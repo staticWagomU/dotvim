@@ -42,3 +42,16 @@ keymap({ 'n' }, '<Leader>ni', require('package-info').install, opts)
 -- Install a different dependency version
 keymap({ 'n' }, '<Leader>np', require('package-info').change_version, opts)
 '''
+
+
+# go
+[[plugins]]
+repo='https://github.com/ray-x/go.nvim'
+on_ft='go'
+lua_source='''
+require('go').setup()
+'''
+
+[[plugins]]
+repo='https://github.com/ray-x/guihua.lua'
+

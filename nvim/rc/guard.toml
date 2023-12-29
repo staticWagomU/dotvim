@@ -4,17 +4,19 @@ depends=['guard-collection']
 lua_source='''
 local ft = require('guard.filetype')
 ft(
-    'javascript,javascriptreact,typescript,typescriptreact,vue,css,scss,less,html,json,jsonc,yaml,markdown,markdown.mdx,graphql,handlebars'
-  )
-  :fmt({
-    cmd = 'deno',
-    args = { 'fmt', '-' },
-    stdin = true,
-  })
+  'javascript,javascriptreact,typescript,typescriptreact,vue,css,scss,less,html,json,jsonc,yaml,markdown,markdown.mdx,graphql,handlebars'
+):fmt {
+  cmd = 'deno',
+  args = { 'fmt', '-' },
+  stdin = true,
+}
 
 ft('go'):fmt('gofmt')
 
-local stylua = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'stylua', 'stylua.exe')
+local stylua = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'stylua', 'stylua')
+if require('utils').is_windows then
+  stylua = stylua .. '.exe'
+end
 ft('lua'):fmt {
   cmd = stylua,
   args = { '-' },

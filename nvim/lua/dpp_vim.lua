@@ -3,8 +3,8 @@ local abbrev = require('utils').make_abbrev
 local autocmd = require('utils').autocmd
 local uc = require('utils').usercmd
 
-local dppBase = require('dpp.helper').basePath
-local tsPath = require('dpp.helper').tsPath
+local dppBase = require('conf.dpp.helper').basePath
+local tsPath = require('conf.dpp.helper').tsPath
 
 local function dppNotfy(msg)
   vim.notify(msg, vim.log.levels.INFO, { title = 'dpp' })

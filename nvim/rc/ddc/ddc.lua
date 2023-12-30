@@ -1,4 +1,28 @@
 -- lua_add {{{
+--local set_buffer = vim.fn['ddc#custom#set_buffer']
+--local get_buffer = vim.fn['ddc#custom#get_buffer']
+--
+--local function commandline_post()
+--    if vim.b.prev_buffer_config then
+--        set_buffer(vim.b.prev_buffer_config)
+--        vim.b.prev_buffer_config = nil
+--    end
+--end
+--
+--local function commandline_pre()
+--    vim.b.prev_buffer_config = get_buffer()
+--    vim.api.nvim_create_autocmd("User", {
+--        pattern = "DDCCmdlineLeave",
+--        callback = function()
+--            commandline_post()
+--        end,
+--        once = true,
+--    })
+--    vim.fn['ddc#enable_cmdline_completion']()
+--end
+local autocmd = vim.api.nvim_create_autocmd
+
+
 vim.cmd([[
 nnoremap :       <Cmd>call CommandlinePre(':')<CR>:
 nnoremap ?       <Cmd>call CommandlinePre('/')<CR>?
@@ -14,19 +38,6 @@ function! CommandlinePre(mode) abort
           \     keywordPattern: '[0-9a-zA-Z_:#-]*',
           \   },
           \ })
-
-    " Use zsh source for :! completion
-    call ddc#custom#set_context_buffer({ ->
-          \ getcmdline()->stridx('!') ==# 0 ? {
-          \   'cmdlineSources': [
-          \     'shell-native', 'cmdline', 'cmdline-history', 'around',
-          \   ],
-          \ } : {} })
-
-    "call ddc#custom#patch_buffer('ui', 'inline')
-  elseif a:mode ==# 'dda'
-    " For AI completion
-    call ddc#custom#patch_buffer('cmdlineSources', ['around', 'mocword'])
   endif
 
   autocmd User DDCCmdlineLeave ++once call CommandlinePost()
@@ -86,31 +97,9 @@ cnoremap <expr> <C-t>       ddc#map#insert_item(0)
 inoremap <expr> <C-t>
       \ pum#visible() ? ddc#map#insert_item(0) : "\<C-v>\<Tab>"
 
-
-" For terminal completion
-call ddc#enable_terminal_completion()
-
-" Narrowing by ddu
-inoremap <C-a> <Cmd>call ddu#start(#{
-      \   name: 'ddc',
-      \   ui: 'ff',
-      \   sync: v:true,
-      \   input: matchstr(getline('.')[: col('.') - 1], '\k*$'),
-      \   sources: [
-      \     #{ name: 'ddc', options: #{ defaultAction: 'complete' } },
-      \   ],
-      \   uiParams: #{
-      \     ff: #{
-      \       startFilter: v:true,
-      \       replaceCol: match(getline('.')[: col('.') - 1], '\k*$') + 1,
-      \     },
-      \   },
-      \ })<CR>
-
-" call ddc#enable(#{ context_filetype: 'treesitter', })
-
 ]])
-vim.fn['ddc#enable']({ context_filetype = 'treesitter' })
+vim.fn['ddc#enable_terminal_completion']()
+vim.fn['ddc#enable'] { context_filetype = 'treesitter' }
 -- }}}
 
 -- lua_post_update {{{

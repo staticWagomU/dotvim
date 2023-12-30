@@ -8,9 +8,9 @@ hooks_file='~/dotvim/nvim/rc/ddc/ddc.lua'
 repo='https://github.com/Shougo/pum.vim'
 lua_source='''
 vim.fn['pum#set_option'] {
-  auto_confirm_time = 3000,
+  auto_confirm_time = 2000,
   auto_select = false,
-  border = 'none',
+  border = 'single',
   follow_cursor = false,
   highlight_scrollbar = 'None',
   horizontal_menu = false,
@@ -18,9 +18,11 @@ vim.fn['pum#set_option'] {
   offset_cmdcol = 0,
   padding = false,
   preview = true,
+  preview_border = 'single',
   preview_width = 80,
   reversed = false,
   use_setline = false,
+  scrollbar_char = '█',
 }
 
 vim.fn['pum#set_local_option']('c', {
@@ -47,31 +49,11 @@ depends = 'pum.vim'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo='https://github.com/Shougo/ddc-ui-inline'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo='https://github.com/Shougo/ddc-ui-none'
-on_source = 'ddc.vim'
-
-[[plugins]]
 repo='https://github.com/Shougo/ddc-source-around'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo='https://github.com/Shougo/ddc-source-copilot'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo='https://github.com/Shougo/ddc-source-codeium'
-on_source = 'ddc.vim'
-
-[[plugins]]
 repo='https://github.com/Shougo/ddc-source-input'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo='https://github.com/Shougo/ddc-source-rg'
 on_source = 'ddc.vim'
 
 [[plugins]]
@@ -89,14 +71,6 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo='https://github.com/Shougo/ddc-source-cmdline-history'
 on_source = 'ddc.vim'
-
-[[plugins]]
-repo='https://github.com/Shougo/ddc-source-omni'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo='https://github.com/Shougo/ddc-source-rtags'
-on_ft = ['c', 'cpp']
 
 [[plugins]]
 repo='https://github.com/matsui54/ddc-buffer'

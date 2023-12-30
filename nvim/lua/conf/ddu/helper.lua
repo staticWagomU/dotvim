@@ -35,4 +35,10 @@ function M.set_static_import_path()
   vim.fn['ddu#set_static_import_path']()
 end
 
+function M.start_source(name)
+  M.start {
+    sources = { { name = { name } } },
+  }
+end
+
 return M

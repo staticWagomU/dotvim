@@ -3,7 +3,9 @@ repo='https://github.com/shellRaining/hlchunk.nvim'
 lua_source='''
 require('hlchunk').setup {
   chunk = {
-    exclude_filetypes = { 'oil' },
+    exclude_filetypes = {
+      oil = false
+    },
     chars = {
       right_arrow = '→',
     },

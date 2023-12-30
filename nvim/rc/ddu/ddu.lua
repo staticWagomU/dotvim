@@ -4,6 +4,13 @@ local ddu = require('conf.ddu.helper')
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
+ddu.patch_local('dpp', {
+    sources = {
+      {
+        name = { 'file_rec' },
+      },
+    },
+  })
 ddu.patch_local('file_recursive', {
   ui = 'ff',
   uiParams = {
@@ -51,6 +58,12 @@ end, opts)
 keymap('n', [[\\]], function()
   ddu.start({sources = {{name = {'patch_local'}}}})
 end, opts)
+
+keymap('n', [[\m]], '<Cmd>Ddu mr<Cr>', opts)
+keymap('n', [[\o]], '<Cmd>Ddu file_old<Cr>', opts)
+keymap('n', [[\l]], '<Cmd>Ddu line<Cr>', opts)
+keymap('n', [[\d]], '<Cmd>Ddu dpp<Cr>', opts)
+keymap('n', [[\b]], '<Cmd>Ddu buffer<Cr>', opts)
 
 -- }}}
 

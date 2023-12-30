@@ -44,9 +44,9 @@ endfunction
 -- }}
 
 -- lua_source {{{
+local ddc = require('conf.ddc.helper')
+ddc.loadConfig(ddc.tsPath)
 vim.cmd([[
-call ddc#custom#load_config(expand('~/dotvim/nvim/rc/ddc/ddc.ts'))
-
 " For insert mode completion
 inoremap <expr> <TAB>
       \ pum#visible() ?
@@ -107,9 +107,10 @@ inoremap <C-a> <Cmd>call ddu#start(#{
       \   },
       \ })<CR>
 
-call ddc#enable(#{ context_filetype: 'treesitter', })
+" call ddc#enable(#{ context_filetype: 'treesitter', })
 
 ]])
+vim.fn['ddc#enable']({ context_filetype = 'treesitter' })
 -- }}}
 
 -- lua_post_update {{{

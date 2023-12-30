@@ -37,53 +37,54 @@ export class Config extends BaseConfig {
           sorters: ["sorter_rank"],
           converters: ["converter_remove_overlap"],
           timeout: 1000,
+          maxAutoCompleteLength: 10,
         },
         around: {
-          mark: "A",
+          mark: "[Around]",
         },
         buffer: {
-          mark: "B",
+          mark: "[Buffer]",
         },
         cmdline: {
-          mark: "cmdline",
+          mark: "[Cmdline]",
           forceCompletionPattern: "\\S/\\S*|\\.\\w*",
         },
         copilot: {
-          mark: "cop",
+          mark: "[Copilot]",
           matchers: [],
           minAutoCompleteLength: 0,
           isVolatile: false,
         },
         input: {
-          mark: "input",
+          mark: "[Input]",
           forceCompletionPattern: "\\S/\\S*",
           isVolatile: true,
         },
         line: {
-          mark: "line",
+          mark: "[Line]",
         },
-        "lsp": {
-          mark: "lsp",
+        lsp: {
+          mark: "[LSP]",
           forceCompletionPattern: "\\.\\w*|::\\w*|->\\w*",
           dup: "force",
         },
         file: {
-          mark: "F",
+          mark: "[File]",
           isVolatile: true,
           minAutoCompleteLength: 1000,
           forceCompletionPattern: "\\S/\\S*",
         },
         "cmdline-history": {
-          mark: "history",
+          mark: "[History]",
           sorters: [],
         },
         rg: {
-          mark: "rg",
+          mark: "[Rg]",
           minAutoCompleteLength: 5,
           enabledIf: "finddir('.git', ';') != ''",
         },
         skkeleton: {
-          mark: "skk",
+          mark: "[Skkeleton]",
           matchers: ["skkeleton"],
           sorters: [],
           minAutoCompleteLength: 2,

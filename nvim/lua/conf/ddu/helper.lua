@@ -15,21 +15,20 @@ function M.start_local(name)
   }
 end
 
---- @param opts table
-function M.start(opts)
-  vim.fn['ddu#start'](opts)
+function M.start(...)
+  vim.fn['ddu#start'](...)
 end
 
-function M.load_config(path)
-  vim.fn['ddu#custom#load_config'](path)
+function M.load_config(...)
+  vim.fn['ddu#custom#load_config'](...)
 end
 
-function M.patch_global(dict)
-  vim.fn['ddu#custom#patch_global'](dict)
+function M.patch_global(...)
+  vim.fn['ddu#custom#patch_global'](...)
 end
 
-function M.patch_local(name, dict)
-  vim.fn['ddu#custom#patch_local'](name, dict)
+function M.patch_local(...)
+  vim.fn['ddu#custom#patch_local'](...)
 end
 
 function M.set_static_import_path()

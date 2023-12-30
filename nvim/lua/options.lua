@@ -19,6 +19,18 @@ local set = vim.opt
 set.ambiwidth = 'single'
 set.backspace = { 'indent', 'eol', 'start' }
 set.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy,
+    ["*"] = require("vim.ui.clipboard.osc52").copy,
+  },
+  paste = {
+    ["+"] = vim.fn.getreg("+"),
+    ["*"] = vim.fn.getreg("*"),
+  },
+}
+
 set.backupdir = vim.fn.expand('~')
 set.directory = vim.fn.expand('~')
 set.expandtab = true
@@ -75,3 +87,11 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
     end
   end,
 })
+
+vim.filetype.add {
+  extension = {
+    ahk = 'autohotkey',
+    jax = 'help',
+    mdx = 'markdown',
+  },
+}

@@ -10,11 +10,11 @@ vim.env.DEEPL_AUTH_KEY = local_vimrc.DEEPL_AUTHKEY
 
 local opts = { noremap = true, silent = true, expr = true }
 local keymap = vim.keymap.set
-keymap('n', '<leader>tr', pantran.motion_translate, opts)
-keymap('n', '<leader>trr', function()
+keymap('n', '<Leader>tr', pantran.motion_translate, opts)
+keymap('n', '<Leader>trr', function()
   return pantran.motion_translate() .. '_'
 end, opts)
-keymap('x', '<leader>tr', pantran.motion_translate, opts)
+keymap('x', '<Leader>tr', pantran.motion_translate, opts)
 
 pantran.setup {
   default_engine = 'deepl',

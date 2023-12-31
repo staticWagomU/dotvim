@@ -7,8 +7,6 @@ require('hlchunk').setup {
       oil = false,
       gin = false,
       toml = false,
-      ddu-ff = false,
-      ddu-ff-filter = false,
     },
     chars = {
       right_arrow = '→',

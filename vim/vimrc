@@ -129,16 +129,16 @@ cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)
 
 function! s:getDict(d) abort
- return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." . a:d)
+ return '~/vimfiles/plugged/dict/SKK-JISYO.' . a:d
 endfunction
 
 function! s:skkeleton_init() abort
  call skkeleton#config({
 		\ 'eggLikeNewline': v:true,
-		\ 'globalDictionaries': [s:getDict("L")]
+		\ 'globalDictionaries': [s:getDict('L')]
 		\ })
  call skkeleton#register_kanatable('rom', {
-		\ "z\<Space>": ["\u3000", ''],
+		\ 'z\<Space>': ['\u3000', ''],
 		\ })
 endfunction
 augroup skkeleton-initialize-pre
@@ -148,9 +148,6 @@ augroup END
 " }}}
 
 Plug 'https://github.com/skk-dev/dict'
-" {{{ gin-settings
-
-" }}}
 
 " }}}
 

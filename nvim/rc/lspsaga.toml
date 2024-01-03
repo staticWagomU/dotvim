@@ -1,6 +1,5 @@
 [[plugins]]
 repo='https://github.com/nvimdev/lspsaga.nvim'
-on_event='LspAttach'
 depends=['nvim-web-devicons', 'nvim-treesitter']
 lua_source='''
 local lspsaga = require('lspsaga')

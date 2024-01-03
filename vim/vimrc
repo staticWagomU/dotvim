@@ -163,8 +163,6 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim/'
 
 Plug 'https://github.com/lambdalisue/fern.vim'
 
-" いれようと思っているプラグインリスト
-" - [ ] skkeleton
 call plug#end()
 " }}} 
 

@@ -46,11 +46,28 @@ let g:mapleader = "\<Space>"
 " {{{ plugins
 call plug#begin()
 
-" {{{ lsp
 Plug 'https://github.com/prabirshrestha/vim-lsp'
 Plug 'https://github.com/mattn/vim-lsp-settings'
 Plug 'https://github.com/prabirshrestha/asyncomplete.vim'
 Plug 'https://github.com/prabirshrestha/asyncomplete-lsp.vim'
+
+
+Plug 'https://github.com/vim-denops/denops.vim'
+
+Plug 'https://github.com/lambdalisue/gin.vim'
+Plug 'https://github.com/vim-skk/skkeleton'
+Plug 'https://github.com/skk-dev/dict'
+
+Plug 'https://github.com/ctrlpvim/ctrlp.vim/'
+
+Plug 'https://github.com/lambdalisue/fern.vim'
+
+call plug#end()
+" }}} 
+
+" {{{ plugins settings
+
+" {{{ lsp settings
 
 let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
 let g:lsp_settings = {
@@ -83,10 +100,6 @@ augroup lsp_install
 augroup END
 " }}}
 
-" {{{ denops plugins
-Plug 'https://github.com/vim-denops/denops.vim'
-
-Plug 'https://github.com/lambdalisue/gin.vim'
 " {{{ gin settings
 augroup FileTypeGin
  autocmd!
@@ -121,8 +134,6 @@ nnoremap <C-g><C-l> <Cmd>GinLog --graph --oneline<Cr>
 nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
 " }}}
 
-Plug 'https://github.com/vim-skk/skkeleton'
-Plug 'https://github.com/skk-dev/dict'
 " {{{ skkeleton settings
 nnoremap <C-j> i<Plug>(skkeleton-toggle)
 imap <C-j> <Plug>(skkeleton-toggle)
@@ -152,20 +163,7 @@ augroup skkeleton-initialize-pre
 augroup END
 " }}}
 
-Plug 'https://github.com/skk-dev/dict'
-
 " }}}
-
-" {{{ git
-
-" }}}
-
-Plug 'https://github.com/ctrlpvim/ctrlp.vim/'
-
-Plug 'https://github.com/lambdalisue/fern.vim'
-
-call plug#end()
-" }}} 
 
 " {{{ keymaps
 "           Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~

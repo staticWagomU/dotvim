@@ -5,7 +5,7 @@ export class Config extends BaseConfig {
   // deno-lint-ignore require-await
   override async config(args: ConfigArguments): Promise<void> {
     const commonSources = [
-      "copilot",
+      "skkeleton",
       "around",
       "file",
     ];
@@ -23,11 +23,8 @@ export class Config extends BaseConfig {
       sources: commonSources,
       cmdlineSources: {
         ":": ["cmdline", "cmdline-history", "around"],
-        "@": ["input", "cmdline-history", "file", "around"],
-        ">": ["input", "cmdline-history", "file", "around"],
         "/": ["around", "line"],
         "?": ["around", "line"],
-        "-": ["around", "line"],
         "=": ["input"],
       },
       sourceOptions: {
@@ -37,56 +34,49 @@ export class Config extends BaseConfig {
           sorters: ["sorter_rank"],
           converters: ["converter_remove_overlap"],
           timeout: 1000,
+          minKeywordLength: 1,
+          maxItems: 50,
         },
         around: {
-          mark: "A",
+          mark: "[Around]",
         },
         buffer: {
-          mark: "B",
+          mark: "[Buffer]",
         },
         cmdline: {
-          mark: "cmdline",
+          mark: "[Cmdline]",
           forceCompletionPattern: "\\S/\\S*|\\.\\w*",
         },
-        copilot: {
-          mark: "cop",
-          matchers: [],
-          minAutoCompleteLength: 0,
-          isVolatile: false,
-        },
         input: {
-          mark: "input",
+          mark: "[Input]",
           forceCompletionPattern: "\\S/\\S*",
           isVolatile: true,
         },
         line: {
-          mark: "line",
+          mark: "[Line]",
         },
-        "lsp": {
-          mark: "lsp",
+        lsp: {
+          mark: "[LSP]",
           forceCompletionPattern: "\\.\\w*|::\\w*|->\\w*",
           dup: "force",
+          isVolatile: true,
+          converters: ["converter_kind_labels"],
         },
         file: {
-          mark: "F",
+          mark: "[File]",
           isVolatile: true,
-          minAutoCompleteLength: 1000,
+          minAutoCompleteLength: 5,
           forceCompletionPattern: "\\S/\\S*",
         },
         "cmdline-history": {
-          mark: "history",
+          mark: "[History]",
           sorters: [],
-        },
-        rg: {
-          mark: "rg",
-          minAutoCompleteLength: 5,
-          enabledIf: "finddir('.git', ';') != ''",
         },
         skkeleton: {
-          mark: "skk",
+          mark: "[Skkeleton]",
           matchers: ["skkeleton"],
           sorters: [],
-          minAutoCompleteLength: 2,
+          minAutoCompleteLength: 1,
           isVolatile: true,
         },
       },
@@ -102,6 +92,64 @@ export class Config extends BaseConfig {
         },
         "shell-native": {
           shell: "fish",
+        },
+      },
+      filterParams: {
+        converter_kind_labels: {
+          kindLabels: {
+            Text: "",
+            Method: "",
+            Function: "",
+            Constructor: "",
+            Field: "",
+            Variable: "",
+            Class: "",
+            Interface: "",
+            Module: "",
+            Property: "",
+            Unit: "",
+            Value: "",
+            Enum: "",
+            Keyword: "",
+            Snippet: "",
+            Color: "",
+            File : '󰈙 ',
+            Reference: "",
+            Folder: "",
+            EnumMember: "",
+            Constant: "",
+            Struct: "",
+            Event: "",
+            Operator: "",
+            TypeParameter: "",
+          },
+          kindHLGroups: {
+            Text: "String",
+            Method: "Function",
+            Function: "Function",
+            Constructor: "Function",
+            Field: "Identifier",
+            Variable: "Identifier",
+            Class: "Structure",
+            Interface: "Structure",
+            Module: "Function",
+            Property: "Identifier",
+            Unit: "Identifier",
+            Value: "String",
+            Enum: "Structure",
+            Keyword: "Identifier",
+            Snippet: "Structure",
+            Color: "Structure",
+            File: "Structure",
+            Reference: "Function",
+            Folder: "Structure",
+            EnumMember: "Structure",
+            Constant: "String",
+            Struct: "Structure",
+            Event: "Function",
+            Operator: "Identifier",
+            TypeParameter: "Identifier",
+          },
         },
       },
       postFilters: ["sorter_head"],
@@ -146,24 +194,19 @@ export class Config extends BaseConfig {
       const filetype of [
         "css",
         "go",
+        "graphql",
         "html",
+        "lua",
         "python",
         "ruby",
+        "tsx",
         "typescript",
         "typescriptreact",
-        "tsx",
-        "graphql",
       ]
     ) {
       args.contextBuilder.patchFiletype(filetype, {
         sources: ["lsp"].concat(commonSources),
       });
     }
-
-    args.contextBuilder.patchFiletype("lua", {
-      sources: [
-        "lsp",
-      ].concat(commonSources),
-    });
   }
 }

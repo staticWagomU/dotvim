@@ -48,6 +48,8 @@ local function Init()
   -- -------------------------------------
   -- colorscheme settings
   -- -------------------------------------
+  vim.g.nightflyCursorColor = true
+  vim.g.nightflyTransparent = true
   vim.cmd.colorscheme('nightfly')
   vim.g.nightflyCursorColor = true
   vim.g.nightflyNormalFloat = true

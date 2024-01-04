@@ -1,9 +1,15 @@
----@diagnostic disable: redefined-local
 -- lua_add {{{
 local ddu = require('conf.ddu.helper')
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
+ddu.patch_local('dpp', {
+  sources = {
+    {
+      name = { 'file_rec' },
+    },
+  },
+})
 ddu.patch_local('file_recursive', {
   ui = 'ff',
   uiParams = {
@@ -49,18 +55,30 @@ keymap('n', [[\f]], function()
   ddu.start_local('file_recursive')
 end, opts)
 keymap('n', [[\\]], function()
-  ddu.start({sources = {{name = {'patch_local'}}}})
+  ddu.start_source('patch_local')
 end, opts)
 
+keymap('n', [[\m]], function()
+  ddu.start_local('mr')
+end, opts)
+keymap('n', [[\o]], function()
+  ddu.start_local('file_old')
+end, opts)
+keymap('n', [[\l]], function()
+  ddu.start_local('line')
+end, opts)
+keymap('n', [[\d]], function()
+  ddu.start_local('dpp')
+end, opts)
+keymap('n', [[\b]], function()
+  ddu.start_local('buffer')
+end, opts)
 -- }}}
 
 -- lua_post_update {{{
 require('conf.ddu.helper').set_static_import_path()
 -- }}}
 
-
 -- lua_source {{{
-vim.cmd([[
-call ddu#custom#load_config(expand('~/dotvim/nvim/rc/ddu/ddu.ts'))
-]])
+require('conf.ddu.helper').load_config(vim.fn.expand('~/dotvim/nvim/rc/ddu/ddu.ts'))
 -- }}}

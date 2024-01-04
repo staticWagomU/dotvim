@@ -89,6 +89,7 @@ export class Config extends BaseConfig {
             "matcher_substring",
           ],
           converters: ["converter_hl_dir"],
+          defaultAction: "cd",
         },
         file_git: {
           matchers: [
@@ -200,20 +201,8 @@ export class Config extends BaseConfig {
             },
           },
         },
-        word: {
-          defaultAction: "append",
-        },
-        deol: {
-          defaultAction: "switch",
-        },
         action: {
           defaultAction: "do",
-        },
-        readme_viewer: {
-          defaultAction: "open",
-        },
-        url: {
-          defaultAction: "browse",
         },
         colorscheme: {
           defaultAction: "set",

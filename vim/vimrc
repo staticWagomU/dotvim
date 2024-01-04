@@ -122,6 +122,7 @@ nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
 " }}}
 
 Plug 'https://github.com/vim-skk/skkeleton'
+Plug 'https://github.com/skk-dev/dict'
 " {{{ skkeleton settings
 nnoremap <C-j> i<Plug>(skkeleton-toggle)
 imap <C-j> <Plug>(skkeleton-toggle)
@@ -129,7 +130,11 @@ cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)
 
 function! s:getDict(d) abort
- return '~/vimfiles/plugged/dict/SKK-JISYO.' . a:d
+ if has('unix')
+	return expand("~/.vim/plugged/dict/SKK-JISYO." . a:d)
+ else
+	return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." . a:d)
+ endif
 endfunction
 
 function! s:skkeleton_init() abort
@@ -159,8 +164,6 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim/'
 
 Plug 'https://github.com/lambdalisue/fern.vim'
 
-" いれようと思っているプラグインリスト
-" - [ ] skkeleton
 call plug#end()
 " }}} 
 

@@ -149,9 +149,9 @@ function! s:getDict(d) abort
 endfunction
 
 function! s:skkeleton_init() abort
- call skkeleton#config({
-		\ 'eggLikeNewline': v:true,
-		\ 'globalDictionaries': [s:getDict('L')]
+ call skkeleton#config(#{
+		\ eggLikeNewline: v:true,
+		\ globalDictionaries: [s:getDict('L')],
 		\ })
  call skkeleton#register_kanatable('rom', {
 		\ 'z\<Space>': ['\u3000', ''],

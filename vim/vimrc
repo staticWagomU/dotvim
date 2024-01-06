@@ -125,6 +125,8 @@ function! s:GinDiffSetup() abort
 endfunction
 
 function! s:GinStatusSetup() abort
+ xnoremap <buffer> h <Plug>(gin-action-stage)
+ xnoremap <buffer> l <Plug>(gin-action-unstage)
  nnoremap <buffer> h <Plug>(gin-action-stage)
  nnoremap <buffer> l <Plug>(gin-action-unstage)
 endfunction

@@ -152,6 +152,7 @@ function! s:skkeleton_init() abort
  call skkeleton#config(#{
 		\ eggLikeNewline: v:true,
 		\ globalDictionaries: [s:getDict('L')],
+		\ databasePath: '/tmp/skkeleton.sqlite3',
 		\ })
  call skkeleton#register_kanatable('rom', {
 		\ 'z\<Space>': ['\u3000', ''],

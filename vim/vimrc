@@ -1,11 +1,12 @@
+" vim: shiftwidth=2
+vim9script noclear
 syntax off
-filetype off
 filetype plugin indent off
 if &compatible
 	set nocompatible
 endif
-
-" {{{ options
+ 
+# {{{ options
 if has('vim_starting')
 	set encoding=utf-8
 	set fileencodings=utf-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
@@ -18,32 +19,31 @@ set signcolumn=yes
 set hidden
 set laststatus=2
 set mouse=a
-" クリップボードレジスタを使用する autoselectはわからない
+# クリップボードレジスタを使用する autoselectはわからない
 set clipboard=unnamed,autoselect
-" 音を鳴らさないようにする
+# 音を鳴らさないようにする
 set belloff=all
 set formatoptions+=mMj
 set ambiwidth=double
-" 大文字の括弧を%でマッチさせる
+# 大文字の括弧を%でマッチさせる
 set matchpairs+=「:」,（:）
 set directory=~
 set backupdir=~
 set undodir=~
-" normal modeに戻った後も<BS> <DELETE>を効かせる
+normal modeに戻った後も<BS> <DELETE>を効かせる
 set backspace=indent,eol,start
 set title
-let &g:titlestring =
-			\ "%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)%(%m%r%w%)"
+const g:titlestring = "%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)%(%m%r%w%)"
 set nowrap
 if !has('gui_running')
 	set t_Co=256
 endif
 set noshowmode
-set shortmess +=I
-let g:mapleader = "\<Space>"
-" }}}
-
-" {{{ plugins
+set shortmess& shortmess+=Ic
+const g:mapleader = "\<Space>"
+# }}}
+ 
+# {{{ plugins
 call plug#begin()
 
 Plug 'https://github.com/prabirshrestha/vim-lsp'
@@ -62,23 +62,25 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim/'
 
 Plug 'https://github.com/lambdalisue/fern.vim'
 
+Plug 'https://github.com/vim-jp/vimdoc-ja'
+
 call plug#end()
-" }}} 
+# }}} 
 
-" {{{ plugins settings
+# {{{ plugins settings
 
-" {{{ lsp settings
+# {{{ lsp settings
 
-let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
-let g:lsp_settings = {
+g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
+g:lsp_settings = {
 	 \ 'efm-langserver': {
 	 \   'disabled': 0,
 	 \   'allowlist': ['markdown'],
 	 \  }
 	 \ }
-let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_diagnostics_enabled = 1
-function! s:on_lsp_buffer_enabled() abort
+g:lsp_diagnostics_float_cursor = 1
+g:lsp_diagnostics_enabled = 1
+def On_lsp_buffer_enabled()
  setlocal completeopt=menu
  setlocal omnifunc=lsp#complete
  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
@@ -92,25 +94,25 @@ function! s:on_lsp_buffer_enabled() abort
  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
  nmap <buffer> K <plug>(lsp-hover)
-endfunction
+enddef
 
 augroup lsp_install
  au!
- au User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+ au User lsp_buffer_enabled call On_lsp_buffer_enabled()
 augroup END
-" }}}
-
-" {{{ gin settings
+# }}}
+ 
+# {{{ gin settings
 augroup FileTypeGin
  autocmd!
 
- autocmd FileType gin-diff,gin-log,gin-status call s:GinFileTypeSetup()
+ autocmd FileType gin-diff,gin-log,gin-status call GinFileTypeSetup()
 
- autocmd FileType gin-diff call s:GinDiffSetup()
- autocmd FileType gin-status call s:GinStatusSetup()
+ autocmd FileType gin-diff call GinDiffSetup()
+ autocmd FileType gin-status call GinStatusSetup()
 augroup END
 
-function! s:GinFileTypeSetup() abort
+def GinFileTypeSetup()
  nnoremap <buffer> c <Cmd>Gin commit<CR>
  nnoremap <buffer> s <Cmd>GinStatus<CR>
  nnoremap <buffer> L <Cmd>GinLog --graph --oneline<CR>
@@ -118,70 +120,70 @@ function! s:GinFileTypeSetup() abort
  nnoremap <buffer> q <Cmd>bdelete<CR>
  nnoremap <buffer> p <Cmd>Gin push<CR>
  nnoremap <buffer> P <Cmd>Gin pull<CR>
-endfunction
+enddef
 
-function! s:GinDiffSetup() abort
+def GinDiffSetup()
  nnoremap <buffer> gd <Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>
-endfunction
+enddef
 
-function! s:GinStatusSetup() abort
+def GinStatusSetup()
  xnoremap <buffer> h <Plug>(gin-action-stage)
  xnoremap <buffer> l <Plug>(gin-action-unstage)
  nnoremap <buffer> h <Plug>(gin-action-stage)
  nnoremap <buffer> l <Plug>(gin-action-unstage)
-endfunction
+enddef
 
 nnoremap <C-g><C-s> <Cmd>GinStatus<Cr>
 nnoremap <C-g><C-l> <Cmd>GinLog --graph --oneline<Cr>
 nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
-" }}}
-
-" {{{ skkeleton settings
+# }}}
+ 
+# {{{ skkeleton settings
 nnoremap <C-j> i<Plug>(skkeleton-toggle)
 imap <C-j> <Plug>(skkeleton-toggle)
 cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)
 
-function! s:getDict(d) abort
+def GetDict(d: string)
  if has('unix')
 	return expand("~/.vim/plugged/dict/SKK-JISYO." . a:d)
  else
 	return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." . a:d)
  endif
-endfunction
+enddef
 
-function! s:skkeleton_init() abort
- call skkeleton#config(#{
-		\ eggLikeNewline: v:true,
-		\ globalDictionaries: [s:getDict('L')],
-		\ databasePath: '/tmp/skkeleton.sqlite3',
-		\ })
+def Skkeleton_init()
+ call skkeleton#config({
+		 eggLikeNewline: v:true,
+		 globalDictionaries: [GetDict('L')],
+		 databasePath: '/tmp/skkeleton.sqlite3',
+		 })
  call skkeleton#register_kanatable('rom', {
-		\ 'z\<Space>': ['\u3000', ''],
-		\ })
-endfunction
+		'z\<Space>': ['\u3000', ''],
+		})
+enddef
 augroup skkeleton-initialize-pre
  autocmd!
- autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+ autocmd User skkeleton-initialize-pre call Skkeleton_init()
 augroup END
-" }}}
-
-" }}}
-
-" {{{ keymaps
-"           Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~
-"  Command        +------+-----+-----+-----+-----+-----+------+------+ ~
-"  [nore]map      |  @   |  -  |  -  |  @  |  @  |  @  |  -   |  -   |
-"  n[nore]map     |  @   |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
-"  [nore]map!     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  -   |
-"  i[nore]map     |  -   |  @  |  -  |  -  |  -  |  -  |  -   |  -   |
-"  c[nore]map     |  -   |  -  |  @  |  -  |  -  |  -  |  -   |  -   |
-"  v[nore]map     |  -   |  -  |  -  |  @  |  @  |  -  |  -   |  -   |
-"  x[nore]map     |  -   |  -  |  -  |  @  |  -  |  -  |  -   |  -   |
-"  s[nore]map     |  -   |  -  |  -  |  -  |  @  |  -  |  -   |  -   |
-"  o[nore]map     |  -   |  -  |  -  |  -  |  -  |  @  |  -   |  -   |
-"  t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  |  @   |  -   |
-"  l[nore]map     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  @   |
+# }}}
+ 
+# }}}
+ 
+# {{{ keymaps
+#           Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~
+#  Command        +------+-----+-----+-----+-----+-----+------+------+ ~
+#  [nore]map      |  @   |  -  |  -  |  @  |  @  |  @  |  -   |  -   |
+#  n[nore]map     |  @   |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+#  [nore]map!     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  -   |
+#  i[nore]map     |  -   |  @  |  -  |  -  |  -  |  -  |  -   |  -   |
+#  c[nore]map     |  -   |  -  |  @  |  -  |  -  |  -  |  -   |  -   |
+#  v[nore]map     |  -   |  -  |  -  |  @  |  @  |  -  |  -   |  -   |
+#  x[nore]map     |  -   |  -  |  -  |  @  |  -  |  -  |  -   |  -   |
+#  s[nore]map     |  -   |  -  |  -  |  -  |  @  |  -  |  -   |  -   |
+#  o[nore]map     |  -   |  -  |  -  |  -  |  -  |  @  |  -   |  -   |
+#  t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  |  @   |  -   |
+#  l[nore]map     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  @   |
 
 nnoremap <Leader> <Nop>
 xnoremap <Leader> <Nop>
@@ -191,9 +193,9 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-" expand path
+# expand path
 cmap <C-x> <C-r>=expand('%:p:h')<CR>
-" expand file 
+# expand file 
 cmap <C-z> <C-r>=expand('%:p')<CR>
 
 nnoremap <silent> <Leader>ls :<C-u>ls<CR>
@@ -234,9 +236,9 @@ onoremap <silent> @a a`
 nnoremap <silent> \ :<C-u>so $MYVIMRC<CR>
 
 vnoremap <RightMouse> :w !clip.exe<CR><ESC>
-" }}}
-
-" {{{ commands
+# }}}
+ 
+# {{{ commands
 augroup restore-cursor
 	autocmd!
 	autocmd BufReadPost *
@@ -262,8 +264,8 @@ filetype plugin indent on
 if has('syntax')
  syntax on
 endif
-colorscheme desert
-
-let &t_SI="\<Esc>[4 q"
-let &t_EI="\<Esc>[2 q"
-" }}}
+# colorscheme desert
+ 
+&t_SI = "\<Esc>[4 q"
+&t_EI = "\<Esc>[2 q"
+# }}}

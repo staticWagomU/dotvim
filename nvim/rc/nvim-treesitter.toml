@@ -1,2 +1,27 @@
 [[plugins]]
 repo='https://github.com/nvim-treesitter/nvim-treesitter'
+lua_source='''
+require('nvim-treesitter.configs').setup {
+  ensure_installed = {
+    'astro',
+    'css',
+    'go',
+    'gomod',
+    'gosum',
+    'html',
+    'markdown',
+    'markdown_inline',
+    'svelte',
+    'typescript',
+    'vimdoc',
+    'lua',
+    'rust',
+    'toml',
+  },
+  sync_install = true,
+
+  highlight = {
+    enable = true,
+  },
+}
+'''

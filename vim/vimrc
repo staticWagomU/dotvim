@@ -144,11 +144,11 @@ imap <C-j> <Plug>(skkeleton-toggle)
 cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)
 
-def GetDict(d: string)
+def GetDict(d: string): string
  if has('unix')
-	return expand("~/.vim/plugged/dict/SKK-JISYO." . a:d)
+	return expand("~/.vim/plugged/dict/SKK-JISYO." .. d)
  else
-	return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." . a:d)
+	return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." .. d)
  endif
 enddef
 

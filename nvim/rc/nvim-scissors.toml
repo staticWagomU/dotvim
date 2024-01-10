@@ -1,0 +1,7 @@
+[[plugins]]
+repo='https://github.com/chrisgrieser/nvim-scissors'
+lua_source='''
+require('scissors').setup ({
+		-- snippetDir = 'path/to/your/snippetFolder',
+		})
+'''

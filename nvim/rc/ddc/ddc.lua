@@ -23,11 +23,11 @@
 local autocmd = vim.api.nvim_create_autocmd
 
 
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+keymap({'n'}, '?', '<Cmd>call CommandlinePre("/")<CR>?', opts)
+keymap({'n', 'x'}, ':', '<Cmd>call CommandlinePre(":")<CR>:', opts)
 vim.cmd([[
-nnoremap :       <Cmd>call CommandlinePre(':')<CR>:
-nnoremap ?       <Cmd>call CommandlinePre('/')<CR>?
-xnoremap :       <Cmd>call CommandlinePre(':')<CR>:
-
 function! CommandlinePre(mode) abort
   " Overwrite sources
   let b:prev_buffer_config = ddc#custom#get_buffer()

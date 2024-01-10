@@ -24,7 +24,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 
 local keymap = vim.keymap.set
-local opts = { noremap = true, silent = true }
+local opts = { noremap = true }
 keymap({'n'}, '?', '<Cmd>call CommandlinePre("/")<CR>?', opts)
 keymap({'n', 'x'}, ':', '<Cmd>call CommandlinePre(":")<CR>:', opts)
 vim.cmd([[

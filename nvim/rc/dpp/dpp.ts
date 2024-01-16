@@ -53,38 +53,41 @@ export class Config extends BaseConfig {
 
     const tomls: Toml[] = [];
     for (const tomlPath of tomlPaths) {
-      tomls.push(
-        await args.dpp.extAction(
-          args.denops,
-          context,
-          options,
-          "toml",
-          "load",
-          {
-            path: tomlPath,
-            options: {
-              lazy: false,
-            },
+      const toml = await args.dpp.extAction(
+        args.denops,
+        context,
+        options,
+        "toml",
+        "load",
+        {
+          path: tomlPath,
+          options: {
+            lazy: false,
           },
-        ) as Toml,
-      );
+        },
+      ) as Toml | undefined;
+
+      if (toml) {
+        tomls.push(toml);
+      }
     }
     if (hasWindows) {
-      tomls.push(
-        await args.dpp.extAction(
-          args.denops,
-          context,
-          options,
-          "toml",
-          "load",
-          {
-            path: "~/dotvim/nvim/rc/windows/windows.toml",
-            options: {
-              lazy: false,
-            },
+      const windows = await args.dpp.extAction(
+        args.denops,
+        context,
+        options,
+        "toml",
+        "load",
+        {
+          path: "~/dotvim/nvim/rc/windows/windows.toml",
+          options: {
+            lazy: false,
           },
-        ) as Toml,
-      );
+        },
+      ) as Toml | undefined;
+      if (windows) {
+        tomls.push(windows);
+      }
     }
 
     const recordPlugins: Record<string, Plugin> = {};
@@ -152,13 +155,19 @@ export class Config extends BaseConfig {
       {
         plugins: Object.values(recordPlugins),
       },
-    ) as LazyMakeStateResult;
+    ) as LazyMakeStateResult | undefined;
+    const checkFiles = [
+      await glob(args.denops, `${dotfilesDir}/*.toml`),
+      await glob(args.denops, `${dotfilesDir}/*.lua`),
+      await glob(args.denops, `${dotfilesDir}/*.ts`),
+    ].flat();
 
     return {
+      checkFiles: checkFiles,
       ftplugins,
       hooksFiles,
-      plugins: lazyResult.plugins ?? [],
-      stateLines: lazyResult.stateLines,
+      plugins: lazyResult?.plugins ?? [],
+      stateLines: lazyResult?.stateLines ?? [],
     };
   }
 }

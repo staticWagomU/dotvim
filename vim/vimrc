@@ -260,10 +260,10 @@ augroup restore-cursor
 	\ | endif
 augroup END
 
-# augroup fileTypeIndent
-# 	autocmd!
-# 	autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
-# augroup END
+augroup fileTypeIndent
+	autocmd!
+	autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
+augroup END
 
 autocmd FileType vim setlocal foldmethod=marker
 

@@ -1,0 +1,8 @@
+[[plugins]]
+repo='https://github.com/gregorias/coerce.nvim'
+lua_source='''
+require('coerce').setup {
+  coerce_prefix = 'cr',
+  keymap_registry = require('coerce.keymap').keymap_registry(),
+}
+'''

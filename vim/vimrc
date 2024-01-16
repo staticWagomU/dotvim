@@ -58,7 +58,7 @@ Plug 'https://github.com/lambdalisue/gin.vim'
 Plug 'https://github.com/vim-skk/skkeleton'
 Plug 'https://github.com/skk-dev/dict'
 
-Plug 'https://github.com/ctrlpvim/ctrlp.vim/'
+Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 
 Plug 'https://github.com/lambdalisue/fern.vim'
 

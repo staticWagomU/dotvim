@@ -3,14 +3,14 @@ vim9script noclear
 syntax off
 filetype plugin indent off
 if &compatible
-	set nocompatible
+  set nocompatible
 endif
- 
+
 # {{{ options
 if has('vim_starting')
-	set encoding=utf-8
-	set fileencodings=utf-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
-	set fileformats=unix,dos,mac
+  set encoding=utf-8
+  set fileencodings=utf-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
+  set fileformats=unix,dos,mac
 endif
 scriptencoding utf-8
 
@@ -36,13 +36,13 @@ set title
 const g:titlestring = "%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)%(%m%r%w%)"
 set nowrap
 if !has('gui_running')
-	set t_Co=256
+  set t_Co=256
 endif
 set noshowmode
 set shortmess& shortmess+=Ic
 const g:mapleader = "\<Space>"
 # }}}
- 
+
 # {{{ plugins
 call plug#begin()
 
@@ -73,71 +73,71 @@ call plug#end()
 
 g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
 g:lsp_settings = {
-	 \ 'efm-langserver': {
-	 \   'disabled': 0,
-	 \   'allowlist': ['markdown'],
-	 \  }
-	 \ }
+  efm-langserver: {
+    disabled: 0,
+    allowlist: ['markdown'],
+  }
+}
 g:lsp_diagnostics_float_cursor = 1
 g:lsp_diagnostics_enabled = 1
 def On_lsp_buffer_enabled()
- setlocal completeopt=menu
- setlocal omnifunc=lsp#complete
- if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
- nmap <buffer> ;d <plug>(lsp-definition)
- nmap <buffer> ;s <plug>(lsp-document-symbol-search)
- nmap <buffer> ;S <plug>(lsp-workspace-symbol-search)
- nmap <buffer> ;r <plug>(lsp-references)
- nmap <buffer> ;i <plug>(lsp-implementation)
- nmap <buffer> ;T <plug>(lsp-type-definition)
- nmap <buffer> ;r <plug>(lsp-rename)
- nmap <buffer> [g <plug>(lsp-previous-diagnostic)
- nmap <buffer> ]g <plug>(lsp-next-diagnostic)
- nmap <buffer> K <plug>(lsp-hover)
+  setlocal completeopt=menu
+  setlocal omnifunc=lsp#complete
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> ;d <plug>(lsp-definition)
+  nmap <buffer> ;s <plug>(lsp-document-symbol-search)
+  nmap <buffer> ;S <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> ;r <plug>(lsp-references)
+  nmap <buffer> ;i <plug>(lsp-implementation)
+  nmap <buffer> ;T <plug>(lsp-type-definition)
+  nmap <buffer> ;r <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
 enddef
 
 augroup lsp_install
- au!
- au User lsp_buffer_enabled call On_lsp_buffer_enabled()
+  au!
+  au User lsp_buffer_enabled call On_lsp_buffer_enabled()
 augroup END
 # }}}
- 
+
 # {{{ gin settings
 augroup FileTypeGin
- autocmd!
+  autocmd!
 
- autocmd FileType gin-diff,gin-log,gin-status call GinFileTypeSetup()
+  autocmd FileType gin-diff,gin-log,gin-status call GinFileTypeSetup()
 
- autocmd FileType gin-diff call GinDiffSetup()
- autocmd FileType gin-status call GinStatusSetup()
+  autocmd FileType gin-diff call GinDiffSetup()
+  autocmd FileType gin-status call GinStatusSetup()
 augroup END
 
 def GinFileTypeSetup()
- nnoremap <buffer> c <Cmd>Gin commit<CR>
- nnoremap <buffer> s <Cmd>GinStatus<CR>
- nnoremap <buffer> L <Cmd>GinLog --graph --oneline<CR>
- nnoremap <buffer> d <Cmd>GinDiff ++processor=delta\ --no-gitconfig\ --color-only\ --cached<CR>
- nnoremap <buffer> q <Cmd>bdelete<CR>
- nnoremap <buffer> p <Cmd>Gin push<CR>
- nnoremap <buffer> P <Cmd>Gin pull<CR>
+  nnoremap <buffer> c <Cmd>Gin commit<CR>
+  nnoremap <buffer> s <Cmd>GinStatus<CR>
+  nnoremap <buffer> L <Cmd>GinLog --graph --oneline<CR>
+  nnoremap <buffer> d <Cmd>GinDiff ++processor=delta\ --no-gitconfig\ --color-only\ --cached<CR>
+  nnoremap <buffer> q <Cmd>bdelete<CR>
+  nnoremap <buffer> p <Cmd>Gin push<CR>
+  nnoremap <buffer> P <Cmd>Gin pull<CR>
 enddef
 
 def GinDiffSetup()
- nnoremap <buffer> gd <Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>
+  nnoremap <buffer> gd <Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>
 enddef
 
 def GinStatusSetup()
- xnoremap <buffer> h <Plug>(gin-action-stage)
- xnoremap <buffer> l <Plug>(gin-action-unstage)
- nnoremap <buffer> h <Plug>(gin-action-stage)
- nnoremap <buffer> l <Plug>(gin-action-unstage)
+  xnoremap <buffer> h <Plug>(gin-action-stage)
+  xnoremap <buffer> l <Plug>(gin-action-unstage)
+  nnoremap <buffer> h <Plug>(gin-action-stage)
+  nnoremap <buffer> l <Plug>(gin-action-unstage)
 enddef
 
 nnoremap <C-g><C-s> <Cmd>GinStatus<Cr>
 nnoremap <C-g><C-l> <Cmd>GinLog --graph --oneline<Cr>
 nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
 # }}}
- 
+
 # {{{ skkeleton settings
 nnoremap <C-j> i<Plug>(skkeleton-toggle)
 imap <C-j> <Plug>(skkeleton-toggle)
@@ -145,31 +145,31 @@ cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)
 
 def GetDict(d: string): string
- if has('unix')
-	return expand("~/.vim/plugged/dict/SKK-JISYO." .. d)
- else
-	return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." .. d)
- endif
+  if has('unix')
+    return expand("~/.vim/plugged/dict/SKK-JISYO." .. d)
+  else
+    return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." .. d)
+  endif
 enddef
 
 def Skkeleton_init()
- call skkeleton#config({
-		 eggLikeNewline: v:true,
-		 globalDictionaries: [GetDict('L')],
-		 databasePath: '/tmp/skkeleton.sqlite3',
-		 })
- call skkeleton#register_kanatable('rom', {
-		'z\<Space>': ['\u3000', ''],
-		})
+  call skkeleton#config({
+    eggLikeNewline: v:true,
+    globalDictionaries: [GetDict('L')],
+    databasePath: '/tmp/skkeleton.sqlite3',
+  })
+  call skkeleton#register_kanatable('rom', {
+    'z\<Space>': ['\u3000', '']
+  })
 enddef
 augroup skkeleton-initialize-pre
- autocmd!
- autocmd User skkeleton-initialize-pre call Skkeleton_init()
+  autocmd!
+  autocmd User skkeleton-initialize-pre call Skkeleton_init()
 augroup END
 # }}}
- 
+
 # }}}
- 
+
 # {{{ keymaps
 #           Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~
 #  Command        +------+-----+-----+-----+-----+-----+------+------+ ~
@@ -237,24 +237,24 @@ nnoremap <silent> \ :<C-u>so $MYVIMRC<CR>
 
 vnoremap <RightMouse> :w !clip.exe<CR><ESC>
 # }}}
- 
+
 # {{{ commands
 augroup restore-cursor
-	autocmd!
-	autocmd BufReadPost *
-				\ : if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-				\ |   exe "normal! g`\""
-				\ | endif
+  autocmd!
+  autocmd BufReadPost *
+	\ : if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+	\ |   exe "normal! g`\""
+	\ | endif
 
-				\ : if empty(&buftype) && line('.') > winheight(0) / 2
-				\ |   execute 'normal! zz'
-				\ | endif
+	\ : if empty(&buftype) && line('.') > winheight(0) / 2
+	\ |   execute 'normal! zz'
+	\ | endif
 augroup END
 
-augroup fileTypeIndent
-	autocmd!
-	autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
-augroup END
+# augroup fileTypeIndent
+# 	autocmd!
+# 	autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
+# augroup END
 
 autocmd FileType vim setlocal foldmethod=marker
 
@@ -262,10 +262,10 @@ set background=dark
 filetype plugin indent on
 
 if has('syntax')
- syntax on
+  syntax on
 endif
-# colorscheme desert
- 
+
 &t_SI = "\<Esc>[4 q"
 &t_EI = "\<Esc>[2 q"
+colorscheme habamax
 # }}}

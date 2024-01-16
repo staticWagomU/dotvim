@@ -20,14 +20,14 @@ set.ambiwidth = 'single'
 set.backspace = { 'indent', 'eol', 'start' }
 set.clipboard = 'unnamedplus'
 vim.g.clipboard = {
-  name = "OSC 52",
+  name = 'OSC 52',
   copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy,
-    ["*"] = require("vim.ui.clipboard.osc52").copy,
+    ['+'] = require('vim.ui.clipboard.osc52').copy,
+    ['*'] = require('vim.ui.clipboard.osc52').copy,
   },
   paste = {
-    ["+"] = vim.fn.getreg("+"),
-    ["*"] = vim.fn.getreg("*"),
+    ['+'] = vim.fn.getreg('+'),
+    ['*'] = vim.fn.getreg('*'),
   },
 }
 
@@ -72,9 +72,20 @@ set.undodir = vim.fn.expand('~')
 set.wildmenu = true
 set.wrap = false
 set.wrapscan = true
-vim.cmd([[
-set matchpairs+=<:>,「:」,（:）,『:』,【:】,《:》,〈:〉,｛:｝,［:］,【:】,‘:’,“:”
-]])
+set.matchpairs = {
+  '<:>',
+  '「:」',
+  '（:）',
+  '『:』',
+  '【:】',
+  '《:》',
+  '〈:〉',
+  '｛:｝',
+  '［:］',
+  '【:】',
+  '‘:’',
+  '“:”',
+}
 vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
   pattern = { '*' },
   callback = function()

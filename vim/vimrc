@@ -64,6 +64,8 @@ Plug 'https://github.com/lambdalisue/fern.vim'
 
 Plug 'https://github.com/vim-jp/vimdoc-ja'
 
+Plug 'https://github.com/airblade/vim-gitgutter'
+
 call plug#end()
 # }}} 
 
@@ -136,6 +138,16 @@ enddef
 nnoremap <C-g><C-s> <Cmd>GinStatus<Cr>
 nnoremap <C-g><C-l> <Cmd>GinLog --graph --oneline<Cr>
 nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
+# }}}
+
+# {{{ gitgutter settings
+# set foldtext=gitgutter#fold#foldtext()
+
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap [g <Plug>(GitGutterPrevHunk)
+nmap <C-g><C-a> <Plug>(GitGutterStageHunk)
+nmap <C-g><C-r> <Plug>(GitGutterUndoHunk)
+nmap <C-g><C-p> <Plug>(GitGutterPreviewHunk)
 # }}}
 
 # {{{ skkeleton settings

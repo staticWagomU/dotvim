@@ -93,8 +93,8 @@ def On_lsp_buffer_enabled()
   nmap <buffer> ;i <plug>(lsp-implementation)
   nmap <buffer> ;T <plug>(lsp-type-definition)
   nmap <buffer> ;r <plug>(lsp-rename)
-  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> [; <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]; <plug>(lsp-next-diagnostic)
   nmap <buffer> K <plug>(lsp-hover)
 enddef
 

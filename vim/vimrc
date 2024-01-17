@@ -64,6 +64,16 @@ Plug 'https://github.com/lambdalisue/fern.vim'
 
 Plug 'https://github.com/vim-jp/vimdoc-ja'
 
+Plug 'https://github.com/sheerun/vim-polyglot'
+
+Plug 'https://github.com/lambdalisue/kensaku.vim'
+
+Plug 'https://github.com/machakann/vim-sandwich'
+
+Plug 'https://github.com/cohama/lexima.vim'
+
+Plug 'https://github.com/wuelnerdotexe/vim-astro'
+
 Plug 'https://github.com/airblade/vim-gitgutter'
 
 call plug#end()

@@ -81,6 +81,8 @@ Plug 'https://github.com/wuelnerdotexe/vim-astro'
 
 Plug 'https://github.com/airblade/vim-gitgutter'
 
+Plug 'https://github.com/github/copilot.vim'
+
 call plug#end()
 # }}}
 

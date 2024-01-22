@@ -24,7 +24,6 @@ set clipboard=unnamed,autoselect
 # 音を鳴らさないようにする
 set belloff=all
 set formatoptions+=mMj
-set ambiwidth=double
 # 大文字の括弧を%でマッチさせる
 set matchpairs+=「:」,（:）
 set directory=~
@@ -41,6 +40,12 @@ endif
 set noshowmode
 set shortmess& shortmess+=Ic
 const g:mapleader = "\<Space>"
+set statusline=─
+set fillchars+=stl:─,stlnc:─,vert:│,eob:\\x20
+set laststatus=0
+highlight! link StatusLine Comment
+highlight! link StatusLineNC Comment
+highlight! link VertSplit Comment
 # }}}
 
 # {{{ plugins

@@ -203,6 +203,7 @@ const g:ctrlp_custom_ignore = {
   dir:  '\v[\/](\.(git|vs|svn|vscode)|dist|build|public|node_modules)$',
   file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
 }
+nnoremap <C-m> <Cmd>CtrlPMRUFiles<Cr>
 # }}}
 
 # {{{ fern settings

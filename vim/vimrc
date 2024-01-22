@@ -15,7 +15,7 @@ endif
 scriptencoding utf-8
 
 set helplang=ja
-set signcolumn=yes 
+set signcolumn=yes
 set hidden
 set laststatus=2
 set mouse=a
@@ -77,12 +77,12 @@ Plug 'https://github.com/wuelnerdotexe/vim-astro'
 Plug 'https://github.com/airblade/vim-gitgutter'
 
 call plug#end()
-# }}} 
+# }}}
 
 # {{{ plugins settings
 
 # {{{ denops settings
-if has('win64') 
+if has('win64')
   const g:denops_server_addr = '127.0.0.1:32123'
 endif
 # }}}
@@ -266,7 +266,7 @@ nnoremap gk k
 
 # expand path
 cmap <C-x> <C-r>=expand('%:p:h')<CR>
-# expand file 
+# expand file
 cmap <C-z> <C-r>=expand('%:p')<CR>
 
 nnoremap <silent> <Leader>ls :<C-u>ls<CR>

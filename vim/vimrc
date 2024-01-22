@@ -167,7 +167,7 @@ nmap <C-g><C-p> <Plug>(GitGutterPreviewHunk)
 # }}}
 
 # {{{ skkeleton settings
-nnoremap <C-j> i<Plug>(skkeleton-toggle)
+nnoremap <C-j> a<Plug>(skkeleton-toggle)
 imap <C-j> <Plug>(skkeleton-toggle)
 cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)

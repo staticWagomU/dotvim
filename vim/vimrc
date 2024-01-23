@@ -83,6 +83,8 @@ Plug 'https://github.com/airblade/vim-gitgutter'
 
 Plug 'https://github.com/github/copilot.vim'
 
+Plug 'https://github.com/catppuccin/vim'
+
 call plug#end()
 # }}}
 
@@ -336,7 +338,7 @@ augroup END
 
 autocmd FileType vim setlocal foldmethod=marker
 
-set background=dark
+set background=light
 filetype plugin indent on
 
 if has('syntax')
@@ -345,5 +347,5 @@ endif
 
 &t_SI = "\<Esc>[4 q"
 &t_EI = "\<Esc>[2 q"
-colorscheme habamax
+colorscheme catppuccin_latte
 # }}}

@@ -1,2 +1,15 @@
-set guioptions-=T
 set guifont=CaskaydiaCove_Nerd_Font_Mono:h10:cANSI:qDRAFT
+set winaltkeys=no
+set guioptions&
+      \ guioptions-=m
+      \ guioptions-=e
+      \ guioptions-=T
+      \ guioptions-=r
+      \ guioptions-=R
+      \ guioptions-=l
+      \ guioptions-=L
+      \ guioptions-=b
+      \ guioptions-=H
+if exists('antialias')
+  set antialias
+endif

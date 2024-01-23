@@ -40,6 +40,7 @@ endif
 set noshowmode
 set shortmess& shortmess+=Ic
 const g:mapleader = "\<Space>"
+set termguicolors
 set statusline=─
 set fillchars+=stl:─,stlnc:─,vert:│,eob:\\x20
 set laststatus=0

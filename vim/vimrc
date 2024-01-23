@@ -100,7 +100,7 @@ endif
 # {{{ lsp settings
 
 const g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
-const g:lsp_settings = {
+const g:lsp_settings = { 
   'efm-langserver': {
     disabled: 0,
     allowlist: ['markdown'],

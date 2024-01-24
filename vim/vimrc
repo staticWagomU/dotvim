@@ -197,7 +197,8 @@ def Skkeleton_init()
     databasePath: '/tmp/skkeleton.sqlite3',
   })
   call skkeleton#register_kanatable('rom', {
-    'z\<Space>': ['\u3000', '']
+    'z\<Space>': ['\u3000', ''],
+    'xn': ['ん', '']
   })
 enddef
 augroup skkeleton-initialize-pre

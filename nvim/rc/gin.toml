@@ -6,6 +6,10 @@ on_cmd = [
 lua_source ='''
 local autocmd = require('utils').autocmd
 local abbrev = require('utils').make_abbrev
+vim.g['gin_log_persistent_args'] = {
+  [[--graph]],
+  [[--pretty=%C(yellow)%h %C(reset)%C(cyan)@%an%C(reset) %C(auto)%d%C(reset) %s  %C(magenta)[%ar]%C(reset)]],
+}
 
 autocmd({ 'FileType' }, {
   pattern = { 'gin-diff', 'gin-log', 'gin-status' },
@@ -14,7 +18,7 @@ autocmd({ 'FileType' }, {
     local opts = { buffer = true, noremap = true }
     keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', opts)
     keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', opts)
-    keymap({ 'n' }, 'L', '<Cmd>GinLog --graph --oneline<Cr>', opts)
+    keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', opts)
     keymap({ 'n' }, 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], opts)
     keymap({ 'n' }, 'q', '<Cmd>bdelete<Cr>', opts)
     keymap({ 'n' }, 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], opts)
@@ -62,6 +66,7 @@ abbrev {
 }
 
 vim.keymap.set({ 'n' }, '<C-g><C-s>', '<Cmd>GinStatus<Cr>', {})
-vim.keymap.set({ 'n' }, '<C-g><C-l>', '<Cmd>GinLog --graph --oneline<Cr>', {})
+vim.keymap.set({ 'n' }, '<C-g><C-l>', '<Cmd>GinLog<Cr>', {})
+vim.keymap.set({ 'n' }, '<C-g>5', '<Cmd>GinLog -- %<Cr>', {})
 vim.keymap.set({ 'n' }, '<C-g><C-b>', '<Cmd>GinBranch<Cr>', {})
 '''

@@ -108,7 +108,7 @@ const g:lsp_settings = {
 }
 g:lsp_diagnostics_float_cursor = 1
 g:lsp_diagnostics_enabled = 1
-def On_lsp_buffer_enabled()
+def OnLspBufferEnabled()
   setlocal completeopt=menu
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
@@ -126,7 +126,7 @@ enddef
 
 augroup lsp_install
   au!
-  au User lsp_buffer_enabled call On_lsp_buffer_enabled()
+  au User lsp_buffer_enabled call OnLspBufferEnabled()
 augroup END
 # }}}
 
@@ -232,7 +232,7 @@ nnoremap <Leader>e <Cmd>Fern .<Cr>
 nnoremap <Leader>E <Cmd>Fern %:h<Cr>
 nnoremap <C-f> <Cmd>Fern . -drawer -reveal=%<Cr>
 
-def Init_fern()
+def InitFern()
 	nmap <silent> <buffer> <C-m> <Plug>(fern-action-move)
 	nmap <silent> <buffer> <C-s> <Plug>(fern-action-new-dir)
 	nnoremap <buffer> <C-f> <C-W>p
@@ -245,7 +245,7 @@ enddef
 
 augroup my-fern
   autocmd! *
-    autocmd FileType fern call Init_fern()
+    autocmd FileType fern call InitFern()
 augroup END
 
 # }}}

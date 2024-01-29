@@ -13,6 +13,13 @@ ft(
 
 ft('go'):fmt('gofmt')
 
+ft('astro'):fmt {
+  cmd = 'prettier',
+  args = { '--stdin-filepath' },
+  fname = true,
+  stdin = true,
+}
+
 local stylua = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'stylua', 'stylua')
 if require('utils').is_windows then
   stylua = stylua .. '.exe'

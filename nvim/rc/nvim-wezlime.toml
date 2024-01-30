@@ -1,0 +1,7 @@
+[[plugins]]
+repo='https://github.com/paytonward6/nvim-wezlime'
+lua_source='''
+require('wezlime').setup {
+  relative_direction = 'next',
+}
+'''

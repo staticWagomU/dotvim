@@ -1,12 +1,11 @@
 " vim: shiftwidth=2
-vim9script noclear
 syntax off
 filetype plugin indent off
 if &compatible
   set nocompatible
 endif
 
-# {{{ options
+" {{{ options
 if has('vim_starting')
   set encoding=utf-8
   set fileencodings=utf-8,sjis,iso-2022-jp,ucs-bom,euc-jp,cp932,default,latin1
@@ -19,12 +18,12 @@ set signcolumn=yes
 set hidden
 set laststatus=2
 set mouse=a
-# クリップボードレジスタを使用する autoselectはわからない
+" クリップボードレジスタを使用する autoselectはわからない
 set clipboard=unnamed,autoselect
-# 音を鳴らさないようにする
+" 音を鳴らさないようにする
 set belloff=all
 set formatoptions+=mMj
-# 大文字の括弧を%でマッチさせる
+" 大文字の括弧を%でマッチさせる
 set matchpairs+=「:」,（:）
 set directory=~
 set backupdir=~
@@ -32,14 +31,14 @@ set undodir=~
 normal modeに戻った後も<BS> <DELETE>を効かせる
 set backspace=indent,eol,start
 set title
-const g:titlestring = "%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)%(%m%r%w%)"
+let g:titlestring = "%{expand('%:p:~:.')} %<\(%{fnamemodify(getcwd(), ':~')}\)%(%m%r%w%)"
 set nowrap
 if !has('gui_running')
   set t_Co=256
 endif
 set noshowmode
 set shortmess& shortmess+=Ic
-const g:mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 set termguicolors
 set statusline=─
 set fillchars+=stl:─,stlnc:─,vert:│,eob:\\x20
@@ -47,9 +46,9 @@ set laststatus=0
 highlight! link StatusLine Comment
 highlight! link StatusLineNC Comment
 highlight! link VertSplit Comment
-# }}}
+" }}}
 
-# {{{ plugins
+" {{{ plugins
 call plug#begin()
 
 Plug 'https://github.com/prabirshrestha/vim-lsp'
@@ -74,6 +73,8 @@ Plug 'https://github.com/sheerun/vim-polyglot'
 
 Plug 'https://github.com/lambdalisue/kensaku.vim'
 
+Plug 'https://github.com/yuki-yano/fuzzy-motion.vim'
+
 Plug 'https://github.com/machakann/vim-sandwich'
 
 Plug 'https://github.com/cohama/lexima.vim'
@@ -86,29 +87,31 @@ Plug 'https://github.com/github/copilot.vim'
 
 Plug 'https://github.com/catppuccin/vim'
 
+Plug 'https://github.com/kawarimidoll/tuskk.vim'
+
 call plug#end()
-# }}}
+" }}}
 
-# {{{ plugins settings
+" {{{ plugins settings
 
-# {{{ denops settings
+" {{{ denops settings
 if has('win64')
-  const g:denops_server_addr = '127.0.0.1:32123'
+  let g:denops_server_addr = '127.0.0.1:32123'
 endif
-# }}}
+" }}}
 
-# {{{ lsp settings
+" {{{ lsp settings
 
-const g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
-const g:lsp_settings = { 
-  'efm-langserver': {
-    disabled: 0,
-    allowlist: ['markdown'],
-  }
-}
-g:lsp_diagnostics_float_cursor = 1
-g:lsp_diagnostics_enabled = 1
-def OnLspBufferEnabled()
+let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
+let g:lsp_settings = { 
+			\ 'efm-langserver': #{
+			\ disabled: 0,
+			\ allowlist: ['markdown'],
+			\ }
+			\ }
+let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_diagnostics_enabled = 1
+function s:OnLspBufferEnabled() abort
   setlocal completeopt=menu
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
@@ -122,25 +125,25 @@ def OnLspBufferEnabled()
   nmap <buffer> [; <plug>(lsp-previous-diagnostic)
   nmap <buffer> ]; <plug>(lsp-next-diagnostic)
   nmap <buffer> K <plug>(lsp-hover)
-enddef
+endfunction
 
 augroup lsp_install
   au!
-  au User lsp_buffer_enabled call OnLspBufferEnabled()
+  au User lsp_buffer_enabled call s:OnLspBufferEnabled()
 augroup END
-# }}}
+" }}}
 
-# {{{ gin settings
+" {{{ gin settings
 augroup FileTypeGin
   autocmd!
 
-  autocmd FileType gin-diff,gin-log,gin-status call GinFileTypeSetup()
+  autocmd FileType gin-diff,gin-log,gin-status call s:GinFileTypeSetup()
 
-  autocmd FileType gin-diff call GinDiffSetup()
-  autocmd FileType gin-status call GinStatusSetup()
+  autocmd FileType gin-diff call s:GinDiffSetup()
+  autocmd FileType gin-status call s:GinStatusSetup()
 augroup END
 
-def GinFileTypeSetup()
+function s:GinFileTypeSetup() abort
   nnoremap <buffer> c <Cmd>Gin commit<CR>
   nnoremap <buffer> s <Cmd>GinStatus<CR>
   nnoremap <buffer> L <Cmd>GinLog --graph --oneline<CR>
@@ -148,91 +151,91 @@ def GinFileTypeSetup()
   nnoremap <buffer> q <Cmd>bdelete<CR>
   nnoremap <buffer> p <Cmd>Gin push<CR>
   nnoremap <buffer> P <Cmd>Gin pull<CR>
-enddef
+endfunction
 
-def GinDiffSetup()
+function s:GinDiffSetup() abort
   nnoremap <buffer> gd <Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>
-enddef
+endfunction
 
-def GinStatusSetup()
+function s:GinStatusSetup() abort
   xnoremap <buffer> h <Plug>(gin-action-stage)
   xnoremap <buffer> l <Plug>(gin-action-unstage)
   nnoremap <buffer> h <Plug>(gin-action-stage)
   nnoremap <buffer> l <Plug>(gin-action-unstage)
-enddef
+endfunction
 
 nnoremap <C-g><C-s> <Cmd>GinStatus<Cr>
 nnoremap <C-g><C-l> <Cmd>GinLog --graph --oneline<Cr>
 nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
-# }}}
+" }}}
 
-# {{{ gitgutter settings
-# set foldtext=gitgutter#fold#foldtext()
+" {{{ gitgutter settings
+" set foldtext=gitgutter#fold#foldtext()
 
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 nmap <C-g><C-a> <Plug>(GitGutterStageHunk)
 nmap <C-g><C-r> <Plug>(GitGutterUndoHunk)
 nmap <C-g><C-p> <Plug>(GitGutterPreviewHunk)
-# }}}
+" }}}
 
-# {{{ skkeleton settings
+" {{{ skkeleton settings
 nnoremap <C-j> a<Plug>(skkeleton-toggle)
 imap <C-j> <Plug>(skkeleton-toggle)
 cmap <C-j> <Plug>(skkeleton-toggle)
 tmap <C-j> <Plug>(skkeleton-toggle)
 
-def GetDict(d: string): string
+function! s:GetDict(d) abort
   if has('unix')
-    return expand("~/.vim/plugged/dict/SKK-JISYO." .. d)
+    return expand("~/.vim/plugged/dict/SKK-JISYO." .. a:d)
   else
-    return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." .. d)
+    return expand("~\\vimfiles\\plugged\\dict\\SKK-JISYO." .. a:d)
   endif
-enddef
+endfunction
 
-def Skkeleton_init()
-  call skkeleton#config({
-    eggLikeNewline: v:true,
-    globalDictionaries: [GetDict('L')],
-    databasePath: '/tmp/skkeleton.sqlite3',
-  })
-  call skkeleton#register_kanatable('rom', {
-    'z\<Space>': ['\u3000', ''],
-    'xn': ['ん', '']
-  })
-enddef
+function! Skkeleton_init() abort
+	call skkeleton#config(#{
+				\ eggLikeNewline: v:true,
+				\ globalDictionaries: [GetDict('L')],
+				\ databasePath: '/tmp/skkeleton.sqlite3',
+	})
+	call skkeleton#register_kanatable('rom', {
+				\ 'z\<Space>': ['\u3000', ''],
+				\ 'xn': ['ん', '']
+	})
+endfunction
 augroup skkeleton-initialize-pre
   autocmd!
   autocmd User skkeleton-initialize-pre call Skkeleton_init()
 augroup END
-# }}}
-
-# {{{ ctrlp settings
-const g:ctrlp_show_hidden = 1
-const g:ctrlp_max_files  = 0
-const g:ctrlp_custom_ignore = {
-  dir:  '\v[\/](\.(git|vs|svn|vscode)|dist|build|public|node_modules)$',
-  file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
-}
+" }}}
+ 
+" {{{ ctrlp settings
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_max_files  = 0
+let g:ctrlp_custom_ignore = #{
+			\ dir:  '\v[\/](\.(git|vs|svn|vscode)|dist|build|public|node_modules)$',
+			\ file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
+			\ }
 nnoremap <C-m> <Cmd>CtrlPMRUFiles<Cr>
-# }}}
+" }}}
 
-# {{{ fern settings
-const g:fern#mark_symbol                       = ''
-const g:fern#renderer#default#collapsed_symbol = ''
-const g:fern#renderer#default#expanded_symbol  = ''
-const g:fern#renderer#default#leading          = '│'
-const g:fern#renderer#default#leaf_symbol      = ' '
-const g:fern#renderer#default#root_symbol      = '~ '
-const g:fern#default_hidden = 1
-const g:fern#window_selector_use_popup = 1
-const g:fern#hide_cursor = 1
+" {{{ fern settings
+let g:fern#mark_symbol                       = ''
+let g:fern#renderer#default#collapsed_symbol = ''
+let g:fern#renderer#default#expanded_symbol  = ''
+let g:fern#renderer#default#leading          = '│'
+let g:fern#renderer#default#leaf_symbol      = ' '
+let g:fern#renderer#default#root_symbol      = '~ '
+let g:fern#default_hidden = 1
+let g:fern#window_selector_use_popup = 1
+let g:fern#hide_cursor = 1
 
 nnoremap <Leader>e <Cmd>Fern .<Cr>
 nnoremap <Leader>E <Cmd>Fern %:h<Cr>
 nnoremap <C-f> <Cmd>Fern . -drawer -reveal=%<Cr>
 
-def InitFern()
+function InitFern() abort
 	nmap <silent> <buffer> <C-m> <Plug>(fern-action-move)
 	nmap <silent> <buffer> <C-s> <Plug>(fern-action-new-dir)
 	nnoremap <buffer> <C-f> <C-W>p
@@ -241,31 +244,61 @@ def InitFern()
 	nmap <silent> <buffer> <C-p> <Plug>(fern-action-preview:scroll:up:half)
 	setlocal signcolumn=yes
 	setlocal nonumber
-enddef
+endfunction
 
 augroup my-fern
   autocmd! *
     autocmd FileType fern call InitFern()
 augroup END
 
-# }}}
+" }}}
 
-# }}}
+" {{{ fuzzy-motion settings
+nnoremap <silent> <Leader><Leader> <Cmd>FuzzyMotion<Cr>
+let g:fuzzy_motion_word_regexp_list = [
+			\ '0-9a-zA-Z_-]+',
+			\ '([0-9a-zA-Z_-]|[.])+',
+			\ '([0-9a-zA-Z]|[()<>.-_#''"]|(\s=+\s)|(,\s)|(:\s)|(\s=>\s))+',
+			\ '\P{Script_Extensions=Latin}+'
+			\ ]
+let g:fuzzy_motion_matchers = ['kensaku']
+" }}}
 
-# {{{ keymaps
-#           Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~
-#  Command        +------+-----+-----+-----+-----+-----+------+------+ ~
-#  [nore]map      |  @   |  -  |  -  |  @  |  @  |  @  |  -   |  -   |
-#  n[nore]map     |  @   |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
-#  [nore]map!     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  -   |
-#  i[nore]map     |  -   |  @  |  -  |  -  |  -  |  -  |  -   |  -   |
-#  c[nore]map     |  -   |  -  |  @  |  -  |  -  |  -  |  -   |  -   |
-#  v[nore]map     |  -   |  -  |  -  |  @  |  @  |  -  |  -   |  -   |
-#  x[nore]map     |  -   |  -  |  -  |  @  |  -  |  -  |  -   |  -   |
-#  s[nore]map     |  -   |  -  |  -  |  -  |  @  |  -  |  -   |  -   |
-#  o[nore]map     |  -   |  -  |  -  |  -  |  -  |  @  |  -   |  -   |
-#  t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  |  @   |  -   |
-#  l[nore]map     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  @   |
+" {{{ tuskk settings
+" call tuskk#initialize(#{
+" 			\ jisyo_list:  [
+" 			\   { 'path': s:GetDict('L'), 'encoding': 'euc-jp', 'mark': '[L]' },
+" 			\   { 'path': s:GetDict('emoji'), 'encoding': 'utf-8' },
+" 			\ ],
+" 			\ kana_table: tuskk#opts#builtin_kana_table(),
+" 			\ suggest_wait_ms: 200,
+" 			\ suggest_prefix_match_minimum: 5,
+" 			\ suggest_sort_by: 'length',
+" 			\ debug_log: '~/tuskk.log',
+" 			\ use_google_cgi: v:true,
+" 			\ merge_tsu: v:true,
+" 			\ trailing_n: v:true,
+" 			\ abbrev_ignore_case: v:true,
+" 			\ put_hanpa: v:true,
+" 			\ })
+" }}}
+
+" }}}
+
+" {{{ keymaps
+"           Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang | ~
+"  Command        +------+-----+-----+-----+-----+-----+------+------+ ~
+"  [nore]map      |  @   |  -  |  -  |  @  |  @  |  @  |  -   |  -   |
+"  n[nore]map     |  @   |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+"  [nore]map!     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  -   |
+"  i[nore]map     |  -   |  @  |  -  |  -  |  -  |  -  |  -   |  -   |
+"  c[nore]map     |  -   |  -  |  @  |  -  |  -  |  -  |  -   |  -   |
+"  v[nore]map     |  -   |  -  |  -  |  @  |  @  |  -  |  -   |  -   |
+"  x[nore]map     |  -   |  -  |  -  |  @  |  -  |  -  |  -   |  -   |
+"  s[nore]map     |  -   |  -  |  -  |  -  |  @  |  -  |  -   |  -   |
+"  o[nore]map     |  -   |  -  |  -  |  -  |  -  |  @  |  -   |  -   |
+"  t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  |  @   |  -   |
+"  l[nore]map     |  -   |  @  |  @  |  -  |  -  |  -  |  -   |  @   |
 
 nnoremap <Leader> <Nop>
 xnoremap <Leader> <Nop>
@@ -275,9 +308,9 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-# expand path
+" expand path
 cmap <C-x> <C-r>=expand('%:p:h')<CR>
-# expand file
+" expand file
 cmap <C-z> <C-r>=expand('%:p')<CR>
 
 nnoremap <silent> <Leader>ls :<C-u>ls<CR>
@@ -318,9 +351,9 @@ onoremap <silent> @a a`
 nnoremap <silent> \ :<C-u>so $MYVIMRC<CR>
 
 vnoremap <RightMouse> :w !clip.exe<CR><ESC>
-# }}}
+" }}}
 
-# {{{ commands
+" {{{ commands
 augroup restore-cursor
   autocmd!
   autocmd BufReadPost *
@@ -347,7 +380,7 @@ if has('syntax')
   syntax on
 endif
 
-&t_SI = "\<Esc>[4 q"
-&t_EI = "\<Esc>[2 q"
-colorscheme catppuccin_latte
-# }}}
+let &t_SI = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+" colorscheme catppuccin_latte
+" }}}

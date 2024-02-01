@@ -7,6 +7,9 @@ require('hlchunk').setup {
       oil = true,
       gin = true,
       toml = true,
+      ["gin-status"] = true,
+      ["gin-log"] = true,
+      ["gin-diff"] = true,
     },
     chars = {
       right_arrow = '→',

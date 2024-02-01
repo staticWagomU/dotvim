@@ -4,9 +4,9 @@ lua_source='''
 require('hlchunk').setup {
   chunk = {
     exclude_filetypes = {
-      oil = false,
-      gin = false,
-      toml = false,
+      oil = true,
+      gin = true,
+      toml = true,
     },
     chars = {
       right_arrow = '→',

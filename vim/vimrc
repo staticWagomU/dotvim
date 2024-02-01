@@ -170,7 +170,7 @@ nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
 " }}}
 
 " {{{ gitgutter settings
-" set foldtext=gitgutter#fold#foldtext()
+set foldtext=gitgutter#fold#foldtext()
 
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
@@ -196,13 +196,13 @@ endfunction
 function! Skkeleton_init() abort
 	call skkeleton#config(#{
 				\ eggLikeNewline: v:true,
-				\ globalDictionaries: [GetDict('L')],
+				\ globalDictionaries: [s:GetDict('L')],
 				\ databasePath: '/tmp/skkeleton.sqlite3',
-	})
+				\})
 	call skkeleton#register_kanatable('rom', {
 				\ 'z\<Space>': ['\u3000', ''],
 				\ 'xn': ['ん', '']
-	})
+				\})
 endfunction
 augroup skkeleton-initialize-pre
   autocmd!
@@ -382,5 +382,5 @@ endif
 
 let &t_SI = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
-" colorscheme catppuccin_latte
+colorscheme catppuccin_latte
 " }}}

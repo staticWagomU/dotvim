@@ -10,6 +10,7 @@ require('hlchunk').setup {
       ["gin-status"] = true,
       ["gin-log"] = true,
       ["gin-diff"] = true,
+      gitcommit = true,
     },
     chars = {
       right_arrow = '→',

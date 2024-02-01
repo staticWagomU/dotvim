@@ -36,25 +36,35 @@ set.directory = vim.fn.expand('~')
 set.expandtab = true
 set.fileformat = 'unix'
 set.fillchars = {
-  stl = '━',
-  stlnc = ' ',
+  stl = '─',
+  stlnc = '─',
   diff = '∙',
   eob = ' ',
   fold = '·',
-  horiz = '━',
-  horizup = '┻',
-  horizdown = '┳',
-  vert = '┃',
-  vertleft = '┫',
-  vertright = '┣',
-  verthoriz = '╋',
+  horiz = '─',
+  horizup = '┴',
+  horizdown = '┬',
+  vert = '│',
+  vertleft = '┤',
+  vertright = '├',
+  verthoriz = '┼',
 }
 set.helplang = 'ja'
 set.hidden = true
 set.ignorecase = true
 set.laststatus = 3
 set.list = true
-set.listchars = { eol = '↴', tab = '▸ ', trail = '»', space = '⋅' }
+set.listchars = {
+  eol = '↴',
+  tab = '▷⋯', -- WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7) + MIDLINE HORIZONTAL ELLIPSIS (U+22EF, UTF-8: E2 8B AF)
+  -- tab = '▸ ',
+  trail = '»',
+  space = '⋅',
+  nbsp = '⦸', -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+  extends = '»', -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+  precedes = '«', -- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+}
+
 set.mouse = 'a'
 set.shiftwidth = 2
 set.showcmd = false

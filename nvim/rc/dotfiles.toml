@@ -97,3 +97,13 @@ name='uga-rosa_dotfiles'
 repo='https://github.com/atusy/dotfiles'
 if=false
 name='atusy_dotfiles'
+
+[[plugins]]
+repo='https://github.com/kamesuke42/dotfiles'
+if=false
+name='kamesuke42_dotfiles'
+
+[[plugins]]
+repo='https://github.com/kamecha/dotfiles'
+if=false
+name='kamecha_dotfiles'

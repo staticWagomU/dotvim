@@ -89,6 +89,8 @@ Plug 'https://github.com/catppuccin/vim'
 
 Plug 'https://github.com/kawarimidoll/tuskk.vim'
 
+Plug 'https://github.com/thinca/vim-qfreplace'
+
 call plug#end()
 " }}}
 

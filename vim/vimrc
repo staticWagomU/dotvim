@@ -218,6 +218,7 @@ let g:ctrlp_custom_ignore = #{
 			\ file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
 			\ }
 nnoremap <C-m> <Cmd>CtrlPMRUFiles<Cr>
+nnoremap <C-b> <Cmd>CtrlPBuffer<Cr>
 " }}}
 
 " {{{ fern settings

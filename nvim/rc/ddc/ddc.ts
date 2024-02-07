@@ -79,6 +79,12 @@ export class Config extends BaseConfig {
           minAutoCompleteLength: 1,
           isVolatile: true,
         },
+        emoji: {
+          mark: "[Emoji]",
+          matchers: ["emoji"],
+          sorters: [],
+          keywordPattern: "[a-zA-Z_:]*",
+        },
       },
       sourceParams: {
         buffer: {
@@ -166,7 +172,7 @@ export class Config extends BaseConfig {
       ]
     ) {
       args.contextBuilder.patchFiletype(filetype, {
-        sources: commonSources.concat(["line"]),
+        sources: commonSources.concat(["line", "emoji"]),
       });
     }
 

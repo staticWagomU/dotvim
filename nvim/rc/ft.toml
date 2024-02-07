@@ -55,3 +55,10 @@ require('go').setup()
 [[plugins]]
 repo='https://github.com/ray-x/guihua.lua'
 
+
+# mdx
+[[plugins]]
+repo='https://github.com/davidmh/mdx.nvim'
+on_ft='mdx'
+on_source = 'nvim-treesitter'
+

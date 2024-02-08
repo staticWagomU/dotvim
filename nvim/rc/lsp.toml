@@ -105,14 +105,15 @@ require('mason-lspconfig').setup_handlers {
       capabilities = capabilities,
       extra_filetype = {
         'astro',
+        'css',
         'html',
         'htmldjango',
-        'css',
-        'javascriptreact',
         'javascript.jsx',
-        'typescriptreact',
-        'typescript.tsx',
+        'javascriptreact',
         'svelte',
+        'typescript.tsx',
+        'typescriptreact',
+        'unocss',
         'vue',
       },
     }
@@ -139,6 +140,11 @@ require('mason-lspconfig').setup_handlers {
   end,
   ['rust_analyzer'] = function()
     lspconfig['rust_analyzer'].setup {
+      capabilities = capabilities,
+    }
+  end,
+  ['unocss'] = function()
+    lspconfig['unocss'].setup {
       capabilities = capabilities,
     }
   end,

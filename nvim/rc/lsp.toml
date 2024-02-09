@@ -1,6 +1,6 @@
 [[plugins]]
 repo='https://github.com/williamboman/mason-lspconfig.nvim'
-depends=['mason.nvim', 'ddc.vim']
+depends=['mason.nvim', 'ddc.vim', 'workspace-diagnostics.nvim']
 lua_source='''
 local enabled_vtsls = true
 local lspconfig = require('lspconfig')
@@ -13,18 +13,19 @@ capabilities.textDocument.foldingRange = {
 require('mason-lspconfig').setup {
   ensure_installed = {
     'astro',
-    'denols',
-    'vtsls',
-    'tsserver',
-    'lua_ls',
-    'tailwindcss',
-    'gopls',
-    'emmet_ls',
     'cssls',
-    'zls',
-    'svelte',
-    'volar',
+    'denols',
+    'emmet_ls',
+    'gopls',
+    'lua_ls',
     'rust_analyzer',
+    'svelte',
+    'tailwindcss',
+    'tsserver',
+    'unocss',
+    'volar',
+    'vtsls',
+    'zls',
   },
 }
 
@@ -61,6 +62,9 @@ require('mason-lspconfig').setup_handlers {
     if is_node and enabled_vtsls then
       lspconfig['vtsls'].setup {
         capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+        end,
       }
     end
   end,
@@ -69,6 +73,9 @@ require('mason-lspconfig').setup_handlers {
     if is_node and not enabled_vtsls then
       lspconfig['tsserver'].setup {
         capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+        end,
       }
     end
   end,
@@ -77,11 +84,27 @@ require('mason-lspconfig').setup_handlers {
       capabilities = capabilities,
       settings = {
         Lua = {
-          diagnostics = {
-            globals = { 'vim' },
+          --          diagnostics = {
+          --            globals = { 'vim' },
+          --          },
+          runtime = {
+            version = 'LuaJIT',
+            pathStrict = true,
+            path = { '?.lua', '?/init.lua' },
+          },
+          workspace = {
+            library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
+              '${3rd}/luv/library',
+              '${3rd}/busted/library',
+              '${3rd}/luassert/library',
+            }),
+            checkThirdParty = 'Disable',
           },
         },
       },
+      on_attach = function(client, bufnr)
+        require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+      end,
     }
   end,
   ['tailwindcss'] = function()
@@ -149,6 +172,46 @@ require('mason-lspconfig').setup_handlers {
     }
   end,
 }
+
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  -- Enable signs
+  signs = true,
+})
+--[[
+vim.lsp.handlers["callHierarchy/incomingCalls"] =
+vim.lsp.handlers["callHierarchy/outgoingCalls"] =
+vim.lsp.handlers["textDocument/codeAction"] =
+vim.lsp.handlers["textDocument/completion"] =
+vim.lsp.handlers["textDocument/declaration*"] =
+vim.lsp.handlers["textDocument/definition"] =
+vim.lsp.handlers["textDocument/diagnostic"] =
+vim.lsp.handlers["textDocument/documentHighlight"] =
+vim.lsp.handlers["textDocument/documentSymbol"] =
+vim.lsp.handlers["textDocument/formatting"] =
+vim.lsp.handlers["textDocument/hover"] =
+vim.lsp.handlers["textDocument/implementation*"] =
+vim.lsp.handlers["textDocument/inlayHint"] =
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+vim.lsp.handlers["textDocument/rangeFormatting"] =
+vim.lsp.handlers["textDocument/references"] =
+vim.lsp.handlers["textDocument/rename"] =
+vim.lsp.handlers["textDocument/semanticTokens/full"] =
+vim.lsp.handlers["textDocument/semanticTokens/full/delta"] =
+vim.lsp.handlers["textDocument/signatureHelp"] =
+vim.lsp.handlers["textDocument/typeDefinition*"] =
+vim.lsp.handlers["window/logMessage"] =
+vim.lsp.handlers["window/showMessage"] =
+vim.lsp.handlers["window/showDocument"] =
+vim.lsp.handlers["window/showMessageRequest"] =
+vim.lsp.handlers["workspace/applyEdit"] =
+vim.lsp.handlers["workspace/configuration"] =
+vim.lsp.handlers["workspace/executeCommand"] =
+vim.lsp.handlers["workspace/inlayHint/refresh"] =
+vim.lsp.handlers["workspace/symbol"] =
+vim.lsp.handlers["workspace/workspaceFolders"] =
+-- ]]
 '''
 
 [[plugins]]

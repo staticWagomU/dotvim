@@ -1,0 +1,6 @@
+[[plugins]]
+repo='https://github.com/folke/trouble.nvim'
+lua_source='''
+require('trouble').setup {}
+'''
+on_source='nvim-web-devicons'

@@ -3,7 +3,6 @@ repo='https://github.com/nvim-treesitter/nvim-treesitter'
 lua_source='''
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
-    'astro',
     'css',
     'go',
     'gomod',
@@ -11,7 +10,6 @@ require('nvim-treesitter.configs').setup {
     'html',
     'markdown',
     'markdown_inline',
-    'svelte',
     'typescript',
     'vimdoc',
     'lua',

@@ -136,6 +136,10 @@ augroup END
 " }}}
 
 " {{{ gin settings
+let g:gin_log_persistent_args = [
+      \ '--graph',
+      \ '--pretty=%C(yellow)%h %C(reset)%C(cyan)@%an%C(reset) %C(auto)%d%C(reset) %s  %C(magenta)[%ar]%C(reset)',
+      \]
 augroup FileTypeGin
   autocmd!
 
@@ -148,7 +152,7 @@ augroup END
 function s:GinFileTypeSetup() abort
   nnoremap <buffer> c <Cmd>Gin commit<CR>
   nnoremap <buffer> s <Cmd>GinStatus<CR>
-  nnoremap <buffer> L <Cmd>GinLog --graph --oneline<CR>
+  nnoremap <buffer> L <Cmd>GinLog<CR>
   nnoremap <buffer> d <Cmd>GinDiff ++processor=delta\ --no-gitconfig\ --color-only\ --cached<CR>
   nnoremap <buffer> q <Cmd>bdelete<CR>
   nnoremap <buffer> p <Cmd>Gin push<CR>
@@ -167,7 +171,7 @@ function s:GinStatusSetup() abort
 endfunction
 
 nnoremap <C-g><C-s> <Cmd>GinStatus<Cr>
-nnoremap <C-g><C-l> <Cmd>GinLog --graph --oneline<Cr>
+nnoremap <C-g><C-l> <Cmd>GinLog<Cr>
 nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
 " }}}
 
@@ -220,6 +224,7 @@ let g:ctrlp_custom_ignore = #{
 			\ file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
 			\ }
 nnoremap <C-m> <Cmd>CtrlPMRUFiles<Cr>
+nnoremap <C-b> <Cmd>CtrlPBuffer<Cr>
 " }}}
 
 " {{{ fern settings

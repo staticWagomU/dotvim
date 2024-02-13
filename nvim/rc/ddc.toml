@@ -81,6 +81,10 @@ repo='https://github.com/LumaKernel/ddc-source-file'
 on_source = 'ddc.vim'
 
 [[plugins]]
+repo='https://github.com/gamoutatsumi/ddc-emoji'
+on_source = 'ddc.vim'
+
+[[plugins]]
 repo='https://github.com/Shougo/ddc-filter-matcher_head'
 on_source = 'ddc.vim'
 

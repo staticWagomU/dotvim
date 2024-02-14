@@ -1,7 +1,0 @@
-[[plugins]]
-repo='https://github.com/Amzd/dontforgit.nvim'
-lua_source='''
-require("dontforgit").setup {
-    compact = true,
-}
-'''

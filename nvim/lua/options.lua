@@ -49,6 +49,7 @@ set.fillchars = {
   vertright = '├',
   verthoriz = '┼',
 }
+set.foldlevelstart = 99
 set.helplang = 'ja'
 set.hidden = true
 set.ignorecase = true

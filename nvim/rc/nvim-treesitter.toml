@@ -1,25 +1,42 @@
 [[plugins]]
 repo='https://github.com/nvim-treesitter/nvim-treesitter'
+on_cmd=['TSUpdate']
 lua_source='''
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
+    'astro',
     'css',
     'go',
     'gomod',
     'gosum',
     'html',
+    'lua',
     'markdown',
     'markdown_inline',
-    'typescript',
-    'vimdoc',
-    'lua',
     'rust',
     'toml',
+    'typescript',
   },
-  sync_install = true,
-
   highlight = {
-    enable = false,
+    enable = true,
+    disable = function(lang, buf)
+      if lang == 'vimdoc' then
+        return true
+      end
+      local max_filesize = 1024 * 1024 -- 1 MB
+      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+        util.print_error('File too large: tree-sitter disabled.', 'WarningMsg')
+        return true
+      end
+      if vim.fn.line('$') > 20000 then
+        util.print_error('Buffer has too many lines: tree-sitter disabled.', 'WarningMsg')
+        return true
+      end
+    end,
+    additional_vim_regex_highlighting = false,
   },
 }
+
+vim.treesitter.language.register('markdown', { 'mdx' })
 '''

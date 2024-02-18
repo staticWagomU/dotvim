@@ -389,5 +389,5 @@ endif
 
 let &t_SI = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
-colorscheme catppuccin_latte
+colorscheme habamax
 " }}}

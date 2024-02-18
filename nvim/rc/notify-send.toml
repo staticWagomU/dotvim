@@ -1,5 +1,0 @@
-[[plugins]]
-repo='https://github.com/Ajnasz/notify-send.nvim'
-lua_source='''
-require('notify-send').setup {}
-'''

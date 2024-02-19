@@ -64,13 +64,24 @@ require('jetpack.packer').add {
       keymap('n', '<Leader>E', '<Cmd>Oil %:p:h<Cr>', opts)
       end,
   },
-  { 'https://github.com/nvim-treesitter/nvim-treesitter',
+  {
+    'https://github.com/nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = function()
-      require'nvim-treesitter.configs'.setup {
-        highlight = { enable = true }
+      require('nvim-treesitter.configs').setup {
+        modules = {},
+        ensure_installed = {
+          'astro',
+          'lua',
+          'markdown',
+          'markdown_inline',
+        },
+        auto_install = true,
+        sync_install = false,
+        ignore_install = {},
+        highlight = { enable = true },
       }
-    end
+    end,
   },
   {
     'https://github.com/hrsh7th/nvim-cmp',

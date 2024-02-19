@@ -73,9 +73,11 @@ require('jetpack.packer').add {
         modules = {},
         ensure_installed = {
           'astro',
+          'css',
           'lua',
           'markdown',
           'markdown_inline',
+          'typescript',
         },
         auto_install = true,
         sync_install = false,

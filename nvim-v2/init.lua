@@ -138,8 +138,23 @@ require('jetpack.packer').add {
       keymap({ 'n', 'x', 'o' }, 'T', '<Plug>(eft-T)', { noremap = false })
       end,
   },
+  { 'https://github.com/machakann/vim-sandwich', },
   {
-    'https://github.com/machakann/vim-sandwich',
+    'https://github.com/kawarimidoll/tuskk.vim',
+    config = function()
+      keymap({ 'i', 'c' }, '<C-j>', '<Cmd>call tuskk#toggle()<Cr>', opts)
+      vim.fn['tuskk#initialize']({
+        ['jisyo_list'] = {
+          { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.L', ['encoding'] = 'euc-jp' },
+          { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.emoji', ['mark'] = '[E]' },
+        },
+        ['kana_table'] = vim.fn['tuskk#opts#builtin_kana_table'](),
+        ['suggest_wait_ms'] = 200,
+        ['suggest_sort_by'] = 'length',
+        ['merge_tsu'] = true,
+        ['trailing_n'] =  true,
+      })
+    end,
   },
 }
 

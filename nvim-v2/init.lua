@@ -188,6 +188,56 @@ require('jetpack.packer').add {
         ['suggest_sort_by'] = 'length',
         ['merge_tsu'] = true,
         ['trailing_n'] =  true,
+  {
+    'https://github.com/vim-denops/denops.vim',
+  },
+  {
+    'https://github.com/lambdalisue/gin.vim',
+    config = function()
+      vim.g['gin_log_persistent_args'] = {
+        [[--graph]],
+        [[--pretty=%C(yellow)%h %C(reset)%C(cyan)@%an%C(reset) %C(auto)%d%C(reset) %s  %C(magenta)[%ar]%C(reset)]],
+      }
+      local autocmd = vim.api.nvim_create_autocmd
+      autocmd({ 'FileType' }, {
+        pattern = { 'gin-diff', 'gin-log', 'gin-status' },
+        callback = function()
+          keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', opts)
+          keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', opts)
+          keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', opts)
+          keymap({ 'n' }, 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], opts)
+          keymap({ 'n' }, 'q', '<Cmd>bdelete<Cr>', opts)
+          keymap({ 'n' }, 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], opts)
+          keymap({ 'n' }, 'P', [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], opts)
+        end,
+      })
+
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-diff',
+        callback = function()
+          keymap(
+            { 'n' },
+            'gd',
+            '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>',
+            { buffer = true, silent = true }
+          )
+        end,
+      })
+
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-status',
+        callback = function()
+          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', opts)
+          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', opts)
+        end,
+      })
+
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-status',
+        callback = function()
+          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', opts)
+          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', opts)
+        end,
       })
     end,
   },

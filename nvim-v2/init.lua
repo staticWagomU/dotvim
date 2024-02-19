@@ -128,6 +128,41 @@ require('jetpack.packer').add {
       require("mason").setup {}
     end,
   },
+  {
+    'https://github.com/williamboman/mason-lspconfig.nvim',
+    config = function()
+      local lspconfig = require('lspconfig')
+      require('mason-lspconfig').setup_handlers {
+        function(server_name)
+          lspconfig[server_name].setup(opts)
+        end,
+        ['astro'] = function()
+          lspconfig['astro'].setup {}
+        end,
+        ['lua_ls'] = function()
+          lspconfig['lua_ls'].setup {
+            settings = {
+              Lua = {
+                runtime = {
+                  version = 'LuaJIT',
+                  pathStrict = true,
+                  path = { '?.lua', '?/init.lua' },
+                },
+                workspace = {
+                  library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
+                    '${3rd}/luv/library',
+                    '${3rd}/busted/library',
+                    '${3rd}/luassert/library',
+                  }),
+                  checkThirdParty = 'Disable',
+                },
+              },
+            },
+          }
+        end,
+      }
+    end,
+  },
   { 'https://github.com/williamboman/mason-lspconfig.nvim' },
   { 'https://github.com/hrsh7th/vim-eft',
     config = function()

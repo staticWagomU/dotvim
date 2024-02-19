@@ -100,7 +100,20 @@ require('jetpack.packer').add {
   { 'https://github.com/L3MON4D3/LuaSnip', depends = { 'hrsh7th/nvim-cmp' }, },
   { 'https://github.com/hrsh7th/cmp-nvim-lsp', depends = { 'hrsh7th/nvim-cmp' }, },
   { 'https://github.com/hrsh7th/cmp-buffer', depends = { 'hrsh7th/nvim-cmp' }, },
-  { 'https://github.com/neovim/nvim-lspconfig', depends = { 'hrsh7th/nvim-cmp' }, },
+  { 'https://github.com/neovim/nvim-lspconfig',
+    depends = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      for type, icon in pairs {
+        Error = '🐙',
+        Warn = '🐝',
+        Hint = '🙊',
+        Info = '🌞',
+      } do
+        local hl = 'DiagnosticSign' .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
+    end,
+  },
   { 'https://github.com/nvim-lua/plenary.nvim' },
   { 'https://github.com/nvim-telescope/telescope.nvim',
     tag = '0.1.5',

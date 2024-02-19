@@ -221,6 +221,9 @@ require('jetpack.packer').add {
           keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', bufopts)
         end,
       })
+
+      keymap('n', '<C-g><C-s>', '<Cmd>GinStatus<Cr>', opts)
+      keymap('n', '<C-g><C-L>', '<Cmd>GinLog<Cr>', opts)
     end,
   },
   {

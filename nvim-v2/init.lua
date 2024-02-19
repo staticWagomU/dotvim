@@ -1,58 +1,8 @@
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_getscript = 1
-vim.g.loaded_getscriptPlugin = 1
-vim.g.loaded_gzip = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwFileHandlers = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_vimball = 1
-vim.g.loaded_vimballPlugin = 1
-vim.g.loaded_zip = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.mapleader = ' '
+require('options')
 
-local set = vim.opt
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
-set.backspace = { 'indent', 'eol', 'start' }
-set.clipboard = 'unnamedplus'
-set.expandtab = true
-set.fillchars = {
-  stl = '─',
-  stlnc = '─',
-  diff = '∙',
-  eob = ' ',
-  fold = '·',
-  horiz = '─',
-  horizup = '┴',
-  horizdown = '┬',
-  vert = '│',
-  vertleft = '┤',
-  vertright = '├',
-  verthoriz = '┼',
-}
-set.hidden = true
-set.ignorecase = true
-set.laststatus = 3
-set.list = true
-set.listchars = {
-  eol = '↴',
-  tab = '▷⋯',
-  trail = '»',
-  space = '⋅',
-  nbsp = '⦸',
-  extends = '»',
-  precedes = '«',
-}
-set.wrap = false
-set.shiftwidth = 2
-set.softtabstop = 2
-set.tabstop = 2
-
+local bufopts = { noremap = true, buffer = true }
 vim.cmd('packadd vim-jetpack')
 require('jetpack.packer').add {
   { 'https://github.com/ani/vim-jetpack' },
@@ -61,7 +11,7 @@ require('jetpack.packer').add {
     'https://github.com/stevearc/oil.nvim',
     config = function()
       require('oil').setup {}
-      keymap('n', '<Space>e', '<Cmd>Oil .<Cr>', opts)
+      keymap('n', '<Leader>e', '<Cmd>Oil .<Cr>', opts)
       keymap('n', '<Leader>E', '<Cmd>Oil %:p:h<Cr>', opts)
     end,
   },
@@ -221,41 +171,36 @@ require('jetpack.packer').add {
       autocmd({ 'FileType' }, {
         pattern = { 'gin-diff', 'gin-log', 'gin-status' },
         callback = function()
-          keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', opts)
-          keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', opts)
-          keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', opts)
-          keymap({ 'n' }, 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], opts)
-          keymap({ 'n' }, 'q', '<Cmd>bdelete<Cr>', opts)
-          keymap({ 'n' }, 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], opts)
-          keymap({ 'n' }, 'P', [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], opts)
+          keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', bufopts)
+          keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', bufopts)
+          keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', bufopts)
+          keymap({ 'n' }, 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], bufopts)
+          keymap({ 'n' }, 'q', '<Cmd>bdelete<Cr>', bufopts)
+          keymap({ 'n' }, 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], bufopts)
+          keymap({ 'n' }, 'P', [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], bufopts)
         end,
       })
 
       autocmd({ 'FileType' }, {
         pattern = 'gin-diff',
         callback = function()
-          keymap(
-            { 'n' },
-            'gd',
-            '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>',
-            { buffer = true, silent = true }
-          )
+          keymap({ 'n' }, 'gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
         end,
       })
 
       autocmd({ 'FileType' }, {
         pattern = 'gin-status',
         callback = function()
-          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', opts)
-          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', opts)
+          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', bufopts)
+          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', bufopts)
         end,
       })
 
       autocmd({ 'FileType' }, {
         pattern = 'gin-status',
         callback = function()
-          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', opts)
-          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', opts)
+          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', bufopts)
+          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', bufopts)
         end,
       })
     end,
@@ -330,6 +275,10 @@ require('jetpack.packer').add {
     end,
   },
 }
+
+--[=[
+-- plugin settings
+--]=]
 
 vim.g.nightflyCursorColor = true
 vim.g.nightflyTransparent = true

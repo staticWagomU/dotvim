@@ -276,6 +276,42 @@ require('jetpack.packer').add {
       end, opts)
     end,
   },
+  {
+    'https://github.com/nvimdev/guard.nvim',
+    config = function()
+      local ft = require('guard.filetype')
+      ft(
+        'javascript,javascriptreact,typescript,typescriptreact,vue,css,scss,less,html,json,jsonc,yaml,markdown,markdown.mdx,graphql,handlebars'
+      ):fmt {
+        cmd = 'deno',
+        args = { 'fmt', '-' },
+        stdin = true,
+      }
+
+      ft('astro'):fmt {
+        cmd = 'prettier',
+        args = { '--stdin-filepath' },
+        fname = true,
+        stdin = true,
+      }
+
+      local stylua = vim.fs.joinpath(tostring(vim.fn.stdpath('data')), 'mason', 'packages', 'stylua', 'stylua')
+      ft('lua'):fmt {
+        cmd = stylua,
+        args = { '-' },
+        stdin = true,
+      }
+
+      require('guard').setup {
+        fmt_on_save = false,
+        lsp_as_default_formatter = false,
+      }
+
+      vim.keymap.set({ 'n' }, 'mf', function()
+        vim.cmd([[GuardFmt]])
+      end, { desc = 'format file' })
+    end,
+  },
 }
 
 vim.g.nightflyCursorColor = true

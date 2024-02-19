@@ -48,21 +48,22 @@ set.listchars = {
   extends = '»',
   precedes = '«',
 }
+set.wrap = false
 set.shiftwidth = 2
 set.softtabstop = 2
 set.tabstop = 2
-
 
 vim.cmd('packadd vim-jetpack')
 require('jetpack.packer').add {
   { 'https://github.com/ani/vim-jetpack' },
   { 'https://github.com/luz71/vim-nightfly-colors' },
-  { 'https://github.com/stevearc/oil.nvim',
+  {
+    'https://github.com/stevearc/oil.nvim',
     config = function()
-      require'oil'.setup {}
+      require('oil').setup {}
       keymap('n', '<Space>e', '<Cmd>Oil .<Cr>', opts)
       keymap('n', '<Leader>E', '<Cmd>Oil %:p:h<Cr>', opts)
-      end,
+    end,
   },
   {
     'https://github.com/nvim-treesitter/nvim-treesitter',
@@ -86,32 +87,33 @@ require('jetpack.packer').add {
   {
     'https://github.com/hrsh7th/nvim-cmp',
     config = function()
-      local cmp = require'cmp'
-      cmp.setup({
-          snippet = {
+      local cmp = require('cmp')
+      cmp.setup {
+        snippet = {
           expand = function(args)
-          require('luasnip').lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
           end,
-          },
-          mapping = cmp.mapping.preset.insert({
-              ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-              ['<C-f>'] = cmp.mapping.scroll_docs(4),
-              ['<C-Space>'] = cmp.mapping.complete(),
-              ['<C-e>'] = cmp.mapping.abort(),
-              ['<CR>'] = cmp.mapping.confirm({ select = true }),
-              }),
-          sources = cmp.config.sources({
-              { name = 'nvim_lsp' },
-              { name = 'luasnip' },
-              }),
-          })
+        },
+        mapping = cmp.mapping.preset.insert {
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+        },
+        sources = cmp.config.sources {
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        },
+      }
     end,
   },
-  { 'https://github.com/saadparwaiz1/cmp_luasnip', depends = { 'hrsh7th/nvim-cmp' }, },
-  { 'https://github.com/L3MON4D3/LuaSnip', depends = { 'hrsh7th/nvim-cmp' }, },
-  { 'https://github.com/hrsh7th/cmp-nvim-lsp', depends = { 'hrsh7th/nvim-cmp' }, },
-  { 'https://github.com/hrsh7th/cmp-buffer', depends = { 'hrsh7th/nvim-cmp' }, },
-  { 'https://github.com/neovim/nvim-lspconfig',
+  { 'https://github.com/saadparwaiz1/cmp_luasnip', depends = { 'hrsh7th/nvim-cmp' } },
+  { 'https://github.com/L3MON4D3/LuaSnip', depends = { 'hrsh7th/nvim-cmp' } },
+  { 'https://github.com/hrsh7th/cmp-nvim-lsp', depends = { 'hrsh7th/nvim-cmp' } },
+  { 'https://github.com/hrsh7th/cmp-buffer', depends = { 'hrsh7th/nvim-cmp' } },
+  {
+    'https://github.com/neovim/nvim-lspconfig',
     depends = { 'hrsh7th/nvim-cmp' },
     config = function()
       for type, icon in pairs {
@@ -126,17 +128,18 @@ require('jetpack.packer').add {
     end,
   },
   { 'https://github.com/nvim-lua/plenary.nvim' },
-  { 'https://github.com/nvim-telescope/telescope.nvim',
+  {
+    'https://github.com/nvim-telescope/telescope.nvim',
     tag = '0.1.5',
     depends = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('telescope').setup{}
-    end
+      require('telescope').setup {}
+    end,
   },
   {
     'https://github.com/williamboman/mason.nvim',
     config = function()
-      require("mason").setup {}
+      require('mason').setup {}
     end,
   },
   {
@@ -174,22 +177,22 @@ require('jetpack.packer').add {
       }
     end,
   },
-  { 'https://github.com/williamboman/mason-lspconfig.nvim' },
-  { 'https://github.com/hrsh7th/vim-eft',
+  {
+    'https://github.com/hrsh7th/vim-eft',
     config = function()
       keymap({ 'n', 'x', 'o' }, ';', '<Plug>(eft-repeat)', { noremap = false })
       keymap({ 'n', 'x', 'o' }, 'f', '<Plug>(eft-f)', { noremap = false })
       keymap({ 'n', 'x', 'o' }, 'F', '<Plug>(eft-F)', { noremap = false })
       keymap({ 'n', 'x', 'o' }, 't', '<Plug>(eft-t)', { noremap = false })
       keymap({ 'n', 'x', 'o' }, 'T', '<Plug>(eft-T)', { noremap = false })
-      end,
+    end,
   },
-  { 'https://github.com/machakann/vim-sandwich', },
+  { 'https://github.com/machakann/vim-sandwich' },
   {
     'https://github.com/kawarimidoll/tuskk.vim',
     config = function()
       keymap({ 'i', 'c' }, '<C-j>', '<Cmd>call tuskk#toggle()<Cr>', opts)
-      vim.fn['tuskk#initialize']({
+      vim.fn['tuskk#initialize'] {
         ['jisyo_list'] = {
           { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.L', ['encoding'] = 'euc-jp' },
           { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.emoji', ['mark'] = '[E]' },
@@ -198,7 +201,10 @@ require('jetpack.packer').add {
         ['suggest_wait_ms'] = 200,
         ['suggest_sort_by'] = 'length',
         ['merge_tsu'] = true,
-        ['trailing_n'] =  true,
+        ['trailing_n'] = true,
+      }
+    end,
+  },
   {
     'https://github.com/vim-denops/denops.vim',
   },
@@ -262,8 +268,6 @@ require('jetpack.packer').add {
         attach_to_untracked = true,
       }
 
-      local opts = { noremap = true, silent = true }
-      local keymap = vim.keymap.set
       keymap('n', '[g', function()
         gitsigns.prev_hunk()
       end, opts)

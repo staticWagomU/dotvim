@@ -87,6 +87,10 @@ require('jetpack.packer').add {
     depends = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('telescope').setup {}
+
+      keymap('n', [[\f]], '<Cmd>Telescope find_files<Cr>', opts)
+      keymap('n', [[\b]], '<Cmd>Telescope buffers<Cr>', opts)
+      keymap('n', [[\m]], '<Cmd>Telescope oldfiles<Cr>', opts)
     end,
   },
   {

@@ -173,6 +173,7 @@ require('jetpack.packer').add {
     'https://github.com/kawarimidoll/tuskk.vim',
     config = function()
       keymap({ 'i', 'c' }, '<C-j>', '<Cmd>call tuskk#toggle()<Cr>', opts)
+      keymap('n', '<C-j>', 'a<Cmd>call tuskk#toggle()<Cr>', opts)
       vim.fn['tuskk#initialize'] {
         ['jisyo_list'] = {
           { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.L', ['encoding'] = 'euc-jp' },

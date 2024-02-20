@@ -27,6 +27,7 @@ require('jetpack.packer').add {
           'lua',
           'markdown',
           'markdown_inline',
+          'svelte',
           'typescript',
         },
         auto_install = true,
@@ -125,6 +126,12 @@ require('jetpack.packer').add {
               },
             },
           }
+        end,
+        ['svelte'] = function()
+          lspconfig['svelte'].setup {}
+        end,
+        ['tailwindcss'] = function()
+          lspconfig['tailwindcss'].setup {}
         end,
       }
       vim.api.nvim_create_autocmd('LspAttach', {

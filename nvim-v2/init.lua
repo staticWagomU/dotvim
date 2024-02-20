@@ -145,8 +145,8 @@ require('jetpack.packer').add {
           vim.keymap.set('n', ';r', '<cmd>lua vim.lsp.buf.rename()<CR>')
           vim.keymap.set('n', ';a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
           vim.keymap.set('n', ';e', '<cmd>lua vim.diagnostic.open_float()<CR>')
-          vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-          vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+          vim.keymap.set('n', ';]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+          vim.keymap.set('n', ';[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
         end,
       })
 

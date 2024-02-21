@@ -1,5 +1,0 @@
-[[plugins]]
-repo='https://github.com/artemave/workspace-diagnostics.nvim'
-lua_source='''
-require('workspace-diagnostics').setup {}
-'''

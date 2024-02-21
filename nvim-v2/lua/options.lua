@@ -48,6 +48,7 @@ set.listchars = {
 }
 set.wrap = false
 set.shiftwidth = 2
+set.signcolumn = 'yes'
 set.softtabstop = 2
 set.tabstop = 2
 

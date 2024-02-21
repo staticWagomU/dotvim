@@ -5,8 +5,8 @@ local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
 vim.cmd('packadd vim-jetpack')
 require('jetpack.packer').add {
-  { 'https://github.com/ani/vim-jetpack' },
-  { 'https://github.com/luz71/vim-nightfly-colors' },
+  { 'https://github.com/tani/vim-jetpack' },
+  { 'https://github.com/bluz71/vim-nightfly-colors' },
   {
     'https://github.com/stevearc/oil.nvim',
     config = function()

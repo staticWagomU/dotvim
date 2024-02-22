@@ -362,11 +362,13 @@ require('jetpack.packer').add {
       end, { desc = 'format file' })
     end,
   },
+  {
+    'https://github.com/folke/trouble.nvim',
+    config = function()
+      require('trouble').setup {}
+    end,
+  },
 }
-
---[=[
--- plugin settings
---]=]
 
 vim.g.nightflyCursorColor = true
 vim.g.nightflyTransparent = true

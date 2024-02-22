@@ -54,7 +54,6 @@ set.softtabstop = 2
 set.tabstop = 2
 --- }}}
 
-
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
@@ -191,6 +190,9 @@ require('jetpack.packer').add {
         end,
         ['tailwindcss'] = function()
           lspconfig['tailwindcss'].setup {}
+        end,
+        ['vtsls'] = function()
+          lspconfig['vtsls'].setup {}
         end,
       }
       vim.api.nvim_create_autocmd('LspAttach', {

@@ -340,7 +340,7 @@ require('jetpack.packer').add {
         stdin = true,
       }
 
-      ft('astro'):fmt {
+      ft('astro,svelte'):fmt {
         cmd = 'prettier',
         args = { '--stdin-filepath' },
         fname = true,

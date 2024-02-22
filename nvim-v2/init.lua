@@ -365,7 +365,9 @@ require('jetpack.packer').add {
   {
     'https://github.com/folke/trouble.nvim',
     config = function()
-      require('trouble').setup {}
+      require('trouble').setup {
+        icons = false,
+      }
     end,
   },
 }

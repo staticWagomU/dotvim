@@ -370,6 +370,9 @@ require('jetpack.packer').add {
       }
     end,
   },
+  {
+    'https://github.com/github/copilot.vim',
+  },
 }
 
 vim.g.nightflyCursorColor = true

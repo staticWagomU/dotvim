@@ -359,9 +359,7 @@ require('jetpack.packer').add {
         lsp_as_default_formatter = false,
       }
 
-      vim.keymap.set({ 'n' }, 'mf', function()
-        vim.cmd([[GuardFmt]])
-      end, { desc = 'format file' })
+      vim.keymap.set({ 'n' }, 'mf', vim.cmd.GuardFmt, { desc = 'format file' })
     end,
   },
   {

@@ -373,6 +373,18 @@ require('jetpack.packer').add {
   {
     'https://github.com/github/copilot.vim',
   },
+  {
+    'https://github.com/kontura/trails.nvim',
+    config = function()
+      require('trails').setup {}
+    end,
+  },
+  {
+    'https://github.com/dmmulroy/ts-error-translator.nvim',
+    config = function()
+      require('ts-error-translator').setup {}
+    end,
+  },
 }
 
 vim.g.nightflyCursorColor = true

@@ -385,6 +385,13 @@ require('jetpack.packer').add {
       require('ts-error-translator').setup {}
     end,
   },
+  {
+    'https://github.com/haya14busa/vim-edgemotion',
+    config = function()
+      vim.keymap.set('n', '<M-j>', '<Plug>(edgemotion-j)', { noremap = false })
+      vim.keymap.set('n', '<M-k>', '<Plug>(edgemotion-k)', { noremap = false })
+    end
+  },
 }
 
 vim.g.nightflyCursorColor = true

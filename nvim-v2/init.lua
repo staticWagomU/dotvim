@@ -257,7 +257,7 @@ require('jetpack.packer').add {
       }
       local autocmd = vim.api.nvim_create_autocmd
       autocmd({ 'FileType' }, {
-        pattern = { 'gin-*' },
+        pattern = { 'gin-*', 'gin' },
         callback = function()
           keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', bufopts)
           keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', bufopts)

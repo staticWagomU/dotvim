@@ -248,7 +248,8 @@ require('jetpack.packer').add {
     'https://github.com/vim-denops/denops.vim',
   },
   {
-    'https://github.com/lambdalisue/gin.vim',
+    'https://github.com/atusy/gin.vim',
+    branch = 'fixup-instant',
     config = function()
       vim.g['gin_log_persistent_args'] = {
         [[--graph]],
@@ -256,15 +257,28 @@ require('jetpack.packer').add {
       }
       local autocmd = vim.api.nvim_create_autocmd
       autocmd({ 'FileType' }, {
-        pattern = { 'gin-diff', 'gin-log', 'gin-status' },
+        pattern = { 'gin-*' },
         callback = function()
           keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', bufopts)
           keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', bufopts)
           keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', bufopts)
           keymap({ 'n' }, 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], bufopts)
-          keymap({ 'n' }, 'q', '<Cmd>bdelete<Cr>', bufopts)
+          keymap({ 'n' }, 'q', function()
+            if vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')) > 1 then
+              return [[<Cmd>bn | bd #<Cr>]]
+            else
+              return [[<Cmd>bd<Cr>]]
+            end
+          end, { buffer = true, noremap = true, expr = true })
           keymap({ 'n' }, 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], bufopts)
           keymap({ 'n' }, 'P', [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], bufopts)
+        end,
+      })
+
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-log',
+        callback = function()
+          keymap({ 'n' }, 'F', '<Plug>(gin-action-fixup:instant)<CR>', bufopts)
         end,
       })
 
@@ -390,7 +404,7 @@ require('jetpack.packer').add {
     config = function()
       vim.keymap.set('n', '<M-j>', '<Plug>(edgemotion-j)', { noremap = false })
       vim.keymap.set('n', '<M-k>', '<Plug>(edgemotion-k)', { noremap = false })
-    end
+    end,
   },
 }
 

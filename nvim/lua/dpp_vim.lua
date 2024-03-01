@@ -2,6 +2,9 @@ local dpp = require('dpp')
 local autocmd = vim.api.nvim_create_autocmd
 local dppBase = _G.DPPBASE
 local tsPath = vim.fn.expand(vim.fn.stdpath('config') .. '/dpp.ts')
+local function usercmd(name, callback, opts)
+  vim.api.nvim_create_user_command(name, callback, opts or {})
+end
 
 if dpp.load_state(dppBase) then
   autocmd('User', {
@@ -19,21 +22,21 @@ autocmd('User', {
   end,
 })
 
-vim.api.nvim_create_user_command('DppMakeState', function()
+usercmd('DppMakeState', function()
   dpp.make_state(dppBase, tsPath)
 end, {})
-vim.api.nvim_create_user_command('DppLoad', function()
+usercmd('DppLoad', function()
   dpp.load_state(dppBase)
 end, {})
-vim.api.nvim_create_user_command('DppInstall', function()
+usercmd('DppInstall', function()
   dpp.async_ext_action('installer', 'install', { maxProcess = 10 })
 end, {})
-vim.api.nvim_create_user_command('DppUpdate', function()
+usercmd('DppUpdate', function()
   dpp.async_ext_action('installer', 'update', { maxProcess = 10 })
 end, {})
-vim.api.nvim_create_user_command('DppSource', function()
+usercmd('DppSource', function()
   dpp.source()
 end, {})
-vim.api.nvim_create_user_command('DppClear', function()
+usercmd('DppClear', function()
   dpp.clear_state()
 end, {})

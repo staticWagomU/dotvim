@@ -112,4 +112,8 @@ function M.wish_close_buf()
   end
 end
 
+function M.joinpath(...)
+  return vim.fs.normalize(vim.fs.joinpath(...))
+end
+
 return M

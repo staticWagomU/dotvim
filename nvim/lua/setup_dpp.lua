@@ -40,11 +40,35 @@ local function Init()
     'staticWagomU/dpp-ext-lua',
 
     'vim-denops/denops.vim',
+
+    'vigoux/notifier.nvim',
+    'bluz71/vim-nightfly-colors',
   }
   clone(append_plugins)
   for _, plugin in ipairs(append_plugins) do
     vim.opt.runtimepath:append(joinpath(plugin_base, plugin))
   end
+
+  -- -------------------------------------
+  -- notifier settings
+  -- -------------------------------------
+  require('notifier').setup {}
+
+  -- -------------------------------------
+  -- colorscheme settings
+  -- -------------------------------------
+  vim.g.nightflyCursorColor = true
+  vim.g.nightflyTransparent = true
+  vim.cmd.colorscheme('nightfly')
+  vim.g.nightflyCursorColor = true
+  vim.g.nightflyNormalFloat = true
+  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = 'single',
+  })
+  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signatureHelp, {
+    border = 'single',
+  })
+  vim.diagnostic.config { float = { border = 'single' } }
 end
 
 Init()

@@ -8,6 +8,7 @@ local abbrev = require('utils').make_abbrev
 local maps = require('utils').maps
 local nmaps = require('utils').nmaps
 local nmap = require('utils').nmaps
+local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
 
 vim.g['gin_log_persistent_args'] = {
   [[--graph]],
@@ -16,21 +17,23 @@ vim.g['gin_log_persistent_args'] = {
 
 autocmd({ 'FileType' }, {
   pattern = { 'gin-*', 'gin' },
+  group = group,
   callback = function()
-    nmaps({
+    nmaps {
       { 'c', '<Cmd>Gin commit<Cr>', bufopts },
       { 's', '<Cmd>GinStatus<Cr>', bufopts },
       { 'L', '<Cmd>GinLog<Cr>', bufopts },
-      { 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], bufopts },
+      { 'D', '<Cmd>GinDiff<Cr>', bufopts },
       { 'q', require('utils').wish_close_buf(), { buffer = true, noremap = true, expr = true } },
-      { 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], bufopts },
-      { 'P', [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], bufopts },
-    })
+      { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
+      { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>', bufopts },
+    }
   end,
 })
 
 autocmd({ 'FileType' }, {
   pattern = 'gin-log',
+  group = group,
   callback = function()
     nmap('F', '<Plug>(gin-action-fixup:instant)', bufopts)
   end,
@@ -38,6 +41,7 @@ autocmd({ 'FileType' }, {
 
 autocmd({ 'FileType' }, {
   pattern = 'gin-diff',
+  group = group,
   callback = function()
     nmap('gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
   end,
@@ -45,19 +49,23 @@ autocmd({ 'FileType' }, {
 
 autocmd({ 'FileType' }, {
   pattern = 'gin-status',
+  group = group,
   callback = function()
-    maps({'n', 'x'}, {
+    maps({ 'n', 'x' }, {
       { 'h', '<Plug>(gin-action-stage)', bufopts },
       { 'l', '<Plug>(gin-action-unstage)', bufopts },
+    })
+    nmaps({
+      { 'a', '<Plug>(gin-action-choice)', bufopts },
+      { 'A', '<Cmd>Gin commit --amend<Cr>', bufopts },
+      { 'd', '<Plug>(gin-action-diff:smart)', bufopts },
+      { '<Cr>', '<Plug>(gin-action-edit)zv', bufopts },
     })
   end,
 })
 
 abbrev {
   { from = 'gc', to = 'Gin commit' },
-  { from = 'gca', to = 'Gin commit --amend' },
-  { from = 'gd', to = [[GinDiff ++processor=delta\ --no-gitconfig\ --color-only]] },
-  { from = 'gds', to = [[GinDiff ++processor=delta\ --no-gitconfig\ --color-only\ --cached]] },
   { from = 'gin', to = 'Gin' },
   { from = 'git', to = 'Gin' },
   { from = 'gp', to = 'Gin push' },
@@ -71,6 +79,5 @@ abbrev {
 
 keymap('n', '<C-g><C-s>', '<Cmd>GinStatus<Cr>', opts)
 keymap('n', '<C-g><C-l>', '<Cmd>GinLog<Cr>', opts)
-keymap('n', '<C-g><C-l>5', '<Cmd>GinLog %<Cr>', opts)
 keymap('n', '<C-g><C-b>', '<Cmd>GinBranch<Cr>', opts)
---- }}}
+-- }}}

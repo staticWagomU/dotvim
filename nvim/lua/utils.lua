@@ -64,7 +64,7 @@ for _, mode in ipairs { 'n', 'i', 'c', 'v', 'x', 's', 'o', 't', 'l' } do
     vim.keymap.set(mode, key, action, mergeOpts(opt))
   end
   ---@param maps table<string, string | function>
-  M[mode .. 'maps'] = function( maps)
+  M[mode .. 'maps'] = function(maps)
     for _, t in ipairs(maps) do
       local key = t[1]
       local action = t[2]

@@ -80,6 +80,12 @@ function M.maps(modes, maps)
   end
 end
 
+function M.map(modes, key, action, opt)
+  for _, mode in ipairs(modes) do
+    M[mode .. 'map'](key, action, opt or {})
+  end
+end
+
 ---@param str string
 ---@param delimiter string
 ---@return string[]

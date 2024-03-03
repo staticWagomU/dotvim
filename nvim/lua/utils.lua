@@ -2,6 +2,8 @@ local M = {}
 ---@alias optsTable {noremap?: boolean, silent?: boolean, expr?: boolean, script?: boolean, nowait?: boolean, buffer?: boolean, unique?: boolean, desc?: string}
 ---@alias abbrrule {from: string, to: string, prepose?: string, prepose_nospace?: string, remove_trigger?: boolean}
 
+M.is_windows = vim.uv.os_uname().sysname == "Windows_NT"
+
 -- ref: https://github.com/monaqa/dotfiles/blob/8f7766f142693e47fbef80d6cc1f02fda94fac76/.config/nvim/lua/rc/abbr.lua
 ---@param rules abbrrule[]
 function M.make_abbrev(rules)

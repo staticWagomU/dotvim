@@ -26,6 +26,7 @@ end
 local function Init()
   local prepend_plugins = {
     'Shougo/dpp.vim',
+    'vim-denops/denops.vim',
   }
   clone(prepend_plugins)
   for _, plugin in ipairs(prepend_plugins) do
@@ -38,8 +39,6 @@ local function Init()
     'Shougo/dpp-ext-packspec',
     'Shougo/dpp-protocol-git',
     'staticWagomU/dpp-ext-lua',
-
-    'vim-denops/denops.vim',
 
     'vigoux/notifier.nvim',
     'bluz71/vim-nightfly-colors',

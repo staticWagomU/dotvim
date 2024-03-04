@@ -7,7 +7,7 @@ local bufopts = { noremap = true, buffer = true }
 local abbrev = require('utils').make_abbrev
 local maps = require('utils').maps
 local nmaps = require('utils').nmaps
-local nmap = require('utils').nmaps
+local nmap = require('utils').nmap
 local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
 
 vim.g['gin_log_persistent_args'] = {
@@ -24,7 +24,17 @@ autocmd({ 'FileType' }, {
       { 's', '<Cmd>GinStatus<Cr>', bufopts },
       { 'L', '<Cmd>GinLog<Cr>', bufopts },
       { 'D', '<Cmd>GinDiff<Cr>', bufopts },
-      { 'q', require('utils').wish_close_buf(), { buffer = true, noremap = true, expr = true } },
+      {
+        'q',
+        function()
+          if vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')) > 1 then
+            return [[<Cmd>bn | bd #<Cr>]]
+          else
+            return [[<Cmd>bd<Cr>]]
+          end
+        end,
+        { buffer = true, noremap = true, expr = true },
+      },
       { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
       { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>', bufopts },
     }
@@ -55,12 +65,12 @@ autocmd({ 'FileType' }, {
       { 'h', '<Plug>(gin-action-stage)', bufopts },
       { 'l', '<Plug>(gin-action-unstage)', bufopts },
     })
-    nmaps({
+    nmaps {
       { 'a', '<Plug>(gin-action-choice)', bufopts },
       { 'A', '<Cmd>Gin commit --amend<Cr>', bufopts },
       { 'd', '<Plug>(gin-action-diff:smart)', bufopts },
       { '<Cr>', '<Plug>(gin-action-edit)zv', bufopts },
-    })
+    }
   end,
 })
 

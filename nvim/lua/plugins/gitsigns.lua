@@ -25,7 +25,7 @@ nmaps {
   {
     '<C-g><C-p>',
     function()
-      gitsigns.prev_hunk()
+      gitsigns.preview_hunk()
     end,
   },
   {

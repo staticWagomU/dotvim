@@ -10,42 +10,12 @@ gitsigns.setup {
 }
 
 nmaps {
-  {
-    '[g',
-    function()
-      gitsigns.prev_hunk()
-    end,
-  },
-  {
-    ']g',
-    function()
-      gitsigns.next_hunk()
-    end,
-  },
-  {
-    '<C-g><C-p>',
-    function()
-      gitsigns.preview_hunk()
-    end,
-  },
-  {
-    '<C-g><C-r>',
-    function()
-      gitsigns.undo_stage_hunk()
-    end,
-  },
-  {
-    '<C-g><C-q>',
-    function()
-      gitsigns.prev_hunk()
-    end,
-  },
-  {
-    '<C-g><C-v>',
-    function()
-      gitsigns.blame_line()
-    end,
-  },
+  { '[g', gitsigns.prev_hunk },
+  { ']g', gitsigns.next_hunk },
+  { '<C-g><C-p>', gitsigns.preview_hunk },
+  { '<C-g><C-r>', gitsigns.undo_stage_hunk },
+  { '<C-g><C-q>', gitsigns.prev_hunk },
+  { '<C-g><C-v>', gitsigns.blame_line },
 }
 
 map({ 'n', 'x' }, '<C-g><C-a>', function()

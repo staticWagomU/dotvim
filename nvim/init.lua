@@ -11,4 +11,13 @@ require('dpp_vim')
 require('options')
 require('keymaps')
 
-vim.cmd.colorscheme('nightfly')
+local function safe_colorscheme(primary, fallback)
+  local ok, _ = pcall(vim.cmd.colorscheme, primary)
+  if ok then
+    vim.cmd.colorscheme(primary)
+  else
+    vim.cmd.colorscheme(fallback)
+  end
+end
+
+safe_colorscheme('nightfly', 'habamax')

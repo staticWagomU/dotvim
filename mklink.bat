@@ -3,6 +3,7 @@ setlocal enabledelayedexpansion
 
 REM nvimのシンボリックリンクを作成
 mklink /D %LOCALAPPDATA%\nvim %USERPROFILE%\dotvim\nvim
+mklink /D %LOCALAPPDATA%\nvim-sub %USERPROFILE%\dotvim\nvim-sub
 
 REM vimのシンボリックリンクを作成
 REM dir /B /A:Dでディレクトリのシンボリックリンクを作成する

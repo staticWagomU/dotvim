@@ -57,6 +57,7 @@ set.tabstop = 2
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
+
 vim.cmd('packadd vim-jetpack')
 require('jetpack.packer').add {
   { 'https://github.com/tani/vim-jetpack' },

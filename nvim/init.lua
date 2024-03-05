@@ -1,3 +1,8 @@
+vim.cmd([=[
+set encoding=utf-8
+scriptencoding utf-8
+]=])
+
 if require('utils').is_windows then
   local normalize = vim.fs.normalize
   local joinpath = vim.fs.joinpath

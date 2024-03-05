@@ -68,3 +68,7 @@ omaps {
 maps({ 'n', 'o', 'x' }, {
   { '0', [[getline('.')[0 : col('.') - 2] =~# '^\s\+$' ? '0' : '^']], { noremap = false, expr = true } },
 })
+
+maps({ 'n', 'x' }, {
+  { 'gy', '"+y' },
+})

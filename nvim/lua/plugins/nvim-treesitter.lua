@@ -3,6 +3,7 @@
 -- {{{ hook_post_update : 'TSUpdate' }}}
 -- lua_source {{{
 require('nvim-treesitter.configs').setup {
+  parser_install_dir = vim.fn.stdpath('data'),
   ensure_installed = {
     'astro',
     'css',
@@ -36,5 +37,10 @@ require('nvim-treesitter.configs').setup {
     end,
     additional_vim_regex_highlighting = false,
   },
+  sync_install = false,
+  modules = {},
+  auto_install = true,
+  ignore_install = {},
+
 }
 -- }}}

@@ -7,6 +7,9 @@
 -- {{{ repo: 'https://github.com/Shougo/dpp-ext-installer' }}}
 -- {{{ on_source: 'dpp.vim' }}}
 
+-- {{{ repo: 'https://github.com/Shougo/dpp-ext-toml'  }}}
+-- {{{ on_source: 'dpp.vim' }}}
+
 -- {{{ repo: 'https://github.com/staticWagomU/dpp-ext-lua'  }}}
 -- {{{ on_source: 'dpp.vim' }}}
 

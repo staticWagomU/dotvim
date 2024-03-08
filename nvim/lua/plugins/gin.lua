@@ -24,17 +24,7 @@ autocmd({ 'FileType' }, {
       { 's', '<Cmd>GinStatus<Cr>', bufopts },
       { 'L', '<Cmd>GinLog<Cr>', bufopts },
       { 'D', '<Cmd>GinDiff<Cr>', bufopts },
-      {
-        'q',
-        function()
-          if vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')) > 1 then
-            return [[<Cmd>bn | bd #<Cr>]]
-          else
-            return [[<Cmd>bd<Cr>]]
-          end
-        end,
-        { buffer = true, noremap = true, expr = true },
-      },
+      { 'q', require('utils').wish_close_buf, bufopts },
       { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
       { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>', bufopts },
     }

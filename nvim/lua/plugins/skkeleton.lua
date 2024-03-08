@@ -4,11 +4,10 @@
 local map = require('utils').map
 local nmap = require('utils').nmap
 vim.api.nvim_create_autocmd('User', {
-  pattern = 'DenopsPluginPost:skkeleton',
+  pattern = 'skkeleton-initialize-pre',
   callback = function()
     local getJisyo = function(name)
       local dictdir = vim.fn.expand(vim.fs.joinpath(_G.DPPBASE, 'repos', 'github.com', 'skk-dev', 'dict', 'SKK-JISYO.'))
-      vim.print(dictdir)
       return vim.fs.normalize(dictdir .. name)
     end
 
@@ -25,10 +24,11 @@ vim.api.nvim_create_autocmd('User', {
     }
     vim.fn['skkeleton#register_kanatable']('rom', {
       [ [[z\<Space>]] ] = { [[\u3000]], '' },
+      [ [[xn]] ] = { [[ん]], '' },
     })
   end,
 })
-map({'i', 'c', 't'}, '<C-j>', '<Plug>(skkeleton-toggle)')
+map({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)')
 nmap('<C-j>', 'i<Plug>(skkeleton-toggle)')
 -- }}}
 

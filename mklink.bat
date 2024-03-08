@@ -2,8 +2,14 @@
 setlocal enabledelayedexpansion
 
 REM nvimのシンボリックリンクを作成
+del %LOCALAPPDATA%\nvim
+del %LOCALAPPDATA%\nvim-sub
+del %LOCALAPPDATA%\nvim-mini
+del %LOCALAPPDATA%\nvim-tmp
 mklink /D %LOCALAPPDATA%\nvim %USERPROFILE%\dotvim\nvim
 mklink /D %LOCALAPPDATA%\nvim-sub %USERPROFILE%\dotvim\nvim-sub
+mklink /D %LOCALAPPDATA%\nvim-mini %USERPROFILE%\dotvim\nvim-mini
+mklink /D %LOCALAPPDATA%\nvim-tmp %USERPROFILE%\dotvim\nvim-tmp
 
 REM vimのシンボリックリンクを作成
 REM dir /B /A:Dでディレクトリのシンボリックリンクを作成する

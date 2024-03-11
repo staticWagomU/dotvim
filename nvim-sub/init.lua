@@ -275,7 +275,7 @@ require('jetpack.packer').add {
           keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', bufopts)
           keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', bufopts)
           keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', bufopts)
-          keymap({ 'n' }, 'd', [[<Cmd>GinDiff  ++processor=delta\ --no-gitconfig\ --color-only\ --cached<Cr>]], bufopts)
+          keymap({ 'n' }, 'd', '<Cmd>GinDiff<Cr>', bufopts)
           keymap({ 'n' }, 'q', function()
             if vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')) > 1 then
               return [[<Cmd>bn | bd #<Cr>]]

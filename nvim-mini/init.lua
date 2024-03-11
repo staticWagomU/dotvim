@@ -26,13 +26,67 @@ now(function()
   vim.notify = require('mini.notify').make_notify()
 end)
 now(function() require('mini.tabline').setup() end)
-now(function() require('mini.statusline').setup() end)
+now(function()
+  local statusline = require('mini.statusline')
+  --stylua: ignore
+  local active = function()
+    local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+    local git           = statusline.section_git({ trunc_width = 75 })
+    -- Try out 'mini.diff'
+    local diff          = vim.b.minidiff_summary_string or ''
+    local diagnostics   = statusline.section_diagnostics({ trunc_width = 75 })
+    local filename      = statusline.section_filename({ trunc_width = 140 })
+    local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
+    local location      = statusline.section_location({ trunc_width = 75 })
+    local search        = statusline.section_searchcount({ trunc_width = 75 })
+
+    return statusline.combine_groups({
+      { hl = mode_hl,                  strings = { mode } },
+      { hl = 'MiniStatuslineDevinfo',  strings = { git, diff, diagnostics } },
+      '%<', -- Mark general truncate point
+      { hl = 'MiniStatuslineFilename', strings = { filename } },
+      '%=', -- End left alignment
+      { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+      { hl = mode_hl,                  strings = { search, location } },
+    })
+  end
+  statusline.setup({ content = { active = active } })
+end)
 
 -- Safely execute later
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.comment').setup() end)
 later(function() require('mini.pick').setup() end)
 later(function() require('mini.surround').setup() end)
+later(function() require('mini.align').setup() end)
+later(function() require('mini.bracketed').setup() end)
+later(function()
+  require('mini.completion').setup({
+    lsp_completion = {
+      source_func = 'omnifunc',
+      auto_setup = false,
+      process_items = function(items, base)
+        -- Don't show 'Text' and 'Snippet' suggestions
+        items = vim.tbl_filter(function(x) return x.kind ~= 1 and x.kind ~= 15 end, items)
+        return MiniCompletion.default_process_items(items, base)
+      end,
+    },
+    window = {
+      info = { border = 'double' },
+      signature = { border = 'double' },
+    },
+  })
+end)
+later(function()
+  require('mini.files').setup({ windows = { preview = true } })
+  local minifiles_augroup = vim.api.nvim_create_augroup('ec-mini-files', {})
+  vim.api.nvim_create_autocmd('User', {
+    group = minifiles_augroup,
+    pattern = 'MiniFilesWindowOpen',
+    callback = function(args) vim.api.nvim_win_set_config(args.data.win_id, { border = 'double' }) end,
+  })
+end)
+later(function() require('mini.indentscope').setup() end)
 
 -- Use external plugins with `add()`
 now(function()
@@ -59,4 +113,14 @@ later(function()
     ensure_installed = { 'lua', 'vimdoc' },
     highlight = { enable = true },
   })
+end)
+
+later(function()
+  add('lewis6991/gitsigns.nvim')
+  source('plugins/gitsigns.lua')
+end)
+
+later(function()
+  add('williamboman/mason.nvim')
+  require('mason').setup()
 end)

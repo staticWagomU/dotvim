@@ -237,15 +237,17 @@ require('jetpack.packer').add {
     end,
   },
   { 'https://github.com/machakann/vim-sandwich' },
+  { 'https://github.com/skk-dev/dict' },
   {
     'https://github.com/kawarimidoll/tuskk.vim',
     config = function()
+      local dict_path = vim.fs.normalize(plugins_path, '/skk-dev/dict')
       keymap({ 'i', 'c' }, '<C-j>', '<Cmd>call tuskk#toggle()<Cr>', opts)
       keymap('n', '<C-j>', 'a<Cmd>call tuskk#toggle()<Cr>', opts)
       vim.fn['tuskk#initialize'] {
         ['jisyo_list'] = {
-          { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.L', ['encoding'] = 'euc-jp' },
-          { ['path'] = '~/.cache/dpp/repos/github.com/skk-dev/dict/SKK-JISYO.emoji', ['mark'] = '[E]' },
+          { ['path'] = dict_path .. '/SKK-JISYO.L', ['encoding'] = 'euc-jp' },
+          { ['path'] = dict_path .. '/SKK-JISYO.emoji', ['mark'] = '[E]' },
         },
         ['kana_table'] = vim.fn['tuskk#opts#builtin_kana_table'](),
         ['suggest_wait_ms'] = 200,

@@ -1,3 +1,13 @@
+local plugins_path = vim.fs.normalize(vim.fn.stdpath('data') .. [[/site/pack/jetpack/opt]] )
+local jetpack_path = vim.fs.normalize(plugins_path .. [[/vim-jetpack/plugin/jetpack.vim]] )
+if not vim.loop.fs_stat(jetpack_path) then
+  vim.cmd('echo "Installing `vim-jetpack`" | redraw')
+  local clone_cmd = { 'curl', '-fLo', jetpack_path, '--create-dirs', 'https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim' }
+  vim.fn.system(clone_cmd)
+  vim.cmd('packadd vim-jetpack | helptags ALL')
+  vim.cmd('echo "Installed `vim-jetpack`" | redraw')
+end
+
 -- {{{ options
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_getscript = 1
@@ -413,4 +423,8 @@ vim.g.nightflyCursorColor = true
 vim.g.nightflyTransparent = true
 vim.g.nightflyCursorColor = true
 vim.g.nightflyNormalFloat = true
-vim.cmd.colorscheme('nightfly')
+if pcall(vim.cmd.colorscheme, 'nightfly') then
+  vim.cmd.colorscheme('nightfly')
+else
+  vim.cmd.colorscheme('habamax')
+end

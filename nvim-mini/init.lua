@@ -61,98 +61,106 @@ now(function()
   vim.notify = require('mini.notify').make_notify()
 end)
 
-later(function() require('mini.comment').setup() end)
+now(function()
+  local statusline = require('mini.statusline')
+  --stylua: ignore
+  local active = function()
+    local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+    local git           = statusline.section_git({ trunc_width = 75 })
+    -- Try out 'mini.diff'
+    local diff          = vim.b.minidiff_summary_string or ''
+    local diagnostics   = statusline.section_diagnostics({ trunc_width = 75 })
+    local filename      = statusline.section_filename({ trunc_width = 140 })
+    local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
+    local location      = statusline.section_location({ trunc_width = 75 })
+    local search        = statusline.section_searchcount({ trunc_width = 75 })
+
+    return statusline.combine_groups({
+      { hl = mode_hl,                  strings = { mode } },
+      { hl = 'MiniStatuslineDevinfo',  strings = { git, diff, diagnostics } },
+      '%<', -- Mark general truncate point
+      { hl = 'MiniStatuslineFilename', strings = { filename } },
+      '%=', -- End left alignment
+      { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+      { hl = mode_hl,                  strings = { search, location } },
+    })
+  end
+  statusline.setup({ content = { active = active } })
+end)
+now(function() require('mini.tabline').setup() end)
+
+now(function()
+  add('nvim-tree/nvim-web-devicons')
+  require('nvim-web-devicons').setup()
+end)
+
+later(function()
+  add('williamboman/mason.nvim')
+  require('mason').setup()
+end)
+later(function()
+  add({
+    source = 'neovim/nvim-lspconfig',
+    depends = { 'williamboman/mason.nvim' }
+  })
+end)
 
 
--- now(function() require('mini.tabline').setup() end)
--- now(function()
---   local statusline = require('mini.statusline')
---   --stylua: ignore
---   local active = function()
---     local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
---     local git           = statusline.section_git({ trunc_width = 75 })
---     -- Try out 'mini.diff'
---     local diff          = vim.b.minidiff_summary_string or ''
---     local diagnostics   = statusline.section_diagnostics({ trunc_width = 75 })
---     local filename      = statusline.section_filename({ trunc_width = 140 })
---     local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
---     local location      = statusline.section_location({ trunc_width = 75 })
---     local search        = statusline.section_searchcount({ trunc_width = 75 })
---
---     return statusline.combine_groups({
---       { hl = mode_hl,                  strings = { mode } },
---       { hl = 'MiniStatuslineDevinfo',  strings = { git, diff, diagnostics } },
---       '%<', -- Mark general truncate point
---       { hl = 'MiniStatuslineFilename', strings = { filename } },
---       '%=', -- End left alignment
---       { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
---       { hl = mode_hl,                  strings = { search, location } },
---     })
---   end
---   statusline.setup({ content = { active = active } })
--- end)
---
--- -- Safely execute later
--- later(function() require('mini.ai').setup() end)
--- later(function() require('mini.pick').setup() end)
--- later(function() require('mini.surround').setup() end)
--- later(function() require('mini.align').setup() end)
--- later(function() require('mini.bracketed').setup() end)
--- later(function()
---   require('mini.completion').setup({
---     lsp_completion = {
---       source_func = 'omnifunc',
---       auto_setup = false,
---       process_items = function(items, base)
---         -- Don't show 'Text' and 'Snippet' suggestions
---         items = vim.tbl_filter(function(x) return x.kind ~= 1 and x.kind ~= 15 end, items)
---         return MiniCompletion.default_process_items(items, base)
---       end,
---     },
---     window = {
---       info = { border = 'double' },
---       signature = { border = 'double' },
---     },
---   })
--- end)
--- later(function() require('mini.indentscope').setup() end)
---
--- -- Use external plugins with `add()`
--- now(function()
---   -- Add to current session (install if absent)
---   add('nvim-tree/nvim-web-devicons')
---   require('nvim-web-devicons').setup()
--- end)
---
--- later(function()
---   -- Supply dependencies near target plugin
---   add({ source = 'neovim/nvim-lspconfig', depends = { 'williamboman/mason.nvim' } })
--- end)
---
--- later(function()
---   add({
---     source = 'nvim-treesitter/nvim-treesitter',
---     -- Use 'master' while monitoring updates in 'main'
---     checkout = 'master',
---     monitor = 'main',
---     -- Perform action after every checkout
---     hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
---   })
---   require('nvim-treesitter.configs').setup({
---     ensure_installed = { 'lua', 'vimdoc' },
---     highlight = { enable = true },
---   })
--- end)
---
--- later(function()
---   add('lewis6991/gitsigns.nvim')
---   require('gitsigns').setup()
--- end)
---
--- later(function()
---   add('williamboman/mason.nvim')
---   require('mason').setup()
--- end)
+
+later(function()
+  add({
+    source = 'nvim-treesitter/nvim-treesitter',
+    -- Use 'master' while monitoring updates in 'main'
+    checkout = 'master',
+    monitor = 'main',
+    -- Perform action after every checkout
+    hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+  })
+  require('nvim-treesitter.configs').setup({
+    ensure_installed = { 'lua', 'vimdoc' },
+    highlight = { enable = true },
+  })
+end)
+
+later(function()
+  add('lewis6991/gitsigns.nvim')
+  local nmaps = require('nvim-wagomu.utils').nmaps
+  local map = require('nvim-wagomu.utils').map
+  local gitsigns = require('gitsigns')
+  gitsigns.setup {
+    signcolumn = true,
+    numhl = true,
+    attach_to_untracked = true,
+  }
+
+  nmaps {
+    { '[g', gitsigns.prev_hunk },
+    { ']g', gitsigns.next_hunk },
+    { '<C-g><C-p>', gitsigns.preview_hunk },
+    { '<C-g><C-r>', gitsigns.undo_stage_hunk },
+    { '<C-g><C-q>', gitsigns.prev_hunk },
+    { '<C-g><C-v>', gitsigns.blame_line },
+  }
+
+  map({ 'n', 'x' }, '<C-g><C-a>',gitsigns.stage_hunk)
+
+end)
+later(function()
+  add('nvim-lua/plenary.nvim')
+end)
+later(function()
+  add('github/copilot.vim')
+end)
+later(function()
+  add({
+    source = 'CopilotC-Nvim/CopilotChat.nvim',
+    depends = { 'github/copilot.vim' },
+    checkout = 'canary'
+  })
+  require("CopilotChat").setup {
+    debug = true,
+  }
+end)
 
 later(function()
   add('sainnhe/everforest')

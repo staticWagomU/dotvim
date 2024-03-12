@@ -8,8 +8,8 @@ end
 vim.loader.enable()
 require('setup_dpp')
 require('dpp_vim')
-require('options')
-require('keymaps')
+vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim-wagomu'))
+require('nvim-wagomu').setup()
 
 local function safe_colorscheme(primary, fallback)
   local ok, _ = pcall(vim.cmd.colorscheme, primary)

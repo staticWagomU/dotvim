@@ -25,6 +25,26 @@ now(function()
   vim.cmd.colorscheme('habamax')
 end)
 
+
+later(function() require('mini.comment').setup() end)
+
+later(function()
+  require('mini.completion').setup({
+    window = {
+      info = { border = 'single' },
+      signature = { border = 'single' },
+    },
+    lsp_completion = {
+      source_func = 'completefunc',
+      process_items = function(items, base)
+        -- Don't show 'Text' and 'Snippet' suggestions
+        items = vim.tbl_filter(function(x) return x.kind ~= 1 and x.kind ~= 15 end, items)
+        return MiniCompletion.default_process_items(items, base)
+      end,
+    },
+  })
+end)
+
 later(function()
   require('mini.files').setup({ windows = { preview = true } })
   vim.keymap.set('n', '<Leader>e', MiniFiles.open, opts)

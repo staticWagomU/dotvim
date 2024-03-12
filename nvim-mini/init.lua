@@ -46,8 +46,13 @@ later(function()
 end)
 
 later(function()
+  require('mini.cursorword').setup({ delay = 200 })
+end)
+
+later(function()
   require('mini.files').setup({ windows = { preview = true } })
   vim.keymap.set('n', '<Leader>e', MiniFiles.open, opts)
+  vim.keymap.set('n', '<Leader>E', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, opts)
   local minifiles_augroup = vim.api.nvim_create_augroup('ec-mini-files', {})
   vim.api.nvim_create_autocmd('User', {
     group = minifiles_augroup,
@@ -56,10 +61,31 @@ later(function()
   })
 end)
 
+later(function()
+  require('mini.indentscope').setup({ delay = 200 })
+end)
+
+later(function()
+  require('mini.jump').setup()
+end)
+
+later(function()
+  require('mini.move').setup()
+end)
+
 now(function()
   require('mini.notify').setup()
   vim.notify = require('mini.notify').make_notify()
 end)
+
+now(function()
+  require('mini.pick').setup()
+end)
+
+now(function()
+  require('mini.surround').setup()
+end)
+
 
 now(function()
   local statusline = require('mini.statusline')
@@ -87,6 +113,7 @@ now(function()
   end
   statusline.setup({ content = { active = active } })
 end)
+
 now(function() require('mini.tabline').setup() end)
 
 now(function()
@@ -145,6 +172,98 @@ later(function()
   map({ 'n', 'x' }, '<C-g><C-a>',gitsigns.stage_hunk)
 
 end)
+
+later(function()
+  add('vim-denops/denops.vim')
+end)
+
+later(function()
+  add({
+    source = 'lambdalisue/gin.vim',
+    depends = { 'vim-denops/denops.vim' }
+  })
+  local autocmd = vim.api.nvim_create_autocmd
+  local keymap = vim.keymap.set
+  local opts = { noremap = true, silent = true }
+  local bufopts = { noremap = true, buffer = true }
+  local abbrev = require('nvim-wagomu.utils').make_abbrev
+  local maps = require('nvim-wagomu.utils').maps
+  local nmaps = require('nvim-wagomu.utils').nmaps
+  local nmap = require('nvim-wagomu.utils').nmap
+  local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
+
+  vim.g['gin_log_persistent_args'] = {
+    [[--graph]],
+    [[--pretty=%C(yellow)%h %C(reset)%C(cyan)@%an%C(reset) %C(auto)%d%C(reset) %s  %C(magenta)[%ar]%C(reset)]],
+  }
+
+  autocmd({ 'FileType' }, {
+    pattern = { 'gin-*', 'gin' },
+    group = group,
+    callback = function()
+      nmaps {
+        { 'c', '<Cmd>Gin commit<Cr>', bufopts },
+        { 's', '<Cmd>GinStatus<Cr>', bufopts },
+        { 'L', '<Cmd>GinLog<Cr>', bufopts },
+        { 'D', '<Cmd>GinDiff<Cr>', bufopts },
+        { 'q', require('nvim-wagomu.utils').wish_close_buf, bufopts },
+        { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
+        { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>', bufopts },
+      }
+    end,
+  })
+
+  autocmd({ 'FileType' }, {
+    pattern = 'gin-log',
+    group = group,
+    callback = function()
+      nmap('F', '<Plug>(gin-action-fixup:instant)', bufopts)
+    end,
+  })
+
+  autocmd({ 'FileType' }, {
+    pattern = 'gin-diff',
+    group = group,
+    callback = function()
+      nmap('gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
+    end,
+  })
+
+  autocmd({ 'FileType' }, {
+    pattern = 'gin-status',
+    group = group,
+    callback = function()
+      maps({ 'n', 'x' }, {
+        { 'h', '<Plug>(gin-action-stage)', bufopts },
+        { 'l', '<Plug>(gin-action-unstage)', bufopts },
+      })
+      nmaps {
+        { 'a', '<Plug>(gin-action-choice)', bufopts },
+        { 'A', '<Cmd>Gin commit --amend<Cr>', bufopts },
+        { 'd', '<Plug>(gin-action-diff:smart)', bufopts },
+        { '<Cr>', '<Plug>(gin-action-edit)zv', bufopts },
+      }
+    end,
+  })
+
+  abbrev {
+    { from = 'gc', to = 'Gin commit' },
+    { from = 'gin', to = 'Gin' },
+    { from = 'git', to = 'Gin' },
+    { from = 'gp', to = 'Gin push' },
+    { from = 'gpp', to = 'Gin pull' },
+    { from = 'gcd', to = 'GinCd' },
+  }
+
+  abbrev {
+    { prepose = 'Gin commit', from = 'a', to = '--amend' },
+  }
+
+  keymap('n', '<C-g><C-s>', '<Cmd>GinStatus<Cr>', opts)
+  keymap('n', '<C-g><C-l>', '<Cmd>GinLog<Cr>', opts)
+  keymap('n', '<C-g><C-b>', '<Cmd>GinBranch<Cr>', opts)
+end)
+
 later(function()
   add('nvim-lua/plenary.nvim')
 end)

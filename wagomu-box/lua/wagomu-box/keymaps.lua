@@ -19,9 +19,9 @@
 local M = {}
 
 function M.apply()
-  local maps = require('nvim-wagomu.utils').maps
-  local nmaps = require('nvim-wagomu.utils').nmaps
-  local omaps = require('nvim-wagomu.utils').omaps
+  local maps = require('wagomu-box.utils').maps
+  local nmaps = require('wagomu-box.utils').nmaps
+  local omaps = require('wagomu-box.utils').omaps
   
   nmaps {
     { '<Space>', '<Nop>' },

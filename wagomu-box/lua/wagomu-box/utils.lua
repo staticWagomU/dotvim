@@ -4,6 +4,10 @@ local M = {}
 
 M.is_windows = vim.uv.os_uname().sysname == 'Windows_NT'
 
+if not _G.WagomuBox then
+  _G.WagomuBox = {}
+end
+
 -- ref: https://github.com/monaqa/dotfiles/blob/8f7766f142693e47fbef80d6cc1f02fda94fac76/.config/nvim/lua/rc/abbr.lua
 ---@param rules abbrrule[]
 function M.make_abbrev(rules)
@@ -74,6 +78,9 @@ for _, mode in ipairs { 'n', 'i', 'c', 'v', 'x', 's', 'o', 't', 'l' } do
       M[mode .. 'map'](key, action, opt)
     end
   end
+
+  WagomuBox[mode .. 'map'] = M[mode .. 'map']
+  WagomuBox[mode .. 'maps'] = M[mode .. 'maps']
 end
 
 function M.maps(modes, maps)
@@ -85,6 +92,8 @@ end
 function M.map(modes, key, action, opt)
   for _, mode in ipairs(modes) do
     M[mode .. 'map'](key, action, opt or {})
+
+    WagomuBox['maps'] = M['maps']
   end
 end
 

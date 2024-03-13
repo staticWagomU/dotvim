@@ -7,8 +7,8 @@ if not vim.loop.fs_stat(jetpack_path) then
   vim.cmd('packadd vim-jetpack | helptags ALL')
   vim.cmd('echo "Installed `vim-jetpack`" | redraw')
 end
-vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim-wagomu'))
-require('nvim-wagomu').setup()
+vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
+require('wagomu-box').setup()
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }

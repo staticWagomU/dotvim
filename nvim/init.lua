@@ -8,8 +8,8 @@ end
 vim.loader.enable()
 require('setup_dpp')
 require('dpp_vim')
-vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim-wagomu'))
-require('nvim-wagomu').setup()
+vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
+require('wagomu-box').setup()
 
 local function safe_colorscheme(primary, fallback)
   local ok, _ = pcall(vim.cmd.colorscheme, primary)

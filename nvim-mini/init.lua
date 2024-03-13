@@ -1,16 +1,7 @@
--- Clone 'mini.nvim' manually in a way that it gets managed by 'mini.deps'
-local path_package = vim.fn.stdpath('data') .. '/site/'
-local mini_path = path_package .. 'pack/deps/start/mini.nvim'
-if not vim.loop.fs_stat(mini_path) then
-  vim.cmd('echo "Installing `mini.nvim`" | redraw')
-  local clone_cmd = { 'git', 'clone', '--filter=blob:none', 'https://github.com/echasnovski/mini.nvim', mini_path }
-  vim.fn.system(clone_cmd)
-  vim.cmd('packadd mini.nvim | helptags ALL')
-  vim.cmd('echo "Installed `mini.nvim`" | redraw')
-end
+vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
+require('wagomu-box.plugin-manager.mini')
 
-vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim-wagomu'))
-require('nvim-wagomu').setup()
+require('wagomu-box').setup()
 local opts = { noremap = true, silent = true }
 
 -- Set up 'mini.deps' (customize to your liking)
@@ -151,8 +142,8 @@ end)
 
 later(function()
   add('lewis6991/gitsigns.nvim')
-  local nmaps = require('nvim-wagomu.utils').nmaps
-  local map = require('nvim-wagomu.utils').map
+  local nmaps = require('wagomu-box.utils').nmaps
+  local map = require('wagomu-box.utils').map
   local gitsigns = require('gitsigns')
   gitsigns.setup {
     signcolumn = true,
@@ -182,7 +173,7 @@ later(function()
     source = 'lambdalisue/gin.vim',
     depends = { 'vim-denops/denops.vim' }
   })
-  require('nvim-wagomu.gin')
+  require('wagomu-box.plugin-config.gin')
 end)
 
 later(function()

@@ -2,10 +2,10 @@ local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
-local abbrev = require('nvim-wagomu.utils').make_abbrev
-local maps = require('nvim-wagomu.utils').maps
-local nmaps = require('nvim-wagomu.utils').nmaps
-local nmap = require('nvim-wagomu.utils').nmap
+local abbrev = require('wagomu-box.utils').make_abbrev
+local maps = require('wagomu-box.utils').maps
+local nmaps = require('wagomu-box.utils').nmaps
+local nmap = require('wagomu-box.utils').nmap
 local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
 
 vim.g['gin_log_persistent_args'] = {
@@ -24,7 +24,7 @@ autocmd({ 'FileType' }, {
       { 'b', '<Cmd>GinBranch<Cr>', bufopts },
       { 'c', '<Cmd>Gin commit<Cr>', bufopts },
       { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
-      { 'q', require('nvim-wagomu.utils').wish_close_buf, bufopts },
+      { 'q', require('wagomu-box.utils').wish_close_buf, bufopts },
       { 's', '<Cmd>GinStatus<Cr>', bufopts },
     }
   end,

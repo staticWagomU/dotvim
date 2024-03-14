@@ -88,14 +88,15 @@ function M.maps(modes, maps)
     M[mode .. 'maps'](maps)
   end
 end
+WagomuBox['maps'] = M['maps']
 
 function M.map(modes, key, action, opt)
   for _, mode in ipairs(modes) do
     M[mode .. 'map'](key, action, opt or {})
-
-    WagomuBox['maps'] = M['maps']
   end
 end
+
+WagomuBox['map'] = M['map']
 
 ---@param str string
 ---@param delimiter string

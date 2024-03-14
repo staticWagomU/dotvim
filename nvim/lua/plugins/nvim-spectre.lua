@@ -2,16 +2,14 @@
 -- {{{ repo: 'https://github.com/nvim-pack/nvim-spectre' }}}
 -- {{{ on_source: 'plenary.nvim' }}}
 -- lua_source {{{
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-    desc = "Toggle Spectre"
+local nmaps, vmap = WagomuBox.nmaps, WagomuBox.vmap
+local spectre = require('spectre')
+
+nmaps({
+  { '<Leader>S', spectre.toggle, { desc = "Toggle Spectre" }, },
+  { '<Leader>sw', function() spectre.open_visual({select_word=true}) end, desc = "Search current word"}, },
+  { '<Leader>sp', function() spectre.open_file_search({select_word=true}) end, desc = "Search on current file"}, },
 })
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-    desc = "Search current word"
-})
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-    desc = "Search current word"
-})
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-    desc = "Search on current file"
-})
+
+vmap('<Leader>sw', spectre.open_visual)
 -- }}}

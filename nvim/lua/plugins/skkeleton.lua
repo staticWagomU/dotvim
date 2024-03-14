@@ -1,8 +1,7 @@
 -- {{{ repo: 'https://github.com/vim-skk/skkeleton' }}}
 -- {{{ on_source: ['denops.vim', 'dict'] }}}
 -- lua_source {{{
-local map = require('utils').map
-local nmap = require('utils').nmap
+local map, nmap = WagomuBox.map, WagomuBox.nmap
 vim.api.nvim_create_autocmd('User', {
   pattern = 'skkeleton-initialize-pre',
   callback = function()

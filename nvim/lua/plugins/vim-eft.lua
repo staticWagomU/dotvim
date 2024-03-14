@@ -1,6 +1,6 @@
 -- {{{ repo: 'https://github.com/hrsh7th/vim-eft' }}}
 -- lua_source {{{
-local maps = require('utils').maps
+local maps = WagomuBox.maps
 
 maps({ 'n', 'x', 'o' }, {
   { ';', '<Plug>(eft-repeat)', { noremap = false } },

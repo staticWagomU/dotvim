@@ -1,7 +1,6 @@
 -- {{{ repo: 'https://github.com/lewis6991/gitsigns.nvim' }}}
 -- lua_source {{{
-local nmaps = require('utils').nmaps
-local map = require('utils').map
+local nmaps, map = WagomuBox.nmaps, WagomuBox.map
 local gitsigns = require('gitsigns')
 gitsigns.setup {
   signcolumn = true,

@@ -3,8 +3,7 @@
 -- lua_source {{{
 local autocmd = vim.api.nvim_create_autocmd
 require('oil').setup {}
-local nmaps = require('utils').nmaps
-local nmap = require('utils').nmap
+local nmaps, nmap = WagomuBox.nmaps, WagomuBox.nmap
 nmaps {
   { '<Leader>e', '<Cmd>Oil .<Cr>' },
   { '<Leader>E', '<Cmd>Oil %:p:h<Cr>' },

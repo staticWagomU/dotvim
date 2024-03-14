@@ -10,6 +10,7 @@ require('mini.deps').setup({ path = { package = path_package } })
 -- Use 'mini.deps'. `now()` and `later()` are helpers for a safe two-stage
 -- startup and are optional.
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local nmap = WagomuBox.nmap
 
 now(function()
   vim.o.termguicolors = true
@@ -70,7 +71,9 @@ now(function()
 end)
 
 now(function()
-  require('mini.pick').setup()
+  local pick = require('mini.pick')
+  pick.setup()
+  nmap('<Leader>ls', pick.builtin.buffers)
 end)
 
 now(function()

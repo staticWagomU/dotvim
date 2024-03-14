@@ -142,5 +142,10 @@ function M.joinpath(...)
   return vim.fs.normalize(vim.fs.joinpath(...))
 end
 
+function M.rm_nvim_data()
+  vim.fn.delete(vim.fn.stdpath('data'), 'rf')
+end
+
+
 return M
 

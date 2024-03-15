@@ -5,7 +5,7 @@ require('wagomu-box.plugin-manager.mini').setup()
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 local opts = { noremap = true, silent = true }
-local nmap = WagomuBox.nmap
+local map, nmap = WagomuBox.map, WagomuBox.nmap
 
 now(function()
   vim.o.termguicolors = true
@@ -170,6 +170,25 @@ later(function()
   require("CopilotChat").setup {
     debug = true,
   }
+end)
+
+later(function()
+  add('skk-dev/dict')
+  add('kawarimidoll/tuskk.vim')
+  local dict_path = vim.fs.normalize(WagomuBox.plugins_path .. "/dict")
+  map({ "i", "c" }, "<C-j>", "<Cmd>call tuskk#toggle()<Cr>", opts)
+  nmap("<C-j>", "a<Cmd>call tuskk#toggle()<Cr>", opts)
+  vim.fn["tuskk#initialize"]({
+    ["jisyo_list"] = {
+      { ["path"] = dict_path .. "/SKK-JISYO.L", ["encoding"] = "euc-jp" },
+      { ["path"] = dict_path .. "/SKK-JISYO.emoji", ["mark"] = "[E]" },
+    },
+    ["kana_table"] = vim.fn["tuskk#opts#builtin_kana_table"](),
+    ["suggest_wait_ms"] = 200,
+    ["suggest_sort_by"] = "length",
+    ["merge_tsu"] = true,
+    ["trailing_n"] = true,
+  })
 end)
 
 later(function()

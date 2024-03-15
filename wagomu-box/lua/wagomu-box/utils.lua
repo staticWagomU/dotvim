@@ -139,8 +139,9 @@ function M.wish_close_buf()
 end
 
 function M.joinpath(...)
-  return vim.fs.normalize(vim.fs.joinpath(...))
+  return vim.fs.normalize(vim.fn.expand(vim.fs.joinpath(...)))
 end
+WagomuBox.joinpath = M.joinpath
 
 function M.rm_nvim_data()
   vim.fn.delete(vim.fn.stdpath('data'), 'rf')

@@ -1,15 +1,10 @@
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
-require('wagomu-box.plugin-manager.mini')
-
 require('wagomu-box').setup()
-local opts = { noremap = true, silent = true }
+require('wagomu-box.plugin-manager.mini').setup()
 
--- Set up 'mini.deps' (customize to your liking)
-require('mini.deps').setup({ path = { package = path_package } })
-
--- Use 'mini.deps'. `now()` and `later()` are helpers for a safe two-stage
--- startup and are optional.
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
+local opts = { noremap = true, silent = true }
 local nmap = WagomuBox.nmap
 
 now(function()

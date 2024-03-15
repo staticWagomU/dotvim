@@ -10,6 +10,7 @@ function M.setup()
     vim.cmd("packadd mini.nvim | helptags ALL")
     vim.cmd('echo "Installed `mini.nvim`" | redraw')
   end
+  require('mini.deps').setup({ path = { package = path_package } })
 end
 
 return M

@@ -1,11 +1,12 @@
-vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
-require('wagomu-box.plugin-manager.mini-deps').setup()
-require('wagomu-box').setup()
-vim.opt.bg='light'
+require('setup_wagomu-box')
+require('options')
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local map, nmap = WagomuBox.map, WagomuBox.nmap
 
+---===========================================
+--- 最初に欲しいやつ
+---===========================================
 now(function()
   add('vim-denops/denops.vim')
   add('catppuccin/nvim')
@@ -31,6 +32,10 @@ now(function()
     },
   })
 end)
+
+---===========================================
+--- skk関連
+---===========================================
 later(function()
   add('skk-dev/dict')
   add('vim-skk/skkeleton')

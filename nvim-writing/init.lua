@@ -9,6 +9,27 @@ local map, nmap = WagomuBox.map, WagomuBox.nmap
 now(function()
   add('vim-denops/denops.vim')
   add('catppuccin/nvim')
+  require("catppuccin").setup({
+    flavour = "latte",
+    background = {
+      light = "latte",
+      dark = "frappe",
+    },
+    term_colors = true,
+    dim_inactive = {
+      enabled = true,
+      shade = "dark",
+      percentage = 0.15,
+    },
+    integrations = {
+      cmp = true,
+      gitsigns = true,
+      treesitter = true,
+      mini = {
+        enabled = true,
+      },
+    },
+  })
 end)
 later(function()
   add('skk-dev/dict')

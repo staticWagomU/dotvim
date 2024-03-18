@@ -1,385 +1,403 @@
-local plugins_path = vim.fs.normalize(vim.fn.stdpath("data") .. [[/site/pack/jetpack/opt]])
+local plugins_path = vim.fs.normalize(vim.fn.stdpath('data') .. [[/site/pack/jetpack/opt]])
 local jetpack_path = vim.fs.normalize(plugins_path .. [[/vim-jetpack/plugin/jetpack.vim]])
 if not vim.loop.fs_stat(jetpack_path) then
   vim.cmd('echo "Installing `vim-jetpack`" | redraw')
   local clone_cmd = {
-    "curl",
-    "-fLo",
+    'curl',
+    '-fLo',
     jetpack_path,
-    "--create-dirs",
-    "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim",
+    '--create-dirs',
+    'https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim',
   }
   vim.fn.system(clone_cmd)
-  vim.cmd("packadd vim-jetpack | helptags ALL")
+  vim.cmd('packadd vim-jetpack | helptags ALL')
   vim.cmd('echo "Installed `vim-jetpack`" | redraw')
 end
-vim.cmd("packadd vim-jetpack")
-vim.opt.runtimepath:append(vim.fs.normalize("~/dotvim/wagomu-box"))
-require("wagomu-box").setup()
+vim.cmd('packadd vim-jetpack')
+vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
+require('wagomu-box').setup()
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
 
-require("jetpack.packer").add({
-  { "https://github.com/tani/vim-jetpack" },
-  { "https://github.com/bluz71/vim-nightfly-colors" },
+require('jetpack.packer').add {
+  { 'https://github.com/tani/vim-jetpack' },
+  { 'https://github.com/bluz71/vim-nightfly-colors' },
   {
-    "https://github.com/stevearc/oil.nvim",
+    'https://github.com/stevearc/oil.nvim',
     config = function()
-      require("oil").setup({})
-      keymap("n", "<Leader>e", "<Cmd>Oil .<Cr>", opts)
-      keymap("n", "<Leader>E", "<Cmd>Oil %:p:h<Cr>", opts)
+      require('oil').setup {}
+      keymap('n', '<Leader>e', '<Cmd>Oil .<Cr>', opts)
+      keymap('n', '<Leader>E', '<Cmd>Oil %:p:h<Cr>', opts)
     end,
   },
   {
-    "https://github.com/nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
+    'https://github.com/nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
     config = function()
-      require("nvim-treesitter.configs").setup({
+      require('nvim-treesitter.configs').setup {
         modules = {},
         ensure_installed = {
-          "astro",
-          "css",
-          "html",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "svelte",
-          "typescript",
+          'astro',
+          'css',
+          'html',
+          'lua',
+          'markdown',
+          'markdown_inline',
+          'svelte',
+          'typescript',
         },
         auto_install = true,
         sync_install = false,
         ignore_install = {},
         highlight = { enable = true },
-      })
+      }
     end,
   },
   {
-    "https://github.com/hrsh7th/nvim-cmp",
+    'https://github.com/hrsh7th/nvim-cmp',
     config = function()
-      local cmp = require("cmp")
-      cmp.setup({
+      local cmp = require('cmp')
+      cmp.setup {
         snippet = {
           expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
           end,
         },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-        }),
-      })
+        mapping = cmp.mapping.preset.insert {
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+        },
+        sources = cmp.config.sources {
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        },
+      }
     end,
   },
-  { "https://github.com/saadparwaiz1/cmp_luasnip", depends = { "hrsh7th/nvim-cmp" } },
-  { "https://github.com/L3MON4D3/LuaSnip", depends = { "hrsh7th/nvim-cmp" } },
-  { "https://github.com/hrsh7th/cmp-nvim-lsp", depends = { "hrsh7th/nvim-cmp" } },
-  { "https://github.com/hrsh7th/cmp-buffer", depends = { "hrsh7th/nvim-cmp" } },
+  { 'https://github.com/saadparwaiz1/cmp_luasnip', depends = { 'hrsh7th/nvim-cmp' } },
+  { 'https://github.com/L3MON4D3/LuaSnip', depends = { 'hrsh7th/nvim-cmp' } },
+  { 'https://github.com/hrsh7th/cmp-nvim-lsp', depends = { 'hrsh7th/nvim-cmp' } },
+  { 'https://github.com/hrsh7th/cmp-buffer', depends = { 'hrsh7th/nvim-cmp' } },
   {
-    "https://github.com/neovim/nvim-lspconfig",
-    depends = { "hrsh7th/nvim-cmp" },
+    'https://github.com/neovim/nvim-lspconfig',
+    depends = { 'hrsh7th/nvim-cmp' },
     config = function()
-      for type, icon in pairs({
-        Error = "🐙",
-        Warn = "🐝",
-        Hint = "🙊",
-        Info = "🌞",
-      }) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-    end
-  end,
-},
-{ "https://github.com/nvim-lua/plenary.nvim" },
-{
-  "https://github.com/nvim-telescope/telescope.nvim",
-  tag = "0.1.5",
-  depends = { "nvim-lua/plenary.nvim" },
-  config = function()
-    require("telescope").setup({})
+      for type, icon in pairs {
+        Error = '🐙',
+        Warn = '🐝',
+        Hint = '🙊',
+        Info = '🌞',
+      } do
+        local hl = 'DiagnosticSign' .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
+    end,
+  },
+  { 'https://github.com/nvim-lua/plenary.nvim' },
+  {
+    'https://github.com/nvim-telescope/telescope.nvim',
+    tag = '0.1.5',
+    depends = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('telescope').setup {}
 
-    keymap("n", [[\f]], "<Cmd>Telescope find_files<Cr>", opts)
-    keymap("n", [[\b]], "<Cmd>Telescope buffers<Cr>", opts)
-    keymap("n", [[\m]], "<Cmd>Telescope oldfiles<Cr>", opts)
-  end,
-},
-{
-  "https://github.com/williamboman/mason.nvim",
-  config = function()
-    require("mason").setup({})
-  end,
-},
-{
-  "https://github.com/williamboman/mason-lspconfig.nvim",
-  config = function()
-    local lspconfig = require("lspconfig")
-    require("mason-lspconfig").setup_handlers({
-      function(server_name)
-        lspconfig[server_name].setup(opts)
-      end,
-      ["astro"] = function()
-        lspconfig["astro"].setup({})
-      end,
-      ["lua_ls"] = function()
-        lspconfig["lua_ls"].setup({
-          settings = {
-            Lua = {
-              runtime = {
-                version = "LuaJIT",
-                pathStrict = true,
-                path = { "?.lua", "?/init.lua" },
-              },
-              workspace = {
-                library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
-                  "${3rd}/luv/library",
-                  "${3rd}/busted/library",
-                  "${3rd}/luassert/library",
-                }),
-                checkThirdParty = "Disable",
+      keymap('n', [[\f]], '<Cmd>Telescope find_files<Cr>', opts)
+      keymap('n', [[\b]], '<Cmd>Telescope buffers<Cr>', opts)
+      keymap('n', [[\m]], '<Cmd>Telescope oldfiles<Cr>', opts)
+    end,
+  },
+  {
+    'https://github.com/williamboman/mason.nvim',
+    config = function()
+      require('mason').setup {}
+    end,
+  },
+  {
+    'https://github.com/williamboman/mason-lspconfig.nvim',
+    config = function()
+      local lspconfig = require('lspconfig')
+      require('mason-lspconfig').setup_handlers {
+        function(server_name)
+          lspconfig[server_name].setup(opts)
+        end,
+        ['astro'] = function()
+          lspconfig['astro'].setup {}
+        end,
+        ['lua_ls'] = function()
+          lspconfig['lua_ls'].setup {
+            settings = {
+              Lua = {
+                runtime = {
+                  version = 'LuaJIT',
+                  pathStrict = true,
+                  path = { '?.lua', '?/init.lua' },
+                },
+                workspace = {
+                  library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
+                    '${3rd}/luv/library',
+                    '${3rd}/busted/library',
+                    '${3rd}/luassert/library',
+                  }),
+                  checkThirdParty = 'Disable',
+                },
               },
             },
-          },
-        })
-      end,
-      ["svelte"] = function()
-        lspconfig["svelte"].setup({})
-      end,
-      ["tailwindcss"] = function()
-        lspconfig["tailwindcss"].setup({})
-      end,
-      ["vtsls"] = function()
-        lspconfig["vtsls"].setup({})
-      end,
-    })
-    vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(_)
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-        vim.keymap.set("n", ";R", "<cmd>lua vim.lsp.buf.references()<CR>")
-        vim.keymap.set("n", ";d", "<cmd>lua vim.lsp.buf.definition()<CR>")
-        vim.keymap.set("n", ";D", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-        vim.keymap.set("n", ";i", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-        vim.keymap.set("n", ";t", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-        vim.keymap.set("n", ";r", "<cmd>lua vim.lsp.buf.rename()<CR>")
-        vim.keymap.set("n", ";a", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-        vim.keymap.set("n", ";e", "<cmd>lua vim.diagnostic.open_float()<CR>")
-        vim.keymap.set("n", ";]", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-        vim.keymap.set("n", ";[", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-      end,
-    })
+          }
+        end,
+        ['svelte'] = function()
+          lspconfig['svelte'].setup {}
+        end,
+        ['tailwindcss'] = function()
+          lspconfig['tailwindcss'].setup {}
+        end,
+        ['vtsls'] = function()
+          lspconfig['vtsls'].setup {}
+        end,
+      }
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(_)
+          vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+          vim.keymap.set('n', ';R', '<cmd>lua vim.lsp.buf.references()<CR>')
+          vim.keymap.set('n', ';d', '<cmd>lua vim.lsp.buf.definition()<CR>')
+          vim.keymap.set('n', ';D', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+          vim.keymap.set('n', ';i', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+          vim.keymap.set('n', ';t', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+          vim.keymap.set('n', ';r', '<cmd>lua vim.lsp.buf.rename()<CR>')
+          vim.keymap.set('n', ';a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+          vim.keymap.set('n', ';e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+          vim.keymap.set('n', ';]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+          vim.keymap.set('n', ';[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+        end,
+      })
 
-    vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
-  end,
-},
-{
-  "https://github.com/hrsh7th/vim-eft",
-  config = function()
-    keymap({ "n", "x", "o" }, ";", "<Plug>(eft-repeat)", { noremap = false })
-    keymap({ "n", "x", "o" }, "f", "<Plug>(eft-f)", { noremap = false })
-    keymap({ "n", "x", "o" }, "F", "<Plug>(eft-F)", { noremap = false })
-    keymap({ "n", "x", "o" }, "t", "<Plug>(eft-t)", { noremap = false })
-    keymap({ "n", "x", "o" }, "T", "<Plug>(eft-T)", { noremap = false })
-  end,
-},
-{ "https://github.com/machakann/vim-sandwich" },
-{ "https://github.com/skk-dev/dict" },
-{
-  "https://github.com/kawarimidoll/tuskk.vim",
-  config = function()
-    local dict_path = vim.fs.normalize(plugins_path .. "/dict")
-    keymap({ "i", "c" }, "<C-j>", "<Cmd>call tuskk#toggle()<Cr>", opts)
-    keymap("n", "<C-j>", "a<Cmd>call tuskk#toggle()<Cr>", opts)
-    vim.fn["tuskk#initialize"]({
-      ["jisyo_list"] = {
-        { ["path"] = dict_path .. "/SKK-JISYO.L", ["encoding"] = "euc-jp" },
-        { ["path"] = dict_path .. "/SKK-JISYO.emoji", ["mark"] = "[E]" },
-      },
-      ["kana_table"] = vim.fn["tuskk#opts#builtin_kana_table"](),
-      ["suggest_wait_ms"] = 200,
-      ["suggest_sort_by"] = "length",
-      ["merge_tsu"] = true,
-      ["trailing_n"] = true,
-    })
-  end,
-},
-{
-  "https://github.com/vim-denops/denops.vim",
-},
-{
-  "https://github.com/atusy/gin.vim",
-  branch = "fixup-instant",
-  config = function()
-    vim.g["gin_log_persistent_args"] = {
-      [[--graph]],
-      [[--pretty=%C(yellow)%h %C(reset)%C(cyan)@%an%C(reset) %C(auto)%d%C(reset) %s  %C(magenta)[%ar]%C(reset)]],
-    }
-    local autocmd = vim.api.nvim_create_autocmd
-    autocmd({ "FileType" }, {
-      pattern = { "gin-*", "gin" },
-      callback = function()
-        keymap({ "n" }, "c", "<Cmd>Gin commit<Cr>", bufopts)
-        keymap({ "n" }, "s", "<Cmd>GinStatus<Cr>", bufopts)
-        keymap({ "n" }, "L", "<Cmd>GinLog<Cr>", bufopts)
-        keymap({ "n" }, "d", "<Cmd>GinDiff<Cr>", bufopts)
-        keymap({ "n" }, "q", function()
-          if vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr("$")), "buflisted(v:val)")) > 1 then
-            return [[<Cmd>bn | bd #<Cr>]]
-          else
-            return [[<Cmd>bd<Cr>]]
-          end
-        end, { buffer = true, noremap = true, expr = true })
-        keymap({ "n" }, "p", [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], bufopts)
-        keymap({ "n" }, "P", [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], bufopts)
-      end,
-    })
+      vim.lsp.handlers['textDocument/publishDiagnostics'] =
+        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
+    end,
+  },
+  {
+    'https://github.com/hrsh7th/vim-eft',
+    config = function()
+      keymap({ 'n', 'x', 'o' }, ';', '<Plug>(eft-repeat)', { noremap = false })
+      keymap({ 'n', 'x', 'o' }, 'f', '<Plug>(eft-f)', { noremap = false })
+      keymap({ 'n', 'x', 'o' }, 'F', '<Plug>(eft-F)', { noremap = false })
+      keymap({ 'n', 'x', 'o' }, 't', '<Plug>(eft-t)', { noremap = false })
+      keymap({ 'n', 'x', 'o' }, 'T', '<Plug>(eft-T)', { noremap = false })
+    end,
+  },
+  { 'https://github.com/machakann/vim-sandwich' },
+  { 'https://github.com/skk-dev/dict' },
+  {
+    'https://github.com/kawarimidoll/tuskk.vim',
+    config = function()
+      local dict_path = vim.fs.normalize(plugins_path .. '/dict')
+      keymap({ 'i', 'c' }, '<C-j>', '<Cmd>call tuskk#toggle()<Cr>', opts)
+      keymap('n', '<C-j>', 'a<Cmd>call tuskk#toggle()<Cr>', opts)
+      vim.fn['tuskk#initialize'] {
+        ['jisyo_list'] = {
+          { ['path'] = dict_path .. '/SKK-JISYO.L', ['encoding'] = 'euc-jp' },
+          { ['path'] = dict_path .. '/SKK-JISYO.emoji', ['mark'] = '[E]' },
+        },
+        ['kana_table'] = vim.fn['tuskk#opts#builtin_kana_table'](),
+        ['suggest_wait_ms'] = 200,
+        ['suggest_sort_by'] = 'length',
+        ['merge_tsu'] = true,
+        ['trailing_n'] = true,
+      }
+    end,
+  },
+  {
+    'https://github.com/vim-denops/denops.vim',
+  },
+  {
+    'https://github.com/atusy/gin.vim',
+    branch = 'fixup-instant',
+    config = function()
+      vim.g['gin_log_persistent_args'] = {
+        [[--graph]],
+        [[--pretty=%C(yellow)%h %C(reset)%C(cyan)@%an%C(reset) %C(auto)%d%C(reset) %s  %C(magenta)[%ar]%C(reset)]],
+      }
+      local autocmd = vim.api.nvim_create_autocmd
+      autocmd({ 'FileType' }, {
+        pattern = { 'gin-*', 'gin' },
+        callback = function()
+          keymap({ 'n' }, 'c', '<Cmd>Gin commit<Cr>', bufopts)
+          keymap({ 'n' }, 's', '<Cmd>GinStatus<Cr>', bufopts)
+          keymap({ 'n' }, 'L', '<Cmd>GinLog<Cr>', bufopts)
+          keymap({ 'n' }, 'd', '<Cmd>GinDiff<Cr>', bufopts)
+          keymap({ 'n' }, 'q', function()
+            if vim.fn.len(vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')) > 1 then
+              return [[<Cmd>bn | bd #<Cr>]]
+            else
+              return [[<Cmd>bd<Cr>]]
+            end
+          end, { buffer = true, noremap = true, expr = true })
+          keymap({ 'n' }, 'p', [[<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>]], bufopts)
+          keymap({ 'n' }, 'P', [[<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>]], bufopts)
+        end,
+      })
 
-    autocmd({ "FileType" }, {
-      pattern = "gin-log",
-      callback = function()
-        keymap({ "n" }, "F", "<Plug>(gin-action-fixup:instant)<CR>", bufopts)
-      end,
-    })
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-log',
+        callback = function()
+          keymap({ 'n' }, 'F', '<Plug>(gin-action-fixup:instant)<CR>', bufopts)
+        end,
+      })
 
-    autocmd({ "FileType" }, {
-      pattern = "gin-diff",
-      callback = function()
-        keymap({ "n" }, "gd", "<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>", bufopts)
-      end,
-    })
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-diff',
+        callback = function()
+          keymap({ 'n' }, 'gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
+        end,
+      })
 
-    autocmd({ "FileType" }, {
-      pattern = "gin-status",
-      callback = function()
-        keymap({ "n", "x" }, "h", "<Plug>(gin-action-stage)", bufopts)
-        keymap({ "n", "x" }, "l", "<Plug>(gin-action-unstage)", bufopts)
-      end,
-    })
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-status',
+        callback = function()
+          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', bufopts)
+          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', bufopts)
+        end,
+      })
 
-    autocmd({ "FileType" }, {
-      pattern = "gin-status",
-      callback = function()
-        keymap({ "n", "x" }, "h", "<Plug>(gin-action-stage)", bufopts)
-        keymap({ "n", "x" }, "l", "<Plug>(gin-action-unstage)", bufopts)
-      end,
-    })
+      autocmd({ 'FileType' }, {
+        pattern = 'gin-status',
+        callback = function()
+          keymap({ 'n', 'x' }, 'h', '<Plug>(gin-action-stage)', bufopts)
+          keymap({ 'n', 'x' }, 'l', '<Plug>(gin-action-unstage)', bufopts)
+        end,
+      })
 
-    keymap("n", "<C-g><C-s>", "<Cmd>GinStatus<Cr>", opts)
-    keymap("n", "<C-g><C-L>", "<Cmd>GinLog<Cr>", opts)
-  end,
-},
-{
-  "https://github.com/lewis6991/gitsigns.nvim",
-  config = function()
-    local gitsigns = require("gitsigns")
-    gitsigns.setup({
-      signcolumn = true,
-      numhl = true,
-      attach_to_untracked = true,
-    })
+      keymap('n', '<C-g><C-s>', '<Cmd>GinStatus<Cr>', opts)
+      keymap('n', '<C-g><C-L>', '<Cmd>GinLog<Cr>', opts)
+    end,
+  },
+  {
+    'https://github.com/lewis6991/gitsigns.nvim',
+    config = function()
+      local gitsigns = require('gitsigns')
+      gitsigns.setup {
+        signcolumn = true,
+        numhl = true,
+        attach_to_untracked = true,
+      }
 
-    keymap("n", "[g", function()
-      gitsigns.prev_hunk()
-    end, opts)
-    keymap("n", "]g", function()
-      gitsigns.next_hunk()
-    end, opts)
-    keymap("n", "<C-g><C-p>", function()
-      gitsigns.preview_hunk()
-    end, opts)
-    keymap({ "n", "x" }, "<C-g><C-a>", function()
-      gitsigns.stage_hunk()
-    end, opts)
-    keymap("n", "<C-g><C-r>", function()
-      gitsigns.undo_stage_hunk()
-    end, opts)
-    keymap("n", "<C-g><C-q>", function()
-      gitsigns.setqflist()
-    end, opts)
-    keymap("n", "<C-g><C-v>", function()
-      gitsigns.blame_line()
-    end, opts)
-  end,
-},
-{
-  "https://github.com/nvimdev/guard.nvim",
-  config = function()
-    local ft = require("guard.filetype")
-    ft(
-    "javascript,javascriptreact,typescript,typescriptreact,vue,css,scss,less,html,json,jsonc,yaml,markdown,markdown.mdx,graphql,handlebars"
-    ):fmt({
-      cmd = "deno",
-      args = { "fmt", "-" },
-      stdin = true,
-    })
+      keymap('n', '[g', function()
+        gitsigns.prev_hunk()
+      end, opts)
+      keymap('n', ']g', function()
+        gitsigns.next_hunk()
+      end, opts)
+      keymap('n', '<C-g><C-p>', function()
+        gitsigns.preview_hunk()
+      end, opts)
+      keymap({ 'n', 'x' }, '<C-g><C-a>', function()
+        gitsigns.stage_hunk()
+      end, opts)
+      keymap('n', '<C-g><C-r>', function()
+        gitsigns.undo_stage_hunk()
+      end, opts)
+      keymap('n', '<C-g><C-q>', function()
+        gitsigns.setqflist()
+      end, opts)
+      keymap('n', '<C-g><C-v>', function()
+        gitsigns.blame_line()
+      end, opts)
+    end,
+  },
+  {
+    'https://github.com/nvimdev/guard.nvim',
+    config = function()
+      local ft = require('guard.filetype')
+      ft(
+        'javascript,javascriptreact,typescript,typescriptreact,vue,css,scss,less,html,json,jsonc,yaml,markdown,markdown.mdx,graphql,handlebars'
+      ):fmt {
+        cmd = 'deno',
+        args = { 'fmt', '-' },
+        stdin = true,
+      }
 
-    ft("astro,svelte"):fmt({
-      cmd = "prettier",
-      args = { "--stdin-filepath" },
-      fname = true,
-      stdin = true,
-    })
+      ft('astro,svelte'):fmt {
+        cmd = 'prettier',
+        args = { '--stdin-filepath' },
+        fname = true,
+        stdin = true,
+      }
 
-    local stylua = vim.fs.joinpath(tostring(vim.fn.stdpath("data")), "mason", "packages", "stylua", "stylua")
-    ft("lua"):fmt({
-      cmd = stylua,
-      args = { "-" },
-      stdin = true,
-    })
+      local stylua_path = vim.fs.normalize(vim.fn.expand(vim.env.aqua_bin_dir) .. '/stylua')
+      ft('lua'):fmt {
+        cmd = stylua_path,
+        args = { '-f', '~/dotvim/stylua.toml', '--stdin-filepath' },
+        stdin = true,
+      }
 
-    require("guard").setup({
-      fmt_on_save = false,
-      lsp_as_default_formatter = false,
-    })
+      require('guard').setup {
+        fmt_on_save = false,
+        lsp_as_default_formatter = false,
+      }
 
-    vim.keymap.set({ "n" }, "mf", vim.cmd.GuardFmt, { desc = "format file" })
-  end,
-},
-{
-  "https://github.com/folke/trouble.nvim",
-  config = function()
-    require("trouble").setup({
-      icons = false,
-    })
-  end,
-},
-{
-  "https://github.com/github/copilot.vim",
-},
-{
-  "https://github.com/kontura/trails.nvim",
-  config = function()
-    require("trails").setup({})
-  end,
-},
-{
-  "https://github.com/dmmulroy/ts-error-translator.nvim",
-  config = function()
-    require("ts-error-translator").setup({})
-  end,
-},
-{
-  "https://github.com/haya14busa/vim-edgemotion",
-  config = function()
-    vim.keymap.set("n", "<M-j>", "<Plug>(edgemotion-j)", { noremap = false })
-    vim.keymap.set("n", "<M-k>", "<Plug>(edgemotion-k)", { noremap = false })
-  end,
-},
-})
+      vim.keymap.set({ 'n' }, 'mf', vim.cmd.GuardFmt, { desc = 'format file' })
+    end,
+  },
+  {
+    'https://github.com/folke/trouble.nvim',
+    config = function()
+      require('trouble').setup {
+        icons = false,
+      }
+    end,
+  },
+  {
+    'https://github.com/github/copilot.vim',
+  },
+  {
+    'https://github.com/kontura/trails.nvim',
+    config = function()
+      require('trails').setup {}
+    end,
+  },
+  {
+    'https://github.com/dmmulroy/ts-error-translator.nvim',
+    config = function()
+      require('ts-error-translator').setup {}
+    end,
+  },
+  {
+    'https://github.com/haya14busa/vim-edgemotion',
+    config = function()
+      vim.keymap.set('n', '<M-j>', '<Plug>(edgemotion-j)', { noremap = false })
+      vim.keymap.set('n', '<M-k>', '<Plug>(edgemotion-k)', { noremap = false })
+    end,
+  },
+  {
+    'https://github.com/cbochs/grapple.nvim',
+    depends = 'stevearc/oil.nvim',
+    config = function()
+      vim.keymap.set('n', '<leader>M', function()
+        local Oil = require('oil')
+        local filename = Oil.get_cursor_entry().name
+        local directory = Oil.get_current_dir()
+
+        local Grapple = require('grapple')
+        local Path = require('grapple.path')
+        Grapple.toggle { path = Path.join(directory, filename) }
+      end, { desc = 'Grapple tag under cursor' })
+    end,
+  },
+  {
+    'https://github.com/nvim-tree/nvim-web-devicons',
+  },
+}
 
 vim.g.nightflyCursorColor = true
 vim.g.nightflyTransparent = true
 vim.g.nightflyCursorColor = true
 vim.g.nightflyNormalFloat = true
-if pcall(vim.cmd.colorscheme, "nightfly") then
-  vim.cmd.colorscheme("nightfly")
+if pcall(vim.cmd.colorscheme, 'nightfly') then
+  vim.cmd.colorscheme('nightfly')
 else
-  vim.cmd.colorscheme("habamax")
+  vim.cmd.colorscheme('habamax')
 end

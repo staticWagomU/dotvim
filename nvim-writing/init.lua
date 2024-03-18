@@ -68,4 +68,17 @@ later(function()
   nmap('<C-j>', 'i<Plug>(skkeleton-toggle)')
 end)
 
+---===========================================
+--- git関連
+---===========================================
+later(function()
+  add('lewis6991/gitsigns.nvim')
+  require('wagomu-box.plugin-config.gitsigns')
+  add({
+    source = 'lambdalisue/gin.vim',
+    depends = { 'vim-denops/denops.vim' }
+  })
+  require('wagomu-box.plugin-config.gin')
+end)
+
 vim.cmd.colorscheme('catppuccin-latte')

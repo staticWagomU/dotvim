@@ -1,6 +1,7 @@
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box').setup()
 require('wagomu-box.plugin-manager.mini').setup()
+  vim.opt.bg = 'dark'
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
@@ -191,8 +192,8 @@ later(function()
   })
 end)
 
-later(function()
+now(function()
   add('sainnhe/everforest')
-  vim.opt.bg = 'dark'
-  vim.cmd.colorscheme('everforest')
 end)
+
+vim.cmd.colorscheme('everforest')

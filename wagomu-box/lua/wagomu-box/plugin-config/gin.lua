@@ -22,7 +22,7 @@ autocmd({ 'FileType' }, {
       { 'b', '<Cmd>GinBranch<Cr>', bufopts },
       { 'c', '<Cmd>Gin commit<Cr>', bufopts },
       { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
-      { 'q', require('wagomu-box.utils').wish_close_buf, bufopts },
+      { 'q', require('wagomu-box.utils').wish_close_buf, { noremap = true, buffer = true, expr = true} },
       { 's', '<Cmd>GinStatus<Cr>', bufopts },
     }
   end,

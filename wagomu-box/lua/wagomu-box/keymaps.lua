@@ -25,6 +25,8 @@ function M.apply()
   
   nmaps {
     { '<Space>', '<Nop>' },
+    { 'q', '<Nop>' },
+    { 'Q', 'q', { noremap = false, silent = false } },
   
     { '<Leader>w', '<Cmd>update<Cr>' },
     { '<Leader>bn', '<Cmd>bnext<Cr>' },

@@ -61,6 +61,15 @@ autocmd({ 'FileType' }, {
   end,
 })
 
+autocmd({ 'FileType' }, {
+  pattern = 'gin-status',
+  group = group,
+  callback = function()
+    nmap('ZZ', '<Cmd>Apply<Cr>', bufopts)
+    
+  end,
+})
+
 abbrev {
   { from = 'gc', to = 'Gin commit' },
   { from = 'gin', to = 'Gin' },

@@ -16,6 +16,7 @@ now(function()
       light = "latte",
       dark = "frappe",
     },
+    transparent_background = false,
     term_colors = true,
     dim_inactive = {
       enabled = true,

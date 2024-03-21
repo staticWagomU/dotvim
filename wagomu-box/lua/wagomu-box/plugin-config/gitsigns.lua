@@ -11,7 +11,7 @@ nmaps({
   { "]g", gitsigns.next_hunk },
   { "<C-g><C-p>", gitsigns.preview_hunk },
   { "<C-g><C-r>", gitsigns.undo_stage_hunk },
-  { "<C-g><C-q>", gitsigns.prev_hunk },
+  { "<C-g><C-q>", gitsigns.setqflist },
 })
 
 map({ "n", "x" }, "<C-g><C-a>", gitsigns.stage_hunk)

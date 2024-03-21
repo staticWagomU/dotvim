@@ -107,6 +107,11 @@ end)
 now(function() require('mini.tabline').setup() end)
 
 now(function()
+  require('mini.visits').setup()
+  nmap('<C-m><C-v>', MiniVisits.select_path)
+end)
+
+now(function()
   add('nvim-tree/nvim-web-devicons')
   require('nvim-web-devicons').setup()
 end)

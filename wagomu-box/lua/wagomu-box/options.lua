@@ -17,7 +17,7 @@ function M.apply()
   vim.g.loaded_zip = 1
   vim.g.loaded_zipPlugin = 1
   vim.g.mapleader = ' '
-  
+
   local set = vim.opt
   set.backspace = { 'indent', 'eol', 'start' }
   set.clipboard = 'unnamedplus'

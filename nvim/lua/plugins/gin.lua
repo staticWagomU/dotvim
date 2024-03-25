@@ -26,7 +26,7 @@ autocmd({ 'FileType' }, {
       { 'D', '<Cmd>GinDiff<Cr>', bufopts },
       { 'q', require('utils').wish_close_buf, bufopts },
       { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
-      { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>', bufopts },
+      { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', bufopts },
     }
   end,
 })

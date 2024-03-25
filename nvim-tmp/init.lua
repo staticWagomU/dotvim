@@ -8,6 +8,9 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('packadd mini.deps | helptags ALL')
   vim.cmd('echo "Installed `mini.deps`" | redraw')
 end
+
+vim.opt.signcolumn='yes'
+
 require('mini.deps').setup { path = { package = path_package } }
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
@@ -22,9 +25,9 @@ end)
 later(function()
   add('lewis6991/gitsigns.nvim')
   local gitsigns = require('gitsigns')
+  gitsigns.setup()
   vim.keymap.set({ 'n', 'x' }, '<C-g><C-a>', gitsigns.stage_hunk, opts)
   vim.keymap.set({ 'n', 'x' }, '<C-g><C-r>', gitsigns.undo_stage_hunk, opts)
-  vim.keymap.set('n', '<C-g><C-S-A>', gitsigns.stage_buffer, opts)
   vim.keymap.set('n', '<C-g><C-p>', gitsigns.prev_hunk, opts)
 end)
 

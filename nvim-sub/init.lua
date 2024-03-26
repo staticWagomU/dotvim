@@ -41,4 +41,14 @@ later(function()
   })
 end)
 
-vim.cmd.colorscheme('habamax')
+later(function()
+  add({
+    source = 'https://github.com/lambdalisue/gin.vim',
+    depends = { 'vim-denops/denops.vim' }
+  })
+  nmaps({
+    {'<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
+    {'<C-g><C-l>', '<Cmd>GinLog<Cr>' },
+    {'<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
+  })
+end)

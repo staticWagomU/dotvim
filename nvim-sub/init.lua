@@ -52,3 +52,8 @@ later(function()
     {'<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
   })
 end)
+
+now(function()
+  add('https://github.com/savq/melange-nvim')
+  vim.cmd.colorscheme('melange')
+end)

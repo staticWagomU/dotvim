@@ -22,6 +22,7 @@ local bufopts = { noremap = true, buffer = true }
 
 now(function()
   add('https://github.com/vim-jp/vimdoc-ja')
+  add('https://github.com/nvim-tree/nvim-web-devicons')
 end)
 
 later(function()
@@ -135,6 +136,32 @@ later(function()
     { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
     { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
   }
+end)
+
+later(function()
+  add('https://github.com/stevearc/oil.nvim')
+  require('oil').setup {}
+
+  nmaps {
+    { '<Leader>e', '<Cmd>Oil .<Cr>' },
+    { '<Leader>E', '<Cmd>Oil %:p:h<Cr>' },
+  }
+
+
+  autocmd('FileType', {
+    pattern = 'oil',
+    callback = function()
+      nmap('<Leader>we', function()
+        local oil = require('oil')
+        local config = require('oil.config')
+        if #config.columns == 1 then
+          oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
+        else
+          oil.set_columns { 'icon' }
+        end
+      end, { buffer = true })
+    end,
+  })
 end)
 
 now(function()

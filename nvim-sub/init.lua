@@ -25,6 +25,8 @@ local bufopts = { noremap = true, buffer = true }
 now(function()
   add('https://github.com/nvim-tree/nvim-web-devicons')
   add('https://github.com/vim-denops/denops.vim')
+  add('https://github.com/zbirenbaum/copilot.lua')
+  require("copilot").setup({})
 end)
 
 

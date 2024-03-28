@@ -17,7 +17,6 @@ local abbrev = require('wagomu-box.utils').make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
 local maps, nmaps, nmap = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.nmap
 
-local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
 
 -- =========================================
@@ -227,7 +226,6 @@ later(function()
     }, {
       { name = 'cmdline' }
     }),
-    matching = { disallow_symbol_nonprefix_matching = false }
   })
 
 end)
@@ -331,9 +329,6 @@ later(function()
         capabilities = capabilities,
         settings = {
           Lua = {
-            --          diagnostics = {
-              --            globals = { 'vim' },
-              --          },
               runtime = {
                 version = 'LuaJIT',
                 pathStrict = true,

@@ -1,3 +1,8 @@
+-- [ ] Treesitter
+-- [ ] LspSagaとかのUI系
+-- [ ] formatter
+-- [ ] SKK
+-- [ ] ddc
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
 
@@ -9,8 +14,155 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
-require('options')
-require('keymaps')
+local maps, nmaps, omaps = require('wagomu-box.utils').maps , require('wagomu-box.utils').nmaps , require('wagomu-box.utils').omaps
+
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_fzf = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_remote_plugins = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+
+vim.g.mapleader = ' '
+
+vim.opt.encoding='utf-8'
+vim.opt.fileencoding='utf-8'
+vim.opt.fileencodings='utf-8,euc-jp,cp932'
+
+vim.opt.backspace = {
+  'indent',
+  'eol',
+  'start'
+}
+vim.opt.expandtab = true
+vim.opt.fillchars = {
+  stl = '─',
+  stlnc = '─',
+  diff = '∙',
+  eob = ' ',
+  fold = '·',
+  horiz = '─',
+  horizup = '┴',
+  horizdown = '┬',
+  vert = '│',
+  vertleft = '┤',
+  vertright = '├',
+  verthoriz = '┼',
+}
+vim.opt.helplang='ja,en'
+vim.opt.hidden = true
+vim.opt.hlsearch = true
+vim.opt.ignorecase = true
+vim.opt.incsearch = true
+vim.opt.laststatus = 3
+vim.opt.list = true
+vim.opt.listchars = {
+  eol = '↴',
+  tab = '▷⋯',
+  trail = '»',
+  space = '⋅',
+  nbsp = '⦸',
+  extends = '»',
+  precedes = '«',
+}
+vim.opt.shiftwidth = 2
+vim.opt.signcolumn = 'yes'
+vim.opt.smartcase = true
+vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
+vim.opt.wrap = false
+
+--[=[
+"-------------------------------------------------------------------------------------------------+
+" Commands \ Modes | Normal | Insert | Command | Visual | Select | Operator | Terminal | Lang-Arg |
+" ================================================================================================+
+" map  / noremap   |    @   |   -    |    -    |   @    |   @    |    @     |    -     |    -     |
+" nmap / nnoremap  |    @   |   -    |    -    |   -    |   -    |    -     |    -     |    -     |
+" map! / noremap!  |    -   |   @    |    @    |   -    |   -    |    -     |    -     |    -     |
+" imap / inoremap  |    -   |   @    |    -    |   -    |   -    |    -     |    -     |    -     |
+" cmap / cnoremap  |    -   |   -    |    @    |   -    |   -    |    -     |    -     |    -     |
+" vmap / vnoremap  |    -   |   -    |    -    |   @    |   @    |    -     |    -     |    -     |
+" xmap / xnoremap  |    -   |   -    |    -    |   @    |   -    |    -     |    -     |    -     |
+" smap / snoremap  |    -   |   -    |    -    |   -    |   @    |    -     |    -     |    -     |
+" omap / onoremap  |    -   |   -    |    -    |   -    |   -    |    @     |    -     |    -     |
+" tmap / tnoremap  |    -   |   -    |    -    |   -    |   -    |    -     |    @     |    -     |
+" lmap / lnoremap  |    -   |   @    |    @    |   -    |   -    |    -     |    -     |    @     |
+"-------------------------------------------------------------------------------------------------+
+-- ]=]
+
+
+nmaps {
+  { '<Space>', '<Nop>' },
+  { 'q', '<Nop>' },
+  { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true }},
+  { 'Q', 'q', { noremap = false, silent = false } },
+
+  { '<Leader>w', '<Cmd>update<Cr>' },
+  { '<Leader>bn', '<Cmd>bnext<Cr>' },
+  { '<Leader>bp', '<Cmd>bprevious<Cr>' },
+  { '<Leader>bd', '<Cmd>bdelete<Cr>' },
+  { '<Leader>bc', '<Cmd>close<Cr>' },
+  { '<Leader>cd', '<Cmd>cd %:p:h<Cr>' },
+
+  { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true }},
+  { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true }},
+
+  { 'v2', 'vi"' },
+  { 'v7', "vi'" },
+  { 'v8', 'vi(' },
+  { 'v[', 'vi[' },
+  { 'v{', 'vi{' },
+  { 'v@', 'vi`' },
+  { 'vt', 'vit' },
+
+  { 'va2', 'va"' },
+  { 'va7', "va'" },
+  { 'va8', 'va(' },
+  { 'va[', 'va[' },
+  { 'va{', 'va{' },
+  { 'va@', 'va`' },
+}
+
+omaps {
+  { '2', 'i"' },
+  { '7', "i'" },
+  { '8', 'i(' },
+  { '[', 'i[' },
+  { '{', 'i{' },
+  { '@', 'i`' },
+
+  { 'a2', 'a"' },
+  { 'a7', "a'" },
+  { 'a8', 'a(' },
+  { 'a[', 'a[' },
+  { 'a{', 'a{' },
+  { 'a@', 'a`' },
+}
+
+maps({ 'n', 'o', 'x' }, {
+  { '0', [[getline('.')[0 : col('.') - 2] =~# '^\s\+$' ? '0' : '^']], { noremap = false, expr = true } },
+})
+
+maps({ 'n', 'x' }, {
+  { 'gy', '"+y' },
+})
+
+
+
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local abbrev = require('wagomu-box.utils').make_abbrev

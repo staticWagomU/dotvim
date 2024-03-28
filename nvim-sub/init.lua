@@ -21,7 +21,6 @@ local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
 
 now(function()
-  add('https://github.com/vim-jp/vimdoc-ja')
   add('https://github.com/nvim-tree/nvim-web-devicons')
 end)
 
@@ -167,4 +166,8 @@ end)
 now(function()
   add('https://github.com/savq/melange-nvim')
   vim.cmd.colorscheme('melange')
+end)
+
+later(function()
+  add('https://github.com/vim-jp/vimdoc-ja')
 end)

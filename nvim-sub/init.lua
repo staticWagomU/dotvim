@@ -14,7 +14,8 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
-local maps, nmaps, omaps = require('wagomu-box.utils').maps , require('wagomu-box.utils').nmaps , require('wagomu-box.utils').omaps
+local maps, nmaps, omaps =
+  require('wagomu-box.utils').maps, require('wagomu-box.utils').nmaps, require('wagomu-box.utils').omaps
 
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_fzf = 1
@@ -39,14 +40,14 @@ vim.g.loaded_zipPlugin = 1
 
 vim.g.mapleader = ' '
 
-vim.opt.encoding='utf-8'
-vim.opt.fileencoding='utf-8'
-vim.opt.fileencodings='utf-8,euc-jp,cp932'
+vim.opt.encoding = 'utf-8'
+vim.opt.fileencoding = 'utf-8'
+vim.opt.fileencodings = 'utf-8,euc-jp,cp932'
 
 vim.opt.backspace = {
   'indent',
   'eol',
-  'start'
+  'start',
 }
 vim.opt.expandtab = true
 vim.opt.fillchars = {
@@ -63,7 +64,7 @@ vim.opt.fillchars = {
   vertright = '├',
   verthoriz = '┼',
 }
-vim.opt.helplang='ja,en'
+vim.opt.helplang = 'ja,en'
 vim.opt.hidden = true
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
@@ -104,11 +105,10 @@ vim.opt.wrap = false
 "-------------------------------------------------------------------------------------------------+
 -- ]=]
 
-
 nmaps {
   { '<Space>', '<Nop>' },
   { 'q', '<Nop>' },
-  { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true }},
+  { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true } },
   { 'Q', 'q', { noremap = false, silent = false } },
 
   { '<Leader>w', '<Cmd>update<Cr>' },
@@ -118,8 +118,8 @@ nmaps {
   { '<Leader>bc', '<Cmd>close<Cr>' },
   { '<Leader>cd', '<Cmd>cd %:p:h<Cr>' },
 
-  { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true }},
-  { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true }},
+  { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
+  { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
 
   { 'v2', 'vi"' },
   { 'v7', "vi'" },
@@ -161,13 +161,9 @@ maps({ 'n', 'x' }, {
   { 'gy', '"+y' },
 })
 
-
-
-
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local abbrev = require('wagomu-box.utils').make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
-local maps, nmaps, nmap = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.nmap
 
 local bufopts = { noremap = true, buffer = true }
 
@@ -178,9 +174,8 @@ now(function()
   add('https://github.com/nvim-tree/nvim-web-devicons')
   add('https://github.com/vim-denops/denops.vim')
   add('https://github.com/zbirenbaum/copilot.lua')
-  require("copilot").setup({})
+  require('copilot').setup {}
 end)
-
 
 -- =========================================
 -- | git関連
@@ -231,7 +226,9 @@ later(function()
     pattern = 'gin-log',
     group = group,
     callback = function()
-      nmap('F', '<Plug>(gin-action-fixup:instant)', bufopts)
+      nmaps {
+        { 'F', '<Plug>(gin-action-fixup:instant)', bufopts },
+      }
     end,
   })
 
@@ -306,7 +303,6 @@ later(function()
     { '<Leader>E', '<Cmd>Oil %:p:h<Cr>' },
   }
 
-
   autocmd('FileType', {
     pattern = 'oil',
     callback = function()
@@ -324,7 +320,7 @@ later(function()
 end)
 
 -- =========================================
--- | nvim-cmp関連 
+-- | nvim-cmp関連
 -- =========================================
 later(function()
   add('https://github.com/hrsh7th/nvim-cmp')
@@ -337,67 +333,65 @@ later(function()
   add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
   add('https://github.com/zbirenbaum/copilot-cmp')
   add('https://github.com/onsails/lspkind.nvim')
-  require("copilot_cmp").setup()
+  require('copilot_cmp').setup()
 
-  local cmp = require'cmp'
-  local lspkind = require("lspkind")
+  local cmp = require('cmp')
+  local lspkind = require('lspkind')
 
-  cmp.setup({
+  cmp.setup {
     snippet = {
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        vim.fn['vsnip#anonymous'](args.body)
       end,
     },
     formatting = {
-      format = lspkind.cmp_format({
-        mode = "symbol",
+      format = lspkind.cmp_format {
+        mode = 'symbol',
         max_width = 50,
-        symbol_map = { Copilot = "" }
-      })
+        symbol_map = { Copilot = '' },
+      },
     },
-    mapping = cmp.mapping.preset.insert({
+    mapping = cmp.mapping.preset.insert {
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
+      ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    },
     sources = cmp.config.sources({
       { name = 'nvim_lsp_signature_help' },
-      { name = "copilot" },
+      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'vsnip' },
     }, {
       { name = 'buffer' },
-    })
-  })
+    }),
+  }
 
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
       { name = 'git' },
     }, {
       { name = 'buffer' },
-    })
+    }),
   })
 
   cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = 'buffer' }
-    }
+      { name = 'buffer' },
+    },
   })
 
   cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = 'path' }
+      { name = 'path' },
     }, {
-      { name = 'cmdline' }
+      { name = 'cmdline' },
     }),
   })
-
 end)
-
 
 -- =========================================
 -- | LSP関連
@@ -405,14 +399,14 @@ end)
 later(function()
   add('https://github.com/artemave/workspace-diagnostics.nvim')
   add('https://github.com/williamboman/mason.nvim')
-  add({
+  add {
     source = 'https://github.com/williamboman/mason-lspconfig.nvim',
     depends = { 'williamboman/mason.nvim' },
-  })
-  add({
+  }
+  add {
     source = 'https://github.com/neovim/nvim-lspconfig',
     depends = { 'mwilliamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
-  })
+  }
 
   require('mason').setup()
   local enabled_vtsls = true
@@ -497,92 +491,91 @@ later(function()
         capabilities = capabilities,
         settings = {
           Lua = {
-              runtime = {
-                version = 'LuaJIT',
-                pathStrict = true,
-                path = { '?.lua', '?/init.lua' },
-              },
-              workspace = {
-                library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
-                  '${3rd}/luv/library',
-                  '${3rd}/busted/library',
-                  '${3rd}/luassert/library',
-                }),
-                checkThirdParty = 'Disable',
-              },
+            runtime = {
+              version = 'LuaJIT',
+              pathStrict = true,
+              path = { '?.lua', '?/init.lua' },
+            },
+            workspace = {
+              library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
+                '${3rd}/luv/library',
+                '${3rd}/busted/library',
+                '${3rd}/luassert/library',
+              }),
+              checkThirdParty = 'Disable',
             },
           },
-          on_attach = function(client, bufnr)
-            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-          end,
-        }
-      end,
-      ['tailwindcss'] = function()
-        lspconfig['tailwindcss'].setup {
-          capabilities = capabilities,
-          root_dir = lspconfig.util.root_pattern(
+        },
+        on_attach = function(client, bufnr)
+          require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+        end,
+      }
+    end,
+    ['tailwindcss'] = function()
+      lspconfig['tailwindcss'].setup {
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',
           'tailwind.config.ts',
           'tailwind.config.lua',
           'tailwind.config.json'
-          ),
-        }
-      end,
-      ['gopls'] = function()
-        lspconfig['gopls'].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['emmet_ls'] = function()
-        lspconfig['emmet_ls'].setup {
-          capabilities = capabilities,
-          extra_filetype = {
-            'astro',
-            'css',
-            'html',
-            'htmldjango',
-            'javascript.jsx',
-            'javascriptreact',
-            'svelte',
-            'typescript.tsx',
-            'typescriptreact',
-            'unocss',
-            'vue',
-          },
-        }
-      end,
-      ['cssls'] = function()
-        lspconfig['cssls'].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['zls'] = function()
-        lspconfig['zls'].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['svelte'] = function()
-        lspconfig['svelte'].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['volar'] = function()
-        lspconfig['volar'].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['rust_analyzer'] = function()
-        lspconfig['rust_analyzer'].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['unocss'] = function()
-        lspconfig['unocss'].setup {
-          capabilities = capabilities,
-        }
-      end,
-    }
-
+        ),
+      }
+    end,
+    ['gopls'] = function()
+      lspconfig['gopls'].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['emmet_ls'] = function()
+      lspconfig['emmet_ls'].setup {
+        capabilities = capabilities,
+        extra_filetype = {
+          'astro',
+          'css',
+          'html',
+          'htmldjango',
+          'javascript.jsx',
+          'javascriptreact',
+          'svelte',
+          'typescript.tsx',
+          'typescriptreact',
+          'unocss',
+          'vue',
+        },
+      }
+    end,
+    ['cssls'] = function()
+      lspconfig['cssls'].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['zls'] = function()
+      lspconfig['zls'].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['svelte'] = function()
+      lspconfig['svelte'].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['volar'] = function()
+      lspconfig['volar'].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['rust_analyzer'] = function()
+      lspconfig['rust_analyzer'].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['unocss'] = function()
+      lspconfig['unocss'].setup {
+        capabilities = capabilities,
+      }
+    end,
+  }
 
   for type, icon in pairs {
     Error = '🚒',
@@ -590,16 +583,14 @@ later(function()
     Hint = '🦒',
     Info = '👀',
   } do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    local hl = 'DiagnosticSign' .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
 
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { signs = true, })
-
-end
-
+    vim.lsp.handlers['textDocument/publishDiagnostics'] =
+      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { signs = true })
+  end
 end)
 
 now(function()

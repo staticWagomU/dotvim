@@ -20,11 +20,18 @@ local maps, nmaps, nmap = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.nmap
 local opts = { noremap = true, silent = true }
 local bufopts = { noremap = true, buffer = true }
 
+-- =========================================
+-- | はじめにいるプラグインたち
+-- =========================================
 now(function()
   add('https://github.com/nvim-tree/nvim-web-devicons')
   add('https://github.com/vim-denops/denops.vim')
 end)
 
+
+-- =========================================
+-- | git関連
+-- =========================================
 later(function()
   add('https://github.com/lewis6991/gitsigns.nvim')
   local gitsigns = require('gitsigns')
@@ -134,6 +141,9 @@ later(function()
   }
 end)
 
+-- =========================================
+-- | ファイラー
+-- =========================================
 later(function()
   add('https://github.com/stevearc/oil.nvim')
   require('oil').setup {}

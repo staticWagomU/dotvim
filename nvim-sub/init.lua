@@ -22,6 +22,7 @@ local bufopts = { noremap = true, buffer = true }
 
 now(function()
   add('https://github.com/nvim-tree/nvim-web-devicons')
+  add('https://github.com/vim-denops/denops.vim')
 end)
 
 later(function()
@@ -41,10 +42,6 @@ later(function()
     { '<C-g><C-v>', gitsigns.blame_line },
     { '<C-g><C-q>', gitsigns.setqflist },
   }
-end)
-
-later(function()
-  add('https://github.com/vim-denops/denops.vim')
 end)
 
 later(function()

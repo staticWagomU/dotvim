@@ -182,14 +182,26 @@ later(function()
   add('https://github.com/hrsh7th/cmp-cmdline')
   add('https://github.com/hrsh7th/cmp-vsnip')
   add('https://github.com/hrsh7th/vim-vsnip')
+  add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
+  add('https://github.com/zbirenbaum/copilot-cmp')
+  add('https://github.com/onsails/lspkind.nvim')
+  require("copilot_cmp").setup()
 
- local cmp = require'cmp'
+  local cmp = require'cmp'
+  local lspkind = require("lspkind")
 
   cmp.setup({
     snippet = {
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body)
       end,
+    },
+    formatting = {
+      format = lspkind.cmp_format({
+        mode = "symbol",
+        max_width = 50,
+        symbol_map = { Copilot = "" }
+      })
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -199,6 +211,8 @@ later(function()
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
+      { name = 'nvim_lsp_signature_help' },
+      { name = "copilot" },
       { name = 'nvim_lsp' },
       { name = 'vsnip' },
     }, {

@@ -474,6 +474,23 @@ later(function()
 end)
 
 -- =========================================
+-- | Formatter & Linter
+-- =========================================
+later(function()
+  add('https://github.com/nvimdev/guard.nvim')
+  require('guard').setup()
+local ft = require('guard.filetype')
+
+  ft('lua'):fmt {
+    cmd = 'stylua',
+    args = { '-' },
+    stdin = true,
+  }
+
+  map({ 'n', 'v' }, '<Leader>mf', '<Cmd>GuardFmt<Cr>')
+end)
+
+-- =========================================
 -- | LSP関連
 -- =========================================
 later(function()

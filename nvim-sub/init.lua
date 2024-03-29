@@ -486,7 +486,7 @@ later(function()
     stdin = true,
   }
 
-  map({ 'n', 'v' }, '<Leader>mf', '<Cmd>GuardFmt<Cr>')
+  map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
 end)
 
 -- =========================================

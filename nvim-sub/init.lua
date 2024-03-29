@@ -771,10 +771,6 @@ later(function()
   }
 end)
 
-later(function()
-  add('https://github.com/kevinhwang91/nvim-ufo')
-end)
-
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   require('kanagawa').setup {

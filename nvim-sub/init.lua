@@ -731,6 +731,11 @@ later(function()
   }
 end)
 
+later(function()
+  add('https://github.com/0xAdk/full_visual_line.nvim')
+  require('full_visual_line').setup {}
+end)
+
 now(function()
   add('https://github.com/savq/melange-nvim')
   vim.cmd.colorscheme('melange')

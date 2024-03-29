@@ -1,7 +1,5 @@
--- [ ] Treesitter
 -- [ ] LspSagaとかのUI系
 -- [ ] formatter
--- [ ] SKK
 -- [ ] ddc
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
@@ -14,8 +12,8 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
-local maps, nmaps, omaps =
-  require('wagomu-box.utils').maps, require('wagomu-box.utils').nmaps, require('wagomu-box.utils').omaps
+local maps, nmaps, omaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps
+local nmap, map = WagomuBox.nmap, WagomuBox.map
 
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_fzf = 1

@@ -708,6 +708,26 @@ later(function()
       extend_gitsigns = true,
     },
   }
+
+  ---@param action string
+  ---@return string
+  local doSagaAction = function(action)
+    return string.format('<Cmd>Lspsaga %s<Cr>', action)
+  end
+
+  nmap(';', '<Nop>', { noremap = false })
+  nmaps {
+    { ';r', doSagaAction('rename') },
+    { ';d', doSagaAction('peek_definition') },
+    { ';D', doSagaAction('goto_definition') },
+    { ';t', doSagaAction('peek_type_definition') },
+    { ';T', doSagaAction('goto_type_definition') },
+    { ';<Space>', doSagaAction('code_action') },
+    { ';l', doSagaAction('show_line_diagnostics') },
+    { ';j', doSagaAction('diagnostics_jump_next') },
+    { ';k', doSagaAction('diagnostics_jump_prev') },
+    { 'K', doSagaAction('hover_doc') },
+  }
 end)
 
 now(function()

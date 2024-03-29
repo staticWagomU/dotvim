@@ -756,6 +756,16 @@ end)
 
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
+  require('kanagawa').setup {
+    compile = true,
+    functionStyle = { italic = true },
+    dimInactive = true,
+    theme = 'wave',
+    background = {
+      dark = 'wave',
+      light = 'lotus',
+    },
+  }
   vim.cmd.colorscheme('kanagawa')
 end)
 

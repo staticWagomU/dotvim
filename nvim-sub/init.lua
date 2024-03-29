@@ -182,7 +182,6 @@ later(function()
   add('https://github.com/nvim-treesitter/nvim-treesitter')
 
   require('nvim-treesitter.configs').setup {
-    parser_install_dir = vim.fn.stdpath('data'),
     ensure_installed = {
       'astro',
       'css',
@@ -222,6 +221,42 @@ later(function()
     ignore_install = {},
   }
 end)
+
+-- =========================================
+-- | 日本語入力関連
+-- =========================================
+later(function()
+  add('https://github.com/vim-skk/skkeleton')
+  add('https://github.com/skk-dev/dict')
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'skkeleton-initialize-pre',
+    callback = function()
+      local getJisyo = function(name)
+        local dictdir = vim.fn.expand(vim.fs.joinpath(WagomuBox.plugins_path, 'dict', 'SKK-JISYO.'))
+        return vim.fs.normalize(dictdir .. name)
+      end
+      vim.fn['skkeleton#config'] {
+        eggLikeNewline = true,
+        globalDictionaries = {
+          getJisyo('L'),
+          getJisyo('hukugougo'),
+          getJisyo('mazegaki'),
+          getJisyo('propernoun'),
+          getJisyo('station'),
+        },
+        databasePath = '/tmp/skkeleton.sqlite3',
+      }
+      vim.fn['skkeleton#register_kanatable']('rom', {
+        [ [[z\<Space>]] ] = { [[\u3000]], '' },
+        [ [[xn]] ] = { [[ん]], '' },
+      })
+    end,
+  })
+  map({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)')
+  nmap('<C-j>', 'i<Plug>(skkeleton-toggle)')
+end)
+
 -- =========================================
 -- | git関連
 -- =========================================

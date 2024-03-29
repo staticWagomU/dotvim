@@ -170,6 +170,7 @@ now(function()
   add('https://github.com/nvim-tree/nvim-web-devicons')
   add('https://github.com/vim-denops/denops.vim')
   add('https://github.com/zbirenbaum/copilot.lua')
+  add('https://github.com/MunifTanjim/nui.nvim')
   require('copilot').setup {}
 end)
 
@@ -752,6 +753,26 @@ end)
 later(function()
   add('https://github.com/0xAdk/full_visual_line.nvim')
   require('full_visual_line').setup {}
+end)
+
+later(function()
+  add('https://github.com/folke/noice.nvim')
+  require('noice').setup {
+    cmdline = {
+      format = {
+        search_down = {
+          view = 'cmdline',
+        },
+        search_up = {
+          view = 'cmdline',
+        },
+      },
+    },
+  }
+end)
+
+later(function()
+  add('https://github.com/kevinhwang91/nvim-ufo')
 end)
 
 now(function()

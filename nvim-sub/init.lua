@@ -1,5 +1,3 @@
--- [ ] LspSagaとかのUI系
--- [ ] formatter
 -- [ ] ddc
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
@@ -479,7 +477,7 @@ end)
 later(function()
   add('https://github.com/nvimdev/guard.nvim')
   require('guard').setup()
-local ft = require('guard.filetype')
+  local ft = require('guard.filetype')
 
   ft('lua'):fmt {
     cmd = 'stylua',
@@ -688,6 +686,28 @@ later(function()
     vim.lsp.handlers['textDocument/publishDiagnostics'] =
       vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { signs = true })
   end
+end)
+
+later(function()
+  add {
+    source = 'https://github.com/nvimdev/lspsaga.nvim',
+    depends = { 'nvim-lspconfig' },
+  }
+  require('lspsaga').setup {
+    ui = {
+      code_action = '🚕',
+    },
+    lightbulb = {
+      enable = false,
+    },
+    symbol_in_winbar = {
+      enable = false,
+    },
+    code_action = {
+      show_server_name = true,
+      extend_gitsigns = true,
+    },
+  }
 end)
 
 now(function()

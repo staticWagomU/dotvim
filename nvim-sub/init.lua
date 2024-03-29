@@ -422,6 +422,7 @@ later(function()
         vim.fn['vsnip#anonymous'](args.body)
       end,
     },
+---@diagnostic disable-next-line: missing-fields
     formatting = {
       format = lspkind.cmp_format {
         mode = 'symbol',

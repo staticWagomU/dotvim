@@ -267,8 +267,8 @@ later(function()
     word_diff = true,
   }
   nmaps {
-    { '[g', gitsigns.next_hunk },
-    { ']g', gitsigns.prev_hunk },
+    { ']g', gitsigns.next_hunk },
+    { '[g', gitsigns.prev_hunk },
     { '<C-g><C-a>', gitsigns.stage_hunk },
     { '<C-g><C-r>', gitsigns.reset_hunk },
     { '<C-g><C-p>', gitsigns.preview_hunk },

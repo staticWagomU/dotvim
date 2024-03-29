@@ -731,6 +731,24 @@ later(function()
   }
 end)
 
+-- =========================================
+-- | mini family
+-- =========================================
+later(function()
+  add('https://github.com/echasnovski/mini.comment')
+  require('mini.comment').setup {}
+end)
+
+later(function()
+  add('https://github.com/echasnovski/mini.bracketed')
+  require('mini.bracketed').setup {}
+end)
+
+later(function()
+  add('https://github.com/echasnovski/mini.move')
+  require('mini.move').setup {}
+end)
+
 later(function()
   add('https://github.com/0xAdk/full_visual_line.nvim')
   require('full_visual_line').setup {}

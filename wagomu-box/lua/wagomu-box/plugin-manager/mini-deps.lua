@@ -16,6 +16,7 @@ function M.setup()
     vim.cmd('echo "Installed `mini.deps`" | redraw')
   end
   require('mini.deps').setup({ path = { package = path_package } })
+  require('wagomu-box.utils')
 end
 
 return M

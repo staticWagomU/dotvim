@@ -422,7 +422,7 @@ later(function()
         vim.fn['vsnip#anonymous'](args.body)
       end,
     },
----@diagnostic disable-next-line: missing-fields
+    ---@diagnostic disable-next-line: missing-fields
     formatting = {
       format = lspkind.cmp_format {
         mode = 'symbol',
@@ -755,8 +755,8 @@ later(function()
 end)
 
 now(function()
-  add('https://github.com/savq/melange-nvim')
-  vim.cmd.colorscheme('melange')
+  add('https://github.com/rebelot/kanagawa.nvim')
+  vim.cmd.colorscheme('kanagawa')
 end)
 
 later(function()

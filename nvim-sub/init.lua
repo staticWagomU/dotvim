@@ -771,6 +771,10 @@ later(function()
   }
 end)
 
+later(function ()
+  add('https://github.com/hrsh7th/nvim-insx')
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   require('kanagawa').setup {

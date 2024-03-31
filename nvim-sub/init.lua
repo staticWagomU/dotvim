@@ -779,6 +779,56 @@ later(function ()
   add('https://github.com/simeji/winresizer')
 end)
 
+-- =========================================
+-- | ddu関連
+-- =========================================
+later(function ()
+  -- ----------------------------------------
+  -- UI
+  -- ----------------------------------------
+  add('https://github.com/Shougo/ddu-ui-ff')
+  -- ----------------------------------------
+  -- Source
+  -- ----------------------------------------
+  add('https://github.com/Shougo/ddu-source-action')
+  add('https://github.com/Shougo/ddu-source-file')
+  add('https://github.com/Shougo/ddu-source-file_old')
+  add('https://github.com/Shougo/ddu-source-file_rec')
+  add('https://github.com/Shougo/ddu-source-line')
+  add('https://github.com/matsui54/ddu-source-command_history')
+  add('https://github.com/matsui54/ddu-source-file_external')
+  add('https://github.com/matsui54/ddu-source-help')
+  add('https://github.com/shun/ddu-source-buffer')
+  add('https://github.com/shun/ddu-source-rg')
+  add('https://github.com/staticWagomU/ddu-source-patch_local')
+
+  add('https://github.com/kuuote/ddu-source-git_diff')
+  add('https://github.com/kuuote/ddu-source-git_status')
+  add('https://github.com/kyoh86/ddu-source-git_branch')
+  add('https://github.com/kyoh86/ddu-source-git_diff_tree')
+  add('https://github.com/kyoh86/ddu-source-git_log')
+
+  -- ----------------------------------------
+  -- Kind
+  -- ----------------------------------------
+  add('https://github.com/Shougo/ddu-kind-file')
+  add('https://github.com/matsui54/ddu-vim-ui-select')
+
+  -- ----------------------------------------
+  -- Filter
+  -- ----------------------------------------
+  add('https://github.com/Shougo/ddu-filter-matcher_substring')
+  add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
+
+  add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
+
+
+  add('https://github.com/Shougo/ddu.vim')
+
+  -- さすがに長いので分ける
+  require('pluginconfig.ddu')
+end)
+
 later(function()
   add('https://github.com/vim-jp/vimdoc-ja')
 end)

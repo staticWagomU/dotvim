@@ -1,4 +1,4 @@
--- [ ] ddc
+-- [ ] ddu
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
 
@@ -769,6 +769,10 @@ now(function()
     },
   }
   vim.cmd.colorscheme('kanagawa')
+end)
+
+later(function ()
+  add('https://github.com/machakann/vim-sandwich')
 end)
 
 later(function()

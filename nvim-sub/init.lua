@@ -1,4 +1,3 @@
--- [ ] ddu
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
 
@@ -755,6 +754,11 @@ later(function()
   require('mini.move').setup {}
 end)
 
+
+later(function()
+  add('https://github.com/echasnovski/mini.indentscope')
+  require('mini.indentscope').setup {}
+end)
 -- =========================================
 -- | その他
 -- =========================================

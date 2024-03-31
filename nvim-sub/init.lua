@@ -726,6 +726,17 @@ later(function()
   }
 end)
 
+later(function ()
+  add {
+    source = 'https://github.com/folke/trouble.nvim',
+    depends = { 'nvim-tree/nvim-web-devicons' },
+  }
+  require('trouble').setup {
+    icons = true, -- use devicons for filenames
+    use_diagnostic_signs = true
+}
+end)
+
 -- =========================================
 -- | mini family
 -- =========================================

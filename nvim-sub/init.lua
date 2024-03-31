@@ -749,22 +749,6 @@ later(function()
   require('full_visual_line').setup {}
 end)
 
-later(function()
-  add('https://github.com/folke/noice.nvim')
-  require('noice').setup {
-    cmdline = {
-      format = {
-        search_down = {
-          view = 'cmdline',
-        },
-        search_up = {
-          view = 'cmdline',
-        },
-      },
-    },
-  }
-end)
-
 later(function ()
   add('https://github.com/hrsh7th/nvim-insx')
 end)

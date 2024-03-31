@@ -847,3 +847,9 @@ end)
 later(function()
   add('https://github.com/vim-jp/vimdoc-ja')
 end)
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "*.mdx" },
+  command = "set filetype=mdx",
+})
+

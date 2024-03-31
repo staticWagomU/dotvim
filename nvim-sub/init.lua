@@ -775,6 +775,10 @@ later(function ()
   add('https://github.com/machakann/vim-sandwich')
 end)
 
+later(function ()
+  add('https://github.com/simeji/winresizer')
+end)
+
 later(function()
   add('https://github.com/vim-jp/vimdoc-ja')
 end)

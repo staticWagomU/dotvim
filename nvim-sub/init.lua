@@ -292,7 +292,7 @@ later(function()
       nmaps {
         { 'D', '<Cmd>GinDiff<Cr>', bufopts },
         { 'L', '<Cmd>GinLog<Cr>', bufopts },
-        { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull<Cr>', bufopts },
+        { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', bufopts },
         { 'b', '<Cmd>GinBranch<Cr>', bufopts },
         { 'c', '<Cmd>Gin commit<Cr>', bufopts },
         { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },

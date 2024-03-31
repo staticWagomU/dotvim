@@ -794,6 +794,10 @@ later(function ()
   add('https://github.com/simeji/winresizer')
 end)
 
+later(function ()
+  add('https://github.com/lambdalisue/mr.vim')
+end)
+
 -- =========================================
 -- | ddu関連
 -- =========================================

@@ -284,6 +284,12 @@ later(function()
     depends = { 'vim-denops/denops.vim' },
   }
 
+  nmaps {
+    { '<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
+    { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
+    { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
+  }
+
   local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
   autocmd({ 'FileType' }, {
     pattern = { 'gin-*', 'gin' },
@@ -355,18 +361,6 @@ later(function()
 
   abbrev {
     { prepose = 'Gin commit', from = 'a', to = '--amend' },
-  }
-end)
-
-later(function()
-  add {
-    source = 'https://github.com/lambdalisue/gin.vim',
-    depends = { 'vim-denops/denops.vim' },
-  }
-  nmaps {
-    { '<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
-    { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
-    { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
   }
 end)
 

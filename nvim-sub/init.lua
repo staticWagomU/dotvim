@@ -744,6 +744,9 @@ later(function()
   require('mini.move').setup {}
 end)
 
+-- =========================================
+-- | その他
+-- =========================================
 later(function()
   add('https://github.com/0xAdk/full_visual_line.nvim')
   require('full_visual_line').setup {}

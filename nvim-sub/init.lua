@@ -10,7 +10,7 @@ vim.treesitter.start = (function(wrapped)
 end)(vim.treesitter.start)
 
 local maps, nmaps, omaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps
-local nmap, map = WagomuBox.nmap, WagomuBox.map
+local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap
 
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_fzf = 1
@@ -725,15 +725,15 @@ later(function()
   }
 end)
 
-later(function ()
+later(function()
   add {
     source = 'https://github.com/folke/trouble.nvim',
     depends = { 'nvim-tree/nvim-web-devicons' },
   }
   require('trouble').setup {
     icons = true, -- use devicons for filenames
-    use_diagnostic_signs = true
-}
+    use_diagnostic_signs = true,
+  }
 end)
 
 -- =========================================
@@ -754,7 +754,6 @@ later(function()
   require('mini.move').setup {}
 end)
 
-
 later(function()
   add('https://github.com/echasnovski/mini.indentscope')
   require('mini.indentscope').setup {}
@@ -767,7 +766,7 @@ later(function()
   require('full_visual_line').setup {}
 end)
 
-later(function ()
+later(function()
   add('https://github.com/hrsh7th/nvim-insx')
 end)
 
@@ -786,22 +785,60 @@ now(function()
   vim.cmd.colorscheme('kanagawa')
 end)
 
-later(function ()
+later(function()
   add('https://github.com/machakann/vim-sandwich')
 end)
 
-later(function ()
+later(function()
   add('https://github.com/simeji/winresizer')
 end)
 
-later(function ()
+later(function()
   add('https://github.com/lambdalisue/mr.vim')
+end)
+
+later(function()
+  add('https://github.com/potamides/pantran.nvim')
+  local pantran = require('pantran')
+  vim.env.DEEPL_AUTH_KEY = WagomuBox.DEEPL_AUTHKEY
+  nmaps {
+    { '<Leader>tr', pantran.motion_translate },
+    {
+      '<Leader>trr',
+      function()
+        return pantran.motion_translate() .. '_'
+      end,
+    },
+  }
+  xmap('<Leader>tr', pantran.motion_translate)
+  pantran.setup {
+    default_engine = 'deepl',
+    engines = {
+      deepl = {
+        default_target = 'JA',
+      },
+    },
+    controls = {
+      mappings = {
+        edit = {
+          n = {
+            ['j'] = 'gj',
+            ['k'] = 'gk',
+          },
+          i = {
+            ['<C-y>'] = false,
+            ['<C-a>'] = require('pantran.ui.actions').yank_close_translation,
+          },
+        },
+      },
+    },
+  }
 end)
 
 -- =========================================
 -- | ddu関連
 -- =========================================
-later(function ()
+later(function()
   -- ----------------------------------------
   -- UI
   -- ----------------------------------------
@@ -841,7 +878,6 @@ later(function ()
 
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
 
-
   add('https://github.com/Shougo/ddu.vim')
 
   -- さすがに長いので分ける
@@ -852,8 +888,7 @@ later(function()
   add('https://github.com/vim-jp/vimdoc-ja')
 end)
 
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = { "*.mdx" },
-  command = "set filetype=mdx",
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { '*.mdx' },
+  command = 'setlocal filetype=mdx',
 })
-

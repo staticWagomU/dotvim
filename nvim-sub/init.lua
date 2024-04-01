@@ -9,7 +9,7 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
-local maps, nmaps, omaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps
+local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
 local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap
 
 vim.g.loaded_2html_plugin = 1

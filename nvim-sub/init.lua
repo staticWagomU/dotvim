@@ -767,6 +767,7 @@ end)
 
 later(function()
   add('https://github.com/hrsh7th/nvim-insx')
+  require('insx.preset.standard').setup()
 end)
 
 now(function()

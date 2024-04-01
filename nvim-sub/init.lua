@@ -170,7 +170,15 @@ now(function()
   add('https://github.com/vim-denops/denops.vim')
   add('https://github.com/zbirenbaum/copilot.lua')
   add('https://github.com/MunifTanjim/nui.nvim')
-  require('copilot').setup {}
+  require('copilot').setup {
+    suggestion = {
+      auto_trigger = true,
+      keymap = {
+        accept = '<C-g><C-Cr>',
+        dismiss = '<C-e>',
+      },
+    },
+  }
 end)
 
 -- =========================================

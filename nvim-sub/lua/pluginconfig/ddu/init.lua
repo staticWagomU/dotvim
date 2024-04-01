@@ -1,4 +1,5 @@
-require('pluginconfig.ddu.util').patch_global {
+local ddu = require('pluginconfig.ddu.util')
+ddu.patch_global {
   ui = 'ff',
   uiParams = {
     ff = {
@@ -29,15 +30,69 @@ require('pluginconfig.ddu.util').patch_global {
   },
 }
 
+ddu.patch_local('dpp', {
+  sources = {
+    {
+      name = { 'file_rec' },
+    },
+  },
+})
+ddu.patch_local('file_recursive', {
+  ui = 'ff',
+  uiParams = {
+    ff = {
+      previewSplit = 'horizontal',
+      prompt = '> ',
+    },
+  },
+  sources = {
+    {
+      name = { 'file_rec' },
+      options = {
+        matchers = {
+          'matcher_substring',
+        },
+        converters = {
+          'converter_devicon',
+          'converter_hl_dir',
+        },
+        ignoreCase = true,
+      },
+      params = {
+        ignoredDirectories = { 'node_modules', '.git', '.vscode' },
+      },
+    },
+  },
+  kindOptions = {
+    file = {
+      defaultAction = 'open',
+    },
+    action = {
+      defaultAction = 'do',
+    },
+  },
+  filterParams = {
+    matcher_substring = {
+      hightlightMatched = 'Search',
+    },
+  },
+})
+
+WagomuBox.nmaps {
+  { [[\f]], function() ddu.start_local('file_recursive') end },
+}
+
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff',
   callback = function()
-    -- vim.optlocal.signcolumn = 'no'
+    vim.opt_local.signcolumn = 'no'
+    local bufopts = { buffer = true }
     WagomuBox.nmaps {
-      { 'q', [[<Cmd>call ddu#ui#ff#do_action('quit')<CR>]] },
-      { '<Cr>', [[<Cmd>call ddu#ui#ff#do_action('itemAction')<CR>]] },
-      { 'i', [[<Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>]] },
-      { 'P', [[<Cmd>call ddu#ui#ff#do_action('togglePreview')<CR>]] },
+      { '<Cr>', function() ddu.do_action('itemAction') end, bufopts },
+      { 'P', function() ddu.do_action('togglePreview') end, bufopts },
+      { 'i', function() ddu.do_action('openFilterWindow') end, bufopts },
+      { 'q', function() ddu.do_action('quit') end, bufopts },
     }
   end,
 })

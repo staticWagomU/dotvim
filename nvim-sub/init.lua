@@ -834,6 +834,94 @@ later(function()
   }
 end)
 
+later(function()
+  add('https://github.com/monaqa/dial.nvim')
+  local augend = require('dial.augend')
+  require('dial.config').augends:register_group {
+    default = {
+      augend.integer.alias.decimal,
+      augend.semver.alias.semver,
+      augend.date.alias['%Y/%m/%d'],
+      augend.date.alias['%Y-%m-%d'],
+      augend.date.alias['%m/%d'],
+      augend.date.alias['%-m/%-d'],
+      augend.date.alias['%H:%M:%S'],
+      augend.date.alias['%H:%M'],
+      augend.constant.alias.bool,
+      augend.constant.alias.ja_weekday,
+      augend.constant.alias.ja_weekday_full,
+      augend.constant.new { elements = { 'and', 'or' } },
+      augend.constant.new {
+        elements = { '&&', '||' },
+        word = false,
+      },
+      augend.constant.new { elements = { 'let', 'const' } },
+      augend.case.new {
+        types = {
+          'PascalCase',
+          'camelCase',
+          'kebab-case',
+          'snake_case',
+          'SCREAMING_SNAKE_CASE',
+        },
+      },
+    },
+  }
+  nmaps {
+    {
+      '<C-a>',
+      function()
+        require('dial.map').manipulate('increment', 'normal')
+      end,
+    },
+    {
+      '<C-x>',
+      function()
+        require('dial.map').manipulate('decrement', 'normal')
+      end,
+    },
+    {
+      'g<C-a>',
+      function()
+        require('dial.map').manipulate('increment', 'gnormal')
+      end,
+    },
+    {
+      'g<C-x>',
+      function()
+        require('dial.map').manipulate('decrement', 'gnormal')
+      end,
+    },
+  }
+
+  vmaps {
+    {
+      '<C-a>',
+      function()
+        require('dial.map').manipulate('increment', 'visual')
+      end,
+    },
+    {
+      '<C-x>',
+      function()
+        require('dial.map').manipulate('decrement', 'visual')
+      end,
+    },
+    {
+      'g<C-a>',
+      function()
+        require('dial.map').manipulate('increment', 'gvisual')
+      end,
+    },
+    {
+      'g<C-x>',
+      function()
+        require('dial.map').manipulate('decrement', 'gvisual')
+      end,
+    },
+  }
+end)
+
 -- =========================================
 -- | ddu関連
 -- =========================================

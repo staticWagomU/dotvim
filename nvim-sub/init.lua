@@ -950,8 +950,6 @@ later(function()
   add('https://github.com/Shougo/ddu-source-file')
   add('https://github.com/Shougo/ddu-source-file_old')
   add('https://github.com/Shougo/ddu-source-file_rec')
-  add('https://github.com/Shougo/ddu-source-line')
-  add('https://github.com/matsui54/ddu-source-command_history')
   add('https://github.com/matsui54/ddu-source-file_external')
   add('https://github.com/matsui54/ddu-source-help')
   add('https://github.com/shun/ddu-source-buffer')
@@ -974,6 +972,7 @@ later(function()
   -- Filter
   -- ----------------------------------------
   add('https://github.com/Shougo/ddu-filter-matcher_substring')
+  add('https://github.com/Shougo/ddu-filter-sorter_alpha')
   add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
 
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
@@ -982,6 +981,34 @@ later(function()
 
   -- さすがに長いので分ける
   require('pluginconfig.ddu')
+
+  local ddu = require('pluginconfig.ddu.util')
+  WagomuBox.nmaps {
+    {
+      [[\\]],
+      function()
+        ddu.start_local('patch_local')
+      end,
+    },
+    {
+      [[\f]],
+      function()
+        ddu.start_local('file_recursive')
+      end,
+    },
+    {
+      [[\b]],
+      function()
+        ddu.start_source('buffer')
+      end,
+    },
+    {
+      [[\h]],
+      function()
+        ddu.start_source('help')
+      end,
+    },
+  }
 end)
 
 later(function()

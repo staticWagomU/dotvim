@@ -1,8 +1,9 @@
 local M = {}
 
 ---@param action string
----@param args table
-function M.do_action(action, args)
+---@param _args table
+function M.do_action(action, _args)
+  local args = _args or nil
   if args ~= nil then
     vim.fn['ddu#ui#do_action'](action, args)
   else

@@ -502,7 +502,7 @@ later(function()
   }
   add {
     source = 'https://github.com/neovim/nvim-lspconfig',
-    depends = { 'mwilliamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
+    depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
   }
 
   require('mason').setup()

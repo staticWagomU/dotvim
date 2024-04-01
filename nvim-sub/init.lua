@@ -264,7 +264,6 @@ later(function()
   gitsigns.setup {
     signcolumn = true,
     numhl = true,
-    word_diff = true,
   }
   nmaps {
     { ']g', gitsigns.next_hunk },

@@ -171,7 +171,6 @@ local bufopts = { noremap = true, buffer = true }
 -- | はじめにいるプラグインたち
 -- =========================================
 now(function()
-  add('https://github.com/nvim-tree/nvim-web-devicons')
   add('https://github.com/vim-denops/denops.vim')
   add('https://github.com/zbirenbaum/copilot.lua')
   add('https://github.com/MunifTanjim/nui.nvim')
@@ -179,7 +178,7 @@ now(function()
     suggestion = {
       auto_trigger = true,
       keymap = {
-        accept = '<C-g><C-Cr>',
+        accept = '<C-g><C-g>',
         dismiss = '<C-e>',
       },
     },

@@ -302,6 +302,7 @@ later(function()
     { '<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
     { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
     { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
+    { '<C-g><C-g>', '<Cmd>Gin commit<Cr>' },
   }
 
   local group = vim.api.nvim_create_augroup('my-gin', { clear = true })

@@ -111,6 +111,8 @@ nmaps {
   { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true } },
   { 'Q', 'q', { noremap = false, silent = false } },
 
+  { '1', '<Cmd>edit $MYVIMRC<Cr>' },
+
   { '<Leader>w', '<Cmd>update<Cr>' },
   { '<Leader>bn', '<Cmd>bnext<Cr>' },
   { '<Leader>bp', '<Cmd>bprevious<Cr>' },

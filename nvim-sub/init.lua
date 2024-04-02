@@ -384,25 +384,43 @@ end)
 -- =========================================
 later(function()
   add('https://github.com/stevearc/oil.nvim')
-  require('oil').setup {}
+  local oil = require('oil')
+  oil.setup {
+    default_file_explorer = true,
+  }
 
   nmaps {
-    { '<Leader>e', '<Cmd>Oil .<Cr>' },
-    { '<Leader>E', '<Cmd>Oil %:p:h<Cr>' },
+    { '<Leader>e', oil.open },
+    {
+      '<Leader>E',
+      function()
+        oil.open(vim.fn.expand('%:p:h'))
+      end,
+    },
   }
 
   autocmd('FileType', {
     pattern = 'oil',
-    callback = function()
-      nmap('<Leader>we', function()
-        local oil = require('oil')
-        local config = require('oil.config')
-        if #config.columns == 1 then
-          oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
-        else
-          oil.set_columns { 'icon' }
-        end
-      end, { buffer = true })
+    callback = function(args)
+      local bufnr = args.buf
+      local buffer = { buffer = bufnr }
+
+      nmaps {
+        { 'q', oil.close, buffer },
+        { '=', oil.save, buffer },
+        {
+          '<Leader>we',
+          function()
+            local config = require('oil.config')
+            if #config.columns == 1 then
+              oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
+            else
+              oil.set_columns { 'icon' }
+            end
+          end,
+          buffer,
+        },
+      }
     end,
   })
 end)

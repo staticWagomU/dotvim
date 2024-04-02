@@ -65,7 +65,6 @@ autocmd({ 'FileType' }, {
   group = group,
   callback = function()
     nmap('ZZ', '<Cmd>Apply<Cr>', bufopts)
-    
   end,
 })
 

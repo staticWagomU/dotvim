@@ -10,17 +10,17 @@ local map, nmap = WagomuBox.map, WagomuBox.nmap
 now(function()
   add('vim-denops/denops.vim')
   add('catppuccin/nvim')
-  require("catppuccin").setup({
-    flavour = "latte",
+  require('catppuccin').setup {
+    flavour = 'latte',
     background = {
-      light = "latte",
-      dark = "frappe",
+      light = 'latte',
+      dark = 'frappe',
     },
     transparent_background = false,
     term_colors = true,
     dim_inactive = {
       enabled = true,
-      shade = "dark",
+      shade = 'dark',
       percentage = 0.15,
     },
     integrations = {
@@ -31,7 +31,7 @@ now(function()
         enabled = true,
       },
     },
-  })
+  }
 end)
 
 ---===========================================
@@ -44,7 +44,7 @@ later(function()
     pattern = 'skkeleton-initialize-pre',
     callback = function()
       local getJisyo = function(name)
-        local dict_path = vim.fs.normalize(WagomuBox.plugins_path .. "/dict/SKK-JISYO.")
+        local dict_path = vim.fs.normalize(WagomuBox.plugins_path .. '/dict/SKK-JISYO.')
         return vim.fs.normalize(dict_path .. name)
       end
 
@@ -75,10 +75,10 @@ end)
 later(function()
   add('lewis6991/gitsigns.nvim')
   require('wagomu-box.plugin-config.gitsigns')
-  add({
+  add {
     source = 'lambdalisue/gin.vim',
-    depends = { 'vim-denops/denops.vim' }
-  })
+    depends = { 'vim-denops/denops.vim' },
+  }
   require('wagomu-box.plugin-config.gin')
 end)
 

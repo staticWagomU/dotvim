@@ -1,2 +1,1 @@
-vim.opt.bg='light'
-
+vim.opt.bg = 'light'

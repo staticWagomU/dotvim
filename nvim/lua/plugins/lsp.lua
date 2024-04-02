@@ -180,7 +180,6 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
 })
 -- }}}
 
-
 -- {{{ repo: 'https://github.com/neovim/nvim-lspconfig' }}}
 -- {{{ depends: 'mason-lspconfig.nvim' }}}
 -- lua_source {{{

@@ -5,4 +5,3 @@ MiniDeps.now(function()
   }
   require('mdx').setup()
 end)
-

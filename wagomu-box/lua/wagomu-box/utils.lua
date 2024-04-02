@@ -147,6 +147,4 @@ function M.rm_nvim_data()
   vim.fn.delete(vim.fn.stdpath('data'), 'rf')
 end
 
-
 return M
-

@@ -30,8 +30,8 @@ nmaps {
   { '<Leader>bc', '<Cmd>close<Cr>' },
   { '<Leader>cd', '<Cmd>cd %:p:h<Cr>' },
 
-  { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true }},
-  { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true }},
+  { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
+  { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
 
   { 'v2', 'vi"' },
   { 'v7', "vi'" },

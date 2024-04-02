@@ -17,6 +17,6 @@ nmaps {
   { '<C-g><C-v>', gitsigns.blame_line },
 }
 
-map({ 'n', 'x' }, '<C-g><C-a>',gitsigns.stage_hunk)
+map({ 'n', 'x' }, '<C-g><C-a>', gitsigns.stage_hunk)
 
 -- }}}

@@ -531,15 +531,19 @@ later(function()
     source = 'https://github.com/neovim/nvim-lspconfig',
     depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
   }
-  add({
+  add {
     source = 'https://github.com/kevinhwang91/nvim-ufo',
-    depends = { 'kevinhwang91/promise-async' }
-  })
+    depends = { 'kevinhwang91/promise-async' },
+  }
 
   require('mason').setup()
   local enabled_vtsls = true
   local lspconfig = require('lspconfig')
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  local capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('cmp_nvim_lsp').default_capabilities()
+  )
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true,
@@ -726,7 +730,7 @@ later(function()
   vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     callback = function(_)
       require('ufo').setup()
-    end
+    end,
   })
 end)
 
@@ -1082,8 +1086,8 @@ later(function()
 end)
 
 later(function()
- add('https://github.com/lewis6991/foldsigns.nvim')
- require('foldsigns').setup()
+  add('https://github.com/lewis6991/foldsigns.nvim')
+  require('foldsigns').setup()
 end)
 
 later(function()

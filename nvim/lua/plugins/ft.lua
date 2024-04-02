@@ -2,10 +2,9 @@
 -- {{{ repo:'https://github.com/wuelnerdotexe/vim-astro' }}}
 -- {{{ on_ft:'astro' }}}
 -- lua_source {{{
-vim.g["astro_typescript"] = "enable"
-vim.g["astro_stylus"] = "enaable"
+vim.g['astro_typescript'] = 'enable'
+vim.g['astro_stylus'] = 'enaable'
 -- }}}
-
 
 -- svelte  ----------------------------------------------
 -- {{{ repo:'https://github.com/evanleck/vim-svelte' }}}
@@ -13,7 +12,6 @@ vim.g["astro_stylus"] = "enaable"
 
 -- {{{ repo:'https://github.com/leafOfTree/vim-svelte-plugin' }}}
 -- {{{ on_ft:'svelte' }}}
-
 
 -- json ----------------------------------------------
 -- {{{ repo:'https://github.com/vuki656/package-info.nvim' }}}
@@ -39,7 +37,6 @@ keymap({ 'n' }, '<Leader>ni', require('package-info').install, opts)
 keymap({ 'n' }, '<Leader>np', require('package-info').change_version, opts)
 -- }}}
 
-
 -- go
 -- {{{ repo:'https://github.com/ray-x/go.nvim' }}}
 -- {{{ on_ft:'go' }}}
@@ -48,7 +45,6 @@ require('go').setup()
 -- }}}
 
 -- {{{ repo:'https://github.com/ray-x/guihua.lua' }}}
-
 
 -- mdx
 -- {{{ repo:'https://github.com/davidmh/mdx.nvim' }}}

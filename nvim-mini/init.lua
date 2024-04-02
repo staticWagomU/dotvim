@@ -9,11 +9,12 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local opts = { noremap = true, silent = true }
 local map, nmap = WagomuBox.map, WagomuBox.nmap
 
-
-later(function() require('mini.comment').setup() end)
+later(function()
+  require('mini.comment').setup()
+end)
 
 later(function()
-  require('mini.completion').setup({
+  require('mini.completion').setup {
     window = {
       info = { border = 'single' },
       signature = { border = 'single' },
@@ -22,31 +23,37 @@ later(function()
       source_func = 'completefunc',
       process_items = function(items, base)
         -- Don't show 'Text' and 'Snippet' suggestions
-        items = vim.tbl_filter(function(x) return x.kind ~= 1 and x.kind ~= 15 end, items)
+        items = vim.tbl_filter(function(x)
+          return x.kind ~= 1 and x.kind ~= 15
+        end, items)
         return MiniCompletion.default_process_items(items, base)
       end,
     },
-  })
+  }
 end)
 
 later(function()
-  require('mini.cursorword').setup({ delay = 200 })
+  require('mini.cursorword').setup { delay = 200 }
 end)
 
 later(function()
-  require('mini.files').setup({ windows = { preview = true } })
+  require('mini.files').setup { windows = { preview = true } }
   vim.keymap.set('n', '<Leader>e', MiniFiles.open, opts)
-  vim.keymap.set('n', '<Leader>E', function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, opts)
+  vim.keymap.set('n', '<Leader>E', function()
+    MiniFiles.open(vim.api.nvim_buf_get_name(0))
+  end, opts)
   local minifiles_augroup = vim.api.nvim_create_augroup('ec-mini-files', {})
   vim.api.nvim_create_autocmd('User', {
     group = minifiles_augroup,
     pattern = 'MiniFilesWindowOpen',
-    callback = function(args) vim.api.nvim_win_set_config(args.data.win_id, { border = 'double' }) end,
+    callback = function(args)
+      vim.api.nvim_win_set_config(args.data.win_id, { border = 'double' })
+    end,
   })
 end)
 
 later(function()
-  require('mini.indentscope').setup({ delay = 200 })
+  require('mini.indentscope').setup { delay = 200 }
 end)
 
 later(function()
@@ -72,7 +79,6 @@ now(function()
   require('mini.surround').setup()
 end)
 
-
 now(function()
   local statusline = require('mini.statusline')
   --stylua: ignore
@@ -97,10 +103,12 @@ now(function()
       { hl = mode_hl,                  strings = { search, location } },
     })
   end
-  statusline.setup({ content = { active = active } })
+  statusline.setup { content = { active = active } }
 end)
 
-now(function() require('mini.tabline').setup() end)
+now(function()
+  require('mini.tabline').setup()
+end)
 
 now(function()
   require('mini.visits').setup()
@@ -117,27 +125,29 @@ later(function()
   require('mason').setup()
 end)
 later(function()
-  add({
+  add {
     source = 'neovim/nvim-lspconfig',
-    depends = { 'williamboman/mason.nvim' }
-  })
+    depends = { 'williamboman/mason.nvim' },
+  }
 end)
 
-
-
 later(function()
-  add({
+  add {
     source = 'nvim-treesitter/nvim-treesitter',
     -- Use 'master' while monitoring updates in 'main'
     checkout = 'master',
     monitor = 'main',
     -- Perform action after every checkout
-    hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
-  })
-  require('nvim-treesitter.configs').setup({
+    hooks = {
+      post_checkout = function()
+        vim.cmd('TSUpdate')
+      end,
+    },
+  }
+  require('nvim-treesitter.configs').setup {
     ensure_installed = { 'lua', 'vimdoc' },
     highlight = { enable = true },
-  })
+  }
 end)
 
 later(function()
@@ -150,10 +160,10 @@ later(function()
 end)
 
 later(function()
-  add({
+  add {
     source = 'lambdalisue/gin.vim',
-    depends = { 'vim-denops/denops.vim' }
-  })
+    depends = { 'vim-denops/denops.vim' },
+  }
   require('wagomu-box.plugin-config.gin')
 end)
 
@@ -164,12 +174,12 @@ later(function()
   add('github/copilot.vim')
 end)
 later(function()
-  add({
+  add {
     source = 'CopilotC-Nvim/CopilotChat.nvim',
     depends = { 'github/copilot.vim' },
-    checkout = 'canary'
-  })
-  require("CopilotChat").setup {
+    checkout = 'canary',
+  }
+  require('CopilotChat').setup {
     debug = true,
   }
 end)
@@ -177,20 +187,20 @@ end)
 later(function()
   add('skk-dev/dict')
   add('kawarimidoll/tuskk.vim')
-  local dict_path = vim.fs.normalize(WagomuBox.plugins_path .. "/dict")
-  map({ "i", "c" }, "<C-j>", "<Cmd>call tuskk#toggle()<Cr>", opts)
-  nmap("<C-j>", "a<Cmd>call tuskk#toggle()<Cr>", opts)
-  vim.fn["tuskk#initialize"]({
-    ["jisyo_list"] = {
-      { ["path"] = dict_path .. "/SKK-JISYO.L", ["encoding"] = "euc-jp" },
-      { ["path"] = dict_path .. "/SKK-JISYO.emoji", ["mark"] = "[E]" },
+  local dict_path = vim.fs.normalize(WagomuBox.plugins_path .. '/dict')
+  map({ 'i', 'c' }, '<C-j>', '<Cmd>call tuskk#toggle()<Cr>', opts)
+  nmap('<C-j>', 'a<Cmd>call tuskk#toggle()<Cr>', opts)
+  vim.fn['tuskk#initialize'] {
+    ['jisyo_list'] = {
+      { ['path'] = dict_path .. '/SKK-JISYO.L', ['encoding'] = 'euc-jp' },
+      { ['path'] = dict_path .. '/SKK-JISYO.emoji', ['mark'] = '[E]' },
     },
-    ["kana_table"] = vim.fn["tuskk#opts#builtin_kana_table"](),
-    ["suggest_wait_ms"] = 200,
-    ["suggest_sort_by"] = "length",
-    ["merge_tsu"] = true,
-    ["trailing_n"] = true,
-  })
+    ['kana_table'] = vim.fn['tuskk#opts#builtin_kana_table'](),
+    ['suggest_wait_ms'] = 200,
+    ['suggest_sort_by'] = 'length',
+    ['merge_tsu'] = true,
+    ['trailing_n'] = true,
+  }
 end)
 
 now(function()

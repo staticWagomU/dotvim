@@ -508,10 +508,14 @@ later(function()
   require('guard').setup()
   local ft = require('guard.filetype')
 
+  local rootdir = require('wagomu-box.utils').root_pattern('stylua.toml', '.stylua.toml')
+  local args = { '-' }
+  if rootdir == nil then
+    args = require('wagomu-box.utils').mergeTable(args, { '--config-path', rootdir })
+  end
   ft('lua'):fmt {
     cmd = 'stylua',
-    args = { '-' },
-    stdin = true,
+    args = { '--config-path', rootdir, '-' },
   }
 
   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')

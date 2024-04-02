@@ -44,6 +44,19 @@ function M.make_abbrev(rules)
   end
 end
 
+function M.mergeTable(t1, t2)
+  if t1 == nil then
+    return t2
+  end
+  if t2 == nil then
+    return t1
+  end
+  for k, v in pairs(t2) do
+    t1[k] = v
+  end
+  return t1
+end
+
 ---@param opts optsTable | nil
 ---@return optsTable
 local function mergeOpts(opts)
@@ -144,7 +157,19 @@ end
 WagomuBox.joinpath = M.joinpath
 
 function M.rm_nvim_data()
-  vim.fn.delete(vim.fn.stdpath('data'), 'rf')
+  vim.fn.delete(vim.fn.stdpath('data')[0], 'rf')
+end
+
+function M.root_pattern(...)
+  for dir in vim.fs.parents(vim.api.nvim_buf_get_name(0)) do
+    for _, pattern in ipairs { ... } do
+      local file_path = vim.fs.joinpath(dir, pattern)
+      if vim.uv.fs_stat(file_path) then
+        return vim.fn.expand(file_path)
+      end
+    end
+  end
+  return nil
 end
 
 return M

@@ -59,6 +59,11 @@ vim.opt.fillchars = {
   vertright = '├',
   verthoriz = '┼',
 }
+vim.opt.foldcolumn = '1'
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99999
+vim.opt.foldlevelstart = 99999
+vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
 vim.opt.helplang = 'ja,en'
 vim.opt.hidden = true
 vim.opt.hlsearch = true
@@ -504,6 +509,10 @@ later(function()
     source = 'https://github.com/neovim/nvim-lspconfig',
     depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
   }
+  add({
+    source = 'https://github.com/kevinhwang91/nvim-ufo',
+    depends = { 'kevinhwang91/promise-async' }
+  })
 
   require('mason').setup()
   local enabled_vtsls = true
@@ -692,6 +701,11 @@ later(function()
     vim.lsp.handlers['textDocument/publishDiagnostics'] =
       vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { signs = true })
   end
+  vim.api.nvim_create_autocmd({ 'LspAttach' }, {
+    callback = function(_)
+      require('ufo').setup()
+    end
+  })
 end)
 
 later(function()
@@ -1043,6 +1057,11 @@ later(function()
       end
     end)
   end, { range = true })
+end)
+
+later(function()
+ add('https://github.com/lewis6991/foldsigns.nvim')
+ require('foldsigns').setup()
 end)
 
 later(function()

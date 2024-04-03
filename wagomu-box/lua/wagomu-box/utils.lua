@@ -160,14 +160,14 @@ function M.rm_nvim_data()
   vim.fn.delete(vim.fn.stdpath('data')[0], 'rf')
 end
 
-function M.root_pattern(...)
-  for dir in vim.fs.parents(vim.api.nvim_buf_get_name(0)) do
-    for _, pattern in ipairs { ... } do
-      local file_path = vim.fs.joinpath(dir, pattern)
-      if vim.uv.fs_stat(file_path) then
-        return vim.fn.expand(file_path)
-      end
-    end
+function M.find_specific_file_path(...)
+  local path = vim.fs.find({ ... }, {
+    upward = true,
+    stop = vim.uv.os_homedir(),
+    path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+  })
+  if #path > 0 then
+    return vim.fn.expand(path[1])
   end
   return nil
 end

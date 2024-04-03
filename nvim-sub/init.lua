@@ -1,6 +1,11 @@
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
 
+if require('wagomu-box.utils').is_windows then
+  vim.opt.shell = 'cmd.exe'
+  vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
+end
+
 -- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 vim.treesitter.start = (function(wrapped)
   return function(bufnr, lang)

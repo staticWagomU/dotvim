@@ -377,6 +377,8 @@ later(function()
     { from = 'gp', to = 'Gin push' },
     { from = 'gpp', to = 'Gin pull' },
     { from = 'gcd', to = 'GinCd' },
+    { from = 'gf', to = 'Gin fetch origin main' },
+    { from = 'gr', to = 'Gin rebase --autostash' },
   }
 
   abbrev {
@@ -513,7 +515,7 @@ later(function()
   require('guard').setup()
   local ft = require('guard.filetype')
 
-  local rootdir = require('wagomu-box.utils').root_pattern('stylua.toml', '.stylua.toml')
+  local rootdir = require('wagomu-box.utils').find_specific_file_path('stylua.toml', '.stylua.toml')
   local args = { '-' }
   if rootdir == nil then
     args = require('wagomu-box.utils').mergeTable(args, { '--config-path', rootdir })

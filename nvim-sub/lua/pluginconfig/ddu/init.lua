@@ -74,7 +74,7 @@ ddu.patch_global {
   },
   kindOptions = {
     ui_select = {
-      sourceOptions = 'select',
+      defaultAction = 'select',
     },
     action = {
       defaultAction = 'do',

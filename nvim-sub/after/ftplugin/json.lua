@@ -13,6 +13,11 @@ MiniDeps.now(function()
     { '<Plug>(packageinfo-action-delete)', packageinfo.delete },
     { '<Plug>(packageinfo-action-install)', packageinfo.install },
     { '<Plug>(packageinfo-action-chage_version)', packageinfo.change_version },
-    { '<C-h><C-h>', function() select_action('packageinfo') end },
+    {
+      '<C-h><C-h>',
+      function()
+        select_action('packageinfo')
+      end,
+    },
   }
 end)

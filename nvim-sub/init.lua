@@ -1044,7 +1044,7 @@ later(function()
     {
       [[\\]],
       function()
-        ddu.start_local('patch_local')
+        ddu.start_source('patch_local')
       end,
     },
     {

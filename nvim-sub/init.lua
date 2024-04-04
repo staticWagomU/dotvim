@@ -397,7 +397,12 @@ later(function()
   }
 
   nmaps {
-    { '<Leader>e', oil.open },
+    {
+      '<Leader>e',
+      function()
+        oil.open(vim.fn.getcwd())
+      end,
+    },
     {
       '<Leader>E',
       function()

@@ -1,4 +1,5 @@
 local ddu = require('pluginconfig.ddu.util')
+local bufopts = { buffer = true, silent = false }
 
 ddu.alias('source', 'file_rg', 'file_external')
 ddu.alias('source', 'file_git', 'file_external')
@@ -129,7 +130,6 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff',
   callback = function()
     vim.opt_local.signcolumn = 'no'
-    local bufopts = { buffer = true }
     WagomuBox.nmaps {
       {
         '*',
@@ -215,6 +215,22 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff-filter',
   callback = function()
-    WagomuBox.map({ 'n', 'i' }, '<CR>', [[<Esc><Cmd>close<CR>]], { buffer = true })
+    WagomuBox.map({ 'n', 'i' }, '<CR>', [[<Esc><Cmd>close<CR>]], bufopts)
+    WagomuBox.imaps {
+      {
+        '<C-f>',
+        function()
+          ddu.do_action('cursorNext', { loop = true })
+        end,
+        bufopts,
+      },
+      {
+        '<C-b>',
+        function()
+          ddu.do_action('cursorPrev', { loop = true })
+        end,
+        bufopts,
+      },
+    }
   end,
 })

@@ -322,14 +322,8 @@ later(function()
         { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', bufopts },
         { 'c', '<Cmd>bdelete<Cr><Cmd>Gin commit<Cr>', bufopts },
         { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
-<<<<<<< HEAD
         { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>', bufopts },
-||||||| parent of 86f228d (nvim-sub: vim.ui.selectを実行する)
-        { 's', '<Cmd>GinStatus<Cr>', bufopts },
-=======
-        { 's', '<Cmd>GinStatus<Cr>', bufopts },
         { '<C-h><C-h>', function() require('select_action')('gin') end, bufopts },
->>>>>>> 86f228d (nvim-sub: vim.ui.selectを実行する)
       }
     end,
   })

@@ -8,7 +8,7 @@ ddu.patch_global {
   uiParams = {
     ff = {
       autoAction = {
-        name = 'preview'
+        name = 'preview',
       },
       filterFloatingPosition = 'bottom',
       filterSplitDirection = 'floating',
@@ -47,7 +47,7 @@ ddu.patch_global {
       converters = {
         'converter_hl_dir',
       },
-      defaultAction = 'cd',
+      defaultAction = 'open',
     },
     buffer = {
       defaultAction = 'open',

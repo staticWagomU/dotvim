@@ -7,6 +7,9 @@ ddu.patch_global {
   ui = 'ff',
   uiParams = {
     ff = {
+      autoAction = {
+        name = 'preview'
+      },
       filterFloatingPosition = 'bottom',
       filterSplitDirection = 'floating',
       floatingBorder = 'rounded',
@@ -26,6 +29,7 @@ ddu.patch_global {
         'matcher_substring',
       },
       ignoreCase = true,
+      smartCase = true,
     },
     file_old = {
       converters = {

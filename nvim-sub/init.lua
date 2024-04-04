@@ -375,7 +375,7 @@ later(function()
     { from = 'gin', to = 'Gin' },
     { from = 'git', to = 'Gin' },
     { from = 'gp', to = 'Gin push' },
-    { from = 'gpp', to = 'Gin pull' },
+    { from = 'gpp', to = 'Gin pull --autostash' },
     { from = 'gcd', to = 'GinCd' },
     { from = 'gf', to = 'Gin fetch origin main' },
     { from = 'gr', to = 'Gin rebase --autostash' },

@@ -1035,6 +1035,7 @@ later(function()
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
 
   add('https://github.com/Shougo/ddu.vim')
+  add('https://github.com/shougo/ddu-commands.vim')
 
   -- さすがに長いので分ける
   require('pluginconfig.ddu')

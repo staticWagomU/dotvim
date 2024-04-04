@@ -44,7 +44,7 @@ function M.start_source(name)
   }
 end
 
----@param type 'source' | 'command' | 'keymap' | 'option' | 'autocmd' | 'alias'
+---@param type 'ui' | 'source' | 'filter' | 'kind' | 'column' | 'action'
 ---@param name string
 ---@param base string
 function M.alias(type, name, base)

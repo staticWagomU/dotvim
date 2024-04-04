@@ -132,6 +132,13 @@ vim.api.nvim_create_autocmd('FileType', {
     local bufopts = { buffer = true }
     WagomuBox.nmaps {
       {
+        '*',
+        function()
+          ddu.do_action('toggleAllItems')
+        end,
+        bufopts,
+      },
+      {
         '<Cr>',
         function()
           ddu.do_action('itemAction')
@@ -139,9 +146,51 @@ vim.api.nvim_create_autocmd('FileType', {
         bufopts,
       },
       {
+        '<Space>',
+        function()
+          ddu.do_action('toggleSelectItem')
+        end,
+        bufopts,
+      },
+      {
         'P',
         function()
           ddu.do_action('togglePreview')
+        end,
+        bufopts,
+      },
+      {
+        'a',
+        function()
+          ddu.do_action('chooseAction')
+        end,
+        bufopts,
+      },
+      {
+        'A',
+        function()
+          ddu.do_action('inputAction')
+        end,
+        bufopts,
+      },
+      {
+        'r',
+        function()
+          ddu.do_action('itemAction', { name = 'quickfix' })
+        end,
+        bufopts,
+      },
+      {
+        'yy',
+        function()
+          ddu.do_action('itemAction', { name = 'yank' })
+        end,
+        bufopts,
+      },
+      {
+        'gr',
+        function()
+          ddu.do_action('itemAction', { name = 'grep' })
         end,
         bufopts,
       },

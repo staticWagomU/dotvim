@@ -316,13 +316,13 @@ later(function()
     group = group,
     callback = function()
       nmaps {
-        { 'D', '<Cmd>GinDiff<Cr>', bufopts },
-        { 'L', '<Cmd>GinLog<Cr>', bufopts },
+        { 'D', '<Cmd>bdelete<Cr><Cmd>GinDiff<Cr>', bufopts },
+        { 'L', [[<Cmd>bdelete<Cr><Cmd>GinLog --graph --pretty=%C(yellow)%h\ %C(reset)%C(cyan)@%an%C(reset)\ %C(auto)%d%C(reset)\ %s\ %C(magenta)[%ar]%C(reset)<Cr>]], bufopts },
         { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', bufopts },
-        { 'b', '<Cmd>GinBranch<Cr>', bufopts },
-        { 'c', '<Cmd>Gin commit<Cr>', bufopts },
+        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', bufopts },
+        { 'c', '<Cmd>bdelete<Cr><Cmd>Gin commit<Cr>', bufopts },
         { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
-        { 's', '<Cmd>GinStatus<Cr>', bufopts },
+        { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>', bufopts },
       }
     end,
   })

@@ -857,7 +857,7 @@ later(function()
   add('https://github.com/simeji/winresizer')
 end)
 
-later(function()
+now(function()
   add('https://github.com/lambdalisue/mr.vim')
 end)
 

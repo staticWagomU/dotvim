@@ -849,21 +849,6 @@ later(function()
   require('insx.preset.standard').setup()
 end)
 
-now(function()
-  add('https://github.com/rebelot/kanagawa.nvim')
-  require('kanagawa').setup {
-    compile = true,
-    functionStyle = { italic = true },
-    dimInactive = true,
-    theme = 'wave',
-    background = {
-      dark = 'wave',
-      light = 'lotus',
-    },
-  }
-  vim.cmd.colorscheme('kanagawa')
-end)
-
 later(function()
   add('https://github.com/machakann/vim-sandwich')
 end)
@@ -1120,6 +1105,22 @@ end)
 
 later(function()
   add('https://github.com/vim-jp/vimdoc-ja')
+end)
+
+now(function()
+  add('https://github.com/rebelot/kanagawa.nvim')
+  require('kanagawa').setup {
+    compile = true,
+    transparent = true,
+    functionStyle = { italic = true },
+    dimInactive = true,
+    theme = 'wave',
+    background = {
+      dark = 'wave',
+      light = 'lotus',
+    },
+  }
+  vim.cmd.colorscheme('kanagawa')
 end)
 
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {

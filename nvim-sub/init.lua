@@ -1060,6 +1060,18 @@ later(function()
       end,
     },
     {
+      [[\f]],
+      function()
+        ddu.start_local('file_recursive')
+      end,
+    },
+    {
+      [[\g]],
+      function()
+        ddu.start_local('file_git')
+      end,
+    },
+    {
       [[\h]],
       function()
         ddu.start_source('help')

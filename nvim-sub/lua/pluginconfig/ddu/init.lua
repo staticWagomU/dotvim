@@ -32,25 +32,31 @@ ddu.patch_global {
       ignoreCase = true,
       smartCase = true,
     },
-    file_old = {
+    buffer = {
+      defaultAction = 'open',
+    },
+    file_git = {
       converters = {
+        'converter_devicon',
         'converter_hl_dir',
       },
       defaultAction = 'cd',
     },
-    file_git = {
+    file_old = {
       converters = {
+        'converter_devicon',
         'converter_hl_dir',
       },
       defaultAction = 'cd',
     },
     file_rec = {
       converters = {
+        'converter_devicon',
         'converter_hl_dir',
       },
       defaultAction = 'open',
     },
-    buffer = {
+    help = {
       defaultAction = 'open',
     },
     mr = {
@@ -63,7 +69,7 @@ ddu.patch_global {
   },
   sourceParams = {
     file_git = {
-      cmd = { 'git', 'ls-file', '-co', '--exclude-standard' },
+      cmd = { 'git', 'ls-files', '-co', '--exclude-standard' },
     },
     rg = {
       args = { '--ignore-case', '--column', '--no-heading', '--color', 'never' },
@@ -74,28 +80,17 @@ ddu.patch_global {
     },
   },
   filterParams = {
-    matcher_substring = {
-      hightlightMatched = 'Search',
-    },
-    converter_hl_dir = {
-      hlGroup = { 'Directory', 'Keyword' },
-    },
+    matcher_substring = { hightlightMatched = 'Search' },
+    converter_hl_dir = { hlGroup = { 'Directory', 'Keyword' } },
   },
   kindOptions = {
-    ui_select = {
-      defaultAction = 'select',
-    },
-    action = {
-      defaultAction = 'do',
-    },
-    patch_local = {
-      defaultAction = 'start',
-    },
+    ui_select = { defaultAction = 'select' },
+    action = { defaultAction = 'do' },
+    patch_local = { defaultAction = 'start' },
   },
 }
 
 ddu.patch_local('file_recursive', {
-  ui = 'ff',
   uiParams = {
     ff = {
       previewSplit = 'horizontal',
@@ -106,17 +101,13 @@ ddu.patch_local('file_recursive', {
     {
       name = { 'file_rec' },
       options = {
-        matchers = {
-          'matcher_substring',
-        },
         converters = {
           'converter_devicon',
           'converter_hl_dir',
         },
-        ignoreCase = true,
       },
       params = {
-        ignoredDirectories = { 'node_modules', '.git', '.vscode' },
+        ignoredDirectories = { 'node_modules', '.git', '.vscode', '.npm' },
       },
     },
   },
@@ -126,6 +117,21 @@ ddu.patch_local('file_recursive', {
     },
     action = {
       defaultAction = 'do',
+    },
+  },
+})
+
+ddu.patch_local('file_git', {
+  sources = {
+    {
+      name = { 'file_git' },
+      options = {
+        converters = {
+          'converter_devicon',
+          'converter_hl_dir',
+        },
+        defaultAction = 'open',
+      },
     },
   },
 })

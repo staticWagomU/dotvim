@@ -1002,6 +1002,7 @@ later(function()
   add('https://github.com/Shougo/ddu-source-file')
   add('https://github.com/Shougo/ddu-source-file_old')
   add('https://github.com/Shougo/ddu-source-file_rec')
+  add('https://github.com/kuuote/ddu-source-mr')
   add('https://github.com/matsui54/ddu-source-file_external')
   add('https://github.com/matsui54/ddu-source-help')
   add('https://github.com/shun/ddu-source-buffer')
@@ -1029,7 +1030,10 @@ later(function()
 
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
 
-  add('https://github.com/Shougo/ddu.vim')
+  add {
+    source = 'https://github.com/Shougo/ddu.vim',
+    depends = { 'lambdalisue/mr.vim' },
+  }
   add('https://github.com/shougo/ddu-commands.vim')
 
   -- さすがに長いので分ける
@@ -1044,9 +1048,9 @@ later(function()
       end,
     },
     {
-      [[\f]],
+      [[\m]],
       function()
-        ddu.start_local('file_recursive')
+        ddu.start_local('mr:mrw')
       end,
     },
     {

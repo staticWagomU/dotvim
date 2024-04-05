@@ -53,7 +53,11 @@ ddu.patch_global {
     buffer = {
       defaultAction = 'open',
     },
-    help = {
+    mr = {
+      converters = {
+        'converter_devicon',
+        'converter_hl_dir',
+      },
       defaultAction = 'open',
     },
   },
@@ -125,6 +129,26 @@ ddu.patch_local('file_recursive', {
     },
   },
 })
+
+for _, mrKind in ipairs { 'mrr', 'mru', 'mrw' } do
+  ddu.patch_local('mr:' .. mrKind, {
+    sources = {
+      {
+        name = { 'mr' },
+        options = {
+          converters = {
+            'converter_devicon',
+            'converter_hl_dir',
+          },
+          defaultAction = 'open',
+        },
+        params = {
+          kind = mrKind,
+        },
+      },
+    },
+  })
+end
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff',

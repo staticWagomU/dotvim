@@ -325,7 +325,7 @@ later(function()
         },
         { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', bufopts },
         { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', bufopts },
-        { 'c', '<Cmd>bdelete<Cr><Cmd>Gin commit<Cr>', bufopts },
+        { 'c', '<Cmd>Gin commit<Cr>', bufopts },
         { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
         { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>', bufopts },
         {

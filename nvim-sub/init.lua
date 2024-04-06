@@ -1,4 +1,5 @@
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
+-- vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim/wagomu/denopstatusline'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
 
 if require('wagomu-box.utils').is_windows then
@@ -1174,6 +1175,20 @@ later(function()
 
   -- Because heirline is lazy loaded, we need to manually set the winbar on startup
   vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+end)
+
+later(function()
+  add('https://github.com/ptdewey/yankbank-nvim')
+  require('yankbank').setup {
+    max_entries = 12,
+    sep = '',
+    keymaps = {
+      navigation_next = 'j',
+      navigation_prev = 'k',
+    },
+    num_behavior = 'prefix',
+  }
+  nmap('<Leader>y', '<Cmd>YankBank<Cr>')
 end)
 
 now(function()

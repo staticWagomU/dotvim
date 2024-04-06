@@ -605,7 +605,9 @@ later(function()
 
   require('mason-lspconfig').setup_handlers {
     function(server_name)
-      lspconfig[server_name].setup()
+      lspconfig[server_name].setup {
+        capabilities = capabilities,
+      }
     end,
     ['astro'] = function()
       lspconfig['astro'].setup {
@@ -716,36 +718,6 @@ later(function()
         },
       }
     end,
-    ['cssls'] = function()
-      lspconfig['cssls'].setup {
-        capabilities = capabilities,
-      }
-    end,
-    ['zls'] = function()
-      lspconfig['zls'].setup {
-        capabilities = capabilities,
-      }
-    end,
-    ['svelte'] = function()
-      lspconfig['svelte'].setup {
-        capabilities = capabilities,
-      }
-    end,
-    ['volar'] = function()
-      lspconfig['volar'].setup {
-        capabilities = capabilities,
-      }
-    end,
-    ['rust_analyzer'] = function()
-      lspconfig['rust_analyzer'].setup {
-        capabilities = capabilities,
-      }
-    end,
-    ['unocss'] = function()
-      lspconfig['unocss'].setup {
-        capabilities = capabilities,
-      }
-    end,
   }
 
   for type, icon in pairs {
@@ -756,12 +728,11 @@ later(function()
   } do
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-
-    vim.lsp.handlers['textDocument/publishDiagnostics'] =
-      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { signs = true })
   end
+  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
+
+  vim.lsp.handlers['textDocument/publishDiagnostics'] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { signs = true })
   vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     callback = function(_)
       require('ufo').setup()

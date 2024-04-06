@@ -304,6 +304,8 @@ later(function()
     depends = { 'vim-denops/denops.vim' },
   }
 
+  vim.g.gin_proxy_apply_without_confirm = 1
+
   nmaps {
     { '<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
     { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },

@@ -174,6 +174,7 @@ local abbrev = require('wagomu-box.utils').make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
 
 local bufopts = { noremap = true, buffer = true }
+local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
 
 -- =========================================
 -- | はじめにいるプラグインたち
@@ -346,7 +347,8 @@ later(function()
     group = group,
     callback = function()
       nmaps {
-        { 'F', '<Plug>(gin-action-fixup:instant)', bufopts },
+        { '<C-g><C-g>', '<Plug>(gin-action-fixup:instant)', bufopts },
+        { '<C-g><C-f>', '<Plug>(gin-action-choice)fixup:', nosilent_bufopts },
       }
     end,
   })
@@ -363,7 +365,6 @@ later(function()
     pattern = 'gin-status',
     group = group,
     callback = function()
-      local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
       maps({ 'n', 'x' }, {
         { 'h', '<Plug>(gin-action-stage)', bufopts },
         { 'l', '<Plug>(gin-action-unstage)', bufopts },

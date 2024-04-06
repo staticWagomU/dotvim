@@ -308,7 +308,7 @@ later(function()
     { '<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
     { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
     { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
-    { '<C-g><C-g>', '<Cmd>Gin commit<Cr>' },
+    { '<C-g>c', '<Cmd>Gin commit<Cr>' },
   }
 
   local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
@@ -361,6 +361,7 @@ later(function()
     pattern = 'gin-status',
     group = group,
     callback = function()
+      local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
       maps({ 'n', 'x' }, {
         { 'h', '<Plug>(gin-action-stage)', bufopts },
         { 'l', '<Plug>(gin-action-unstage)', bufopts },
@@ -370,6 +371,9 @@ later(function()
         { 'A', '<Cmd>Gin commit --amend<Cr>', bufopts },
         { 'd', '<Plug>(gin-action-diff:smart)', bufopts },
         { '<Cr>', '<Plug>(gin-action-edit)zv', bufopts },
+        { '<C-g><C-f>', ':<C-u>Gin fetch', nosilent_bufopts },
+        { '<C-g><C-m>', ':<C-u>Gin merge', nosilent_bufopts },
+        { '<C-g><C-r>', ':<C-u>Gin rebase', nosilent_bufopts },
       }
     end,
   })

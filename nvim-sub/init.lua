@@ -41,6 +41,7 @@ vim.g.loaded_zipPlugin = 1
 
 vim.g.mapleader = ' '
 
+vim.opt.clipboard = 'unnamedplus,unnamed'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 vim.opt.fileencodings = 'utf-8,euc-jp,cp932'

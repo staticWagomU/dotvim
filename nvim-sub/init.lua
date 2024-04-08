@@ -347,6 +347,9 @@ later(function()
     pattern = { 'gin-*', 'gin' },
     group = group,
     callback = function()
+      vim.opt_local.signcolumn = 'no'
+      vim.opt_local.number = false
+      vim.opt_local.foldcolumn = '0'
       nmaps {
         { 'D', '<Cmd>bdelete<Cr><Cmd>GinDiff<Cr>', bufopts },
         {
@@ -461,6 +464,10 @@ later(function()
   autocmd('FileType', {
     pattern = 'oil',
     callback = function(args)
+      vim.opt_local.signcolumn = 'no'
+      vim.opt_local.number = false
+      vim.opt_local.foldcolumn = '0'
+
       local bufnr = args.buf
       local buffer = { buffer = bufnr }
 

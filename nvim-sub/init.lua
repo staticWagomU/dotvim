@@ -127,6 +127,33 @@ nmaps {
   { '<Leader>bc', '<Cmd>close<Cr>' },
   { '<Leader>cd', '<Cmd>cd %:p:h<Cr>' },
 
+  -- ref: https://github.com/habamax/.vim/blob/5ae879ffa91aa090efedc9f43b89c78cf748fb01/plugin/mappings.vim?plain=1#L152
+  {
+    '<Leader>j',
+    function()
+      local line = vim.fn.line('.')
+      vim.cmd('normal! L')
+      if line == vim.fn.line('.') then
+        vim.cmd('normal! ztL')
+      end
+      if vim.fn.line('.') == vim.fn.line('$') then
+        vim.cmd('normal! z-')
+      end
+      vim.cmd('normal! 0')
+    end,
+  },
+  {
+    '<Leader>k',
+    function()
+      local line = vim.fn.line('.')
+      vim.cmd('normal! H')
+      if line == vim.fn.line('.') then
+        vim.cmd('normal! zbH')
+      end
+      vim.cmd('normal! 0')
+    end,
+  },
+
   { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
   { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
 

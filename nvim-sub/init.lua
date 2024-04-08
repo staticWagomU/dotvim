@@ -1199,6 +1199,7 @@ end)
 
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
+  vim.opt.background='dark'
   require('kanagawa').setup {
     compile = true,
     transparent = true,

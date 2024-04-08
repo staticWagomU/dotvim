@@ -39,8 +39,8 @@ function M.make_abbrev(rules)
     end
 
     vim.cmd(([[
-				cnoreabbrev <expr> %s (getcmdtype()==# ":") ? get(%s, getcmdline(), %s) : %s
-				]]):format(key, vim.fn.string(d), vim.fn.string(key), vim.fn.string(key)))
+    cnoreabbrev <expr> %s (getcmdtype()==# ":") ? get(%s, getcmdline(), %s) : %s
+    ]]):format(key, vim.fn.string(d), vim.fn.string(key), vim.fn.string(key)))
   end
 end
 
@@ -57,22 +57,28 @@ function M.mergeTable(t1, t2)
   return t1
 end
 
----@param opts optsTable | nil
+---@param ... optsTable | nil
 ---@return optsTable
-local function mergeOpts(opts)
-  local defaultOpts = {
+local function mergeOpts(...)
+  local defaultTable = {
     noremap = true,
     silent = true,
   }
-  if opts == nil then
-    return defaultOpts
+  local result = {}
+
+  for k, v in pairs(defaultTable) do
+    if result[k] == nil then
+      result[k] = v
+    end
   end
 
-  for k, v in pairs(opts) do
-    defaultOpts[k] = v
+  for _, t in ipairs { ... } do
+    for k, v in pairs(t) do
+      result[k] = v
+    end
   end
 
-  return defaultOpts
+  return result
 end
 
 for _, mode in ipairs { 'n', 'i', 'c', 'v', 'x', 's', 'o', 't', 'l' } do

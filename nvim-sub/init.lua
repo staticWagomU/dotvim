@@ -571,18 +571,11 @@ end)
 -- =========================================
 later(function()
   add('https://github.com/nvimdev/guard.nvim')
+  add('https://github.com/nvimdev/guard-collection')
   require('guard').setup()
   local ft = require('guard.filetype')
 
-  local rootdir = require('wagomu-box.utils').find_specific_file_path('stylua.toml', '.stylua.toml')
-  local args = { '-' }
-  if rootdir == nil then
-    args = require('wagomu-box.utils').mergeTable(args, { '--config-path', rootdir })
-  end
-  ft('lua'):fmt {
-    cmd = 'stylua',
-    args = { '--config-path', rootdir, '-' },
-  }
+  ft('lua'):fmt('stylua')
 
   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
 end)

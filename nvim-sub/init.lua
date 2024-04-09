@@ -1197,6 +1197,13 @@ later(function()
   nmap('<Leader>y', '<Cmd>YankBank<Cr>')
 end)
 
+later(function()
+  add('https://git.sr.ht/~whynothugo/lsp_lines.nvim')
+  require('lsp_lines').setup {
+    virtual_text = false,
+  }
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background='dark'

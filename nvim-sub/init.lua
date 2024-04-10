@@ -1,8 +1,9 @@
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 -- vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim/wagomu/denopstatusline'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
+local utils = require('wagomu-box.utils')
 
-if require('wagomu-box.utils').is_windows then
+if utils.is_windows then
   vim.opt.shell = 'cmd.exe'
   vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
 end
@@ -795,19 +796,25 @@ later(function()
     return string.format('<Cmd>Lspsaga %s<Cr>', action)
   end
 
-  nmap(';', '<Nop>', { noremap = false })
-  nmaps {
-    { ';r', doSagaAction('rename') },
-    { ';d', doSagaAction('peek_definition') },
-    { ';D', doSagaAction('goto_definition') },
-    { ';t', doSagaAction('peek_type_definition') },
-    { ';T', doSagaAction('goto_type_definition') },
-    { ';<Space>', doSagaAction('code_action') },
-    { ';l', doSagaAction('show_line_diagnostics') },
-    { ';j', doSagaAction('diagnostics_jump_next') },
-    { ';k', doSagaAction('diagnostics_jump_prev') },
-    { 'K', doSagaAction('hover_doc') },
+  nmaps{
+    {';', '<Nop>', { noremap = false }},
+    {';;',doSagaAction('term_toggle') },
   }
+  utils.on_attach(function(client, buffer)
+    nmaps {
+      { ';r', doSagaAction('rename') },
+      { ';d', doSagaAction('peek_definition') },
+      { ';D', doSagaAction('goto_definition') },
+      { ';t', doSagaAction('peek_type_definition') },
+      { ';T', doSagaAction('goto_type_definition') },
+      { ';<Space>', doSagaAction('code_action') },
+      { ';l', doSagaAction('show_line_diagnostics') },
+      { ';j', doSagaAction('diagnostics_jump_next') },
+      { ';k', doSagaAction('diagnostics_jump_prev') },
+      { 'K', doSagaAction('hover_doc') },
+    }
+  end)
+
 end)
 
 later(function()

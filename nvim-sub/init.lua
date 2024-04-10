@@ -1,3 +1,4 @@
+vim.loader.enable()
 vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
 -- vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim/wagomu/denopstatusline'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
@@ -15,6 +16,7 @@ vim.treesitter.start = (function(wrapped)
     pcall(wrapped, bufnr, lang)
   end
 end)(vim.treesitter.start)
+vim.diagnostic.config({severity_sort = true})
 
 local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
 local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap

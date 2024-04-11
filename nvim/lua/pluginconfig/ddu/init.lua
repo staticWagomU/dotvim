@@ -12,7 +12,6 @@ ddu.patch_global {
         name = 'preview',
       },
       cursorPos = 0,
-      filterFloatingPosition = 'top',
       previewFloating = false,
       previewSplit = 'vertical',
       prompt = '> ',

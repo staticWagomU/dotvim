@@ -806,7 +806,7 @@ later(function()
     {';', '<Nop>', { noremap = false }},
     {';;',doSagaAction('term_toggle') },
   }
-  utils.on_attach(function(client, buffer)
+  utils.on_attach(function(_, _)
     nmaps {
       { ';r', doSagaAction('rename') },
       { ';d', doSagaAction('peek_definition') },

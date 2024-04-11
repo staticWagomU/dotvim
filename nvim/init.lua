@@ -338,11 +338,12 @@ later(function()
     source = 'https://github.com/lambdalisue/gin.vim',
     depends = { 'vim-denops/denops.vim' },
   }
+  local nowait_bufopts = { buffer = true, noremap  = true, nowait = true }
 
   vim.g.gin_proxy_apply_without_confirm = 1
 
   nmaps {
-    { '<C-g><C-s>', '<Cmd>GinStatus<Cr>' },
+    { '<C-g><C-s>', '<Cmd>GinStatus<Cr>j' },
     { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
     { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
     { '<C-g>c', '<Cmd>Gin commit<Cr>' },
@@ -357,23 +358,23 @@ later(function()
       vim.opt_local.number = false
       vim.opt_local.foldcolumn = '0'
       nmaps {
-        { 'D', '<Cmd>bdelete<Cr><Cmd>GinDiff<Cr>', bufopts },
+        { 'D', '<Cmd>bdelete<Cr><Cmd>GinDiff<Cr>', nowait_bufopts },
         {
           'L',
           [[<Cmd>bdelete<Cr><Cmd>GinLog --graph --pretty=%C(yellow)%h\ %C(reset)%C(cyan)@%an%C(reset)\ %C(auto)%d%C(reset)\ %s\ %C(magenta)[%ar]%C(reset)<Cr>]],
-          bufopts,
+          nowait_bufopts,
         },
-        { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', bufopts },
-        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', bufopts },
-        { 'c', '<Cmd>Gin commit<Cr>', bufopts },
-        { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', bufopts },
-        { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>', bufopts },
+        { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', nowait_bufopts },
+        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', nowait_bufopts },
+        { 'c', '<Cmd>Gin commit<Cr>', nowait_bufopts },
+        { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', nowait_bufopts },
+        { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j', nowait_bufopts },
         {
           '<C-h><C-h>',
           function()
             require('select_action')('gin')
           end,
-          bufopts,
+          nowait_bufopts,
         },
       }
     end,
@@ -394,7 +395,7 @@ later(function()
     pattern = 'gin-diff',
     group = group,
     callback = function()
-      nmap('gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
+      nmap('gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', nowait_bufopts)
     end,
   })
 
@@ -403,14 +404,14 @@ later(function()
     group = group,
     callback = function()
       maps({ 'n', 'x' }, {
-        { 'h', '<Plug>(gin-action-stage)', bufopts },
-        { 'l', '<Plug>(gin-action-unstage)', bufopts },
+        { 'h', '<Plug>(gin-action-stage)', nowait_bufopts },
+        { 'l', '<Plug>(gin-action-unstage)', nowait_bufopts },
       })
       nmaps {
-        { 'a', '<Plug>(gin-action-choice)', bufopts },
-        { 'A', '<Cmd>Gin commit --amend<Cr>', bufopts },
-        { 'd', '<Plug>(gin-action-diff:smart)', bufopts },
-        { '<Cr>', '<Plug>(gin-action-edit)zv', bufopts },
+        { 'a', '<Plug>(gin-action-choice)', nowait_bufopts },
+        { 'A', '<Cmd>Gin commit --amend<Cr>', nowait_bufopts },
+        { 'd', '<Plug>(gin-action-diff:smart)', nowait_bufopts },
+        { '<Cr>', '<Plug>(gin-action-edit)zv', nowait_bufopts },
         { '<C-g><C-f>', ':<C-u>Gin fetch', nosilent_bufopts },
         { '<C-g><C-m>', ':<C-u>Gin merge', nosilent_bufopts },
         { '<C-g><C-r>', ':<C-u>Gin rebase', nosilent_bufopts },

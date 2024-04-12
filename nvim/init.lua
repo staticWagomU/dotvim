@@ -1224,6 +1224,14 @@ later(function()
   vim.notify = require("notify")
 end)
 
+later(function()
+  add('https://github.com/mattn/vim-sonictemplate')
+  vim.g.sonictemplate_vim_template_dir = {
+    WagomuBox.plugins_path .. '/vim-sonictemplate/template',
+    '~/dotvim/wagomu-box/template/'
+  }
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

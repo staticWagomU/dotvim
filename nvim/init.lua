@@ -1220,8 +1220,8 @@ later(function()
 end)
 
 later(function()
-  add('https://github.com/rcarriga/nvim-notify')
-  vim.notify = require("notify")
+  add('https://github.com/vigoux/notifier.nvim')
+  require('notifier').setup {}
 end)
 
 later(function()

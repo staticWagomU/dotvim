@@ -1220,11 +1220,6 @@ later(function()
 end)
 
 later(function()
-  add('https://github.com/vigoux/notifier.nvim')
-  require('notifier').setup {}
-end)
-
-later(function()
   add('https://github.com/mattn/vim-sonictemplate')
   vim.g.sonictemplate_vim_template_dir = {
     WagomuBox.plugins_path .. '/vim-sonictemplate/template',

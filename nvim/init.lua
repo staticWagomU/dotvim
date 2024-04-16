@@ -511,6 +511,7 @@ later(function()
   add('https://github.com/hrsh7th/vim-vsnip')
   add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
   add('https://github.com/zbirenbaum/copilot-cmp')
+  add('https://github.com/uga-rosa/cmp-skkeleton')
   add('https://github.com/onsails/lspkind.nvim')
   require('copilot_cmp').setup()
 
@@ -539,6 +540,7 @@ later(function()
       ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     },
     sources = cmp.config.sources({
+      { name = 'skkeleton' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lsp' },
       { name = 'vsnip' },

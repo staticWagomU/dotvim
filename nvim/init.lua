@@ -120,7 +120,6 @@ vim.opt.wrap = false
 
 nmaps {
   { '<Space>', '<Nop>' },
-  { 'q', '<Nop>' },
   { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true } },
   { 'Q', 'q', { noremap = false, silent = false } },
 

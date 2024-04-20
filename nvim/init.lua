@@ -774,6 +774,10 @@ later(function()
       require('ufo').setup()
     end,
   })
+
+  nmaps {
+    { ';f', vim.lsp.buf.format },
+  }
 end)
 
 later(function()

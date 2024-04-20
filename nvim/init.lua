@@ -645,11 +645,6 @@ later(function()
         capabilities = capabilities,
       }
     end,
-    ['astro'] = function()
-      lspconfig['astro'].setup {
-        capabilities = capabilities,
-      }
-    end,
     ['denols'] = function()
       lspconfig['denols'].setup {
         capabilities = capabilities,
@@ -729,11 +724,6 @@ later(function()
           'tailwind.config.lua',
           'tailwind.config.json'
         ),
-      }
-    end,
-    ['gopls'] = function()
-      lspconfig['gopls'].setup {
-        capabilities = capabilities,
       }
     end,
     ['emmet_ls'] = function()

@@ -1227,6 +1227,10 @@ later(function()
   }
 end)
 
+later(function()
+  add('https://github.com/epwalsh/obsidian.nvim')
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

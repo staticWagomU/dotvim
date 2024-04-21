@@ -504,6 +504,7 @@ later(function()
   add('https://github.com/hrsh7th/nvim-cmp')
   add('https://github.com/hrsh7th/cmp-nvim-lsp')
   add('https://github.com/hrsh7th/cmp-buffer')
+  add('https://github.com/hrsh7th/cmp-emoji')
   add('https://github.com/hrsh7th/cmp-path')
   add('https://github.com/hrsh7th/cmp-cmdline')
   add('https://github.com/hrsh7th/cmp-vsnip')
@@ -539,6 +540,7 @@ later(function()
       ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     },
     sources = cmp.config.sources({
+      { name = 'emoji' },
       { name = 'skkeleton' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lsp' },
@@ -553,6 +555,9 @@ later(function()
     sources = cmp.config.sources({
       { name = 'git' },
     }, {
+      { name = 'copilot' },
+      { name = 'emoji' },
+      { name = 'skkeleton' },
       { name = 'buffer' },
     }),
   })

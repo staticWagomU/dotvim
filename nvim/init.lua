@@ -368,6 +368,7 @@ later(function()
         { 'c', '<Cmd>Gin commit<Cr>', nowait_bufopts },
         { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', nowait_bufopts },
         { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j', nowait_bufopts },
+        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', nowait_bufopts },
         {
           '<C-h><C-h>',
           function()

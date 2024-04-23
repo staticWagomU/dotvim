@@ -629,6 +629,7 @@ later(function()
   require('mason-lspconfig').setup {
     ensure_installed = {
       'astro',
+      'biome',
       'cssls',
       'denols',
       'emmet_ls',

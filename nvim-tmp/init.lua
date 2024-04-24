@@ -9,7 +9,7 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('echo "Installed `mini.deps`" | redraw')
 end
 
-vim.opt.signcolumn = 'yes'
+vim.opt.number = true
 
 require('mini.deps').setup { path = { package = path_package } }
 

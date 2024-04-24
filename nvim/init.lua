@@ -370,7 +370,7 @@ later(function()
         { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j', nowait_bufopts },
         { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', nowait_bufopts },
         {
-          '<C-h><C-h>',
+          'g?',
           function()
             require('select_action')('gin')
           end,

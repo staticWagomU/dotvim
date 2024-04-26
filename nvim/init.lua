@@ -371,8 +371,9 @@ later(function()
         { 'c', '<Cmd>Gin commit<Cr>', nowait_bufopts },
         { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', nowait_bufopts },
         { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j', nowait_bufopts },
+        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', nowait_bufopts },
         {
-          '<C-h><C-h>',
+          'g?',
           function()
             require('select_action')('gin')
           end,
@@ -414,9 +415,9 @@ later(function()
         { 'A', '<Cmd>Gin commit --amend<Cr>', nowait_bufopts },
         { 'd', '<Plug>(gin-action-diff:smart)', nowait_bufopts },
         { '<Cr>', '<Plug>(gin-action-edit)zv', nowait_bufopts },
-        { '<C-g><C-f>', ':<C-u>Gin fetch', nosilent_bufopts },
-        { '<C-g><C-m>', ':<C-u>Gin merge', nosilent_bufopts },
-        { '<C-g><C-r>', ':<C-u>Gin rebase', nosilent_bufopts },
+        { '<C-g><C-f>', ':<C-u>Gin fetch ', nosilent_bufopts },
+        { '<C-g><C-m>', ':<C-u>Gin merge ', nosilent_bufopts },
+        { '<C-g><C-r>', ':<C-u>Gin rebase --autostash', nosilent_bufopts },
       }
     end,
   })
@@ -631,6 +632,7 @@ later(function()
   require('mason-lspconfig').setup {
     ensure_installed = {
       'astro',
+      'biome',
       'cssls',
       'denols',
       'emmet_ls',

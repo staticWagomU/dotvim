@@ -7,10 +7,10 @@ end
 require('wagomu-box.plugin-manager.mini-deps').setup()
 local utils = require('wagomu-box.utils')
 
-if utils.is_windows then
-  vim.opt.shell = 'cmd.exe'
-  vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
-end
+-- if utils.is_windows then
+--   vim.opt.shell = 'cmd.exe'
+--   vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
+-- end
 
 -- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 vim.treesitter.start = (function(wrapped)
@@ -212,6 +212,7 @@ local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
 -- =========================================
 -- | はじめにいるプラグインたち
 -- =========================================
+
 now(function()
   add('https://github.com/vim-denops/denops.vim')
   add('https://github.com/zbirenbaum/copilot.lua')
@@ -225,6 +226,8 @@ now(function()
       },
     },
   }
+  add('https://github.com/vigoux/notifier.nvim')
+  require('notifier').setup {}
 end)
 
 -- =========================================
@@ -1227,7 +1230,7 @@ later(function()
   }
 end)
 
-later(function()
+later(function ()
   add('https://github.com/epwalsh/obsidian.nvim')
 end)
 

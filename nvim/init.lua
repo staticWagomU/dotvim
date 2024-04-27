@@ -1243,6 +1243,25 @@ later(function ()
   add('https://github.com/epwalsh/obsidian.nvim')
 end)
 
+later(function()
+  add('https://github.com/lewis6991/satellite.nvim')
+  require('satellite').setup {
+    current_only = true,
+    winblend = 50,
+    excluded_filetypes = {},
+    handlers = {
+      cursor = {
+        enable = true,
+        symbols = { '⎺', '⎻', '⎼', '⎽' }
+      },
+      diagnostic = {
+        enable = true,
+        signs = {'-', '=', '≡'},
+      },
+    },
+  }
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

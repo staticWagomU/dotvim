@@ -446,6 +446,11 @@ later(function()
   }
 end)
 
+later(function()
+  add('https://github.com/FabijanZulj/blame.nvim')
+  require('blame').setup()
+end)
+
 -- =========================================
 -- | ファイラー
 -- =========================================

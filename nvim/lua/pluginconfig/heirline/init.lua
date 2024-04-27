@@ -56,10 +56,38 @@ local ViMode = {
     end
   end,
   provider = function(_)
-    return ' '
+    local mode_icons = setmetatable({
+      ["n"] = "󰋜 ",
+      ["no"] = "󰋜 ",
+      ["niI"] = "󰋜 ",
+      ["niR"] = "󰋜 ",
+      ["no"] = "󰋜 ",
+      ["niV"] = "󰋜 ",
+      ["nov"] = "󰋜 ",
+      ["noV"] = "󰋜 ",
+      ["i"] = "󰏫 ",
+      ["ic"] = "󰏫 ",
+      ["ix"] = "󰏫 ",
+      ["s"] = "󰏫 ",
+      ["S"] = "󰏫 ",
+      ["v"] = "󰈈 ",
+      ["V"] = "󰈈 ",
+      [""] = "󰈈 ",
+      ["r"] = "󰛔 ",
+      ["r?"] = " ",
+      ["c"] = " ",
+      ["t"] = " ",
+      ["!"] = " ",
+      ["R"] = " ",
+    }, {
+      __index = function()
+        return " "
+      end
+    })
+    return ' ' .. mode_icons[vim.fn.mode(1)] .. ' '
   end,
   hl = function(self)
-    return { fg = 'black', bg = self:mode_color(), bold = true }
+    return { fg = 'white', bg = self:mode_color(), bold = true }
   end,
   update = {
     'ModeChanged',

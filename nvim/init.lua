@@ -1249,6 +1249,11 @@ later(function ()
 end)
 
 later(function()
+  add('https://github.com/stevearc/aerial.nvim')
+  require('aerial').setup {}
+end)
+
+later(function()
   add('https://github.com/lewis6991/satellite.nvim')
   require('satellite').setup {
     current_only = true,

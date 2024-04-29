@@ -59,7 +59,7 @@ vim.opt.backspace = {
 }
 vim.opt.expandtab = true
 vim.opt.fillchars = {
-  stl = '─',
+  stl = ' ',
   stlnc = '─',
   diff = '∙',
   eob = ' ',

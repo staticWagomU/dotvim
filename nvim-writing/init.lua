@@ -1,5 +1,6 @@
 require('setup_wagomu-box')
 require('options')
+vim.opt.wrap = true
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local map, nmap = WagomuBox.map, WagomuBox.nmap

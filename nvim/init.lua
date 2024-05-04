@@ -1270,6 +1270,26 @@ later(function()
         signs = {'-', '=', '≡'},
       },
     },
+}
+end)
+
+later(function()
+  add('https://github.com/tris203/precognition.nvim')
+  require('precognition').setup {
+    startVisible = true,
+    hints = {
+        ["^"] = { text = "^", prio = 1 },
+        ["$"] = { text = "$", prio = 1 },
+        ["w"] = { text = "w", prio = 10 },
+        ["b"] = { text = "b", prio = 10 },
+        ["e"] = { text = "e", prio = 10 },
+    },
+    gutterHints = {
+        ["G"] = { text = "G", prio = 1 },
+        ["gg"] = { text = "gg", prio = 1 },
+        ["{"] = { text = "{", prio = 1 },
+        ["}"] = { text = "}", prio = 1 },
+    },
   }
 end)
 

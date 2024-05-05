@@ -1314,3 +1314,11 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = { '*.mdx' },
   command = 'setlocal filetype=mdx',
 })
+
+local favoriteList = {
+  'CopilotChatFix',
+  'GinStatus'
+}
+map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)
+
+

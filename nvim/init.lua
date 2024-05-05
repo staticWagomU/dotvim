@@ -601,6 +601,16 @@ later(function()
   }
   map({ 'n', 'v' }, 'mf', require('conform').format({ lsp_fallback = true }))
 end)
+-- later(function()
+--   add('https://github.com/nvimdev/guard.nvim')
+--   add('https://github.com/nvimdev/guard-collection')
+--   require('guard').setup()
+--   local ft = require('guard.filetype')
+--
+--   ft('lua'):fmt('stylua')
+--
+--   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
+-- end)
 
 -- =========================================
 -- | LSP関連

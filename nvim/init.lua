@@ -459,6 +459,9 @@ later(function()
   local oil = require('oil')
   oil.setup {
     default_file_explorer = true,
+    win_options = {
+      signcolumn = "yes:1",
+    },
   }
 
   nmaps {
@@ -504,6 +507,11 @@ later(function()
       }
     end,
   })
+end)
+
+later(function()
+  add('https://github.com/refractalize/oil-git-status.nvim')
+  require('oil-git-status').setup {}
 end)
 
 -- =========================================

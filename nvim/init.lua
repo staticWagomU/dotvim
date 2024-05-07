@@ -1312,6 +1312,18 @@ later(function()
   }
 end)
 
+later(function()
+  add({
+    source='https://github.com/simonmclean/triptych.nvim',
+    depends = {
+      'https://github.com/nvim-lua/plenary.nvim',
+      'https://github.com/nvim-tree/nvim-web-devicons',
+    },
+  })
+
+  require 'triptych'.setup()
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

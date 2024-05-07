@@ -460,7 +460,9 @@ later(function()
   oil.setup {
     default_file_explorer = true,
     win_options = {
-      signcolumn = "yes:1",
+      signcolumn = "yes:2",
+      number = false,
+      foldcolumn = '0',
     },
   }
 
@@ -482,12 +484,7 @@ later(function()
   autocmd('FileType', {
     pattern = 'oil',
     callback = function(args)
-      vim.opt_local.signcolumn = 'no'
-      vim.opt_local.number = false
-      vim.opt_local.foldcolumn = '0'
-
-      local bufnr = args.buf
-      local buffer = { buffer = bufnr }
+      local buffer = { buffer = args.buf }
 
       nmaps {
         { 'q', oil.close, buffer },

@@ -1324,6 +1324,13 @@ later(function()
   require 'triptych'.setup()
 end)
 
+later(function()
+  add('https://github.com/tani/dmacro.nvim')
+  require('dmacro').setup({
+    dmacro_key = '<C-t>'
+  })
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

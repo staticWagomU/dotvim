@@ -226,8 +226,8 @@ now(function()
       },
     },
   }
-  add('https://github.com/vigoux/notifier.nvim')
-  require('notifier').setup {}
+  -- add('https://github.com/vigoux/notifier.nvim')
+  -- require('notifier').setup {}
 end)
 
 -- =========================================
@@ -1329,6 +1329,22 @@ later(function()
   require('dmacro').setup({
     dmacro_key = '<C-t>'
   })
+end)
+
+later(function()
+  add('https://github.com/ObserverOfTime/notifications.nvim')
+  require('notifications').setup {
+      override_notify = true,
+      hist_command = 'Notifications',
+      icons = {
+        TRACE = ' ', -- '🔍 ',
+        DEBUG = '󰠭 ', -- '🐞 ',
+        INFO  = ' ', -- '📣 ',
+        WARN  = ' ', -- '⚠️  ',
+        ERROR = ' ', -- '🚨 ',
+        OFF   = ' ', -- '⛔ ',
+      }
+    }
 end)
 
 now(function()

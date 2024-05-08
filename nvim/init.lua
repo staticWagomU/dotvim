@@ -1310,6 +1310,7 @@ later(function()
         ["}"] = { text = "}", prio = 1 },
     },
   }
+  require('precognition').toggle()
 end)
 
 later(function()

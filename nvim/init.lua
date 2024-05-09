@@ -485,8 +485,50 @@ later(function()
     pattern = 'oil',
     callback = function(args)
       local buffer = { buffer = args.buf }
+      local oil_url = vim.api.nvim_buf_get_name(args.buf)
+      local file_url = oil_url:gsub("^oil", "file")
+      local path = vim.uri_to_fname(file_url)
 
       nmaps {
+        { 'h', function()
+          local curorEntry = oil.get_cursor_entry()
+          if curorEntry == nil or curorEntry.type ~= 'file' then
+            return
+          end
+
+          local fpath = vim.fs.joinpath(path, curorEntry.name)
+          vim.cmd('Gin add --ignore-errors --force -- ' .. fpath)
+          vim.schedule(function()
+            vim.cmd('redraw')
+            vim.cmd('doautocmd BufWritePost')
+          end)
+        end, buffer },
+        { 'l', function()
+          local curorEntry = oil.get_cursor_entry()
+          if curorEntry == nil or curorEntry.type ~= 'file' then
+            return
+          end
+
+          local fpath = vim.fs.joinpath(path, curorEntry.name)
+          vim.cmd('Gin reset --quiet -- ' .. fpath)
+          vim.schedule(function()
+            vim.cmd('redraw')
+            vim.cmd('doautocmd BufWritePost')
+          end)
+        end, buffer },
+        { '<C-g><C-d>', function()
+          local curorEntry = oil.get_cursor_entry()
+          if curorEntry == nil or curorEntry.type ~= 'file' then
+            return
+          end
+
+          local fpath = vim.fs.joinpath(path, curorEntry.name)
+          vim.cmd('GinDiff ' .. fpath)
+          vim.schedule(function()
+            vim.cmd('redraw')
+            vim.cmd('doautocmd BufWritePost')
+          end)
+        end, buffer },
         { 'q', oil.close, buffer },
         { '=', oil.save, buffer },
         {

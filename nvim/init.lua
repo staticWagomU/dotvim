@@ -548,6 +548,8 @@ later(function()
   })
 end)
 
+
+
 later(function()
   add('https://github.com/refractalize/oil-git-status.nvim')
   require('oil-git-status').setup {}
@@ -642,188 +644,188 @@ end)
 later(function()
   add('https://github.com/stevearc/conform.nvim')
   require('conform').setup {
-        lua = { "stylua" },
-        go = { "gofmt" },
-        javascript = { "biome" },
+    lua = { "stylua" },
+    go = { "gofmt" },
+    javascript = { "biome" },
   }
   map({ 'n', 'v' }, 'mf', require('conform').format({ lsp_fallback = true }))
 end)
 -- later(function()
---   add('https://github.com/nvimdev/guard.nvim')
---   add('https://github.com/nvimdev/guard-collection')
---   require('guard').setup()
---   local ft = require('guard.filetype')
---
---   ft('lua'):fmt('stylua')
---
---   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
--- end)
+  --   add('https://github.com/nvimdev/guard.nvim')
+  --   add('https://github.com/nvimdev/guard-collection')
+  --   require('guard').setup()
+  --   local ft = require('guard.filetype')
+  --
+  --   ft('lua'):fmt('stylua')
+  --
+  --   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
+  -- end)
 
--- =========================================
--- | LSP関連
--- =========================================
-later(function()
-  add('https://github.com/artemave/workspace-diagnostics.nvim')
-  add('https://github.com/williamboman/mason.nvim')
-  add {
-    source = 'https://github.com/williamboman/mason-lspconfig.nvim',
-    depends = { 'williamboman/mason.nvim' },
-  }
-  add {
-    source = 'https://github.com/neovim/nvim-lspconfig',
-    depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
-  }
-  add {
-    source = 'https://github.com/kevinhwang91/nvim-ufo',
-    depends = { 'kevinhwang91/promise-async' },
-  }
+  -- =========================================
+  -- | LSP関連
+  -- =========================================
+  later(function()
+    add('https://github.com/artemave/workspace-diagnostics.nvim')
+    add('https://github.com/williamboman/mason.nvim')
+    add {
+      source = 'https://github.com/williamboman/mason-lspconfig.nvim',
+      depends = { 'williamboman/mason.nvim' },
+    }
+    add {
+      source = 'https://github.com/neovim/nvim-lspconfig',
+      depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
+    }
+    add {
+      source = 'https://github.com/kevinhwang91/nvim-ufo',
+      depends = { 'kevinhwang91/promise-async' },
+    }
 
-  require('mason').setup()
-  local enabled_vtsls = true
-  local lspconfig = require('lspconfig')
-  local capabilities = vim.tbl_deep_extend(
+    require('mason').setup()
+    local enabled_vtsls = true
+    local lspconfig = require('lspconfig')
+    local capabilities = vim.tbl_deep_extend(
     'force',
     vim.lsp.protocol.make_client_capabilities(),
     require('cmp_nvim_lsp').default_capabilities()
-  )
-  capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
+    )
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
 
-  require('mason-lspconfig').setup {
-    ensure_installed = {
-      'astro',
-      'biome',
-      'cssls',
-      'denols',
-      'emmet_ls',
-      'gopls',
-      'lua_ls',
-      'rust_analyzer',
-      'svelte',
-      'tailwindcss',
-      'tsserver',
-      'unocss',
-      'volar',
-      'vtsls',
-      'zls',
-    },
-  }
+    require('mason-lspconfig').setup {
+      ensure_installed = {
+        'astro',
+        'biome',
+        'cssls',
+        'denols',
+        'emmet_ls',
+        'gopls',
+        'lua_ls',
+        'rust_analyzer',
+        'svelte',
+        'tailwindcss',
+        'tsserver',
+        'unocss',
+        'volar',
+        'vtsls',
+        'zls',
+      },
+    }
 
-  require('mason-lspconfig').setup_handlers {
-    function(server_name)
-      lspconfig[server_name].setup {
-        capabilities = capabilities,
-      }
-    end,
-    ['denols'] = function()
-      lspconfig['denols'].setup {
-        capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc', 'deps.ts', 'import_map.json'),
-        init_options = {
-          lint = true,
-          unstable = true,
-          suggest = {
-            imports = {
-              hosts = {
-                ['https://deno.land'] = true,
-                ['https://cdn.nest.land'] = true,
-                ['https://crux.land'] = true,
+    require('mason-lspconfig').setup_handlers {
+      function(server_name)
+        lspconfig[server_name].setup {
+          capabilities = capabilities,
+        }
+      end,
+      ['denols'] = function()
+        lspconfig['denols'].setup {
+          capabilities = capabilities,
+          root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc', 'deps.ts', 'import_map.json'),
+          init_options = {
+            lint = true,
+            unstable = true,
+            suggest = {
+              imports = {
+                hosts = {
+                  ['https://deno.land'] = true,
+                  ['https://cdn.nest.land'] = true,
+                  ['https://crux.land'] = true,
+                },
               },
             },
           },
-        },
-      }
-    end,
-    ['vtsls'] = function()
-      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
-      if is_node and enabled_vtsls then
-        lspconfig['vtsls'].setup {
-          capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-          end,
         }
-      end
-    end,
-    ['tsserver'] = function()
-      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
-      if is_node and not enabled_vtsls then
-        lspconfig['tsserver'].setup {
+      end,
+      ['vtsls'] = function()
+        local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+        if is_node and enabled_vtsls then
+          lspconfig['vtsls'].setup {
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+              require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+            end,
+          }
+        end
+      end,
+      ['tsserver'] = function()
+        local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+        if is_node and not enabled_vtsls then
+          lspconfig['tsserver'].setup {
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+              require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+            end,
+          }
+        end
+      end,
+      ['lua_ls'] = function()
+        lspconfig['lua_ls'].setup {
           capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-          end,
-        }
-      end
-    end,
-    ['lua_ls'] = function()
-      lspconfig['lua_ls'].setup {
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            runtime = {
-              version = 'LuaJIT',
-              pathStrict = true,
-              path = { '?.lua', '?/init.lua' },
-            },
-            completion = { callSnippet = 'Both' },
-            diagnostics = { globals = { 'vim' } },
-            telemetry = { enable = false },
-            workspace = {
-              library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
-                '${3rd}/luv/library',
-                '${3rd}/busted/library',
-                '${3rd}/luassert/library',
-                vim.api.nvim_get_runtime_file('', true),
-              }),
-              checkThirdParty = 'Disable',
+          settings = {
+            Lua = {
+              runtime = {
+                version = 'LuaJIT',
+                pathStrict = true,
+                path = { '?.lua', '?/init.lua' },
+              },
+              completion = { callSnippet = 'Both' },
+              diagnostics = { globals = { 'vim' } },
+              telemetry = { enable = false },
+              workspace = {
+                library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
+                  '${3rd}/luv/library',
+                  '${3rd}/busted/library',
+                  '${3rd}/luassert/library',
+                  vim.api.nvim_get_runtime_file('', true),
+                }),
+                checkThirdParty = 'Disable',
+              },
             },
           },
-        },
-        on_attach = function(client, bufnr)
-          require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-        end,
-      }
-    end,
-    ['tailwindcss'] = function()
-      lspconfig['tailwindcss'].setup {
-        capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern(
+          on_attach = function(client, bufnr)
+            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+          end,
+        }
+      end,
+      ['tailwindcss'] = function()
+        lspconfig['tailwindcss'].setup {
+          capabilities = capabilities,
+          root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',
           'tailwind.config.ts',
           'tailwind.config.lua',
           'tailwind.config.json'
-        ),
-      }
-    end,
-    ['emmet_ls'] = function()
-      lspconfig['emmet_ls'].setup {
-        capabilities = capabilities,
-        extra_filetype = {
-          'astro',
-          'css',
-          'html',
-          'htmldjango',
-          'javascript.jsx',
-          'javascriptreact',
-          'svelte',
-          'typescript.tsx',
-          'typescriptreact',
-          'unocss',
-          'vue',
-        },
-      }
-    end,
-  }
+          ),
+        }
+      end,
+      ['emmet_ls'] = function()
+        lspconfig['emmet_ls'].setup {
+          capabilities = capabilities,
+          extra_filetype = {
+            'astro',
+            'css',
+            'html',
+            'htmldjango',
+            'javascript.jsx',
+            'javascriptreact',
+            'svelte',
+            'typescript.tsx',
+            'typescriptreact',
+            'unocss',
+            'vue',
+          },
+        }
+      end,
+    }
 
-  for type, icon in pairs {
-    Error = '🚒',
-    Warn = '🚧',
-    Hint = '🦒',
-    Info = '👀',
-  } do
+    for type, icon in pairs {
+      Error = '🚒',
+      Warn = '🚧',
+      Hint = '🦒',
+      Info = '👀',
+    } do
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
@@ -1237,17 +1239,17 @@ if useDenopstatusline == false then
 
     require('heirline').setup {
       statusline = heirline_utils.insert(
-        {
-          static = comp.stl_static,
-          hl = { bg = 'bg' },
-        },
-        comp.ViMode,
-        comp.lpad(comp.Git),
-        comp.lpad(comp.LSPActive),
-        comp.lpad(comp.Diagnostics),
-        { provider = '%=' },
-        comp.rpad(comp.FileType),
-        comp.Ruler
+      {
+        static = comp.stl_static,
+        hl = { bg = 'bg' },
+      },
+      comp.ViMode,
+      comp.lpad(comp.Git),
+      comp.lpad(comp.LSPActive),
+      comp.lpad(comp.Diagnostics),
+      { provider = '%=' },
+      comp.rpad(comp.FileType),
+      comp.Ruler
       ),
       winbar = {
         comp.FullFileName,
@@ -1326,7 +1328,7 @@ later(function()
         signs = {'-', '=', '≡'},
       },
     },
-}
+  }
 end)
 
 later(function()
@@ -1339,17 +1341,17 @@ later(function()
   require('precognition').setup {
     startVisible = true,
     hints = {
-        ["^"] = { text = "^", prio = 1 },
-        ["$"] = { text = "$", prio = 1 },
-        ["w"] = { text = "w", prio = 10 },
-        ["b"] = { text = "b", prio = 10 },
-        ["e"] = { text = "e", prio = 10 },
+      ["^"] = { text = "^", prio = 1 },
+      ["$"] = { text = "$", prio = 1 },
+      ["w"] = { text = "w", prio = 10 },
+      ["b"] = { text = "b", prio = 10 },
+      ["e"] = { text = "e", prio = 10 },
     },
     gutterHints = {
-        ["G"] = { text = "G", prio = 1 },
-        ["gg"] = { text = "gg", prio = 1 },
-        ["{"] = { text = "{", prio = 1 },
-        ["}"] = { text = "}", prio = 1 },
+      ["G"] = { text = "G", prio = 1 },
+      ["gg"] = { text = "gg", prio = 1 },
+      ["{"] = { text = "{", prio = 1 },
+      ["}"] = { text = "}", prio = 1 },
     },
   }
   require('precognition').toggle()

@@ -490,7 +490,7 @@ later(function()
       local path = vim.uri_to_fname(file_url)
 
       nmaps {
-        { 'h', function()
+        { '<<', function()
           local curorEntry = oil.get_cursor_entry()
           if curorEntry == nil or curorEntry.type ~= 'file' then
             return
@@ -503,7 +503,7 @@ later(function()
             vim.cmd('doautocmd BufWritePost')
           end)
         end, buffer },
-        { 'l', function()
+        { '>>', function()
           local curorEntry = oil.get_cursor_entry()
           if curorEntry == nil or curorEntry.type ~= 'file' then
             return

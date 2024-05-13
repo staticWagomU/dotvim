@@ -902,6 +902,7 @@ end)
 later(function()
   add {
     source = 'https://github.com/folke/trouble.nvim',
+    checkout = 'dev',
     depends = { 'nvim-tree/nvim-web-devicons' },
   }
   require('trouble').setup {

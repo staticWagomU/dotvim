@@ -648,7 +648,7 @@ later(function()
     go = { "gofmt" },
     javascript = { "biome" },
   }
-  map({ 'n', 'v' }, 'mf', require('conform').format({ lsp_fallback = true }))
+  map({ 'n', 'v' }, 'mf', function() require('conform').format({ lsp_fallback = true })end)
 end)
 -- later(function()
   --   add('https://github.com/nvimdev/guard.nvim')

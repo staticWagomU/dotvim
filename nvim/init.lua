@@ -19,7 +19,7 @@ vim.treesitter.start = (function(wrapped)
     pcall(wrapped, bufnr, lang)
   end
 end)(vim.treesitter.start)
-vim.diagnostic.config({severity_sort = true})
+vim.diagnostic.config({ severity_sort = true })
 
 local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
 local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap
@@ -119,13 +119,13 @@ vim.opt.wrap = false
 -- ]=]
 
 nmaps {
-  { '<Space>', '<Nop>' },
-  { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true } },
-  { 'Q', 'q', { noremap = false, silent = false } },
+  { '<Space>',    '<Nop>' },
+  { 'q',          require('wagomu-box.utils').wish_close_buf, { expr = true } },
+  { 'Q',          'q',                                        { noremap = false, silent = false } },
 
-  { '1', '<Cmd>edit $MYVIMRC<Cr>' },
+  { '1',          '<Cmd>edit $MYVIMRC<Cr>' },
 
-  { '<Leader>w', '<Cmd>update<Cr>' },
+  { '<Leader>w',  '<Cmd>update<Cr>' },
   { '<Leader>bn', '<Cmd>bnext<Cr>' },
   { '<Leader>bp', '<Cmd>bprevious<Cr>' },
   { '<Leader>bd', '<Cmd>bdelete<Cr>' },
@@ -159,16 +159,16 @@ nmaps {
     end,
   },
 
-  { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
-  { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
+  { 'i',   [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
+  { 'A',   [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
 
-  { 'v2', 'vi"' },
-  { 'v7', "vi'" },
-  { 'v8', 'vi(' },
-  { 'v[', 'vi[' },
-  { 'v{', 'vi{' },
-  { 'v@', 'vi`' },
-  { 'vt', 'vit' },
+  { 'v2',  'vi"' },
+  { 'v7',  "vi'" },
+  { 'v8',  'vi(' },
+  { 'v[',  'vi[' },
+  { 'v{',  'vi{' },
+  { 'v@',  'vi`' },
+  { 'vt',  'vit' },
 
   { 'va2', 'va"' },
   { 'va7', "va'" },
@@ -179,12 +179,12 @@ nmaps {
 }
 
 omaps {
-  { '2', 'i"' },
-  { '7', "i'" },
-  { '8', 'i(' },
-  { '[', 'i[' },
-  { '{', 'i{' },
-  { '@', 'i`' },
+  { '2',  'i"' },
+  { '7',  "i'" },
+  { '8',  'i(' },
+  { '[',  'i[' },
+  { '{',  'i{' },
+  { '@',  'i`' },
 
   { 'a2', 'a"' },
   { 'a7', "a'" },
@@ -323,10 +323,10 @@ later(function()
     numhl = true,
   }
   nmaps {
-    { ']g', gitsigns.next_hunk },
-    { '[g', gitsigns.prev_hunk },
+    { ']g',         gitsigns.next_hunk },
+    { '[g',         gitsigns.prev_hunk },
     { '<C-g><C-a>', gitsigns.stage_hunk },
-    { '<C-g>a', gitsigns.stage_buffer },
+    { '<C-g>a',     gitsigns.stage_buffer },
     { '<C-g><C-r>', gitsigns.undo_stage_hunk },
     { '<C-g><C-d>', '<Cmd>Gitsigns diffthis ~<Cr>' },
     { '<C-g><C-p>', gitsigns.preview_hunk },
@@ -340,7 +340,7 @@ later(function()
     source = 'https://github.com/lambdalisue/gin.vim',
     depends = { 'vim-denops/denops.vim' },
   }
-  local nowait_bufopts = { buffer = true, noremap  = true, nowait = true }
+  local nowait_bufopts = { buffer = true, noremap = true, nowait = true }
 
   vim.g.gin_proxy_apply_without_confirm = 1
 
@@ -348,7 +348,7 @@ later(function()
     { '<C-g><C-s>', '<Cmd>GinStatus<Cr>j' },
     { '<C-g><C-l>', '<Cmd>GinLog<Cr>' },
     { '<C-g><C-b>', '<Cmd>GinBranch<Cr>' },
-    { '<C-g>c', '<Cmd>Gin commit<Cr>' },
+    { '<C-g>c',     '<Cmd>Gin commit<Cr>' },
   }
 
   local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
@@ -360,18 +360,18 @@ later(function()
       vim.opt_local.number = false
       vim.opt_local.foldcolumn = '0'
       nmaps {
-        { 'D', '<Cmd>bdelete<Cr><Cmd>GinDiff<Cr>', nowait_bufopts },
+        { 'D', '<Cmd>bdelete<Cr><Cmd>GinDiff<Cr>',                                 nowait_bufopts },
         {
           'L',
           [[<Cmd>bdelete<Cr><Cmd>GinLog --graph --pretty=%C(yellow)%h\ %C(reset)%C(cyan)@%an%C(reset)\ %C(auto)%d%C(reset)\ %s\ %C(magenta)[%ar]%C(reset)<Cr>]],
           nowait_bufopts,
         },
         { 'P', '<Cmd>lua vim.notify("Gin pull")<Cr><Cmd>Gin pull --autostash<Cr>', nowait_bufopts },
-        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', nowait_bufopts },
-        { 'c', '<Cmd>Gin commit<Cr>', nowait_bufopts },
-        { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>', nowait_bufopts },
-        { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j', nowait_bufopts },
-        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>', nowait_bufopts },
+        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>',                               nowait_bufopts },
+        { 'c', '<Cmd>Gin commit<Cr>',                                              nowait_bufopts },
+        { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>',             nowait_bufopts },
+        { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j',                              nowait_bufopts },
+        { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>',                               nowait_bufopts },
         {
           'g?',
           function()
@@ -389,7 +389,7 @@ later(function()
     callback = function()
       nmaps {
         { '<C-g><C-g>', '<Plug>(gin-action-fixup:instant)', bufopts },
-        { '<C-g><C-f>', '<Plug>(gin-action-choice)fixup:', nosilent_bufopts },
+        { '<C-g><C-f>', '<Plug>(gin-action-choice)fixup:',  nosilent_bufopts },
       }
     end,
   })
@@ -407,17 +407,17 @@ later(function()
     group = group,
     callback = function()
       maps({ 'n', 'x' }, {
-        { 'h', '<Plug>(gin-action-stage)', nowait_bufopts },
+        { 'h', '<Plug>(gin-action-stage)',   nowait_bufopts },
         { 'l', '<Plug>(gin-action-unstage)', nowait_bufopts },
       })
       nmaps {
-        { 'a', '<Plug>(gin-action-choice)', nowait_bufopts },
-        { 'A', '<Cmd>Gin commit --amend<Cr>', nowait_bufopts },
-        { 'd', '<Plug>(gin-action-diff:smart)', nowait_bufopts },
-        { '<Cr>', '<Plug>(gin-action-edit)zv', nowait_bufopts },
-        { '<C-g><C-f>', ':<C-u>Gin fetch ', nosilent_bufopts },
-        { '<C-g><C-m>', ':<C-u>Gin merge ', nosilent_bufopts },
-        { '<C-g><C-r>', ':<C-u>Gin rebase --autostash', nosilent_bufopts },
+        { 'a',          '<Plug>(gin-action-choice)',     nowait_bufopts },
+        { 'A',          '<Cmd>Gin commit --amend<Cr>',   nowait_bufopts },
+        { 'd',          '<Plug>(gin-action-diff:smart)', nowait_bufopts },
+        { '<Cr>',       '<Plug>(gin-action-edit)zv',     nowait_bufopts },
+        { '<C-g><C-f>', ':<C-u>Gin fetch ',              nosilent_bufopts },
+        { '<C-g><C-m>', ':<C-u>Gin merge ',              nosilent_bufopts },
+        { '<C-g><C-r>', ':<C-u>Gin rebase --autostash',  nosilent_bufopts },
       }
     end,
   })
@@ -431,14 +431,14 @@ later(function()
   })
 
   abbrev {
-    { from = 'gc', to = 'Gin commit' },
+    { from = 'gc',  to = 'Gin commit' },
     { from = 'gin', to = 'Gin' },
     { from = 'git', to = 'Gin' },
-    { from = 'gp', to = 'Gin push' },
+    { from = 'gp',  to = 'Gin push' },
     { from = 'gpp', to = 'Gin pull --autostash' },
     { from = 'gcd', to = 'GinCd' },
-    { from = 'gf', to = 'Gin fetch origin main' },
-    { from = 'gr', to = 'Gin rebase --autostash' },
+    { from = 'gf',  to = 'Gin fetch origin main' },
+    { from = 'gr',  to = 'Gin rebase --autostash' },
   }
 
   abbrev {
@@ -530,7 +530,7 @@ later(function()
           end)
         end, buffer },
         { 'q', oil.close, buffer },
-        { '=', oil.save, buffer },
+        { '=', oil.save,  buffer },
         {
           '<Leader>we',
           function()
@@ -648,184 +648,184 @@ later(function()
     go = { "gofmt" },
     javascript = { "biome" },
   }
-  map({ 'n', 'v' }, 'mf', function() require('conform').format({ lsp_fallback = true })end)
+  map({ 'n', 'v' }, 'mf', function() require('conform').format({ lsp_fallback = true }) end)
 end)
 -- later(function()
-  --   add('https://github.com/nvimdev/guard.nvim')
-  --   add('https://github.com/nvimdev/guard-collection')
-  --   require('guard').setup()
-  --   local ft = require('guard.filetype')
-  --
-  --   ft('lua'):fmt('stylua')
-  --
-  --   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
-  -- end)
+--   add('https://github.com/nvimdev/guard.nvim')
+--   add('https://github.com/nvimdev/guard-collection')
+--   require('guard').setup()
+--   local ft = require('guard.filetype')
+--
+--   ft('lua'):fmt('stylua')
+--
+--   map({ 'n', 'v' }, 'mf', '<Cmd>GuardFmt<Cr>')
+-- end)
 
-  -- =========================================
-  -- | LSP関連
-  -- =========================================
-  later(function()
-    add('https://github.com/artemave/workspace-diagnostics.nvim')
-    add('https://github.com/williamboman/mason.nvim')
-    add {
-      source = 'https://github.com/williamboman/mason-lspconfig.nvim',
-      depends = { 'williamboman/mason.nvim' },
-    }
-    add {
-      source = 'https://github.com/neovim/nvim-lspconfig',
-      depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
-    }
-    add {
-      source = 'https://github.com/kevinhwang91/nvim-ufo',
-      depends = { 'kevinhwang91/promise-async' },
-    }
+-- =========================================
+-- | LSP関連
+-- =========================================
+later(function()
+  add('https://github.com/artemave/workspace-diagnostics.nvim')
+  add('https://github.com/williamboman/mason.nvim')
+  add {
+    source = 'https://github.com/williamboman/mason-lspconfig.nvim',
+    depends = { 'williamboman/mason.nvim' },
+  }
+  add {
+    source = 'https://github.com/neovim/nvim-lspconfig',
+    depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
+  }
+  add {
+    source = 'https://github.com/kevinhwang91/nvim-ufo',
+    depends = { 'kevinhwang91/promise-async' },
+  }
 
-    require('mason').setup()
-    local enabled_vtsls = true
-    local lspconfig = require('lspconfig')
-    local capabilities = vim.tbl_deep_extend(
+  require('mason').setup()
+  local enabled_vtsls = true
+  local lspconfig = require('lspconfig')
+  local capabilities = vim.tbl_deep_extend(
     'force',
     vim.lsp.protocol.make_client_capabilities(),
     require('cmp_nvim_lsp').default_capabilities()
-    )
-    capabilities.textDocument.foldingRange = {
-      dynamicRegistration = false,
-      lineFoldingOnly = true,
-    }
+  )
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
 
-    require('mason-lspconfig').setup {
-      ensure_installed = {
-        'astro',
-        'biome',
-        'cssls',
-        'denols',
-        'emmet_ls',
-        'gopls',
-        'lua_ls',
-        'rust_analyzer',
-        'svelte',
-        'tailwindcss',
-        'tsserver',
-        'unocss',
-        'volar',
-        'vtsls',
-        'zls',
-      },
-    }
+  require('mason-lspconfig').setup {
+    ensure_installed = {
+      'astro',
+      'biome',
+      'cssls',
+      'denols',
+      'emmet_ls',
+      'gopls',
+      'lua_ls',
+      'rust_analyzer',
+      'svelte',
+      'tailwindcss',
+      'tsserver',
+      'unocss',
+      'volar',
+      'vtsls',
+      'zls',
+    },
+  }
 
-    require('mason-lspconfig').setup_handlers {
-      function(server_name)
-        lspconfig[server_name].setup {
-          capabilities = capabilities,
-        }
-      end,
-      ['denols'] = function()
-        lspconfig['denols'].setup {
-          capabilities = capabilities,
-          root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc', 'deps.ts', 'import_map.json'),
-          init_options = {
-            lint = true,
-            unstable = true,
-            suggest = {
-              imports = {
-                hosts = {
-                  ['https://deno.land'] = true,
-                  ['https://cdn.nest.land'] = true,
-                  ['https://crux.land'] = true,
-                },
+  require('mason-lspconfig').setup_handlers {
+    function(server_name)
+      lspconfig[server_name].setup {
+        capabilities = capabilities,
+      }
+    end,
+    ['denols'] = function()
+      lspconfig['denols'].setup {
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc', 'deps.ts', 'import_map.json'),
+        init_options = {
+          lint = true,
+          unstable = true,
+          suggest = {
+            imports = {
+              hosts = {
+                ['https://deno.land'] = true,
+                ['https://cdn.nest.land'] = true,
+                ['https://crux.land'] = true,
               },
             },
           },
-        }
-      end,
-      ['vtsls'] = function()
-        local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
-        if is_node and enabled_vtsls then
-          lspconfig['vtsls'].setup {
-            capabilities = capabilities,
-            on_attach = function(client, bufnr)
-              require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-            end,
-          }
-        end
-      end,
-      ['tsserver'] = function()
-        local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
-        if is_node and not enabled_vtsls then
-          lspconfig['tsserver'].setup {
-            capabilities = capabilities,
-            on_attach = function(client, bufnr)
-              require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-            end,
-          }
-        end
-      end,
-      ['lua_ls'] = function()
-        lspconfig['lua_ls'].setup {
+        },
+      }
+    end,
+    ['vtsls'] = function()
+      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+      if is_node and enabled_vtsls then
+        lspconfig['vtsls'].setup {
           capabilities = capabilities,
-          settings = {
-            Lua = {
-              runtime = {
-                version = 'LuaJIT',
-                pathStrict = true,
-                path = { '?.lua', '?/init.lua' },
-              },
-              completion = { callSnippet = 'Both' },
-              diagnostics = { globals = { 'vim' } },
-              telemetry = { enable = false },
-              workspace = {
-                library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
-                  '${3rd}/luv/library',
-                  '${3rd}/busted/library',
-                  '${3rd}/luassert/library',
-                  vim.api.nvim_get_runtime_file('', true),
-                }),
-                checkThirdParty = 'Disable',
-              },
-            },
-          },
           on_attach = function(client, bufnr)
             require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
           end,
         }
-      end,
-      ['tailwindcss'] = function()
-        lspconfig['tailwindcss'].setup {
+      end
+    end,
+    ['tsserver'] = function()
+      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+      if is_node and not enabled_vtsls then
+        lspconfig['tsserver'].setup {
           capabilities = capabilities,
-          root_dir = lspconfig.util.root_pattern(
+          on_attach = function(client, bufnr)
+            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+          end,
+        }
+      end
+    end,
+    ['lua_ls'] = function()
+      lspconfig['lua_ls'].setup {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+              pathStrict = true,
+              path = { '?.lua', '?/init.lua' },
+            },
+            completion = { callSnippet = 'Both' },
+            diagnostics = { globals = { 'vim' } },
+            telemetry = { enable = false },
+            workspace = {
+              library = vim.list_extend(vim.api.nvim_get_runtime_file('lua', true), {
+                '${3rd}/luv/library',
+                '${3rd}/busted/library',
+                '${3rd}/luassert/library',
+                vim.api.nvim_get_runtime_file('', true),
+              }),
+              checkThirdParty = 'Disable',
+            },
+          },
+        },
+        on_attach = function(client, bufnr)
+          require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+        end,
+      }
+    end,
+    ['tailwindcss'] = function()
+      lspconfig['tailwindcss'].setup {
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',
           'tailwind.config.ts',
           'tailwind.config.lua',
           'tailwind.config.json'
-          ),
-        }
-      end,
-      ['emmet_ls'] = function()
-        lspconfig['emmet_ls'].setup {
-          capabilities = capabilities,
-          extra_filetype = {
-            'astro',
-            'css',
-            'html',
-            'htmldjango',
-            'javascript.jsx',
-            'javascriptreact',
-            'svelte',
-            'typescript.tsx',
-            'typescriptreact',
-            'unocss',
-            'vue',
-          },
-        }
-      end,
-    }
+        ),
+      }
+    end,
+    ['emmet_ls'] = function()
+      lspconfig['emmet_ls'].setup {
+        capabilities = capabilities,
+        extra_filetype = {
+          'astro',
+          'css',
+          'html',
+          'htmldjango',
+          'javascript.jsx',
+          'javascriptreact',
+          'svelte',
+          'typescript.tsx',
+          'typescriptreact',
+          'unocss',
+          'vue',
+        },
+      }
+    end,
+  }
 
-    for type, icon in pairs {
-      Error = '🚒',
-      Warn = '🚧',
-      Hint = '🦒',
-      Info = '👀',
-    } do
+  for type, icon in pairs {
+    Error = '🚒',
+    Warn = '🚧',
+    Hint = '🦒',
+    Info = '👀',
+  } do
     local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
@@ -878,25 +878,24 @@ later(function()
     return string.format('<Cmd>Lspsaga %s<Cr>', action)
   end
 
-  nmaps{
-    {';', '<Nop>', { noremap = false }},
-    {';;',doSagaAction('term_toggle') },
+  nmaps {
+    { ';',  '<Nop>',                    { noremap = false } },
+    { ';;', doSagaAction('term_toggle') },
   }
   utils.on_attach(function(_, _)
     nmaps {
-      { ';r', doSagaAction('rename') },
-      { ';d', doSagaAction('peek_definition') },
-      { ';D', doSagaAction('goto_definition') },
-      { ';t', doSagaAction('peek_type_definition') },
-      { ';T', doSagaAction('goto_type_definition') },
+      { ';r',       doSagaAction('rename') },
+      { ';d',       doSagaAction('peek_definition') },
+      { ';D',       doSagaAction('goto_definition') },
+      { ';t',       doSagaAction('peek_type_definition') },
+      { ';T',       doSagaAction('goto_type_definition') },
       { ';<Space>', doSagaAction('code_action') },
-      { ';l', doSagaAction('show_line_diagnostics') },
-      { ';j', doSagaAction('diagnostics_jump_next') },
-      { ';k', doSagaAction('diagnostics_jump_prev') },
-      { 'K', doSagaAction('hover_doc') },
+      { ';l',       doSagaAction('show_line_diagnostics') },
+      { ';j',       doSagaAction('diagnostics_jump_next') },
+      { ';k',       doSagaAction('diagnostics_jump_prev') },
+      { 'K',        doSagaAction('hover_doc') },
     }
   end)
-
 end)
 
 later(function()
@@ -1240,17 +1239,17 @@ if useDenopstatusline == false then
 
     require('heirline').setup {
       statusline = heirline_utils.insert(
-      {
-        static = comp.stl_static,
-        hl = { bg = 'bg' },
-      },
-      comp.ViMode,
-      comp.lpad(comp.Git),
-      comp.lpad(comp.LSPActive),
-      comp.lpad(comp.Diagnostics),
-      { provider = '%=' },
-      comp.rpad(comp.FileType),
-      comp.Ruler
+        {
+          static = comp.stl_static,
+          hl = { bg = 'bg' },
+        },
+        comp.ViMode,
+        comp.lpad(comp.Git),
+        comp.lpad(comp.LSPActive),
+        comp.lpad(comp.Diagnostics),
+        { provider = '%=' },
+        comp.rpad(comp.FileType),
+        comp.Ruler
       ),
       winbar = {
         comp.FullFileName,
@@ -1304,7 +1303,7 @@ later(function()
   }
 end)
 
-later(function ()
+later(function()
   add('https://github.com/epwalsh/obsidian.nvim')
 end)
 
@@ -1326,7 +1325,7 @@ later(function()
       },
       diagnostic = {
         enable = true,
-        signs = {'-', '=', '≡'},
+        signs = { '-', '=', '≡' },
       },
     },
   }
@@ -1360,7 +1359,7 @@ end)
 
 later(function()
   add({
-    source='https://github.com/simonmclean/triptych.nvim',
+    source = 'https://github.com/simonmclean/triptych.nvim',
     depends = {
       'https://github.com/nvim-lua/plenary.nvim',
       'https://github.com/nvim-tree/nvim-web-devicons',
@@ -1403,6 +1402,4 @@ local favoriteList = {
   'CopilotChatFix',
   'GinStatus'
 }
-map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)
-
-
+map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoritelist, vim.fn.execute) end)

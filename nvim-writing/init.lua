@@ -88,4 +88,13 @@ later(function()
   require('wagomu-box.plugin-config.gin')
 end)
 
+later(function()
+  add('https://github.com/kien/ctrlp.vim')
+end)
+
+later(function()
+  add('https://github.com/mattn/ctrlp-matchfuzzy')
+  vim.g.ctrlp_match_func = { match = 'ctrlp_matchfuzzy#matcher' }
+end)
+
 vim.cmd.colorscheme('catppuccin-latte')

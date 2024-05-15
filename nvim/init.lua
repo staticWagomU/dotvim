@@ -1392,4 +1392,4 @@ local favoriteList = {
   'CopilotChatFix',
   'GinStatus'
 }
-map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoritelist, vim.fn.execute) end)
+map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)

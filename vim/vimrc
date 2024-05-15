@@ -91,6 +91,8 @@ Plug 'https://github.com/kawarimidoll/tuskk.vim'
 
 Plug 'https://github.com/thinca/vim-qfreplace'
 
+Plug 'https://github.com/catppuccin/vim'
+
 call plug#end()
 " }}}
 
@@ -389,5 +391,5 @@ endif
 
 let &t_SI = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
-colorscheme habamax
+colorscheme catppuccin_frappe
 " }}}

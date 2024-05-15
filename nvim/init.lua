@@ -205,6 +205,7 @@ maps({ 'n', 'x' }, {
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local abbrev = require('wagomu-box.utils').make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
+local favoriteList = {}
 
 local bufopts = { noremap = true, buffer = true }
 local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
@@ -1388,8 +1389,4 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   command = 'setlocal filetype=mdx',
 })
 
-local favoriteList = {
-  'CopilotChatFix',
-  'GinStatus'
-}
 map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)

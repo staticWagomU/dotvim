@@ -466,7 +466,7 @@ later(function()
   oil.setup {
     default_file_explorer = true,
     win_options = {
-      signcolumn = "yes:2",
+      -- signcolumn = "yes:2",
       number = false,
       foldcolumn = '0',
     },
@@ -556,10 +556,10 @@ end)
 
 
 
-later(function()
-  add('https://github.com/refractalize/oil-git-status.nvim')
-  require('oil-git-status').setup {}
-end)
+-- later(function()
+--   add('https://github.com/refractalize/oil-git-status.nvim')
+--   require('oil-git-status').setup {}
+-- end)
 
 -- =========================================
 -- | nvim-cmp関連

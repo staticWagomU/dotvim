@@ -389,6 +389,11 @@ later(function()
     group = group,
     callback = function()
       nmaps {
+        {
+          'A',
+          [[<Cmd>bdelete<Cr><Cmd>GinLog --all --graph --pretty=%C(yellow)%h\ %C(reset)%C(cyan)@%an%C(reset)\ %C(auto)%d%C(reset)\ %s\ %C(magenta)[%ar]%C(reset)<Cr>]],
+          nowait_bufopts,
+        },
         { '<C-g><C-g>', '<Plug>(gin-action-fixup:instant)', bufopts },
         { '<C-g><C-f>', '<Plug>(gin-action-choice)fixup:',  nosilent_bufopts },
       }

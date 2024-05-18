@@ -790,6 +790,7 @@ later(function()
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',
+          'tailwind.config.mjs',
           'tailwind.config.ts',
           'tailwind.config.lua',
           'tailwind.config.json'

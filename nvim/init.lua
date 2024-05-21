@@ -901,10 +901,7 @@ later(function()
     checkout = 'dev',
     depends = { 'nvim-tree/nvim-web-devicons' },
   }
-  require('trouble').setup {
-    icons = true, -- use devicons for filenames
-    use_diagnostic_signs = true,
-  }
+  require('trouble').setup { }
 end)
 
 -- =========================================

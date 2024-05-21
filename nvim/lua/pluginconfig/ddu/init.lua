@@ -3,6 +3,7 @@ local bufopts = { buffer = true, silent = false }
 
 ddu.alias('source', 'file_rg', 'file_external')
 ddu.alias('source', 'file_git', 'file_external')
+ddu.alias('source', 'file_ghq', 'file_external')
 
 ddu.patch_global {
   ui = 'ff',
@@ -35,6 +36,13 @@ ddu.patch_global {
       defaultAction = 'open',
     },
     file_git = {
+      converters = {
+        'converter_devicon',
+        'converter_hl_dir',
+      },
+      defaultAction = 'cd',
+    },
+    file_ghq = {
       converters = {
         'converter_devicon',
         'converter_hl_dir',
@@ -77,6 +85,9 @@ ddu.patch_global {
       cmd = { 'rg', '--files', '--glob', '!.git', '--color', 'never', '--no-messages' },
       updateItems = 50000,
     },
+    file_ghq = {
+      cmd = { 'ghq', 'list', '-p' },
+    }
   },
   filterParams = {
     matcher_substring = { hightlightMatched = 'Search' },
@@ -133,6 +144,14 @@ ddu.patch_local('file_git', {
       },
     },
   },
+})
+
+ddu.patch_local('file_ghq', {
+  sources = {
+    {
+      name = { 'file_ghq' },
+    }
+  }
 })
 
 for _, mrKind in ipairs { 'mrr', 'mru', 'mrw' } do

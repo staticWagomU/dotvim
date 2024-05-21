@@ -20,6 +20,7 @@ ddu.patch_global {
       previewFloating = true,
       previewFloatingBorder = 'single',
       prompt = '> ',
+      reversed = true,
       split = 'floating',
       updateTime = 0,
     },

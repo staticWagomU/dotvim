@@ -136,13 +136,6 @@ ddu.patch_local('file_git', {
   sources = {
     {
       name = { 'file_git' },
-      options = {
-        converters = {
-          'converter_devicon',
-          'converter_hl_dir',
-        },
-        defaultAction = 'open',
-      },
     },
   },
 })

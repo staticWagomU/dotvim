@@ -228,7 +228,23 @@ now(function()
     },
   }
   add('https://github.com/vigoux/notifier.nvim')
+  add('https://github.com/nvim-tree/nvim-web-devicons')
   require('notifier').setup {}
+  require('nvim-web-devicons').setup {
+    override = {
+      astro = {
+        icon = '󰑣',
+        color = '#FFD700',
+        name = 'Astro',
+      },
+      ts = {
+        icon = '󰛦',
+        color = '#3178C6',
+        name = 'TypeScript',
+      },
+    },
+  }
+
 end)
 
 -- =========================================

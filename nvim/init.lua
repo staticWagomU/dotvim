@@ -1370,6 +1370,26 @@ later(function()
   })
 end)
 
+-- ref: https://blog.atusy.net/2024/05/21/move-nvim-win-or-wezterm-pane/
+-- https://github.com/atusy/dotfiles/blob/6abe3db2adbe9785c178b17bf6698ac048809164/dot_config/nvim/lua/plugins/wezterm/init.lua
+later(function()
+  add('https://github.com/willothy/wezterm.nvim')
+  local directions = { h = "Left", j = "Down", k = "Up", l = "Right" }
+  local function move_nvim_win_or_wezterm_pane(hjkl)
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd.wincmd(hjkl)
+    if win == vim.api.nvim_get_current_win() then
+      require("wezterm").switch_pane.direction(directions[hjkl])
+    end
+  end
+
+  for k, _ in pairs(directions) do
+    vim.keymap.set("n", "<c-w>" .. k, function()
+      move_nvim_win_or_wezterm_pane(k)
+    end)
+  end
+end)
+
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

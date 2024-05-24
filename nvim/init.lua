@@ -1370,6 +1370,11 @@ later(function()
   })
 end)
 
+later(function()
+  add('https://github.com/echasnovski/mini-git')
+  require('mini.git').setup()
+end)
+
 -- ref: https://blog.atusy.net/2024/05/21/move-nvim-win-or-wezterm-pane/
 -- https://github.com/atusy/dotfiles/blob/6abe3db2adbe9785c178b17bf6698ac048809164/dot_config/nvim/lua/plugins/wezterm/init.lua
 later(function()

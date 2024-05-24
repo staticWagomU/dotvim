@@ -901,7 +901,7 @@ later(function()
     checkout = 'dev',
     depends = { 'nvim-tree/nvim-web-devicons' },
   }
-  require('trouble').setup { }
+  require('trouble').setup {}
 end)
 
 -- =========================================

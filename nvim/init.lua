@@ -1149,40 +1149,32 @@ later(function()
   local ddu = require('pluginconfig.ddu.util')
   WagomuBox.nmaps {
     {
-      [[\\]],
-      function()
-        ddu.start_source('patch_local')
-      end,
+      [[\,]],
+      function() ddu.start_source('file_ghq') end,
     },
     {
-      [[\m]],
-      function()
-        ddu.start_local('mr:mrw')
-      end,
+      [[\\]],
+      function() ddu.start_source('patch_local') end,
     },
     {
       [[\b]],
-      function()
-        ddu.start_source('buffer')
-      end,
+      function() ddu.start_source('buffer') end,
     },
     {
       [[\f]],
-      function()
-        ddu.start_local('file_recursive')
-      end,
+      function() ddu.start_local('file_recursive') end,
     },
     {
       [[\g]],
-      function()
-        ddu.start_local('file_git')
-      end,
+      function() ddu.start_local('file_git') end,
     },
     {
       [[\h]],
-      function()
-        ddu.start_source('help')
-      end,
+      function() ddu.start_source('help') end,
+    },
+    {
+      [[\m]],
+      function() ddu.start_local('mr:mrw') end,
     },
   }
 end)

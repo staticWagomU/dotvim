@@ -6,7 +6,6 @@ MiniDeps.now(function()
 
   local packageinfo = require('package-info')
   packageinfo.setup()
-  local select_action = require('select_action')
   WagomuBox.nmaps {
     { '<Plug>(packageinfo-action-toggle)', packageinfo.toggle },
     { '<Plug>(packageinfo-action-update)', packageinfo.update },
@@ -14,9 +13,9 @@ MiniDeps.now(function()
     { '<Plug>(packageinfo-action-install)', packageinfo.install },
     { '<Plug>(packageinfo-action-chage_version)', packageinfo.change_version },
     {
-      '<C-h><C-h>',
+      'g?',
       function()
-        select_action('packageinfo')
+        require('select_action')('packageinfo')
       end,
     },
   }

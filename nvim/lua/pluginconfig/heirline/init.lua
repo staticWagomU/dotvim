@@ -97,7 +97,7 @@ local ViMode = {
 local FileIcon = {
   init = function(self)
     self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+        require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -278,56 +278,56 @@ local Ruler = {
 }
 
 local Git = {
-    condition = conditions.is_git_repo,
+  condition = conditions.is_git_repo,
 
-    init = function(self)
-        self.status_dict = vim.b.gitsigns_status_dict
-        self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
+  init = function(self)
+    self.status_dict = vim.b.gitsigns_status_dict
+    self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
+  end,
+
+  hl = { fg = "orange" },
+
+
+  {   -- git branch name
+    provider = function(self)
+      return " " .. self.status_dict.head
     end,
-
-    hl = { fg = "orange" },
-
-
-    {   -- git branch name
-        provider = function(self)
-            return " " .. self.status_dict.head
-        end,
-        hl = { bold = true }
-    },
-    -- You could handle delimiters, icons and counts similar to Diagnostics
-    {
-        condition = function(self)
-            return self.has_changes
-        end,
-        provider = "("
-    },
-    {
-        provider = function(self)
-            local count = self.status_dict.added or 0
-            return count > 0 and ("+" .. count)
-        end,
-        hl = { fg = setup_colors().git_add },
-    },
-    {
-        provider = function(self)
-            local count = self.status_dict.removed or 0
-            return count > 0 and ("-" .. count)
-        end,
-        hl = { fg = setup_colors().git_delete },
-    },
-    {
-        provider = function(self)
-            local count = self.status_dict.changed or 0
-            return count > 0 and ("~" .. count)
-        end,
-        hl = { fg = setup_colors().git_change },
-    },
-    {
-        condition = function(self)
-            return self.has_changes
-        end,
-        provider = ")",
-    },
+    hl = { bold = true }
+  },
+  -- You could handle delimiters, icons and counts similar to Diagnostics
+  {
+    condition = function(self)
+      return self.has_changes
+    end,
+    provider = "("
+  },
+  {
+    provider = function(self)
+      local count = self.status_dict.added or 0
+      return count > 0 and ("+" .. count)
+    end,
+    hl = { fg = setup_colors().git_add },
+  },
+  {
+    provider = function(self)
+      local count = self.status_dict.removed or 0
+      return count > 0 and ("-" .. count)
+    end,
+    hl = { fg = setup_colors().git_delete },
+  },
+  {
+    provider = function(self)
+      local count = self.status_dict.changed or 0
+      return count > 0 and ("~" .. count)
+    end,
+    hl = { fg = setup_colors().git_change },
+  },
+  {
+    condition = function(self)
+      return self.has_changes
+    end,
+    provider = ")",
+  },
 }
 
 return {

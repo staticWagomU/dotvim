@@ -74,6 +74,10 @@ ddu.patch_global {
       },
       defaultAction = 'open',
     },
+    rg = {
+      volatile = true,
+      defaultAction = 'open',
+    }
   },
   sourceParams = {
     file_git = {
@@ -144,6 +148,27 @@ ddu.patch_local('file_ghq', {
   sources = {
     {
       name = { 'file_ghq' },
+    }
+  }
+})
+
+ddu.patch_local('live_grep', {
+  volatile = true,
+  sources = {
+    {
+      name = { 'rg' },
+      options = {
+        converters = {
+          'converter_devicon',
+          'converter_hl_dir',
+        },
+      },
+    },
+  },
+  uiParamas = {
+    ff = {
+      ignoreEmpty = true,
+      autoResize = false,
     }
   }
 })

@@ -23,6 +23,8 @@ vim.diagnostic.config({ severity_sort = true })
 
 local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
 local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap
+WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
+local MyAuGroup = WagomuBox.MyAuGroup
 
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_fzf = 1
@@ -367,10 +369,9 @@ later(function()
     { '<C-g>c',     '<Cmd>Gin commit<Cr>' },
   }
 
-  local group = vim.api.nvim_create_augroup('my-gin', { clear = true })
   autocmd({ 'FileType' }, {
     pattern = { 'gin-*', 'gin' },
-    group = group,
+    group = MyAuGroup,
     callback = function()
       vim.opt_local.signcolumn = 'no'
       vim.opt_local.number = false
@@ -401,7 +402,7 @@ later(function()
 
   autocmd({ 'FileType' }, {
     pattern = 'gin-log',
-    group = group,
+    group = MyAuGroup,
     callback = function()
       nmaps {
         {
@@ -417,7 +418,7 @@ later(function()
 
   autocmd({ 'FileType' }, {
     pattern = 'gin-diff',
-    group = group,
+    group = MyAuGroup,
     callback = function()
       nmap('gd', '<Plug>(gin-diffjump-smart)<Cmd>lua vim.lsp.buf.definition()<CR>', nowait_bufopts)
     end,
@@ -425,7 +426,7 @@ later(function()
 
   autocmd({ 'FileType' }, {
     pattern = 'gin-status',
-    group = group,
+    group = MyAuGroup,
     callback = function()
       maps({ 'n', 'x' }, {
         { 'h', '<Plug>(gin-action-stage)',   nowait_bufopts },
@@ -445,7 +446,7 @@ later(function()
 
   autocmd({ 'FileType' }, {
     pattern = 'gin-commit',
-    group = group,
+    group = MyAuGroup,
     callback = function()
       nmap('ZZ', '<Cmd>Apply<Cr>', bufopts)
     end,
@@ -504,6 +505,7 @@ later(function()
 
   autocmd('FileType', {
     pattern = 'oil',
+    group = MyAuGroup,
     callback = function(args)
       local buffer = { buffer = args.buf }
       local oil_url = vim.api.nvim_buf_get_name(args.buf)

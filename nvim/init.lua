@@ -942,6 +942,12 @@ later(function()
   add('https://github.com/echasnovski/mini.indentscope')
   require('mini.indentscope').setup {}
 end)
+
+later(function()
+  add('https://github.com/echasnovski/mini.animate')
+  require('mini.animate').setup {}
+end)
+
 -- =========================================
 -- | その他
 -- =========================================

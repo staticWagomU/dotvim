@@ -74,7 +74,6 @@ ddu.patch_global {
       defaultAction = 'open',
     },
     rg = {
-      volatile = true,
       defaultAction = 'open',
     }
   },

@@ -167,11 +167,11 @@ ddu.patch_local('file_ghq', {
 })
 
 ddu.patch_local('live_grep', {
-  volatile = true,
   sources = {
     {
       name = { 'rg' },
       options = {
+        volatile = true,
         converters = {
           'converter_devicon',
           'converter_hl_dir',

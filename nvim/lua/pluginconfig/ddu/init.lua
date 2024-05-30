@@ -113,6 +113,9 @@ ddu.patch_global {
 ddu.patch_local('file_recursive', {
   uiParams = {
     ff = {
+      previewFloating = false,
+      previewSplit = 'vertical',
+      split = 'horizontal',
       floatingTitle = 'FILE RECURSIVE',
     },
   },
@@ -133,9 +136,6 @@ ddu.patch_local('file_recursive', {
   kindOptions = {
     file = {
       defaultAction = 'open',
-    },
-    action = {
-      defaultAction = 'do',
     },
   },
 })

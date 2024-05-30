@@ -75,7 +75,13 @@ ddu.patch_global {
     },
     rg = {
       defaultAction = 'open',
-    }
+    },
+    patch_local = {
+      matchers = {
+        'matcher_substring',
+      },
+      sorters = {},
+    },
   },
   sourceParams = {
     file_git = {

@@ -1163,6 +1163,7 @@ later(function()
   add('https://github.com/Shougo/ddu-filter-matcher_substring')
   add('https://github.com/Shougo/ddu-filter-sorter_alpha')
   add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
+  add('https://github.com/yuki-yano/ddu-filter-fzf')
 
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
 

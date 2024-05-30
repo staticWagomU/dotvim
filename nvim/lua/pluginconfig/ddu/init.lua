@@ -28,7 +28,10 @@ ddu.patch_global {
   sourceOptions = {
     _ = {
       matchers = {
-        'matcher_substring',
+        'matcher_fzf',
+      },
+      sorters = {
+        'sorter_fzf',
       },
       ignoreCase = true,
       smartCase = true,
@@ -97,6 +100,7 @@ ddu.patch_global {
   filterParams = {
     matcher_substring = { hightlightMatched = 'Search' },
     converter_hl_dir = { hlGroup = { 'Directory', 'Keyword' } },
+    matcher_fzf = { highlightMatched = 'Search' },
   },
   kindOptions = {
     ui_select = { defaultAction = 'select' },

@@ -99,7 +99,7 @@ ddu.patch_global {
     }
   },
   filterParams = {
-    matcher_substring = { hightlightMatched = 'Search' },
+    matcher_substring = { highlightMatched = 'Search' },
     converter_hl_dir = { hlGroup = { 'Directory', 'Keyword' } },
     matcher_fzf = { highlightMatched = 'Search' },
   },

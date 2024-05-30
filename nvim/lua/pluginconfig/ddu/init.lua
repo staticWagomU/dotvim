@@ -112,8 +112,7 @@ ddu.patch_global {
 ddu.patch_local('file_recursive', {
   uiParams = {
     ff = {
-      previewSplit = 'horizontal',
-      prompt = '> ',
+      floatingTitle = 'FILE RECURSIVE',
     },
   },
   sources = {
@@ -146,6 +145,11 @@ ddu.patch_local('file_git', {
       name = { 'file_git' },
     },
   },
+  uiParams = {
+    ff = {
+      floatingTitle = 'FILE GIT',
+    }
+  },
 })
 
 ddu.patch_local('file_ghq', {
@@ -153,7 +157,12 @@ ddu.patch_local('file_ghq', {
     {
       name = { 'file_ghq' },
     }
-  }
+  },
+  uiParams = {
+    ff = {
+      floatingTitle = 'GHQ',
+    }
+  },
 })
 
 ddu.patch_local('live_grep', {
@@ -169,10 +178,9 @@ ddu.patch_local('live_grep', {
       },
     },
   },
-  uiParamas = {
+  uiParams = {
     ff = {
-      ignoreEmpty = true,
-      autoResize = false,
+      floatingTitle = 'LIVE GREP',
     }
   }
 })
@@ -194,6 +202,11 @@ for _, mrKind in ipairs { 'mrr', 'mru', 'mrw' } do
         },
       },
     },
+    uiParams = {
+      ff = {
+        floatingTitle = mrKind:upper(),
+      }
+    }
   })
 end
 

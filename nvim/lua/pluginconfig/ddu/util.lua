@@ -13,7 +13,7 @@ end
 
 --- @param name string
 function M.start_local(name)
-  vim.fn['ddu#start'] {
+  M.start {
     name = name,
   }
 end

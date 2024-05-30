@@ -199,6 +199,7 @@ end
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff',
+  group = WagomuBox.MyAuGroup,
   callback = function()
     vim.opt_local.signcolumn = 'no'
     WagomuBox.nmaps {
@@ -283,10 +284,13 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'ddu-ff-filter',
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'Ddu:ui:ff:openFilterWindow',
+  group = WagomuBox.MyAuGroup,
   callback = function()
-    WagomuBox.map({ 'n', 'i' }, '<CR>', [[<Esc><Cmd>close<CR>]], bufopts)
+    vim.fn['ddu#ui#ff#save_cmaps']({
+      '<C-f>', '<C-b>',
+    })
     WagomuBox.imaps {
       {
         '<C-f>',
@@ -303,5 +307,14 @@ vim.api.nvim_create_autocmd('FileType', {
         bufopts,
       },
     }
+  end,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'Ddu:ui:ff:closeFilterWindow',
+  group = WagomuBox.MyAuGroup,
+  callback = function()
+    -- vim.opt.cursorline = false
+    vim.fn['ddu#ui#ff#restore_cmaps']()
   end,
 })

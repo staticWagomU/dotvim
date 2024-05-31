@@ -249,13 +249,6 @@ vim.api.nvim_create_autocmd('FileType', {
         bufopts,
       },
       {
-        'gr',
-        function()
-          ddu.do_action('itemAction', { name = 'grep' })
-        end,
-        bufopts,
-      },
-      {
         'i',
         function()
           ddu.do_action('openFilterWindow')
@@ -266,6 +259,16 @@ vim.api.nvim_create_autocmd('FileType', {
         'q',
         function()
           ddu.do_action('quit')
+        end,
+        bufopts,
+      },
+      {
+        '-',
+        function()
+          ddu.do_action('itemAction', {
+            name = 'open',
+            params = { command = 'botright split' }
+          })
         end,
         bufopts,
       },

@@ -272,6 +272,16 @@ vim.api.nvim_create_autocmd('FileType', {
         end,
         bufopts,
       },
+      {
+        '|',
+        function()
+          ddu.do_action('itemAction', {
+            name = 'open',
+            params = { command = 'botright vsplit' }
+          })
+        end,
+        bufopts,
+      },
     }
   end,
 })

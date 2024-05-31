@@ -948,11 +948,6 @@ later(function()
   require('mini.animate').setup {}
 end)
 
-later(function()
-  add('https://github.com/echasnovski/mini.cursorword')
-  require('mini.cursorword').setup {}
-end)
-
 -- =========================================
 -- | その他
 -- =========================================

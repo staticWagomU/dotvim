@@ -116,7 +116,6 @@ ddu.patch_local('file_recursive', {
       previewFloating = false,
       previewSplit = 'vertical',
       split = 'horizontal',
-      floatingTitle = 'FILE RECURSIVE',
     },
   },
   sources = {

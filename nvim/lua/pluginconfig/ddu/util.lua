@@ -1,14 +1,7 @@
 local M = {}
 
----@param action string
----@param args table | nil
-function M.do_action(action, args)
-  args = args or nil
-  if args ~= nil then
-    vim.fn['ddu#ui#do_action'](action, args)
-  else
-    vim.fn['ddu#ui#do_action'](action)
-  end
+function M.do_action(...)
+  vim.fn['ddu#ui#do_action'](...)
 end
 
 --- @param name string

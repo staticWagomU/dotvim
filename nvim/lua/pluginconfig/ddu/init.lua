@@ -186,30 +186,6 @@ ddu.patch_local('live_grep', {
   }
 })
 
-for _, mrKind in ipairs { 'mrr', 'mru', 'mrw' } do
-  ddu.patch_local('mr:' .. mrKind, {
-    sources = {
-      {
-        name = { 'mr' },
-        options = {
-          converters = {
-            'converter_devicon',
-            'converter_hl_dir',
-          },
-          defaultAction = 'open',
-        },
-        params = {
-          kind = mrKind,
-        },
-      },
-    },
-    uiParams = {
-      ff = {
-        floatingTitle = mrKind:upper(),
-      }
-    }
-  })
-end
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff',

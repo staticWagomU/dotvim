@@ -1199,7 +1199,19 @@ later(function()
     },
     {
       [[\m]],
-      function() ddu.start_local('mr:mrw') end,
+      function()
+        ddu.start({
+          sources = {
+            {
+              name = 'mr',
+              params = { kind = 'mrw' }
+            },
+          },
+          uiParams = {
+            ff = { floatingTitle = 'MRW' },
+          },
+        })
+      end,
     },
   }
 end)

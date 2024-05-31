@@ -1178,7 +1178,21 @@ later(function()
     },
     {
       [[\\]],
-      function() ddu.start_source('patch_local') end,
+      function()
+        ddu.start({
+          sources = {
+            {
+              name = 'patch_local',
+            },
+          },
+          uiParams = {
+            ff = {
+              floatingTitle = 'FAVORITE',
+              autoResize = true,
+            },
+          },
+        })
+      end,
     },
     {
       [[\b]],

@@ -200,10 +200,6 @@ maps({ 'n', 'o', 'x' }, {
   { '0', [[getline('.')[0 : col('.') - 2] =~# '^\s\+$' ? '0' : '^']], { noremap = false, expr = true } },
 })
 
-maps({ 'n', 'x' }, {
-  { 'gy', '"+y' },
-})
-
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local abbrev = require('wagomu-box.utils').make_abbrev
 local autocmd = vim.api.nvim_create_autocmd

@@ -214,20 +214,17 @@ local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
 
 now(function()
   add('https://github.com/vim-denops/denops.vim')
-  add('https://github.com/zbirenbaum/copilot.lua')
-  add('https://github.com/MunifTanjim/nui.nvim')
-  require('copilot').setup {
-    suggestion = {
-      auto_trigger = true,
-      keymap = {
-        accept = '<C-g><C-g>',
-        dismiss = '<C-e>',
-      },
-    },
-  }
+end)
+
+
+now(function()
   add('https://github.com/vigoux/notifier.nvim')
-  add('https://github.com/nvim-tree/nvim-web-devicons')
   require('notifier').setup {}
+end)
+
+
+now(function()
+  add('https://github.com/nvim-tree/nvim-web-devicons')
   require('nvim-web-devicons').setup {
     override = {
       astro = {
@@ -242,6 +239,23 @@ now(function()
       },
     },
   }
+end)
+
+now(function()
+  add('https://github.com/zbirenbaum/copilot.lua')
+  require('copilot').setup {
+    suggestion = {
+      auto_trigger = true,
+      keymap = {
+        accept = '<C-g><C-g>',
+        dismiss = '<C-e>',
+      },
+    },
+  }
+end)
+
+now(function()
+  add('https://github.com/MunifTanjim/nui.nvim')
 end)
 
 -- =========================================

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find ~/.local/share/nvim/site/pack/deps/ -type f -name "*.ts" | xargs deno cache -r
+find ~/.local/share/nvim/site/pack/deps/ -name "*.ts" -exec deno cache --reload {} +

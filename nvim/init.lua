@@ -518,9 +518,6 @@ later(function()
     group = MyAuGroup,
     callback = function(args)
       local buffer = { buffer = args.buf }
-      local oil_url = vim.api.nvim_buf_get_name(args.buf)
-      local file_url = oil_url:gsub("^oil", "file")
-      local path = vim.uri_to_fname(file_url)
 
       nmaps {
         { 'q', oil.close, buffer },

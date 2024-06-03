@@ -452,7 +452,7 @@ later(function()
   add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
   add('https://github.com/zbirenbaum/copilot-cmp')
   add('https://github.com/uga-rosa/cmp-skkeleton')
-  add('https://github.com/staticWagomU/cmp-my-git-emoji')
+  add('https://github.com/staticWagomU/cmp-my-git-commit-prefix')
   add('https://github.com/onsails/lspkind.nvim')
   require('copilot_cmp').setup()
 
@@ -497,7 +497,7 @@ later(function()
       { name = 'git' },
     }, {
       { name = 'copilot' },
-      { name = 'my-git-emoji' },
+      { name = 'my-commit-prefix' },
       { name = 'skkeleton' },
       { name = 'buffer' },
     }),

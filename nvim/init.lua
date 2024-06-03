@@ -655,6 +655,9 @@ later(function()
     depends = { 'kevinhwang91/promise-async' },
   }
 
+  add('https://github.com/themaxmarchuk/tailwindcss-colors.nvim')
+  require('tailwindcss-colors').setup {}
+
   require('mason').setup()
   local enabled_vtsls = true
   local lspconfig = require('lspconfig')
@@ -776,6 +779,9 @@ later(function()
           'tailwind.config.mjs',
           'tailwind.config.ts'
         ),
+        on_attach = function(_, bufnr)
+          require('tailwindcss-colors').buf_attach(bufnr)
+        end
       }
     end,
     ['emmet_ls'] = function()

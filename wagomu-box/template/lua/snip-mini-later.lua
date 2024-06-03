@@ -1,3 +1,3 @@
 later(function()
-  add('_')
+  add('')
 end)

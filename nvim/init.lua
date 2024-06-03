@@ -345,22 +345,8 @@ end)
 -- =========================================
 later(function()
   add('https://github.com/lewis6991/gitsigns.nvim')
-  local gitsigns = require('gitsigns')
-  gitsigns.setup {
-    signcolumn = true,
-    numhl = true,
-  }
-  nmaps {
-    { ']g',         gitsigns.next_hunk },
-    { '[g',         gitsigns.prev_hunk },
-    { '<C-g><C-a>', gitsigns.stage_hunk },
-    { '<C-g>a',     gitsigns.stage_buffer },
-    { '<C-g><C-r>', gitsigns.undo_stage_hunk },
-    { '<C-g><C-d>', '<Cmd>Gitsigns diffthis ~<Cr>' },
-    { '<C-g><C-p>', gitsigns.preview_hunk },
-    { '<C-g><C-v>', gitsigns.blame_line },
-    { '<C-g><C-q>', gitsigns.setqflist },
-  }
+
+  require('wagomu-box.plugin-config.gitsigns')
 end)
 
 later(function()

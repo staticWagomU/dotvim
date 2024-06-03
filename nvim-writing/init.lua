@@ -87,6 +87,9 @@ end)
 later(function()
   add('lewis6991/gitsigns.nvim')
   require('wagomu-box.plugin-config.gitsigns')
+end)
+
+later(function()
   add {
     source = 'lambdalisue/gin.vim',
     depends = { 'vim-denops/denops.vim' },

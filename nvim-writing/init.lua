@@ -103,4 +103,10 @@ later(function()
   vim.g.ctrlp_match_func = { match = 'ctrlp_matchfuzzy#matcher' }
 end)
 
+later(function()
+  add('https://github.com/yuki-yano/fuzzy-motion.vim')
+  vim.g.fuzzy_motion_matchers = { 'kensaku', 'fzf' }
+  nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<Cr>')
+end)
+
 vim.cmd.colorscheme('catppuccin-latte')

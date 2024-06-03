@@ -692,6 +692,9 @@ later(function()
     function(server_name)
       lspconfig[server_name].setup {
         capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+        end,
       }
     end,
     ['denols'] = function()
@@ -718,9 +721,6 @@ later(function()
       if is_node and enabled_vtsls then
         lspconfig['vtsls'].setup {
           capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-          end,
         }
       end
     end,
@@ -729,9 +729,6 @@ later(function()
       if is_node and not enabled_vtsls then
         lspconfig['tsserver'].setup {
           capabilities = capabilities,
-          on_attach = function(client, bufnr)
-            require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-          end,
         }
       end
     end,

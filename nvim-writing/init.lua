@@ -3,7 +3,7 @@ require('options')
 vim.opt.wrap = true
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-local map, nmap = WagomuBox.map, WagomuBox.nmap
+local map, nmap, cmap = WagomuBox.map, WagomuBox.nmap, WagomuBox.cmap
 
 nmap('gj', 'j')
 nmap('gk', 'k')
@@ -73,6 +73,12 @@ later(function()
   })
   map({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)')
   nmap('<C-j>', 'i<Plug>(skkeleton-toggle)')
+end)
+
+later(function()
+  add('https://github.com/lambdalisue/vim-kensaku')
+  add('https://github.com/lambdalisue/vim-kensaku-search')
+  cmap('<Cr>', '<Plug>(kensaku-search-replace)<Cr>')
 end)
 
 ---===========================================

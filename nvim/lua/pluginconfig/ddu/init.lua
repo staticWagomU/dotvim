@@ -40,7 +40,7 @@ ddu.patch_global {
         'converter_devicon',
         'converter_hl_dir',
       },
-      defaultAction = 'cd',
+      defaultAction = 'open',
     },
     file_ghq = {
       converters = {

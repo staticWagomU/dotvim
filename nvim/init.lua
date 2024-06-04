@@ -526,9 +526,9 @@ end)
 later(function()
   add('https://github.com/stevearc/conform.nvim')
   require('conform').setup {
-    lua = { "stylua" },
-    go = { "gofmt" },
-    javascript = { "biome" },
+    lua = { 'stylua' },
+    go = { 'gofmt' },
+    javascript = { 'biome' },
   }
   map({ 'n', 'v' }, 'mf', function() require('conform').format({ lsp_fallback = true }) end)
 end)
@@ -717,7 +717,7 @@ later(function()
     update_in_insert = false,
     virtual_text = {
       format = function(diagnostic)
-        return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+        return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
       end,
     },
   })
@@ -1187,10 +1187,10 @@ if useDenopstatusline == false then
     }
 
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
-      vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
+      vim.o.statusline = '%{%v:lua.require'heirline'.eval_statusline()%}'
     end, {})
 
-    vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    vim.opt_local.winbar = '%{%v:lua.require'heirline'.eval_winbar()%}'
   end)
 end
 
@@ -1253,7 +1253,7 @@ end)
 
 later(function()
   add('https://github.com/zapling/mason-conform.nvim')
-  require("mason-conform").setup {}
+  require('mason-conform').setup {}
 end)
 
 later(function()
@@ -1261,17 +1261,17 @@ later(function()
   require('precognition').setup {
     startVisible = true,
     hints = {
-      ["^"] = { text = "^", prio = 1 },
-      ["$"] = { text = "$", prio = 1 },
-      ["w"] = { text = "w", prio = 10 },
-      ["b"] = { text = "b", prio = 10 },
-      ["e"] = { text = "e", prio = 10 },
+      ['^'] = { text = '^', prio = 1 },
+      ['$'] = { text = '$', prio = 1 },
+      ['w'] = { text = 'w', prio = 10 },
+      ['b'] = { text = 'b', prio = 10 },
+      ['e'] = { text = 'e', prio = 10 },
     },
     gutterHints = {
-      ["G"] = { text = "G", prio = 1 },
-      ["gg"] = { text = "gg", prio = 1 },
-      ["{"] = { text = "{", prio = 1 },
-      ["}"] = { text = "}", prio = 1 },
+      ['G'] = { text = 'G', prio = 1 },
+      ['gg'] = { text = 'gg', prio = 1 },
+      ['{'] = { text = '{', prio = 1 },
+      ['}'] = { text = '}', prio = 1 },
     },
   }
   require('precognition').toggle()
@@ -1305,17 +1305,17 @@ end)
 -- https://github.com/atusy/dotfiles/blob/6abe3db2adbe9785c178b17bf6698ac048809164/dot_config/nvim/lua/plugins/wezterm/init.lua
 later(function()
   add('https://github.com/willothy/wezterm.nvim')
-  local directions = { h = "Left", j = "Down", k = "Up", l = "Right" }
+  local directions = { h = 'Left', j = 'Down', k = 'Up', l = 'Right' }
   local function move_nvim_win_or_wezterm_pane(hjkl)
     local win = vim.api.nvim_get_current_win()
     vim.cmd.wincmd(hjkl)
     if win == vim.api.nvim_get_current_win() then
-      require("wezterm").switch_pane.direction(directions[hjkl])
+      require('wezterm').switch_pane.direction(directions[hjkl])
     end
   end
 
   for k, _ in pairs(directions) do
-    vim.keymap.set("n", "<c-w>" .. k, function()
+    vim.keymap.set('n', '<c-w>' .. k, function()
       move_nvim_win_or_wezterm_pane(k)
     end)
   end

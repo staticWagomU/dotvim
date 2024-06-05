@@ -24,28 +24,55 @@ function M.apply()
   local omaps = require('wagomu-box.utils').omaps
 
   nmaps {
-    { '<Space>', '<Nop>' },
-    { 'q', '<Nop>' },
-    { 'q', require('wagomu-box.utils').wish_close_buf, { expr = true } },
-    { 'Q', 'q', { noremap = false, silent = false } },
+    { '<Space>',    '<Nop>' },
+    { 'q',          '<Nop>' },
+    { 'q',          require('wagomu-box.utils').wish_close_buf, { expr = true } },
+    { 'Q',          'q',                                        { noremap = false, silent = false } },
 
-    { '<Leader>w', '<Cmd>update<Cr>' },
+    { '<Leader>w',  '<Cmd>update<Cr>' },
     { '<Leader>bn', '<Cmd>bnext<Cr>' },
     { '<Leader>bp', '<Cmd>bprevious<Cr>' },
     { '<Leader>bd', '<Cmd>bdelete<Cr>' },
     { '<Leader>bc', '<Cmd>close<Cr>' },
     { '<Leader>cd', '<Cmd>cd %:p:h<Cr>' },
 
-    { 'i', [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
-    { 'A', [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
+    -- ref: https://github.com/habamax/.vim/blob/5ae879ffa91aa090efedc9f43b89c78cf748fb01/plugin/mappings.vim?plain=1#L152
+    {
+      '<Leader>j',
+      function()
+        local line = vim.fn.line('.')
+        vim.cmd('normal! L')
+        if line == vim.fn.line('.') then
+          vim.cmd('normal! ztL')
+        end
+        if vim.fn.line('.') == vim.fn.line('$') then
+          vim.cmd('normal! z-')
+        end
+        vim.cmd('normal! 0')
+      end,
+    },
+    {
+      '<Leader>k',
+      function()
+        local line = vim.fn.line('.')
+        vim.cmd('normal! H')
+        if line == vim.fn.line('.') then
+          vim.cmd('normal! zbH')
+        end
+        vim.cmd('normal! 0')
+      end,
+    },
 
-    { 'v2', 'vi"' },
-    { 'v7', "vi'" },
-    { 'v8', 'vi(' },
-    { 'v[', 'vi[' },
-    { 'v{', 'vi{' },
-    { 'v@', 'vi`' },
-    { 'vt', 'vit' },
+    { 'i',   [[len(getline('.')) ? 'i' : '"_cc']], { noremap = false, expr = true } },
+    { 'A',   [[len(getline('.')) ? 'A' : '"_cc']], { noremap = false, expr = true } },
+
+    { 'v2',  'vi"' },
+    { 'v7',  "vi'" },
+    { 'v8',  'vi(' },
+    { 'v[',  'vi[' },
+    { 'v{',  'vi{' },
+    { 'v@',  'vi`' },
+    { 'vt',  'vit' },
 
     { 'va2', 'va"' },
     { 'va7', "va'" },
@@ -56,12 +83,12 @@ function M.apply()
   }
 
   omaps {
-    { '2', 'i"' },
-    { '7', "i'" },
-    { '8', 'i(' },
-    { '[', 'i[' },
-    { '{', 'i{' },
-    { '@', 'i`' },
+    { '2',  'i"' },
+    { '7',  "i'" },
+    { '8',  'i(' },
+    { '[',  'i[' },
+    { '{',  'i{' },
+    { '@',  'i`' },
 
     { 'a2', 'a"' },
     { 'a7', "a'" },

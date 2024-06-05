@@ -21,6 +21,7 @@ vim.treesitter.start = (function(wrapped)
 end)(vim.treesitter.start)
 vim.diagnostic.config({ severity_sort = true })
 
+---@diagnostic disable-next-line: unused-local
 local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
 local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
@@ -201,11 +202,14 @@ maps({ 'n', 'o', 'x' }, {
 })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+---@diagnostic disable-next-line: unused-local
 local abbrev = require('wagomu-box.utils').make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
 local favoriteList = {}
 
+---@diagnostic disable-next-line: unused-local
 local bufopts = { noremap = true, buffer = true }
+---@diagnostic disable-next-line: unused-local
 local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
 
 -- =========================================

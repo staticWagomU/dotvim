@@ -1191,10 +1191,10 @@ if useDenopstatusline == false then
     }
 
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
-      vim.o.statusline = '%{%v:lua.require'heirline'.eval_statusline()%}'
+      vim.o.statusline = [[%{%v:lua.require'heirline'.eval_statusline()%}]]
     end, {})
 
-    vim.opt_local.winbar = '%{%v:lua.require'heirline'.eval_winbar()%}'
+    vim.opt_local.winbar = [[%{%v:lua.require'heirline'.eval_winbar()%}]]
   end)
 end
 

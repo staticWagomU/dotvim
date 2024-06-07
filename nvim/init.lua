@@ -5,6 +5,7 @@ if useDenopstatusline then
   vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim/wagomu/denopstatusline'))
 end
 require('wagomu-box.plugin-manager.mini-deps').setup()
+require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
 if utils.is_windows then

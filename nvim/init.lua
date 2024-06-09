@@ -1071,7 +1071,7 @@ end)
 later(function()
   add('https://github.com/NStefan002/donut.nvim')
   require("donut").setup {
-    timeout = 60,
+    timeout = 180,
     sync_donuts = true,
 
   }

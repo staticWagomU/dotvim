@@ -522,6 +522,18 @@ later(function()
     end,
     ['tailwindcss'] = function()
       lspconfig['tailwindcss'].setup {
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                "twc\\.[^`]+`([^`]*)`",
+                "twc\\(.*?\\).*?`([^`]*)",
+                { "twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+              },
+            },
+          },
+        },
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern(
           'tailwind.config.js',

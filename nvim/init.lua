@@ -1080,15 +1080,6 @@ later(function()
   end
 end)
 
-later(function()
-  add('https://github.com/NStefan002/donut.nvim')
-  require("donut").setup {
-    timeout = 180,
-    sync_donuts = true,
-
-  }
-end)
-
 now(function()
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

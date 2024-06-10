@@ -37,7 +37,6 @@ autocmd({ 'FileType' }, {
       { 'c', '<Cmd>Gin commit<Cr>',                                              nowait_bufopts },
       { 'p', '<Cmd>lua vim.notify("Gin push")<Cr><Cmd>Gin push<Cr>',             nowait_bufopts },
       { 's', '<Cmd>bdelete<Cr><Cmd>GinStatus<Cr>j',                              nowait_bufopts },
-      { 'b', '<Cmd>bdelete<Cr><Cmd>GinBranch<Cr>',                               nowait_bufopts },
       {
         'g?',
         function()
@@ -100,6 +99,16 @@ autocmd({ 'FileType' }, {
     nmap('ZZ', '<Cmd>Apply<Cr>', bufopts)
   end,
 })
+
+autocmd({ 'FileType' }, {
+  pattern = 'gin-branch',
+  group = group,
+  callback = function()
+    nmap('A', '<Cmd>GinBranch -a<Cr>', bufopts)
+    nmap('r', '<Cmd>GinBranch -r<Cr>', bufopts)
+  end,
+})
+
 
 abbrev {
   { from = 'gc',  to = 'Gin commit' },

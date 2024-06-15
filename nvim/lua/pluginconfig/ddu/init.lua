@@ -82,6 +82,13 @@ ddu.patch_global {
       },
       sorters = {},
     },
+    git_status = {
+      converters = {
+        'converter_hl_dir',
+        'converter_git_status',
+      },
+      path = vim.fn.expand('%:p'),
+    }
   },
   sourceParams = {
     file_git = {
@@ -191,6 +198,27 @@ vim.api.nvim_create_autocmd('FileType', {
   group = WagomuBox.MyAuGroup,
   callback = function()
     vim.opt_local.signcolumn = 'no'
+    vim.print(vim.b.ddu_ui_name)
+    if vim.b.ddu_ui_name == 'git_status' then
+
+    WagomuBox.nmaps {
+      {
+        'h',
+        function()
+          ddu.do_action('add')
+        end,
+        bufopts
+      },
+      {
+        'l',
+        function()
+          ddu.do_action('reset')
+        end,
+        bufopts
+      },
+
+    }
+    end
     WagomuBox.nmaps {
       {
         '*',

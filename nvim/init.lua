@@ -782,6 +782,7 @@ later(function()
   add('https://github.com/yuki-yano/ddu-filter-fzf')
 
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
+  add('https://github.com/nabezokodaikon/ddu-filter-converter_git_status')
 
   add {
     source = 'https://github.com/Shougo/ddu.vim',

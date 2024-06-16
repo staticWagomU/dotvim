@@ -109,6 +109,7 @@ ddu.patch_global {
     matcher_substring = { highlightMatched = 'Search' },
     converter_hl_dir = { hlGroup = { 'Directory', 'Keyword' } },
     matcher_fzf = { highlightMatched = 'Search' },
+    matcher_specific_items = { startsWith = "_" },
   },
   kindOptions = {
     ui_select = { defaultAction = 'select' },
@@ -116,6 +117,30 @@ ddu.patch_global {
     patch_local = { defaultAction = 'start' },
   },
 }
+
+ddu.patch_local('favorite', {
+  sources = {
+    {
+      name = 'patch_local',
+    },
+  },
+  sourceOptions = {
+    patch_local = {
+      matchers = {
+        'matcher_specific_items',
+        'matcher_substring',
+      },
+    },
+  },
+  uiParams = {
+    ff = {
+      floatingTitle = '💛FAVORITE💛',
+      autoResize = true,
+    },
+  },
+
+})
+
 
 ddu.patch_local('file_recursive', {
   uiParams = {

@@ -779,6 +779,7 @@ later(function()
   add('https://github.com/Shougo/ddu-filter-matcher_substring')
   add('https://github.com/Shougo/ddu-filter-sorter_alpha')
   add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
+  add('https://github.com/staticWagomU/ddu-filter-matcher-specific-items')
   add('https://github.com/yuki-yano/ddu-filter-fzf')
 
   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
@@ -800,7 +801,7 @@ later(function()
       function() ddu.start_source('file_ghq') end,
     },
     {
-      [[\\]],
+      [[\p]],
       function()
         ddu.start({
           sources = {
@@ -810,11 +811,17 @@ later(function()
           },
           uiParams = {
             ff = {
-              floatingTitle = 'FAVORITE',
+              floatingTitle = 'PATCH LOCAL',
               autoResize = true,
             },
           },
         })
+      end,
+    },
+    {
+      [[\\]],
+      function()
+        ddu.start_local('favorite')
       end,
     },
     {

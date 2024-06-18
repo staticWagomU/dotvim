@@ -999,7 +999,9 @@ later(function()
   require('satellite').setup {
     current_only = true,
     winblend = 50,
-    excluded_filetypes = {},
+    excluded_filetypes = {
+      'ddu-ff',
+    },
     handlers = {
       cursor = {
         enable = true,

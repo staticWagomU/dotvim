@@ -109,7 +109,7 @@ ddu.patch_global {
     matcher_substring = { highlightMatched = 'Search' },
     converter_hl_dir = { hlGroup = { 'Directory', 'Keyword' } },
     matcher_fzf = { highlightMatched = 'Search' },
-    matcher_specific_items = { startsWith = "_" },
+    matcher_specific_items = { endsWith = "💛" },
   },
   kindOptions = {
     ui_select = { defaultAction = 'select' },
@@ -142,7 +142,7 @@ ddu.patch_local('favorite', {
 })
 
 
-ddu.patch_local('file_recursive', {
+ddu.patch_local('file_recursive💛', {
   uiParams = {
     ff = {
       previewFloating = false,
@@ -197,7 +197,7 @@ ddu.patch_local('file_ghq', {
   },
 })
 
-ddu.patch_local('live_grep', {
+ddu.patch_local('live_grep💛', {
   sources = {
     {
       name = { 'rg' },
@@ -223,26 +223,25 @@ vim.api.nvim_create_autocmd('FileType', {
   group = WagomuBox.MyAuGroup,
   callback = function()
     vim.opt_local.signcolumn = 'no'
-    vim.print(vim.b.ddu_ui_name)
+    -- vim.print(vim.b.ddu_ui_name)
     if vim.b.ddu_ui_name == 'git_status' then
+      WagomuBox.nmaps {
+        {
+          'h',
+          function()
+            ddu.do_action('add')
+          end,
+          bufopts
+        },
+        {
+          'l',
+          function()
+            ddu.do_action('reset')
+          end,
+          bufopts
+        },
 
-    WagomuBox.nmaps {
-      {
-        'h',
-        function()
-          ddu.do_action('add')
-        end,
-        bufopts
-      },
-      {
-        'l',
-        function()
-          ddu.do_action('reset')
-        end,
-        bufopts
-      },
-
-    }
+      }
     end
     WagomuBox.nmaps {
       {

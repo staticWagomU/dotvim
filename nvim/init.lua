@@ -21,6 +21,15 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 vim.diagnostic.config({ severity_sort = true })
+vim.diagnostic.config({
+  virtual_lines = {
+    only_current_line = true,
+    format = function(diagnostic)
+      return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
+    end,
+
+  }
+})
 
 ---@diagnostic disable-next-line: unused-local
 local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
@@ -605,13 +614,15 @@ later(function()
   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
 
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    signs = true,
-    update_in_insert = false,
-    virtual_text = {
-      format = function(diagnostic)
-        return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
-      end,
-    },
+    virtual_text = false,
+    -- underline = true,
+    -- signs = true,
+    -- update_in_insert = false,
+    -- virtual_text = {
+    --   format = function(diagnostic)
+    --     return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
+    --   end,
+    -- },
   })
   vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     callback = function(_)
@@ -998,7 +1009,7 @@ later(function()
 end)
 
 later(function()
-  add('https://git.sr.ht/~whynothugo/lsp_lines.nvim')
+  add('https://github.com/staticWagomU/lsp_lines.nvim')
   require('lsp_lines').setup {
     virtual_text = false,
   }

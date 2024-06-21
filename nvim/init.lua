@@ -459,6 +459,7 @@ later(function()
       'rust_analyzer',
       'svelte',
       'tailwindcss',
+      'tinymist',
       'tsserver',
       'unocss',
       'volar',

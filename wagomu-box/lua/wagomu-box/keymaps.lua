@@ -24,7 +24,7 @@ function M.apply()
   local omaps = require('wagomu-box.utils').omaps
 
   nmaps {
-    { '1',    '<Cmd>edit $MYVIMRC<Cr>' },
+    { '-',    '<Cmd>edit $MYVIMRC<Cr>' },
 
     { '<Space>',    '<Nop>' },
     { 'q',          '<Nop>' },

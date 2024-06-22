@@ -242,14 +242,14 @@ vim.api.nvim_create_autocmd('FileType', {
         {
           'h',
           function()
-            ddu.item_action('add')
+            ddu.item_action({ name = 'add' })
           end,
           bufopts
         },
         {
           'l',
           function()
-            ddu.item_action('reset')
+            ddu.item_action({ name = 'reset' })
           end,
           bufopts
         },

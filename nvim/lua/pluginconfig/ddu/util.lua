@@ -4,8 +4,8 @@ function M.do_action(...)
   vim.fn['ddu#ui#do_action'](...)
 end
 
-function M.item_action(name)
-  M.do_action('itemAction', {name = name})
+function M.item_action(...)
+  M.do_action('itemAction', ...)
 end
 
 --- @param name string

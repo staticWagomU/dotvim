@@ -4,6 +4,10 @@ function M.do_action(...)
   vim.fn['ddu#ui#do_action'](...)
 end
 
+function M.item_action(name)
+  M.do_action('itemAction', {name = name})
+end
+
 --- @param name string
 function M.start_local(name)
   M.start {

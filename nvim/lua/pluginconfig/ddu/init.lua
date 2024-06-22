@@ -217,26 +217,39 @@ ddu.patch_local('live_grep💛', {
   }
 })
 
+ddu.patch_local('git_status💛', {
+  sources = {
+    {
+      name = { 'git_status' },
+    }
+  },
+  uiParams = {
+    ff = {
+      floatingTitle = 'GIT_STATUS',
+    }
+  },
+})
+
+
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ddu-ff',
   group = WagomuBox.MyAuGroup,
   callback = function()
     vim.opt_local.signcolumn = 'no'
-    -- vim.print(vim.b.ddu_ui_name)
-    if vim.b.ddu_ui_name == 'git_status' then
+    if vim.b.ddu_ui_name == 'git_status💛' then
       WagomuBox.nmaps {
         {
           'h',
           function()
-            ddu.do_action('add')
+            ddu.item_action('add')
           end,
           bufopts
         },
         {
           'l',
           function()
-            ddu.do_action('reset')
+            ddu.item_action('reset')
           end,
           bufopts
         },

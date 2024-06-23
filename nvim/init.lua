@@ -784,6 +784,7 @@ later(function()
   add('https://github.com/Shougo/ddu-source-file')
   add('https://github.com/Shougo/ddu-source-file_old')
   add('https://github.com/Shougo/ddu-source-file_rec')
+  add('https://github.com/Shougo/ddu-source-line')
   add('https://github.com/kuuote/ddu-source-mr')
   add('https://github.com/matsui54/ddu-source-file_external')
   add('https://github.com/matsui54/ddu-source-help')
@@ -869,6 +870,10 @@ later(function()
     {
       [[\h]],
       function() ddu.start_source('help') end,
+    },
+    {
+      [[\l]],
+      function() ddu.start_source('line') end,
     },
     {
       [[\m]],

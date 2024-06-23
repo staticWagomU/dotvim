@@ -66,6 +66,9 @@ ddu.patch_global {
     help = {
       defaultAction = 'open',
     },
+    line = {
+      defaultAction = 'open',
+    },
     mr = {
       converters = {
         'converter_devicon',

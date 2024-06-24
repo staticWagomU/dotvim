@@ -1,8 +1,8 @@
 vim.loader.enable()
-vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/wagomu-box'))
+vim.opt.runtimepath:prepend(vim.fs.normalize('~/dotvim/wagomu-box'))
 local useDenopstatusline = false
 if useDenopstatusline then
-  vim.opt.runtimepath:append(vim.fs.normalize('~/dotvim/nvim/wagomu/denopstatusline'))
+  vim.opt.runtimepath:prepend(vim.fs.normalize('~/dotvim/nvim/wagomu/denopstatusline'))
 end
 require('wagomu-box.plugin-manager.mini-deps').setup()
 require('wagomu-box.commands')

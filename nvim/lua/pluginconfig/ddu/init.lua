@@ -231,6 +231,7 @@ ddu.patch_local('git_status💛', {
       floatingTitle = 'GIT_STATUS',
     }
   },
+  sync = true,
 })
 
 

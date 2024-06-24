@@ -20,8 +20,9 @@ vim.treesitter.start = (function(wrapped)
     pcall(wrapped, bufnr, lang)
   end
 end)(vim.treesitter.start)
-vim.diagnostic.config({ severity_sort = true })
+
 vim.diagnostic.config({
+  severity_sort = true,
   virtual_lines = {
     only_current_line = true,
     format = function(diagnostic)

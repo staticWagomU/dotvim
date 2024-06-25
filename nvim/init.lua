@@ -1122,6 +1122,7 @@ later(function()
 end)
 
 now(function()
+  add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'
   require('kanagawa').setup {
@@ -1135,7 +1136,7 @@ now(function()
       light = 'lotus',
     },
   }
-  vim.cmd.colorscheme('kanagawa')
+  vim.cmd.colorscheme('everforest')
 end)
 
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {

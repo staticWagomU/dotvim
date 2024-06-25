@@ -121,6 +121,21 @@ ddu.patch_global {
   },
 }
 
+ddu.patch_local('patch_local', {
+
+  sources = {
+    {
+      name = 'patch_local',
+    },
+  },
+  uiParams = {
+    ff = {
+      floatingTitle = 'PATCH LOCAL',
+      autoResize = true,
+    },
+  }
+})
+
 ddu.patch_local('favorite', {
   sources = {
     {

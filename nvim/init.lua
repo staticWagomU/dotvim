@@ -835,19 +835,7 @@ now(function()
     {
       [[\p]],
       function()
-        ddu.start({
-          sources = {
-            {
-              name = 'patch_local',
-            },
-          },
-          uiParams = {
-            ff = {
-              floatingTitle = 'PATCH LOCAL',
-              autoResize = true,
-            },
-          },
-        })
+        ddu.start_local('patch_local')
       end,
     },
     {

@@ -834,9 +834,7 @@ now(function()
     },
     {
       [[\p]],
-      function()
-        ddu.start_local('patch_local')
-      end,
+      function() ddu.start_local('patch_local') end,
     },
     {
       [[\\]],
@@ -866,19 +864,7 @@ now(function()
     },
     {
       [[\m]],
-      function()
-        ddu.start({
-          sources = {
-            {
-              name = 'mr',
-              params = { kind = 'mrw' }
-            },
-          },
-          uiParams = {
-            ff = { floatingTitle = 'MRW' },
-          },
-        })
-      end,
+      function() ddu.start_local('mrw') end,
     },
   }
 end)

@@ -249,6 +249,20 @@ ddu.patch_local('git_status💛', {
   sync = true,
 })
 
+for _, name in ipairs { 'mru', 'mrw', 'mrr' } do
+  ddu.patch_local(name, {
+    sources = {
+      {
+        name = 'mr',
+        params = { kind = name }
+      },
+    },
+    uiParams = {
+      ff = { floatingTitle = name:upper() },
+    },
+  })
+end
+
 
 
 vim.api.nvim_create_autocmd('FileType', {

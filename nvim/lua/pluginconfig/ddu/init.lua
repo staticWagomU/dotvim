@@ -160,7 +160,7 @@ ddu.patch_local('favorite', {
 })
 
 
-ddu.patch_local('file_recursive💛', {
+ddu.patch_local('file_recursive 💛', {
   uiParams = {
     ff = {
       previewFloating = false,

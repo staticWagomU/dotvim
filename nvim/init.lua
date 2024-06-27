@@ -848,7 +848,7 @@ now(function()
     },
     {
       [[\f]],
-      function() ddu.start_local('file_recursive') end,
+      function() ddu.start_local('file_recursive 💛') end,
     },
     {
       [[\g]],

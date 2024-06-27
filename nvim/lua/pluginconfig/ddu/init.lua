@@ -152,7 +152,7 @@ ddu.patch_local('favorite', {
   },
   uiParams = {
     ff = {
-      floatingTitle = '💛FAVORITE💛',
+      floatingTitle = '💛 FAVORITE 💛',
       autoResize = true,
     },
   },
@@ -215,7 +215,7 @@ ddu.patch_local('file_ghq', {
   },
 })
 
-ddu.patch_local('live_grep💛', {
+ddu.patch_local('live_grep 💛', {
   sources = {
     {
       name = { 'rg' },
@@ -235,7 +235,7 @@ ddu.patch_local('live_grep💛', {
   }
 })
 
-ddu.patch_local('git_status💛', {
+ddu.patch_local('git_status 💛', {
   sources = {
     {
       name = { 'git_status' },
@@ -270,7 +270,7 @@ vim.api.nvim_create_autocmd('FileType', {
   group = WagomuBox.MyAuGroup,
   callback = function()
     vim.opt_local.signcolumn = 'no'
-    if vim.b.ddu_ui_name == 'git_status💛' then
+    if vim.b.ddu_ui_name == 'git_status 💛' then
       WagomuBox.nmaps {
         {
           'h',

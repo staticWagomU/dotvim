@@ -778,6 +778,7 @@ now(function()
   -- UI
   -- ----------------------------------------
   add('https://github.com/Shougo/ddu-ui-ff')
+  add('https://github.com/Shougo/ddu-ui-filer')
   -- ----------------------------------------
   -- Source
   -- ----------------------------------------

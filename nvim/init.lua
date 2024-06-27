@@ -893,6 +893,7 @@ later(function()
   for _, k in ipairs(vim.tbl_keys(copilotChat.config.prompts)) do
     local name = 'copilotchat' .. string.gsub(k, '[A-Z]', '-%0'):lower()
     vim.keymap.set('n', '<Plug>(' .. name .. ')', ':CopilotChat' .. k .. '<Cr>', { desc = '☆ ' .. name })
+    table.insert(favoriteList, 'CopilotChat' .. k)
   end
 
   vim.api.nvim_create_user_command('Chat', function()

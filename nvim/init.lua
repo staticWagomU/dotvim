@@ -1098,6 +1098,11 @@ later(function()
 end)
 
 now(function()
+  add('https://github.com/yuki-yano/fuzzy-motion.vim')
+  nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
+end)
+
+now(function()
   add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')
   vim.opt.background = 'dark'

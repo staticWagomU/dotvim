@@ -419,7 +419,7 @@ later(function()
     go = { 'gofmt' },
     javascript = { 'biome' },
   }
-  map({ 'n', 'v' }, 'mf', function() require('conform').format({ lsp_fallback = true }) end)
+  map({ 'n', 'v' }, '<Leader>mf', function() require('conform').format({ lsp_fallback = true }) end)
 end)
 
 -- =========================================

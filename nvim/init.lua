@@ -171,7 +171,7 @@ end)
 -- =========================================
 -- | 日本語入力関連
 -- =========================================
-later(function()
+now(function()
   add('https://github.com/vim-skk/skkeleton')
   add('https://github.com/skk-dev/dict')
 
@@ -212,7 +212,7 @@ later(function()
   require('wagomu-box.plugin-config.gitsigns')
 end)
 
-later(function()
+now(function()
   add {
     source = 'https://github.com/lambdalisue/gin.vim',
     depends = { 'vim-denops/denops.vim' },

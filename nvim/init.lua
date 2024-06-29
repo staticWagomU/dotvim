@@ -624,7 +624,7 @@ later(function()
   })
 
   nmaps {
-    { ';f', vim.lsp.buf.format },
+    { 'gf', vim.lsp.buf.format },
   }
 end)
 
@@ -656,20 +656,20 @@ later(function()
   end
 
   nmaps {
-    { ';',  '<Nop>',                    { noremap = false } },
-    { ';;', doSagaAction('term_toggle') },
+    { 'g',  '<Nop>',                    { noremap = false } },
+    { 'gg', doSagaAction('term_toggle') },
   }
   utils.on_attach(function(_, _)
     nmaps {
-      { ';r',       doSagaAction('rename') },
-      { ';d',       doSagaAction('peek_definition') },
-      { ';D',       doSagaAction('goto_definition') },
-      { ';t',       doSagaAction('peek_type_definition') },
-      { ';T',       doSagaAction('goto_type_definition') },
-      { ';<Space>', doSagaAction('code_action') },
-      { ';l',       doSagaAction('show_line_diagnostics') },
-      { ';j',       doSagaAction('diagnostics_jump_next') },
-      { ';k',       doSagaAction('diagnostics_jump_prev') },
+      { 'gr',       doSagaAction('rename') },
+      { 'gd',       doSagaAction('peek_definition') },
+      { 'gD',       doSagaAction('goto_definition') },
+      { 'gt',       doSagaAction('peek_type_definition') },
+      { 'gT',       doSagaAction('goto_type_definition') },
+      { 'g<Space>', doSagaAction('code_action') },
+      { 'gl',       doSagaAction('show_line_diagnostics') },
+      { 'gj',       doSagaAction('diagnostics_jump_next') },
+      { 'gk',       doSagaAction('diagnostics_jump_prev') },
       { 'K',        doSagaAction('hover_doc') },
     }
   end)

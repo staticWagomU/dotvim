@@ -655,10 +655,6 @@ later(function()
     return string.format('<Cmd>Lspsaga %s<Cr>', action)
   end
 
-  nmaps {
-    { 'g',  '<Nop>',                    { noremap = false } },
-    { 'gg', doSagaAction('term_toggle') },
-  }
   utils.on_attach(function(_, _)
     nmaps {
       { 'gr',       doSagaAction('rename') },

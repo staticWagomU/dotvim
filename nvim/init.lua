@@ -8,6 +8,8 @@ require('wagomu-box.plugin-manager.mini-deps').setup()
 require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
+vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
+
 if utils.is_windows then
   vim.opt.shell = 'cmd.exe'
   vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])

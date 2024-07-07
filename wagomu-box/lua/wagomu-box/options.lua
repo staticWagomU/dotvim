@@ -30,7 +30,6 @@ function M.apply()
     'start'
   }
   set.clipboard = 'unnamedplus,unnamed'
-  set.cmdheight = 0
   set.encoding = 'utf-8'
   set.expandtab = true
   set.expandtab = true

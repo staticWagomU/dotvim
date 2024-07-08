@@ -1134,6 +1134,14 @@ later(function()
   })
 end)
 
+later(function()
+  add{
+    source = 'https://github.com/spywhere/detect-language.nvim',
+    depends = { 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  }
+  require('detect-language').setup {}
+end)
+
 now(function()
   add('https://github.com/yuki-yano/fuzzy-motion.vim')
   nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')

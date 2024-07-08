@@ -41,6 +41,7 @@ require('mini.deps').setup { path = { package = path_package } }
 
 
 local opts = { noremap = true, silent = true }
+local bufopts = { buffer = true, noremap = true, silent = true }
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local myAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local on_attach = function(on_attach)
@@ -299,6 +300,47 @@ later(function()
 		virtual_text = false,
 	})
 end)
+
+later(function()
+	add {
+		source = 'https://github.com/nvimdev/lspsaga.nvim',
+		depends = { 'nvim-lspconfig' },
+	}
+
+	require('lspsaga').setup {
+		ui = {
+			code_action = '🚕',
+		},
+		lightbulb = {
+			enable = false,
+		},
+		symbol_in_winbar = {
+			enable = false,
+		},
+		code_action = {
+			show_server_name = true,
+			extend_gitsigns = true,
+		},
+	}
+
+	---@param action string
+	---@return string
+	local doSagaAction = function(action)
+		return string.format('<Cmd>Lspsaga %s<Cr>', action)
+	end
+
+	on_attach(function(_)
+		vim.keymap.set('n', 'gr', doSagaAction('rename'), bufopts)
+		vim.keymap.set('n', 'gd', doSagaAction('peek_definition'), bufopts)
+		vim.keymap.set('n', 'gD', doSagaAction('goto_definition'), bufopts)
+		vim.keymap.set('n', 'gt', doSagaAction('peek_type_definition'), bufopts)
+		vim.keymap.set('n', 'gT', doSagaAction('goto_type_definition'), bufopts)
+		vim.keymap.set('n', 'g<Space>', doSagaAction('code_action'), bufopts)
+		vim.keymap.set('n', 'gl', doSagaAction('show_line_diagnostics'), bufopts)
+		vim.keymap.set('n', 'gj', doSagaAction('diagnostics_jump_next'), bufopts)
+		vim.keymap.set('n', 'gk', doSagaAction('diagnostics_jump_prev'), bufopts)
+		vim.keymap.set('n', 'K', doSagaAction('hover_doc'), bufopts)
+	end)
 
 end)
 

@@ -26,6 +26,14 @@ vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 vim.opt.wrap = false
 
+vim.treesitter.start = (function(wrapped)
+  return function(bufnr, lang)
+    lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
+    pcall(wrapped, bufnr, lang)
+  end
+end)(vim.treesitter.start)
+vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
+
 local path_package = vim.fn.stdpath('data') .. '/site/'
 local mini_path = path_package .. 'pack/deps/start/mini.nvim'
 
@@ -185,6 +193,49 @@ later(function()
 	vim.keymap.set('n', '<Leader><Leader>', '<Cmd>LazyGit<Cr>', opts)
 end)
 
+later(function()
+  add('https://github.com/nvim-treesitter/nvim-treesitter')
+
+  require('nvim-treesitter.configs').setup {
+    ensure_installed = {
+      'astro',
+      'css',
+      'go',
+      'gomod',
+      'gosum',
+      'html',
+      'lua',
+      'markdown',
+      'markdown_inline',
+      'rust',
+      'toml',
+      'typescript',
+    },
+    highlight = {
+      enable = true,
+      disable = function(lang, buf)
+        if lang == 'vimdoc' then
+          return true
+        end
+        local max_filesize = 50 * 1024 -- 50 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+          vim.print('File too large: tree-sitter disabled.', 'WarningMsg')
+          return true
+        end
+        if vim.fn.line('$') > 20000 then
+          vim.print('Buffer has too many lines: tree-sitter disabled.', 'WarningMsg')
+          return true
+        end
+      end,
+      additional_vim_regex_highlighting = false,
+    },
+    sync_install = false,
+    modules = {},
+    auto_install = true,
+    ignore_install = {},
+  }
+end)
 
 later(function()
 	add('https://github.com/williamboman/mason.nvim')

@@ -1,4 +1,4 @@
-set guifont=CaskaydiaCove_Nerd_Font_Mono:h10:cANSI:qDRAFT
+set guifont=CaskaydiaCove_Nerd_Font_Mono:h20:cANSI:qDRAFT
 set winaltkeys=no
 set guioptions&
       \ guioptions-=m

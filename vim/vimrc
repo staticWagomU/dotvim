@@ -98,12 +98,6 @@ call plug#end()
 
 " {{{ plugins settings
 
-" {{{ denops settings
-if has('win64')
-  let g:denops_server_addr = '127.0.0.1:32123'
-endif
-" }}}
-
 " {{{ lsp settings
 
 let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']

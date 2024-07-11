@@ -8,6 +8,8 @@ require('wagomu-box.plugin-manager.mini-deps').setup()
 require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
+vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
+
 if utils.is_windows then
   vim.opt.shell = 'cmd.exe'
   vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
@@ -171,7 +173,7 @@ end)
 -- =========================================
 -- | 日本語入力関連
 -- =========================================
-later(function()
+now(function()
   add('https://github.com/vim-skk/skkeleton')
   add('https://github.com/skk-dev/dict')
 
@@ -212,7 +214,7 @@ later(function()
   require('wagomu-box.plugin-config.gitsigns')
 end)
 
-later(function()
+now(function()
   add {
     source = 'https://github.com/lambdalisue/gin.vim',
     depends = { 'vim-denops/denops.vim' },
@@ -419,7 +421,7 @@ later(function()
     go = { 'gofmt' },
     javascript = { 'biome' },
   }
-  map({ 'n', 'v' }, 'mf', function() require('conform').format({ lsp_fallback = true }) end)
+  map({ 'n', 'v' }, '<Leader>mf', function() require('conform').format({ lsp_fallback = true }) end)
 end)
 
 -- =========================================
@@ -624,7 +626,7 @@ later(function()
   })
 
   nmaps {
-    { ';f', vim.lsp.buf.format },
+    { 'gf', vim.lsp.buf.format },
   }
 end)
 
@@ -655,21 +657,17 @@ later(function()
     return string.format('<Cmd>Lspsaga %s<Cr>', action)
   end
 
-  nmaps {
-    { ';',  '<Nop>',                    { noremap = false } },
-    { ';;', doSagaAction('term_toggle') },
-  }
   utils.on_attach(function(_, _)
     nmaps {
-      { ';r',       doSagaAction('rename') },
-      { ';d',       doSagaAction('peek_definition') },
-      { ';D',       doSagaAction('goto_definition') },
-      { ';t',       doSagaAction('peek_type_definition') },
-      { ';T',       doSagaAction('goto_type_definition') },
-      { ';<Space>', doSagaAction('code_action') },
-      { ';l',       doSagaAction('show_line_diagnostics') },
-      { ';j',       doSagaAction('diagnostics_jump_next') },
-      { ';k',       doSagaAction('diagnostics_jump_prev') },
+      { 'gr',       doSagaAction('rename') },
+      { 'gd',       doSagaAction('peek_definition') },
+      { 'gD',       doSagaAction('goto_definition') },
+      { 'gt',       doSagaAction('peek_type_definition') },
+      { 'gT',       doSagaAction('goto_type_definition') },
+      { 'g<Space>', doSagaAction('code_action') },
+      { 'gl',       doSagaAction('show_line_diagnostics') },
+      { 'gj',       doSagaAction('diagnostics_jump_next') },
+      { 'gk',       doSagaAction('diagnostics_jump_prev') },
       { 'K',        doSagaAction('hover_doc') },
     }
   end)
@@ -1095,6 +1093,58 @@ later(function()
       move_nvim_win_or_wezterm_pane(k)
     end)
   end
+end)
+
+later(function()
+  add('https://github.com/rachartier/tiny-inline-diagnostic.nvim')
+  -- Default configuration
+  require('tiny-inline-diagnostic').setup({
+    signs = {
+      left = "",
+      right = "",
+      diag = "●",
+      arrow = "    ",
+      up_arrow = "    ",
+      vertical = " │",
+      vertical_end = " └"
+    },
+    hi = {
+      error = "DiagnosticError",
+      warn = "DiagnosticWarn",
+      info = "DiagnosticInfo",
+      hint = "DiagnosticHint",
+      arrow = "NonText",
+      background = "CursorLine",       -- Can be a highlight or a hexadecimal color (#RRGGBB)
+      mixing_color = "None",           -- Can be None or a hexadecimal color (#RRGGBB). Used to blend the background color with the diagnostic background color with another color.
+    },
+    blend = {
+      factor = 0.27,
+    },
+    options = {
+      -- The minimum length of the message, otherwise it will be on a new line.
+      softwrap = 15,
+      --- When overflow="wrap", when the message is too long, it is then displayed on multiple lines.
+      overflow = "wrap",
+      --- Enable it if you want to always have message with `after` characters length.
+      break_line = {
+        enabled = false,
+        after = 30,
+      }
+    }
+  })
+end)
+
+later(function()
+  add{
+    source = 'https://github.com/spywhere/detect-language.nvim',
+    depends = { 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  }
+  require('detect-language').setup {}
+end)
+
+now(function()
+  add('https://github.com/yuki-yano/fuzzy-motion.vim')
+  nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
 end)
 
 now(function()

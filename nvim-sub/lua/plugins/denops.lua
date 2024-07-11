@@ -1,1 +1,0 @@
--- {{{ repo: 'https://github.com/vim-denops/denops.vim' }}}

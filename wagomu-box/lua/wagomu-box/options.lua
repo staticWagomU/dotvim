@@ -59,7 +59,6 @@ function M.apply()
   set.ignorecase = true
   set.incsearch = true
   set.laststatus = 3
-  set.laststatus = 3
   set.list = true
   set.listchars = {
     eol = '↴',

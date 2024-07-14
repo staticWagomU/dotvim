@@ -17,6 +17,11 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { '*.mdx' },
+  command = 'setlocal filetype=mdx',
+})
+
 ---===========================================
 --- 最初に欲しいやつ
 ---===========================================

@@ -119,4 +119,4 @@ later(function()
   nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<Cr>')
 end)
 
-vim.cmd.colorscheme('catppuccin-latte')
+vim.cmd.colorscheme('catppuccin-frappe')

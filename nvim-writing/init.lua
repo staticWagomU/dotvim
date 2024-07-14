@@ -10,6 +10,13 @@ nmap('gk', 'k')
 nmap('j', 'gj')
 nmap('k', 'gk')
 
+vim.treesitter.start = (function(wrapped)
+  return function(bufnr, lang)
+    lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
+    pcall(wrapped, bufnr, lang)
+  end
+end)(vim.treesitter.start)
+
 ---===========================================
 --- 最初に欲しいやつ
 ---===========================================

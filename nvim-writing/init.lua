@@ -160,3 +160,49 @@ end)
 
 
 vim.cmd.colorscheme('catppuccin-frappe')
+
+vim.api.nvim_create_user_command('CreateNewPost', function(opts)
+  if vim.fn.getcwd() ~= vim.fn.expand('~/dev/github.com/staticWagomU/_BoxOfRubberBands') then
+    print("This command can only be used in the _BoxOfRubberBands directory.")
+    return
+  end
+
+  local date = os.date("%Y-%m-%d")
+  local title = opts.args
+
+  local function create_file(title)
+    local result
+    if title == "" then
+      result = string.format('%s.mdx', date)
+    else
+      result = string.format('%s-%s.mdx', date, title)
+    end
+    vim.cmd('e ' .. result)
+
+    -- テンプレートの挿入
+    local template = string.format([[
+---
+title: ''
+pubDate: %s
+published: true
+---
+]], os.date('%Y/%m/%d'))
+
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(template, "\n"))
+    vim.cmd([[normal! G]])
+
+  end
+
+  if title == "" then
+    vim.ui.input({prompt = "Enter post title (optional): "}, function(input)
+      if input then
+        create_file(input)
+      else
+        create_file("")
+      end
+    end)
+  else
+    create_file(title)
+  end
+
+end, { nargs = '?' })

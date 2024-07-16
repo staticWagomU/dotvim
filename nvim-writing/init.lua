@@ -166,7 +166,7 @@ vim.api.nvim_create_user_command('CreateNewPost', function(opts)
     print("This command can only be used in the _BoxOfRubberBands directory.")
     return
   end
-
+  local blogPath = vim.fs.joinpath(vim.fn.getcwd(), 'src', 'content', 'blog')
   local date = os.date("%Y-%m-%d")
   local title = opts.args
 
@@ -177,16 +177,16 @@ vim.api.nvim_create_user_command('CreateNewPost', function(opts)
     else
       result = string.format('%s-%s.mdx', date, title)
     end
-    vim.cmd('e ' .. result)
+    vim.cmd('e ' .. vim.fs.joinpath(blogPath, result))
 
     -- テンプレートの挿入
     local template = string.format([[
 ---
-title: ''
+title: ""
 pubDate: %s
 published: true
 ---
-]], os.date('%Y/%m/%d'))
+]], date)
 
     vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(template, "\n"))
     vim.cmd([[normal! G]])

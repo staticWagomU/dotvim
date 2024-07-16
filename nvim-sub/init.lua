@@ -1,5 +1,6 @@
 vim.loader.enable()
 
+-- 初期プラグインを無効化
 vim.g.loaded_gzip = 1
 vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
@@ -17,26 +18,38 @@ vim.g.loaded_rrhelper = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' '
 
+-- 最低限の設定
 vim.opt.clipboard = 'unnamedplus,unnamed'
-vim.opt.completeopt = 'menu,menuone,noselect,popup'
+vim.opt.completeopt = 'menu,menuone,noselect,popup' -- mini.completionで必要な設定
 vim.opt.hidden = true
 vim.opt.shiftwidth = 2
 vim.opt.signcolumn = 'yes'
 vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 vim.opt.wrap = false
+vim.opt.listchars = {
+	eol = '↴',
+	tab = '▷⋯',
+	trail = '»',
+	space = '⋅',
+	nbsp = '⦸',
+	extends = '»',
+	precedes = '«',
+}
 
+
+-- pcallを挟むことでエラーが発生しても続行できる
 vim.treesitter.start = (function(wrapped)
-  return function(bufnr, lang)
-    lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
-    pcall(wrapped, bufnr, lang)
-  end
+	return function(bufnr, lang)
+		lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
+		pcall(wrapped, bufnr, lang)
+	end
 end)(vim.treesitter.start)
 vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
 
+-- mini.depsの初期設定
 local path_package = vim.fn.stdpath('data') .. '/site/'
 local mini_path = path_package .. 'pack/deps/start/mini.nvim'
-
 
 if not vim.uv.fs_stat(mini_path) then
 	vim.cmd('echo "Installing `mini.nvim`" | redraw')
@@ -51,7 +64,6 @@ require('mini.deps').setup { path = { package = path_package } }
 local opts = { noremap = true, silent = true }
 local bufopts = { buffer = true, noremap = true, silent = true }
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
-local myAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local on_attach = function(on_attach)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)
@@ -63,42 +75,53 @@ local on_attach = function(on_attach)
 end
 
 now(function()
+	-- おすすめ設定をしてくれる
 	require('mini.basics').setup {
 		options = {
 			extra_ui = true,
 			win_borders = 'single',
-		}
+		},
+		mappings = {
+			option_toggle_prefix = 'm',
+		},
 	}
 end)
 
 later(function()
+	-- '[',']'起点のマッピングを追加
 	require('mini.bracketed').setup()
 end)
 
 later(function()
+	-- gcc等でコメントをトグルできる
 	require('mini.comment').setup()
 end)
 
 now(function()
+	-- 補完
 	require('mini.completion').setup()
 end)
 
 later(function()
+	-- 表示領域内のカーソル下と同単語に下線を付ける
 	require('mini.cursorword').setup()
 end)
 
 
 later(function()
+	-- gitsignsのように差分が表示される
 	require('mini.diff').setup()
 	MiniDiff.config.view.style = 'sign'
 end)
 
 later(function()
+	-- mini.hogeに対して便利関数が追加される
 	require('mini.extra').setup()
 end)
 
 
 now(function()
+	-- ファイラー
 	require('mini.files').setup { window = { preview = true } }
 	vim.keymap.set('n', '<Leader>e', MiniFiles.open, opts)
 	vim.keymap.set('n', '<Leader>E', function()
@@ -107,56 +130,39 @@ now(function()
 end)
 
 now(function()
-  local statusline = require('mini.statusline')
-  --stylua: ignore
-  local active = function()
-    local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
-    local git           = statusline.section_git({ trunc_width = 75 })
-    -- Try out 'mini.diff'
-    local diff          = vim.b.minidiff_summary_string or ''
-    local diagnostics   = statusline.section_diagnostics({ trunc_width = 75 })
-    local filename      = statusline.section_filename({ trunc_width = 140 })
-    local fileinfo      = statusline.section_fileinfo({ trunc_width = 120 })
-    local location      = statusline.section_location({ trunc_width = 75 })
-    local search        = statusline.section_searchcount({ trunc_width = 75 })
-
-    return statusline.combine_groups({
-      { hl = mode_hl,                  strings = { mode } },
-      { hl = 'MiniStatuslineDevinfo',  strings = { git, diff, diagnostics } },
-      '%<', -- Mark general truncate point
-      { hl = 'MiniStatuslineFilename', strings = { filename } },
-      '%=', -- End left alignment
-      { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-      { hl = mode_hl,                  strings = { search, location } },
-    })
-  end
-  statusline.setup { content = { active = active } }
+	-- ステータスライン
+	require('mini.statusline').setup()
 end)
 
 later(function()
+	-- 対となる括弧等を挿入してくれる
 	require('mini.surround').setup()
 end)
 
 later(function()
+	-- タブライン
 	require('mini.tabline').setup()
 end)
 
 
 later(function()
+	-- git関連のコマンド等を追加してくれる（全然使いこなせてない）
 	require('mini.git').setup()
-	vim.keymap.set({ 'n', 'x' }, '<C-g><C-p>', MiniGit.show_at_cursor, opts)
 end)
 
-later(function()
+now(function()
+	-- nvim_web_deviconsの代わり
 	require('mini.icons').setup()
 	MiniIcons.mock_nvim_web_devicons()
 end)
 
 later(function()
+	-- 縦移動が見やすくなる
 	require('mini.indentscope').setup()
 end)
 
 later(function()
+	-- 通知
 	require('mini.notify').setup()
 end)
 
@@ -165,6 +171,7 @@ later(function()
 end)
 
 later(function()
+	-- telescope的なやつ
 	require('mini.pick').setup()
 	vim.keymap.set('n', [[\e]], '<Cmd>Pick explorer<Cr>', opts)
 	vim.keymap.set('n', [[\b]], '<Cmd>Pick buffers<Cr>', opts)
@@ -177,14 +184,17 @@ later(function()
 end)
 
 later(function()
+	-- gSでJの逆操作してくれるやつ
 	require('mini.splitjoin').setup()
 end)
 
 now(function()
+	-- スタート画面表示させるやつ
 	require('mini.starter').setup()
 end)
 
 now(function()
+	-- mr.vimのように訪問したファイルを記録してくれるやつ
 	require('mini.visits').setup()
 end)
 
@@ -194,47 +204,57 @@ later(function()
 end)
 
 later(function()
-  add('https://github.com/nvim-treesitter/nvim-treesitter')
+	add {
+		source = 'https://github.com/nvim-treesitter/nvim-treesitter',
+		checkout = 'master',
+		monitor = 'main',
+		hooks = {
+			post_checkout = function()
+				vim.cmd('TSUpdate')
+			end,
+		},
+	}
 
-  require('nvim-treesitter.configs').setup {
-    ensure_installed = {
-      'astro',
-      'css',
-      'go',
-      'gomod',
-      'gosum',
-      'html',
-      'lua',
-      'markdown',
-      'markdown_inline',
-      'rust',
-      'toml',
-      'typescript',
-    },
-    highlight = {
-      enable = true,
-      disable = function(lang, buf)
-        if lang == 'vimdoc' then
-          return true
-        end
-        local max_filesize = 50 * 1024 -- 50 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-          vim.print('File too large: tree-sitter disabled.', 'WarningMsg')
-          return true
-        end
-        if vim.fn.line('$') > 20000 then
-          vim.print('Buffer has too many lines: tree-sitter disabled.', 'WarningMsg')
-          return true
-        end
-      end,
-      additional_vim_regex_highlighting = false,
-    },
-    sync_install = false,
-    modules = {},
-    auto_install = true,
-    ignore_install = {},
-  }
+	require('nvim-treesitter.configs').setup {
+		ensure_installed = {
+			'astro',
+			'css',
+			'go',
+			'gomod',
+			'gosum',
+			'html',
+			'lua',
+			'markdown',
+			'markdown_inline',
+			'rust',
+			'toml',
+			'typescript',
+		},
+		highlight = {
+			enable = true,
+			disable = function(lang, buf)
+				-- filetypeやファイルサイズによってtreesitterを無効化させる
+				if lang == 'vimdoc' then
+					return true
+				end
+				local max_filesize = 50 * 1024 -- 50 KB
+				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+				if ok and stats and stats.size > max_filesize then
+					vim.print('File too large: tree-sitter disabled.', 'WarningMsg')
+					return true
+				end
+				if vim.fn.line('$') > 20000 then
+					vim.print('Buffer has too many lines: tree-sitter disabled.', 'WarningMsg')
+					return true
+				end
+			end,
+			additional_vim_regex_highlighting = false,
+		},
+		sync_install = false,
+		modules = {},
+		auto_install = true,
+		ignore_install = {},
+	}
 end)
 
 later(function()
@@ -342,14 +362,14 @@ later(function()
 		Hint = '🦒',
 		Info = '👀',
 	} do
-		local hl = 'DiagnosticSign' .. type
-		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-	end
-	vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
+	local hl = 'DiagnosticSign' .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
 
-	vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-		virtual_text = false,
-	})
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	virtual_text = false,
+})
 end)
 
 later(function()
@@ -380,6 +400,7 @@ later(function()
 		return string.format('<Cmd>Lspsaga %s<Cr>', action)
 	end
 
+	-- LS関連のマッピングを設定
 	on_attach(function(_)
 		vim.keymap.set('n', 'gr', doSagaAction('rename'), bufopts)
 		vim.keymap.set('n', 'gd', doSagaAction('peek_definition'), bufopts)
@@ -395,8 +416,15 @@ later(function()
 
 end)
 
+later(function()
+	require('mini.misc').setup({
+	make_global = { 'put', 'put_text', 'zoom'}
+})
+end)
+
 now(function()
 	vim.opt.background = 'dark'
+	-- カラースキームを作るやつ
 	require('mini.base16').setup {
 		palette = {
 			base00= "#EFECF4",

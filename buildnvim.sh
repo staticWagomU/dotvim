@@ -1,15 +1,16 @@
 #!/bin/sh
+set -e
 
-sudo apt-get install ninja-build gettext cmake unzip curl build-essential
+NEOVIM_DIR=~/dev/github.com/neovim/neovim
 
-# ~/dev/github.com/neovim/neovim が存在しなければクローン
-if [ ! -d ~/dev/github.com/neovim/neovim ]; then
+sudo apt-get install -y ninja-build gettext cmake unzip curl build-essential
+
+# If ~/dev/github.com/neovim/neovim does not exist, clone it
+if [ ! -d "$NEOVIM_DIR" ]; then
   ghq get https://github.com/neovim/neovim
 fi
 
-cd ~/dev/github.com/neovim/neovim
-
-git pull
-
-sudo make CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make instal
+cd "$NEOVIM_DIR" && \
+git pull && \
+sudo make CMAKE_BUILD_TYPE=RelWithDebInfo && \
+sudo make install

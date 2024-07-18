@@ -1108,6 +1108,13 @@ later(function()
   require('detect-language').setup {}
 end)
 
+later(function()
+  add('https://github.com/ChuufMaster/buffer-vacuum')
+  require('buffer-vacuum').setup({
+    max_buffers = 7,
+  })
+end)
+
 now(function()
   add('https://github.com/yuki-yano/fuzzy-motion.vim')
   nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')

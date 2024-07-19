@@ -4,6 +4,7 @@ require('wagomu-box.plugin-manager.mini-deps').setup()
 require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
+vim.opt.cmdheight = 0
 vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
 
 if utils.is_windows then

@@ -113,13 +113,13 @@ function s:OnLspBufferEnabled() abort
   setlocal completeopt=menu
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-  nmap <buffer> ;d <plug>(lsp-definition)
-  nmap <buffer> ;s <plug>(lsp-document-symbol-search)
-  nmap <buffer> ;S <plug>(lsp-workspace-symbol-search)
-  nmap <buffer> ;r <plug>(lsp-references)
-  nmap <buffer> ;i <plug>(lsp-implementation)
-  nmap <buffer> ;T <plug>(lsp-type-definition)
-  nmap <buffer> ;r <plug>(lsp-rename)
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gT <plug>(lsp-type-definition)
+  nmap <buffer> gr <plug>(lsp-rename)
   nmap <buffer> [; <plug>(lsp-previous-diagnostic)
   nmap <buffer> ]; <plug>(lsp-next-diagnostic)
   nmap <buffer> K <plug>(lsp-hover)

@@ -32,7 +32,6 @@ function M.apply()
   set.clipboard = 'unnamedplus,unnamed'
   set.encoding = 'utf-8'
   set.expandtab = true
-  set.expandtab = true
   set.fileencoding = 'utf-8'
   set.fileencodings = 'utf-8,euc-jp,cp932'
   set.fillchars = {

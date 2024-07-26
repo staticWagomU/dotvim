@@ -19,7 +19,21 @@ set hidden
 set laststatus=2
 set mouse=a
 " クリップボードレジスタを使用する autoselectはわからない
-set clipboard=unnamed,autoselect
+" ref:https://zenn.dev/kujirahand/articles/4b37160f781be7
+if executable('win32yank.exe')
+	au TextYankPost * call system('win32yank.exe -i &', @")
+	function Paste(p)
+		let sysclip=system('win32yank.exe -o')
+		if sysclip != @"
+			let @"=sysclip
+		endif
+		return a:p
+	endfunction
+	noremap <expr> p Paste('p')
+	noremap <expr> P Paste('P')
+endif
+set clipboard&
+set clipboard^=unnamedplus,unnamed
 " 音を鳴らさないようにする
 set belloff=all
 set formatoptions+=mMj

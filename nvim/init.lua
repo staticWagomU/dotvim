@@ -1006,13 +1006,6 @@ later(function()
 end)
 
 later(function()
-  add('https://github.com/tani/dmacro.nvim')
-  require('dmacro').setup({
-    dmacro_key = '<C-t>'
-  })
-end)
-
-later(function()
   add('https://github.com/echasnovski/mini-git')
   require('mini.git').setup()
 end)

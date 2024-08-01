@@ -11,6 +11,7 @@ fi
 cd "$VIM_DIR" && \
 git pull && \
 cd src && \
+make clean && \
 make && \
 sudo make install
 

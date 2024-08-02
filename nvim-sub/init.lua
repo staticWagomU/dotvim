@@ -22,6 +22,7 @@ vim.g.mapleader = ' '
 vim.opt.clipboard = 'unnamedplus,unnamed'
 vim.opt.completeopt = 'menu,menuone,noselect,popup' -- mini.completionで必要な設定
 vim.opt.hidden = true
+vim.opt.laststatus = 3
 vim.opt.shiftwidth = 2
 vim.opt.signcolumn = 'yes'
 vim.opt.softtabstop = 2
@@ -420,6 +421,10 @@ later(function()
 	require('mini.misc').setup({
 	make_global = { 'put', 'put_text', 'zoom'}
 })
+end)
+
+later(function()
+	add('https://github.com/github/copilot.vim')
 end)
 
 now(function()

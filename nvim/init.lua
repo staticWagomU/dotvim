@@ -1056,6 +1056,10 @@ now(function()
   nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
 end)
 
+later(function()
+  add('https://github.com/tyru/capture.vim')
+end)
+
 now(function()
   add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')

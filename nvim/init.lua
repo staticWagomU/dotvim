@@ -1075,7 +1075,7 @@ now(function()
       light = 'lotus',
     },
   }
-  vim.cmd.colorscheme('kanagawa')
+  vim.cmd.colorscheme('everforest')
 end)
 
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {

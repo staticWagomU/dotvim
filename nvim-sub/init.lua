@@ -190,11 +190,6 @@ later(function()
 end)
 
 now(function()
-	-- スタート画面表示させるやつ
-	require('mini.starter').setup()
-end)
-
-now(function()
 	-- mr.vimのように訪問したファイルを記録してくれるやつ
 	require('mini.visits').setup()
 end)

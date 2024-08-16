@@ -4,7 +4,6 @@ require('wagomu-box.plugin-manager.mini-deps').setup()
 require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
-vim.opt.cmdheight = 0
 vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
 
 if utils.is_windows then
@@ -63,7 +62,15 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'BufEnter', 'BufModifiedSet', 'WinEnte
     if vim.fn.win_gettype(vim.fn.winnr()) == 'popup' then
       return
     end
-    vim.wo.winbar = vim.fn.expand('%:t')
+    -- vim.wo.winbar = vim.fn.expand('%:t')
+    -- ひとつ上のディレクトリとファイル名を取得
+
+    local dir = vim.fn.fnamemodify(vim.fn.expand('%:p:h'), ':t')
+    local file = vim.fn.expand('%:t')
+    if file == '' then
+      return
+    end
+    vim.wo.winbar = string.format('%s/%s', dir, file)
   end,
 
 })

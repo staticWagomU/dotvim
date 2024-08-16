@@ -38,7 +38,38 @@ WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
 
 require('wagomu-box.options').apply()
+vim.opt.cmdheight = 0
+vim.opt.laststatus = 0
 vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
+
+local excluded_filetypes = {
+  'denops',
+  'ddu-ff',
+  'ddu-ui',
+  'gin-diff',
+  'gin-status',
+}
+
+vim.api.nvim_create_autocmd({ 'VimEnter', 'BufEnter', 'BufModifiedSet', 'WinEnter', 'WinLeave' }, {
+  group = MyAuGroup,
+  pattern = '*',
+  callback = function()
+    -- excluded_filetypesに含まれるファイルタイプの場合は何もしない
+    if vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
+      return
+    end
+
+    -- popupウィンドウの場合は何もしない
+    if vim.fn.win_gettype(vim.fn.winnr()) == 'popup' then
+      return
+    end
+    vim.wo.winbar = vim.fn.expand('%:t')
+  end,
+
+})
+
+
+
 
 --[=[
 "-------------------------------------------------------------------------------------------------+

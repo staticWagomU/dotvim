@@ -1069,12 +1069,6 @@ later(function()
 end)
 
 later(function()
-  add('https://github.com/rachartier/tiny-inline-diagnostic.nvim')
-  -- Default configuration
-  require('tiny-inline-diagnostic').setup {}
-end)
-
-later(function()
   add{
     source = 'https://github.com/spywhere/detect-language.nvim',
     depends = { 'https://github.com/nvim-treesitter/nvim-treesitter' },

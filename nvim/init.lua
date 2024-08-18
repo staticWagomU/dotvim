@@ -407,6 +407,43 @@ later(function()
       { name = 'cmdline' },
     }),
   })
+
+  -- ref: https://github.com/teramako/dotfiles/blob/463b2434ddc4b85c9d335188d357916d142bad6a/nvim/init.lua#L403-L433
+  -- gin.vim の action: 用補完
+---@diagnostic disable-next-line: missing-fields
+  cmp.register_source('gin-action', {
+    enabled = function() -- filetype がgin-* の時のみ有効に
+      local ft = vim.opt_local.filetype:get()
+      if string.match(ft, '^gin%-') then
+        return true
+      end
+      return false
+    end,
+    complete = function(_, _, callback)
+      local items = {}
+      -- cmap の lhs が '<Plug>(gin-action*)' のものを抽出
+      -- see: https://github.com/lambdalisue/vim-gin/blob/main/denops/gin/action/core.ts#L50-L70
+      for _, _nmap in ipairs(vim.api.nvim_buf_get_keymap(0, 'n')) do
+        ---@diagnostic disable-next-line: undefined-field
+        local action = string.match(_nmap.lhs, '<Plug>%(gin%-action%-(%S+)%)')
+        if action then
+          ---@diagnostic disable-next-line: undefined-field
+          table.insert(items, { label = action, kind = 1, detail = _nmap.lhs .. '\n => ' .. _nmap.rhs })
+        end
+      end
+      callback(items)
+    end
+  })
+  cmp.setup.cmdline('@', { -- vim.fn.input() 時の補完
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'gin-action' }
+    }),
+    ---@diagnostic disable-next-line: missing-fields
+    sorting = {
+      comparators = { cmp.config.compare.sort_text }
+    },
+  })
 end)
 
 -- =========================================

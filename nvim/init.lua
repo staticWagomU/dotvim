@@ -38,6 +38,21 @@ local MyAuGroup = WagomuBox.MyAuGroup
 
 require('wagomu-box.options').apply()
 vim.opt.cmdheight = 0
+vim.opt.fillchars = {
+  stl = '─',
+  stlnc = '─',
+  diff = '∙',
+  eob = ' ',
+  fold = '·',
+  horiz = '─',
+  horizup = '┴',
+  horizdown = '┬',
+  vert = '│',
+  vertleft = '┤',
+  vertright = '├',
+  verthoriz = '┼',
+}
+vim.opt.statusline = '─'
 vim.opt.laststatus = 0
 vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
 
@@ -1164,18 +1179,25 @@ autocmd({ 'VimEnter', 'BufEnter', 'BufModifiedSet', 'WinEnter', 'WinLeave' }, {
       return
     end
 
-    for _, bufnr in ipairs(duplicated_filenames) do
-      local bufnrDir = vim.fn.fnamemodify(vim.fn.expand('#' .. bufnr .. ':p:h'), ':t')
-      local bufnrFile = vim.fn.fnamemodify(vim.fn.expand('#' .. bufnr), ':t')
+local function MatchStatuslineColors()
+  local bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg#")
+  local fg = vim.fn.synIDattr(vim.fn.hlID("VertSplit"), "fg#")
 
-      local winid = vim.fn.bufwinid(bufnr)
-      if winid ~= -1 then
-        vim.fn.setwinvar(winid, '&winbar', string.format('%s/%s', bufnrDir, bufnrFile))
-      end
+  if bg ~= "" then
+    vim.cmd("hi StatusLine ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
 
-    end
-    local dir = vim.fn.fnamemodify(vim.fn.expand('%:p:h'), ':t')
-    vim.wo.winbar = string.format('%s/%s', dir, file)
+    vim.cmd("hi StatuslineNC ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
+  else
+    -- Fallback if unable to get background color
+    vim.cmd("hi StatusLine ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
+    vim.cmd("hi StatuslineNC ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
+  end
+end
 
-  end,
+autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
+  group = MyAuGroup,
+  pattern = '*',
+  callback = MatchStatuslineColors,
 })
+
+MatchStatuslineColors()

@@ -413,12 +413,6 @@ later(function()
 end)
 
 later(function()
-	require('mini.misc').setup({
-	make_global = { 'put', 'put_text', 'zoom'}
-})
-end)
-
-later(function()
 	add('https://github.com/github/copilot.vim')
 end)
 

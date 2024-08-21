@@ -73,6 +73,8 @@ function M.apply()
   set.smartcase = true
   set.softtabstop = 2
   set.tabstop = 2
+  set.undofile = true
+  set.undodir = vim.fn.stdpath('data') .. '/undo'
   set.wrap = false
 end
 

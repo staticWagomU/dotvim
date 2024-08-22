@@ -1198,4 +1198,5 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   group = MyAuGroup,
   pattern = '*',
   callback = MatchStatuslineColors,
+  once = true,
 })

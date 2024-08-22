@@ -1199,5 +1199,3 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   pattern = '*',
   callback = MatchStatuslineColors,
 })
-
-MatchStatuslineColors()

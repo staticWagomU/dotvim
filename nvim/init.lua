@@ -1132,52 +1132,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 
 map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)
 
-local excluded_filetypes = {
-  'denops',
-  'ddu-ff',
-  'ddu-ui',
-  'gin-diff',
-  'gin-status',
-}
-
-autocmd({ 'VimEnter', 'BufEnter', 'BufModifiedSet', 'WinEnter', 'WinLeave' }, {
-  group = MyAuGroup,
-  pattern = '*',
-  callback = function()
-    -- excluded_filetypesに含まれるファイルタイプの場合は何もしない
-    if vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
-      return
-    end
-
-    -- popupウィンドウの場合は何もしない
-    if vim.fn.win_gettype(vim.fn.winnr()) == 'popup' then
-      return
-    end
-
-    local file = vim.fn.expand('%:t')
-    if file == '' then
-      return
-    end
-
-    -- 表示されているバッファのリストを取得
-    local buf_list = vim.fn.getbufinfo({ buflisted = 1 })
-    local duplicated_filenames = {}
-    for _, buf in ipairs(buf_list) do
-      if buf.bufnr == vim.fn.bufnr('%') then
-        goto continue
-      end
-      local bufname = vim.fn.fnamemodify(buf.name, ':t')
-      if bufname == file then
-        table.insert(duplicated_filenames, buf.bufnr)
-      end
-      ::continue::
-    end
-
-    -- 同名のバッファが存在する場合は、親ディレクトリ名をウィンドウバーに表示
-    if #duplicated_filenames == 0 then
-      vim.wo.winbar = file
-      return
-    end
+require('wwinbar')
 
 local function MatchStatuslineColors()
   local bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg#")

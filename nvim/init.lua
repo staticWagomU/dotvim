@@ -1110,6 +1110,10 @@ end)
 now(function()
   add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')
+  add('https://github.com/sainnhe/edge')
+  add('https://github.com/EdenEast/nightfox.nvim')
+  add('https://github.com/ayu-theme/ayu-vim')
+  vim.g.ayucolor = 'light'
   vim.opt.background = 'dark'
   require('kanagawa').setup {
     compile = true,

@@ -858,6 +858,7 @@ now(function()
   -- ----------------------------------------
   add('https://github.com/Shougo/ddu-filter-matcher_substring')
   add('https://github.com/Shougo/ddu-filter-sorter_alpha')
+  add('https://github.com/kuuote/ddu-filter-sorter_mtime')
   add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
   add('https://github.com/staticWagomU/ddu-filter-matcher-specific-items')
   add('https://github.com/yuki-yano/ddu-filter-fzf')

@@ -172,6 +172,9 @@ ddu.patch_local('file_recursive 💛', {
     {
       name = { 'file_rec' },
       options = {
+        sorters = {
+          'sorter_mtime',
+        },
         converters = {
           'converter_devicon',
           'converter_hl_dir',

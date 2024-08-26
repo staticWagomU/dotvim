@@ -109,13 +109,13 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'BufEnter', 'BufModifiedSet', 'WinEnte
         for _, bufnr in ipairs(bufnrs) do
           local unique_path = get_unique_path(bufnr, bufnrs)
           local winid = vim.fn.bufwinid(bufnr)
-          if winid ~= -1 then
+          if winid ~= -1 and vim.fn.line('$', winid) > 1 then
             vim.fn.setwinvar(winid, '&winbar', unique_path)
           end
         end
       else
         local winid = vim.fn.bufwinid(bufnrs[1])
-        if winid ~= -1 then
+        if winid ~= -1 and vim.fn.line('$', winid) > 1 then
           vim.fn.setwinvar(winid, '&winbar', vim.fs.basename(vim.fn.bufname(bufnrs[1])))
         end
       end

@@ -77,7 +77,7 @@ require('wagomu-box.keymaps').apply()
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 ---@diagnostic disable-next-line: unused-local
-local abbrev = require('wagomu-box.utils').make_abbrev
+local abbrev = utils.make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
 local favoriteList = {}
 
@@ -887,9 +887,7 @@ now(function()
     },
     {
       [[\\]],
-      function()
-        ddu.start_local('favorite')
-      end,
+      function() ddu.start_local('favorite') end,
     },
     {
       [[\b]],
@@ -1139,24 +1137,23 @@ map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.exe
 
 require('wwinbar')
 
-local function MatchStatuslineColors()
-  local bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg#")
-  local fg = vim.fn.synIDattr(vim.fn.hlID("VertSplit"), "fg#")
-
-  if bg ~= "" then
-    vim.cmd("hi StatusLine ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
-
-    vim.cmd("hi StatuslineNC ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
-  else
-    -- Fallback if unable to get background color
-    vim.cmd("hi StatusLine ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
-    vim.cmd("hi StatuslineNC ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
-  end
-end
-
 autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   group = MyAuGroup,
   pattern = '*',
-  callback = MatchStatuslineColors,
+  callback = function()
+    local bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg#")
+    local fg = vim.fn.synIDattr(vim.fn.hlID("VertSplit"), "fg#")
+
+    if bg ~= "" then
+      vim.cmd("hi StatusLine ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
+
+      vim.cmd("hi StatuslineNC ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
+    else
+      -- Fallback if unable to get background color
+      vim.cmd("hi StatusLine ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
+      vim.cmd("hi StatuslineNC ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
+    end
+
+  end,
   once = true,
 })

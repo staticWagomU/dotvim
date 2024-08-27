@@ -715,8 +715,8 @@ later(function()
       { 'gT',       doSagaAction('goto_type_definition') },
       { 'g<Space>', doSagaAction('code_action') },
       { 'gl',       doSagaAction('show_line_diagnostics') },
-      { 'gj',       doSagaAction('diagnostics_jump_next') },
-      { 'gk',       doSagaAction('diagnostics_jump_prev') },
+      { ']]',       doSagaAction('diagnostic_jump_next') },
+      { '[[',       doSagaAction('diagnostic_jump_prev') },
       { 'K',        doSagaAction('hover_doc') },
     }
   end)

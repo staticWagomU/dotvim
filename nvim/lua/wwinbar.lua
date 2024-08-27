@@ -1,5 +1,4 @@
 local excluded_filetypes = {
-  'ddu-ff'
 }
 
 local function is_uri(filename)
@@ -70,7 +69,7 @@ local function get_unique_path(bufnr, other_bufnrs)
   return table.concat(unique_parts, '/')
 end
 
-vim.api.nvim_create_autocmd({ 'VimEnter', 'BufEnter', 'BufModifiedSet', 'WinEnter', 'WinLeave' }, {
+vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFilePost', 'InsertEnter', 'BufWritePost' }, {
   group = WagomuBox.MyAuGroup,
   pattern = '*',
   callback = function()

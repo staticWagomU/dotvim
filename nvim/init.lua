@@ -284,6 +284,13 @@ later(function()
   require('blame').setup()
 end)
 
+now(function()
+  add {
+    source = 'https://github.com/ogaken-1/nvim-gin-preview',
+    depends = { 'https://github.com/lambdalisue/gin.vim' },
+  }
+end)
+
 -- =========================================
 -- | ファイラー
 -- =========================================

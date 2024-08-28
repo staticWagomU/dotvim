@@ -5,6 +5,7 @@ require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
 vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
+vim.env.OPENAI_API_KEY = require('wagomu-box.local_vimrc').OPENAI_AUTHKEY
 
 if utils.is_windows then
   vim.opt.shell = 'cmd.exe'
@@ -1164,3 +1165,20 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   end,
   once = true,
 })
+
+later(function()
+  add {
+    source = 'https://github.com/yetone/avante.nvim',
+    depends = {
+      'https://github.com/nvim-tree/nvim-web-devicons',
+      'https://github.com/stevearc/dressing.nvim',
+      'https://github.com/nvim-lua/plenary.nvim',
+      'https://github.com/MunifTanjim/nui.nvim',
+      'https://github.com/MeanderingProgrammer/render-markdown.nvim'
+    },
+  }
+
+  require('avante').setup {
+    provider = 'openai',
+  }
+end)

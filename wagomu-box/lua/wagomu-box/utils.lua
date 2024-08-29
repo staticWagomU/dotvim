@@ -188,4 +188,22 @@ function M.on_attach(on_attach)
   })
 end
 
+function M.modified_background_buffers()
+  local modified_background_buffers = vim.tbl_filter(function(bufnr)
+    return vim.api.nvim_buf_is_valid(bufnr)
+    and vim.api.nvim_buf_is_loaded(bufnr)
+    and vim.api.nvim_buf_get_option(bufnr, 'buftype') == ''
+    and vim.api.nvim_buf_get_option(bufnr, 'modifiable')
+    and vim.api.nvim_buf_get_name(bufnr) ~= ''
+    and vim.api.nvim_buf_get_number(bufnr) ~= vim.api.nvim_get_current_buf()
+    and vim.api.nvim_buf_get_option(bufnr, 'modified')
+  end, vim.api.nvim_list_bufs())
+
+  if #modified_background_buffers > 0 then
+    return '!' .. #modified_background_buffers
+  else
+    return ''
+  end
+end
+
 return M

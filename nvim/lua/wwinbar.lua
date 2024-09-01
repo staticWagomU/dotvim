@@ -1,3 +1,5 @@
+local M = {}
+
 local excluded_filetypes = {
 }
 
@@ -69,10 +71,7 @@ local function get_unique_path(bufnr, other_bufnrs)
   return table.concat(unique_parts, '/')
 end
 
-vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFilePost', 'InsertEnter', 'BufWritePost' }, {
-  group = WagomuBox.MyAuGroup,
-  pattern = '*',
-  callback = function()
+local function a()
     local buflist = {}
     for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
       -- popup windowは無視
@@ -119,6 +118,21 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFi
         end
       end
     end
+end
+
+vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFilePost', 'InsertEnter', 'BufWritePost' }, {
+  group = WagomuBox.MyAuGroup,
+  pattern = '*',
+  callback = function()
+    a()
   end,
 })
 
+function M.setup(_opts)
+  local opts = _opts or {}
+end
+
+function M.update()
+end
+
+return M

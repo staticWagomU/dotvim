@@ -1114,6 +1114,23 @@ later(function()
   add('https://github.com/tyru/capture.vim')
 end)
 
+later(function()
+  add {
+    source = 'https://github.com/yetone/avante.nvim',
+    depends = {
+      'https://github.com/nvim-tree/nvim-web-devicons',
+      'https://github.com/stevearc/dressing.nvim',
+      'https://github.com/nvim-lua/plenary.nvim',
+      'https://github.com/MunifTanjim/nui.nvim',
+      'https://github.com/MeanderingProgrammer/render-markdown.nvim'
+    },
+  }
+
+  require('avante').setup {
+    provider = 'openai',
+  }
+end)
+
 now(function()
   add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')
@@ -1166,19 +1183,3 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   once = true,
 })
 
-later(function()
-  add {
-    source = 'https://github.com/yetone/avante.nvim',
-    depends = {
-      'https://github.com/nvim-tree/nvim-web-devicons',
-      'https://github.com/stevearc/dressing.nvim',
-      'https://github.com/nvim-lua/plenary.nvim',
-      'https://github.com/MunifTanjim/nui.nvim',
-      'https://github.com/MeanderingProgrammer/render-markdown.nvim'
-    },
-  }
-
-  require('avante').setup {
-    provider = 'openai',
-  }
-end)

@@ -1131,6 +1131,19 @@ later(function()
   }
 end)
 
+later(function()
+  add 'https://github.com/pwntester/octo.nvim'
+  add {
+    source = 'https://github.com/pwntester/octo.nvim',
+    depends = {
+      'https://github.com/nvim-tree/nvim-web-devicons',
+      'https://github.com/nvim-lua/plenary.nvim',
+      'https://github.com/nvim-telescope/telescope.nvim'
+    },
+  }
+  require"octo".setup()
+end)
+
 now(function()
   add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')

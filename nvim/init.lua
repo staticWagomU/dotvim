@@ -1144,6 +1144,12 @@ later(function()
   require"octo".setup()
 end)
 
+later(function()
+  add('https://github.com/folke/ts-comments.nvim')
+  require('ts-comments').setup()
+end)
+
+
 now(function()
   add('https://github.com/sainnhe/everforest')
   add('https://github.com/rebelot/kanagawa.nvim')

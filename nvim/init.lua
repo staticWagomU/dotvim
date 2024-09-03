@@ -19,6 +19,7 @@ vim.treesitter.start = (function(wrapped)
     pcall(wrapped, bufnr, lang)
   end
 end)(vim.treesitter.start)
+vim.treesitter.language.register('markdown', 'octo')
 
 vim.diagnostic.config({
   severity_sort = true,

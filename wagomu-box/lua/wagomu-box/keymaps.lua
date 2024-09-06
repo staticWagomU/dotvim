@@ -22,6 +22,9 @@ function M.apply()
   local maps = require('wagomu-box.utils').maps
   local nmaps = require('wagomu-box.utils').nmaps
   local omaps = require('wagomu-box.utils').omaps
+  local nmap = require('wagomu-box.utils').nmap
+  local vmap = require('wagomu-box.utils').vmap
+
 
   nmaps {
     { '-',    '<Cmd>edit $MYVIMRC<Cr>' },
@@ -107,6 +110,10 @@ function M.apply()
   maps({ 'n', 'x' }, {
     { 'gy', '"+y' },
   })
+
+  -- ref: https://blog.atusy.net/2024/09/06/linewise-zf/
+  nmap('zf', 'zfV')
+  vmap('zf', [[mode() ==# 'V' ? 'zf' : 'Vzf']], { expr = true})
 end
 
 return M

@@ -1181,6 +1181,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)
 
 require('wwinbar')
+require('wtabbar')
 
 autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   group = MyAuGroup,

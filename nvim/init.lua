@@ -1150,6 +1150,12 @@ later(function()
   require('ts-comments').setup()
 end)
 
+later(function()
+  add('https://github.com/uga-rosa/ccc.nvim')
+  require('ccc').setup()
+  table.insert(favoriteList, 'CccHighlighterToggle')
+end)
+
 
 now(function()
   add('https://github.com/sainnhe/everforest')

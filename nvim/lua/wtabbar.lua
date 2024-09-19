@@ -13,7 +13,7 @@ local track_lsp = vim.schedule_wrap(function()
   end
 end)
 
-vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'BufEnter', 'FileType', 'VimResized' }, {
+vim.api.nvim_create_autocmd({ 'LspAttach', 'LspDetach', 'BufEnter', 'FileType', 'VimResized', 'BufLeave' }, {
   group = WagomuBox.MyAuGroup,
   pattern = '*',
   callback = track_lsp,

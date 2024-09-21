@@ -531,7 +531,7 @@ later(function()
       'svelte',
       'tailwindcss',
       'tinymist',
-      'tsserver',
+      'ts_ls',
       'unocss',
       'volar',
       'vtsls',
@@ -578,7 +578,7 @@ later(function()
         }
       end
     end,
-    ['tsserver'] = function()
+    ['ts_ls'] = function()
       local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
       if is_node and not enabled_vtsls then
         lspconfig['tsserver'].setup {

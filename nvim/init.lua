@@ -549,23 +549,26 @@ later(function()
       }
     end,
     ['denols'] = function()
-      lspconfig['denols'].setup {
-        capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc', 'deps.ts', 'import_map.json'),
-        init_options = {
-          lint = true,
-          unstable = true,
-          suggest = {
-            imports = {
-              hosts = {
-                ['https://deno.land'] = true,
-                ['https://cdn.nest.land'] = true,
-                ['https://crux.land'] = true,
+      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+      if not is_node then
+        lspconfig['denols'].setup {
+          capabilities = capabilities,
+          -- root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc', 'deps.ts', 'import_map.json'),
+          init_options = {
+            lint = true,
+            unstable = true,
+            suggest = {
+              imports = {
+                hosts = {
+                  ['https://deno.land'] = true,
+                  ['https://cdn.nest.land'] = true,
+                  ['https://crux.land'] = true,
+                },
               },
             },
           },
-        },
-      }
+        }
+      end
     end,
     ['vtsls'] = function()
       local is_node = require('lspconfig').util.find_node_modules_ancestor('.')

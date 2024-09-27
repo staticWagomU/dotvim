@@ -81,7 +81,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 ---@diagnostic disable-next-line: unused-local
 local abbrev = utils.make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
-local favoriteList = {}
+_G.favoriteList = {}
 
 ---@diagnostic disable-next-line: unused-local
 local bufopts = { noremap = true, buffer = true }
@@ -951,7 +951,7 @@ later(function()
   for _, k in ipairs(vim.tbl_keys(copilotChat.config.prompts)) do
     local name = 'copilotchat' .. string.gsub(k, '[A-Z]', '-%0'):lower()
     vim.keymap.set('n', '<Plug>(' .. name .. ')', ':CopilotChat' .. k .. '<Cr>', { desc = '☆ ' .. name })
-    table.insert(favoriteList, 'CopilotChat' .. k)
+    table.insert(_G.favoriteList, 'CopilotChat' .. k)
   end
 
   vim.api.nvim_create_user_command('Chat', function()
@@ -1156,7 +1156,7 @@ end)
 later(function()
   add('https://github.com/uga-rosa/ccc.nvim')
   require('ccc').setup()
-  table.insert(favoriteList, 'CccHighlighterToggle')
+  table.insert(_G.favoriteList, 'CccHighlighterToggle')
 end)
 
 
@@ -1187,7 +1187,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   command = 'setlocal filetype=mdx',
 })
 
-map({ 'n', 'x' }, 'g?', function() require('ui_select')(favoriteList, vim.fn.execute) end)
+map({ 'n', 'x' }, 'g?', function() require('ui_select')(_G.favoriteList, vim.fn.execute) end)
 
 require('wwinbar')
 require('wtabbar')

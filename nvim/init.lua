@@ -1161,6 +1161,11 @@ end)
 
 
 now(function()
+  add('https://github.com/Tronikelis/xylene.nvim')
+  require('xylene').setup()
+end)
+
+now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')
   add('https://github.com/rebelot/kanagawa.nvim')

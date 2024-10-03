@@ -1254,6 +1254,9 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
   callback = function()
     local bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg#")
     local fg = vim.fn.synIDattr(vim.fn.hlID("VertSplit"), "fg#")
+    if fg == "" then
+      fg = vim.fn.synIDattr(vim.fn.hlID("WinSeparator"), "fg#")
+    end
 
     if bg ~= "" then
       vim.cmd("hi StatusLine ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)

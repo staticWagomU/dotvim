@@ -4,6 +4,8 @@ require('wagomu-box.plugin-manager.mini-deps').setup()
 require('wagomu-box.commands')
 local utils = require('wagomu-box.utils')
 
+local enabled_octo = false
+
 vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
 vim.env.OPENAI_API_KEY = require('wagomu-box.local_vimrc').OPENAI_AUTHKEY
 
@@ -1135,18 +1137,20 @@ end)
 --   }
 -- end)
 
-later(function()
-  add 'https://github.com/pwntester/octo.nvim'
-  add {
-    source = 'https://github.com/pwntester/octo.nvim',
-    depends = {
-      'https://github.com/nvim-tree/nvim-web-devicons',
-      'https://github.com/nvim-lua/plenary.nvim',
-      'https://github.com/nvim-telescope/telescope.nvim'
-    },
-  }
-  require"octo".setup()
-end)
+if enabled_octo then
+  later(function()
+    add 'https://github.com/pwntester/octo.nvim'
+    add {
+      source = 'https://github.com/pwntester/octo.nvim',
+      depends = {
+        'https://github.com/nvim-tree/nvim-web-devicons',
+        'https://github.com/nvim-lua/plenary.nvim',
+        'https://github.com/nvim-telescope/telescope.nvim'
+      },
+    }
+    require"octo".setup()
+  end)
+end
 
 later(function()
   add('https://github.com/folke/ts-comments.nvim')

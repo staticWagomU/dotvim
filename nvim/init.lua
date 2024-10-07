@@ -36,7 +36,7 @@ vim.diagnostic.config({
 
 ---@diagnostic disable-next-line: unused-local
 local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
-local nmap, map, xmap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap
+local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
 
@@ -78,6 +78,21 @@ vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
 "-------------------------------------------------------------------------------------------------+
 -- ]=]
 require('wagomu-box.keymaps').apply()
+
+-- ref: https://zenn.dev/vim_jp/articles/2024-10-07-vim-insert-uppercase
+imap(
+  "<C-l>",
+  function()
+    local line = vim.fn.getline(".")
+    local col = vim.fn.getpos(".")[3]
+    local substring = line:sub(1, col - 1)
+    local result = vim.fn.matchstr(substring, [[\v<(\k(<)@!)*$]])
+    return "<C-w>" .. result:upper()
+  end,
+  {expr = true}
+)
+
+
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 ---@diagnostic disable-next-line: unused-local

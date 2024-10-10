@@ -1184,6 +1184,11 @@ now(function()
   require('xylene').setup()
 end)
 
+later(function ()
+  add('https://github.com/NvChad/volt')
+  add('https://github.com/NvChad/minty')
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

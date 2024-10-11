@@ -17,7 +17,7 @@ local function is_uri(filename)
   -- ファイルシステムパスの特徴を持つかチェック
   local path_separators = "/\\"  -- UNIXとWindowsのパス区切り文字
   if string.find(filename, "^[" .. path_separators .. "]") or
-     string.find(filename, "^%a:[" .. path_separators .. "]") then
+    string.find(filename, "^%a:[" .. path_separators .. "]") then
     return false
   end
   -- その他の場合はURIと見なす
@@ -72,52 +72,52 @@ local function get_unique_path(bufnr, other_bufnrs)
 end
 
 local function a()
-    local buflist = {}
-    for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
-      -- popup windowは無視
-      if vim.fn.win_gettype(buf.bufnr) == 'popup' then
-        goto continue
-      end
-
-      if is_uri(buf.name) then
-        goto continue
-      end
-
-      -- ファイル名が空の場合は無視
-      local filename = vim.fs.basename(buf.name)
-      if filename == '' then
-        goto continue
-      end
-      -- filetypeが除外リストに含まれている場合は無視
-      if vim.tbl_contains(excluded_filetypes, vim.fn.getbufvar(buf.bufnr, '&filetype')) then
-        goto continue
-      end
-
-      if not buflist[filename] then
-        buflist[filename] = {}
-      end
-
-      table.insert(buflist[filename], buf.bufnr)
-
-      ::continue::
+  local buflist = {}
+  for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+    -- popup windowは無視
+    if vim.fn.win_gettype(buf.bufnr) == 'popup' then
+      goto continue
     end
 
-    for _, bufnrs in pairs(buflist) do
-      if #bufnrs > 1 then
-        for _, bufnr in ipairs(bufnrs) do
-          local unique_path = get_unique_path(bufnr, bufnrs)
-          local winid = vim.fn.bufwinid(bufnr)
-          if winid ~= -1 and vim.fn.line('$', winid) > 1 then
-            vim.fn.setwinvar(winid, '&winbar', unique_path)
-          end
-        end
-      else
-        local winid = vim.fn.bufwinid(bufnrs[1])
+    if is_uri(buf.name) then
+      goto continue
+    end
+
+    -- ファイル名が空の場合は無視
+    local filename = vim.fs.basename(buf.name)
+    if filename == '' then
+      goto continue
+    end
+    -- filetypeが除外リストに含まれている場合は無視
+    if vim.tbl_contains(excluded_filetypes, vim.fn.getbufvar(buf.bufnr, '&filetype')) then
+      goto continue
+    end
+
+    if not buflist[filename] then
+      buflist[filename] = {}
+    end
+
+    table.insert(buflist[filename], buf.bufnr)
+
+    ::continue::
+  end
+
+  for _, bufnrs in pairs(buflist) do
+    if #bufnrs > 1 then
+      for _, bufnr in ipairs(bufnrs) do
+        local unique_path = get_unique_path(bufnr, bufnrs)
+        local winid = vim.fn.bufwinid(bufnr)
         if winid ~= -1 and vim.fn.line('$', winid) > 1 then
-          vim.fn.setwinvar(winid, '&winbar', vim.fs.basename(vim.fn.bufname(bufnrs[1])))
+          vim.fn.setwinvar(winid, '&winbar', unique_path)
         end
       end
+    else
+      local winid = vim.fn.bufwinid(bufnrs[1])
+      if winid ~= -1 and vim.fn.line('$', winid) > 1 then
+        vim.fn.setwinvar(winid, '&winbar', vim.fs.basename(vim.fn.bufname(bufnrs[1])))
+      end
     end
+  end
 end
 
 vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFilePost', 'InsertEnter', 'BufWritePost' }, {

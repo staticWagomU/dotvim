@@ -580,6 +580,7 @@ later(function()
       'volar',
       'vtsls',
       'zls',
+      'pylsp'
     },
   }
 

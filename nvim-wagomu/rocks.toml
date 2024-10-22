@@ -1,0 +1,25 @@
+# This is your rocks.nvim plugins declaration file.
+# Here is a small yet pretty detailed example on how to use it:
+#
+# [plugins]
+# nvim-treesitter = "semver_version"  # e.g. "1.0.0"
+
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.40.5"
+"rocks-git.nvim" = "2.4.2"
+"telescope.nvim" = "scm"
+
+[plugins.vim-fall]
+git = "lambdalisue/vim-fall"
+rev = "v0.9.0"
+
+[plugins."denops.vim"]
+git = "vim-denops/denops.vim"
+rev = "v7.0.3"
+

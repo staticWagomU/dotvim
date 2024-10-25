@@ -12,6 +12,9 @@ fi
 
 cd "$NEOVIM_DIR" && \
 git pull && \
+sudo rm -rf .deps/ && \
+sudo rm -rf build/ && \
+make distclean && \
 make clean && \
 sudo make CMAKE_BUILD_TYPE=RelWithDebInfo && \
 sudo make install

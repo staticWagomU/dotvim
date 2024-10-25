@@ -416,6 +416,10 @@ later(function()
 	add('https://github.com/github/copilot.vim')
 end)
 
+later(function()
+	add('https://github.com/lambdalisue/vim-fern')
+end)
+
 now(function()
 	vim.opt.background = 'dark'
 	-- カラースキームを作るやつ

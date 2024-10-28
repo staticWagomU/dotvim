@@ -1311,13 +1311,13 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
     end
 
     if bg ~= "" then
-      vim.cmd("hi StatusLine ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
+      vim.cmd.hi("StatusLine ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
 
-      vim.cmd("hi StatuslineNC ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
+      vim.cmd.hi("StatuslineNC ctermbg=NONE guibg=" .. bg .. " ctermfg=NONE guifg=" .. fg)
     else
       -- Fallback if unable to get background color
-      vim.cmd("hi StatusLine ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
-      vim.cmd("hi StatuslineNC ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
+      vim.cmd.hi("StatusLine ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
+      vim.cmd.hi("StatuslineNC ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
     end
 
   end,

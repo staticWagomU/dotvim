@@ -101,8 +101,6 @@ Plug 'https://github.com/catppuccin/vim'
 
 Plug 'https://github.com/thinca/vim-qfreplace'
 
-Plug 'https://github.com/catppuccin/vim'
-
 call plug#end()
 " }}}
 

@@ -73,13 +73,13 @@ Plug 'https://github.com/prabirshrestha/asyncomplete-lsp.vim'
 
 Plug 'https://github.com/vim-denops/denops.vim'
 
-Plug 'https://github.com/lambdalisue/gin.vim'
+Plug 'https://github.com/lambdalisue/vim-gin'
 Plug 'https://github.com/vim-skk/skkeleton'
 Plug 'https://github.com/skk-dev/dict'
 
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 
-Plug 'https://github.com/lambdalisue/fern.vim'
+Plug 'https://github.com/lambdalisue/vim-fern'
 
 Plug 'https://github.com/vim-jp/vimdoc-ja'
 

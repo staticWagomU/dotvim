@@ -85,9 +85,7 @@ Plug 'https://github.com/vim-jp/vimdoc-ja'
 
 Plug 'https://github.com/sheerun/vim-polyglot'
 
-Plug 'https://github.com/lambdalisue/kensaku.vim'
-
-Plug 'https://github.com/yuki-yano/fuzzy-motion.vim'
+Plug 'https://github.com/lambdalisue/vim-kensaku'
 
 Plug 'https://github.com/machakann/vim-sandwich'
 
@@ -100,8 +98,6 @@ Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/github/copilot.vim'
 
 Plug 'https://github.com/catppuccin/vim'
-
-Plug 'https://github.com/kawarimidoll/tuskk.vim'
 
 Plug 'https://github.com/thinca/vim-qfreplace'
 
@@ -268,36 +264,6 @@ augroup my-fern
     autocmd FileType fern call InitFern()
 augroup END
 
-" }}}
-
-" {{{ fuzzy-motion settings
-nnoremap <silent> <Leader><Leader> <Cmd>FuzzyMotion<Cr>
-let g:fuzzy_motion_word_regexp_list = [
-			\ '0-9a-zA-Z_-]+',
-			\ '([0-9a-zA-Z_-]|[.])+',
-			\ '([0-9a-zA-Z]|[()<>.-_#''"]|(\s=+\s)|(,\s)|(:\s)|(\s=>\s))+',
-			\ '\P{Script_Extensions=Latin}+'
-			\ ]
-let g:fuzzy_motion_matchers = ['kensaku']
-" }}}
-
-" {{{ tuskk settings
-" call tuskk#initialize(#{
-" 			\ jisyo_list:  [
-" 			\   { 'path': s:GetDict('L'), 'encoding': 'euc-jp', 'mark': '[L]' },
-" 			\   { 'path': s:GetDict('emoji'), 'encoding': 'utf-8' },
-" 			\ ],
-" 			\ kana_table: tuskk#opts#builtin_kana_table(),
-" 			\ suggest_wait_ms: 200,
-" 			\ suggest_prefix_match_minimum: 5,
-" 			\ suggest_sort_by: 'length',
-" 			\ debug_log: '~/tuskk.log',
-" 			\ use_google_cgi: v:true,
-" 			\ merge_tsu: v:true,
-" 			\ trailing_n: v:true,
-" 			\ abbrev_ignore_case: v:true,
-" 			\ put_hanpa: v:true,
-" 			\ })
 " }}}
 
 " }}}

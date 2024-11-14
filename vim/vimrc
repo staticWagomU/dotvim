@@ -180,7 +180,7 @@ nnoremap <C-g><C-b> <Cmd>GinBranch<Cr>
 " }}}
 
 " {{{ gitgutter settings
-set foldtext=gitgutter#fold#foldtext()
+" set foldtext=gitgutter#fold#foldtext()
 
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
@@ -219,7 +219,7 @@ augroup skkeleton-initialize-pre
   autocmd User skkeleton-initialize-pre call Skkeleton_init()
 augroup END
 " }}}
- 
+
 " {{{ ctrlp settings
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_max_files  = 0
@@ -349,7 +349,7 @@ augroup END
 
 augroup fileTypeIndent
   autocmd!
-  autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
+  autocmd BufNewFile,BufRead vimrc setlocal tabstop=3 shiftwidth=1
 augroup END
 
 autocmd FileType vim setlocal foldmethod=marker

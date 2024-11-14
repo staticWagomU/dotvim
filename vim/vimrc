@@ -21,16 +21,16 @@ set mouse=a
 " クリップボードレジスタを使用する autoselectはわからない
 " ref:https://zenn.dev/kujirahand/articles/4b37160f781be7
 if executable('win32yank.exe')
-	au TextYankPost * call system('win32yank.exe -i &', @")
-	function Paste(p)
-		let sysclip=system('win32yank.exe -o')
-		if sysclip != @"
-			let @"=sysclip
-		endif
-		return a:p
-	endfunction
-	noremap <expr> p Paste('p')
-	noremap <expr> P Paste('P')
+  au TextYankPost * call system('win32yank.exe -i &', @")
+  function Paste(p)
+    let sysclip=system('win32yank.exe -o')
+    if sysclip != @"
+      let @"=sysclip
+    endif
+    return a:p
+  endfunction
+  noremap <expr> p Paste('p')
+  noremap <expr> P Paste('P')
 endif
 set clipboard&
 set clipboard^=unnamedplus,unnamed
@@ -110,11 +110,11 @@ call plug#end()
 
 let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
 let g:lsp_settings = { 
-			\ 'efm-langserver': #{
-			\ disabled: 0,
-			\ allowlist: ['markdown'],
-			\ }
-			\ }
+      \ 'efm-langserver': #{
+      \ disabled: 0,
+      \ allowlist: ['markdown'],
+      \ }
+      \ }
 let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_diagnostics_enabled = 1
 function s:OnLspBufferEnabled() abort
@@ -204,15 +204,15 @@ function! s:GetDict(d) abort
 endfunction
 
 function! Skkeleton_init() abort
-	call skkeleton#config(#{
-				\ eggLikeNewline: v:true,
-				\ globalDictionaries: [s:GetDict('L')],
-				\ databasePath: '/tmp/skkeleton.sqlite3',
-				\})
-	call skkeleton#register_kanatable('rom', {
-				\ 'z\<Space>': ['\u3000', ''],
-				\ 'xn': ['ん', '']
-				\})
+  call skkeleton#config(#{
+        \ eggLikeNewline: v:true,
+        \ globalDictionaries: [s:GetDict('L')],
+        \ databasePath: '/tmp/skkeleton.sqlite3',
+        \})
+  call skkeleton#register_kanatable('rom', {
+        \ 'z\<Space>': ['\u3000', ''],
+        \ 'xn': ['ん', '']
+        \})
 endfunction
 augroup skkeleton-initialize-pre
   autocmd!
@@ -224,9 +224,9 @@ augroup END
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_max_files  = 0
 let g:ctrlp_custom_ignore = #{
-			\ dir:  '\v[\/](\.(git|vs|svn|vscode)|dist|build|public|node_modules)$',
-			\ file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
-			\ }
+      \ dir:  '\v[\/](\.(git|vs|svn|vscode)|dist|build|public|node_modules)$',
+      \ file: '\v\.(exe|so|dll|o|obj|class|png|jpg|jpeg|mp3|mp4)$',
+      \ }
 nnoremap <C-m> <Cmd>CtrlPMRUFiles<Cr>
 nnoremap <C-b> <Cmd>CtrlPBuffer<Cr>
 " }}}
@@ -247,19 +247,19 @@ nnoremap <Leader>E <Cmd>Fern %:h<Cr>
 nnoremap <C-f> <Cmd>Fern . -drawer -reveal=%<Cr>
 
 function InitFern() abort
-	nmap <silent> <buffer> <C-m> <Plug>(fern-action-move)
-	nmap <silent> <buffer> <C-s> <Plug>(fern-action-new-dir)
-	nnoremap <buffer> <C-f> <C-W>p
-	nmap <silent> <buffer> p     <Plug>(fern-action-preview:auto:toggle)
-	nmap <silent> <buffer> <C-n> <Plug>(fern-action-preview:scroll:down:half)
-	nmap <silent> <buffer> <C-p> <Plug>(fern-action-preview:scroll:up:half)
-	setlocal signcolumn=yes
-	setlocal nonumber
+  nmap <silent> <buffer> <C-m> <Plug>(fern-action-move)
+  nmap <silent> <buffer> <C-s> <Plug>(fern-action-new-dir)
+  nnoremap <buffer> <C-f> <C-W>p
+  nmap <silent> <buffer> p     <Plug>(fern-action-preview:auto:toggle)
+  nmap <silent> <buffer> <C-n> <Plug>(fern-action-preview:scroll:down:half)
+  nmap <silent> <buffer> <C-p> <Plug>(fern-action-preview:scroll:up:half)
+  setlocal signcolumn=yes
+  setlocal nonumber
 endfunction
 
 augroup my-fern
   autocmd! *
-    autocmd FileType fern call InitFern()
+  autocmd FileType fern call InitFern()
 augroup END
 
 " }}}
@@ -338,18 +338,18 @@ vnoremap <RightMouse> :w !clip.exe<CR><ESC>
 augroup restore-cursor
   autocmd!
   autocmd BufReadPost *
-	\ : if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-	\ |   exe "normal! g`\""
-	\ | endif
+        \ : if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+        \ |   exe "normal! g`\""
+        \ | endif
 
-	\ : if empty(&buftype) && line('.') > winheight(0) / 2
-	\ |   execute 'normal! zz'
-	\ | endif
+  \ : if empty(&buftype) && line('.') > winheight(0) / 2
+  \ |   execute 'normal! zz'
+  \ | endif
 augroup END
 
 augroup fileTypeIndent
-	autocmd!
-	autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
+  autocmd!
+  autocmd BufNewFile,BufRead vimrc setlocal tabstop=2 shiftwidth=1
 augroup END
 
 autocmd FileType vim setlocal foldmethod=marker

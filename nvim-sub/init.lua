@@ -423,12 +423,15 @@ end)
 now(function()
 	add {
 		source = 'https://github.com/vim-fall/fall.vim',
-		depends = { 'https://github.com/vim-denops/denops.vim' },
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/lambdalisue/vim-glyph-palette'
+		},
 	}
 end)
 
 now(function()
-	vim.opt.background = 'dark'
+	vim.opt.background = 'light'
 	-- カラースキームを作るやつ
 	require('mini.base16').setup {
 		palette = {
@@ -465,3 +468,12 @@ vim.api.nvim_create_user_command("SwapClean", function()
   end
 end, {})
 
+
+vim.cmd[[
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fall-list call glyph_palette#apply()
+augroup END
+highlight link FloatNormal Normal
+highlight link FloatBorder Delimiter
+]]

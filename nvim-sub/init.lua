@@ -421,6 +421,13 @@ later(function()
 end)
 
 now(function()
+	add {
+		source = 'https://github.com/vim-fall/fall.vim',
+		depends = { 'https://github.com/vim-denops/denops.vim' },
+	}
+end)
+
+now(function()
 	vim.opt.background = 'dark'
 	-- カラースキームを作るやつ
 	require('mini.base16').setup {

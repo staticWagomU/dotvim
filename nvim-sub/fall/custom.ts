@@ -3,9 +3,33 @@ import {
   composeRenderers,
   refineCurator,
   refineSource,
+  defineSorter,
+  Detail,
+  type Sorter,
 } from "jsr:@vim-fall/std@^0.8.0";
 import * as builtin from "jsr:@vim-fall/std@^0.8.0/builtin";
 import { SEPARATOR } from "jsr:@std/path@^1.0.8/constants";
+
+function sorterMtime<T extends Detail>(): Sorter<T> {
+  return defineSorter<T>((_denops, { items }) => {
+    items.sort((a, b) => {
+      try {
+        const fileInfoA = Deno.statSync(a.detail.path as string);
+        const fileInfoB = Deno.statSync(b.detail.path as string);
+
+        if(fileInfoA.isFile && fileInfoB.isFile) {
+          const va = fileInfoA.mtime?.getTime() ?? 0;
+          const vb = fileInfoB.mtime?.getTime() ?? 0;
+          return va < vb ? 1 : (va > vb ? -1 : 0);
+        }
+        return 0;
+      } catch {
+        return 0;
+      }
+    })
+  });
+}
+
 
 // NOTE:
 //
@@ -220,6 +244,40 @@ export const main: Entrypoint = (
       sorters: [
         builtin.sorter.noop,
         builtin.sorter.lexical,
+        builtin.sorter.lexical({ reverse: true }),
+      ],
+      renderers: [
+        composeRenderers(
+          builtin.renderer.smartPath,
+          builtin.renderer.nerdfont,
+        ),
+        builtin.renderer.nerdfont,
+        builtin.renderer.noop,
+      ],
+      previewers: [builtin.previewer.file],
+      actions: {
+        ...myPathActions,
+        ...myQuickfixActions,
+        ...myMiscActions,
+      },
+      defaultAction: "open",
+    },
+  );
+
+
+  definePickerFromSource(
+    "file:mtime",
+    refineSource(
+      builtin.source.file({
+        filterFile: myFilterFile,
+        filterDirectory: myFilterDirectory,
+      }),
+      builtin.refiner.relativePath,
+    ),
+    {
+      matchers: [builtin.matcher.fzf],
+      sorters: [
+        sorterMtime,
         builtin.sorter.lexical({ reverse: true }),
       ],
       renderers: [

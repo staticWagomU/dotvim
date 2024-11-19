@@ -133,7 +133,7 @@ const myFilterDirectory = (path: string) => {
     ".turbo", // Turbo repo
   ];
   for (const exclude of excludes) {
-    if (path.includes(`${SEPARATOR}${exclude}${SEPARATOR}`)) {
+    if (path.endsWith(`${SEPARATOR}${exclude}`)) {
       return false;
     }
   }

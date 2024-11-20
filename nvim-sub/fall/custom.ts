@@ -20,7 +20,7 @@ function sorterMtime<T extends Detail>(): Sorter<T> {
         if(fileInfoA.isFile && fileInfoB.isFile) {
           const va = fileInfoA.mtime?.getTime() ?? 0;
           const vb = fileInfoB.mtime?.getTime() ?? 0;
-          return va < vb ? 1 : (va > vb ? -1 : 0);
+          return vb - va;
         }
         return 0;
       } catch {

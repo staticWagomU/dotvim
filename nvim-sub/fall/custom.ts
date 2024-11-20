@@ -278,15 +278,12 @@ export const main: Entrypoint = (
       matchers: [builtin.matcher.fzf],
       sorters: [
         sorterMtime,
-        builtin.sorter.lexical({ reverse: true }),
       ],
       renderers: [
         composeRenderers(
           builtin.renderer.smartPath,
           builtin.renderer.nerdfont,
         ),
-        builtin.renderer.nerdfont,
-        builtin.renderer.noop,
       ],
       previewers: [builtin.previewer.file],
       actions: {

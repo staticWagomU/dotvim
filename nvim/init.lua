@@ -352,6 +352,13 @@ later(function()
     },
   }
 
+  if vim.fn.argc() == 0 then
+    vim.defer_fn(function()
+      vim.cmd('vs')
+      oil.open(vim.fn.getcwd())
+    end, 150)
+  end
+
   nmaps {
     {
       '<Leader>e',
@@ -933,6 +940,12 @@ now(function()
   require('pluginconfig.ddu')
 
   local ddu = require('pluginconfig.ddu.util')
+  if vim.fn.argc() == 0 then
+    vim.defer_fn(function()
+      ddu.start_local('file_recursive 💛')
+    end, 150)
+  end
+
   WagomuBox.nmaps {
     {
       [[\,]],

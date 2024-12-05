@@ -827,7 +827,20 @@ end)
 
 later(function()
   add('https://github.com/hrsh7th/nvim-insx')
+  local insx = require('insx')
   require('insx.preset.standard').setup()
+  insx.add('<Tab>', require('insx.recipe.jump_next')({
+    jump_pat = {
+      ([=[\%%#[^%s]*%s\zs]=]):format(';', insx.esc(';')),
+      ([=[\%%#[^%s]*%s\zs]=]):format(')', insx.esc(')')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('\\]', insx.esc(']')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('}', insx.esc('}')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('>', insx.esc('>')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('"', insx.esc('"')),
+      ([=[\%%#[^%s]*%s\zs]=]):format("'", insx.esc("'")),
+      ([=[\%%#[^%s]*%s\zs]=]):format('`', insx.esc('`')),
+    },
+  }))
 end)
 
 later(function()

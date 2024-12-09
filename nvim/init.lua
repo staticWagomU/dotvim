@@ -997,7 +997,6 @@ later(function()
   -- ref: https://github.com/kawarimidoll/dotfiles/blob/d72bdde031248bf5157ef8a4fc1c15aeed0548b3/.config/nvim/minideps.lua#L422C3-L453C25
   add {
     source = 'CopilotC-Nvim/CopilotChat.nvim',
-    checkout = 'canary',
     depends = { 'nvim-lua/plenary.nvim' },
   }
   local copilotChat = require('CopilotChat')

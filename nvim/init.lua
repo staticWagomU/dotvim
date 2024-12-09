@@ -1240,6 +1240,11 @@ later(function()
   add('https://github.com/thinca/vim-qfreplace')
 end)
 
+
+later(function()
+  add('https://github.com/itchyny/vim-qfedit')
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')
@@ -1320,7 +1325,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 
 map({ 'n', 'x' }, 'g?', function() require('ui_select')(_G.favoriteList, vim.fn.execute) end)
 
--- require('wwinbar')
+require('wwinbar')
 -- require('wtabbar')
 
 autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {

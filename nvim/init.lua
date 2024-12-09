@@ -1236,6 +1236,10 @@ later(function ()
   add('https://github.com/NvChad/minty')
 end)
 
+later(function()
+  add('https://github.com/thinca/vim-qfreplace')
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

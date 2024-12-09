@@ -1,9 +1,9 @@
 local ddu = require('pluginconfig.ddu.util')
 local bufopts = { buffer = true, silent = false }
 
-ddu.alias('source', 'file_rg', 'file_external')
-ddu.alias('source', 'file_git', 'file_external')
-ddu.alias('source', 'file_ghq', 'file_external')
+ddu.alias('default', 'source', 'file_rg', 'file_external' )
+ddu.alias('default', 'source', 'file_git', 'file_external')
+ddu.alias('default', 'source', 'file_ghq', 'file_external')
 
 ddu.patch_global {
   ui = 'ff',

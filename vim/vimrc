@@ -342,9 +342,9 @@ augroup restore-cursor
         \ |   exe "normal! g`\""
         \ | endif
 
-  \ : if empty(&buftype) && line('.') > winheight(0) / 2
-  \ |   execute 'normal! zz'
-  \ | endif
+		  \ : if empty(&buftype) && line('.') > winheight(0) / 2
+		  \ |   execute 'normal! zz'
+		  \ | endif
 augroup END
 
 augroup fileTypeIndent

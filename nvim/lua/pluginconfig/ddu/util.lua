@@ -41,11 +41,12 @@ function M.start_source(name)
   }
 end
 
----@param type 'ui' | 'source' | 'filter' | 'kind' | 'column' | 'action'
 ---@param name string
+---@param type 'ui' | 'source' | 'filter' | 'kind' | 'column' | 'action'
+---@param alias_name string
 ---@param base string
-function M.alias(type, name, base)
-  vim.fn['ddu#custom#alias'](type, name, base)
+function M.alias(name, type, alias_name, base)
+  vim.fn['ddu#custom#alias'](name, type, alias_name, base)
 end
 
 return M

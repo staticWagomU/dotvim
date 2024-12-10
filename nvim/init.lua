@@ -1227,7 +1227,12 @@ end)
 
 
 now(function()
-  add('https://github.com/Tronikelis/xylene.nvim')
+  add({
+    source = 'https://github.com/Tronikelis/xylene.nvim',
+    depends = {
+      'https://github.com/stevearc/oil.nvim'
+    }
+  })
   require('xylene').setup()
 end)
 

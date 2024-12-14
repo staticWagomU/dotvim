@@ -430,6 +430,11 @@ now(function()
 	}
 end)
 
+later(function()
+  add('https://github.com/tyru/capture.vim')
+end)
+
+
 now(function()
 	vim.opt.background = 'light'
 	-- カラースキームを作るやつ

@@ -159,7 +159,10 @@ end)
 -- | Treesitter関連
 -- =========================================
 later(function()
-  add('https://github.com/nvim-treesitter/nvim-treesitter')
+  add({
+    sources = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    depends = { 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects' }
+  })
 
   require('nvim-treesitter.configs').setup {
     ensure_installed = {
@@ -194,6 +197,19 @@ later(function()
         end
       end,
       additional_vim_regex_highlighting = false,
+    },
+    textobjects = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+      },
+      selection_modes = {
+        ['@parameter.outer'] = 'v',
+        ['@function.outer'] = 'V',
+        ['@class.outer'] = '<c-v>',
+      },
     },
     sync_install = false,
     modules = {},

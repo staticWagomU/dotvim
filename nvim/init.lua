@@ -629,7 +629,7 @@ later(function()
       }
     end,
     ['denols'] = function()
-      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+      local is_node = vim.fs.dirname(vim.fs.find('node_modules', { path = vim.fn.expand('%:p:h'), upward = true })[1])
       if not is_node then
         lspconfig['denols'].setup {
           capabilities = capabilities,
@@ -651,7 +651,7 @@ later(function()
       end
     end,
     ['vtsls'] = function()
-      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+      local is_node = vim.fs.dirname(vim.fs.find('node_modules', { path = vim.fn.expand('%:p:h'), upward = true })[1])
       if is_node and enabled_vtsls then
         lspconfig['vtsls'].setup {
           capabilities = capabilities,
@@ -662,7 +662,7 @@ later(function()
       end
     end,
     ['ts_ls'] = function()
-      local is_node = require('lspconfig').util.find_node_modules_ancestor('.')
+      local is_node = vim.fs.dirname(vim.fs.find('node_modules', { path = vim.fn.expand('%:p:h'), upward = true })[1])
       if is_node and not enabled_vtsls then
         lspconfig['tsserver'].setup {
           capabilities = capabilities,

@@ -99,6 +99,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local abbrev = utils.make_abbrev
 local autocmd = vim.api.nvim_create_autocmd
 _G.favoriteList = {}
+table.insert(_G.favoriteList, 'YankBank')
 
 ---@diagnostic disable-next-line: unused-local
 local bufopts = { noremap = true, buffer = true }
@@ -1102,6 +1103,7 @@ end)
 later(function()
   add('https://github.com/stevearc/aerial.nvim')
   require('aerial').setup {}
+  table.insert(_G.favoriteList, 'AerialToggle')
 end)
 
 later(function()
@@ -1123,6 +1125,7 @@ later(function()
       },
     },
   }
+  table.insert(_G.favoriteList, 'SatelliteDisable')
 end)
 
 later(function()

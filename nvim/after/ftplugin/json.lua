@@ -16,7 +16,7 @@ MiniDeps.now(function()
       'g?',
       function()
         require('select_action')('packageinfo')
-      end,
+      end, { buffer = true },
     },
   }
 end)

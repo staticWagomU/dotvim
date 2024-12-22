@@ -592,7 +592,9 @@ later(function()
       'denols',
       'emmet_ls',
       'gopls',
+      'jsonls',
       'lua_ls',
+      'pylsp',
       'rust_analyzer',
       'svelte',
       'tailwindcss',
@@ -602,10 +604,10 @@ later(function()
       'volar',
       'vtsls',
       'zls',
-      'pylsp'
     },
   }
 
+  local schemas = require('wagomu-box.plugin-config.schema-catalog').schemas
   require('mason-lspconfig').setup_handlers {
     function(server_name)
       lspconfig[server_name].setup {
@@ -613,6 +615,17 @@ later(function()
         -- on_attach = function(client, bufnr)
         --   require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
         -- end,
+      }
+    end,
+    ['jsonls'] = function()
+      lspconfig['jsonls'].setup {
+        filetypes = { 'json', 'jsonc' },
+        extra_filetypes = { 'jsonc', 'json' },
+        settings = {
+          json  = {
+            schemas = schemas,
+          },
+        },
       }
     end,
     ['denols'] = function()

@@ -1387,3 +1387,9 @@ vim.api.nvim_create_user_command("SwapClean", function()
   end
 end, {})
 
+
+vim.api.nvim_create_user_command('WagomuBox', function()
+  local path = '~/dotvim/wagomu-box/'
+  vim.cmd('edit ' .. path)
+end, {})
+

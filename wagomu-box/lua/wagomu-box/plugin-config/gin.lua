@@ -104,14 +104,12 @@ autocmd({ 'FileType' }, {
   pattern = 'gin-branch',
   group = group,
   callback = function()
-
     nmaps {
       { 'A',          '<Cmd>GinBranch -a<Cr>',        nowait_bufopts },
       { 'r',          '<Cmd>GinBranch -r<Cr>',        nowait_bufopts },
       { '<C-g><C-f>', ':<C-u>Gin fetch ',             nosilent_bufopts },
       { '<C-g><C-r>', ':<C-u>Gin rebase --autostash', nosilent_bufopts },
     }
-
   end,
 })
 
@@ -124,9 +122,13 @@ abbrev {
   { from = 'gpp', to = 'Gin pull --autostash' },
   { from = 'gcd', to = 'GinCd' },
   { from = 'gf',  to = 'Gin fetch origin main' },
-  { from = 'gr',  to = 'Gin rebase --autostash origin/' },
+  { from = 'gr',  to = 'Gin rebase' },
 }
 
 abbrev {
-  { prepose = 'Gin commit', from = 'a', to = '--amend' },
+  { prepose = 'Gin commit', from = 'a',  to = '--amend' },
+  { prepose = 'Gin rebase', from = 'a',  to = '--autostash origin/main' },
+  { prepose = 'Gin rebase', from = 'c',  to = '--continue' },
+  { prepose = 'Gin rebase', from = 's',  to = '--skip' },
+  { prepose = 'Gin rebase', from = 'aa', to = '--abort' },
 }

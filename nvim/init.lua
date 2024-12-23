@@ -89,7 +89,7 @@ imap(
     local result = vim.fn.matchstr(substring, [[\v<(\k(<)@!)*$]])
     return "<C-w>" .. result:upper()
   end,
-  {expr = true}
+  { expr = true }
 )
 
 
@@ -332,12 +332,13 @@ later(function()
 end)
 
 later(function()
-  add{
+  add {
     source = 'https://github.com/isakbm/gitgraph.nvim',
     depends = { 'https://github.com/sindrets/diffview.nvim' },
   }
 
   ---@type I.GGConfig
+  ---@diagnostic disable-next-line: missing-fields
   require('gitgraph').setup {
     hooks = {
       -- Check diff of a commit
@@ -363,7 +364,6 @@ later(function()
   oil.setup {
     default_file_explorer = true,
     win_options = {
-      -- signcolumn = "yes:2",
       number = false,
       foldcolumn = '0',
     },
@@ -501,7 +501,7 @@ later(function()
 
   -- ref: https://github.com/teramako/dotfiles/blob/463b2434ddc4b85c9d335188d357916d142bad6a/nvim/init.lua#L403-L433
   -- gin.vim の action: 用補完
----@diagnostic disable-next-line: missing-fields
+  ---@diagnostic disable-next-line: missing-fields
   cmp.register_source('gin-action', {
     enabled = function() -- filetype がgin-* の時のみ有効に
       local ft = vim.opt_local.filetype:get()
@@ -764,7 +764,7 @@ later(function()
   })
 
   utils.on_attach(function(_, _)
-      require('ufo').setup()
+    require('ufo').setup()
   end)
 
   nmaps {
@@ -1006,6 +1006,10 @@ now(function()
       function() ddu.start_local('file_recursive 💛') end,
     },
     {
+      [[\F]],
+      function() ddu.start_local('current_file') end,
+    },
+    {
       [[\g]],
       function() ddu.start_local('file_git') end,
     },
@@ -1192,7 +1196,7 @@ later(function()
 end)
 
 later(function()
-  add{
+  add {
     source = 'https://github.com/spywhere/detect-language.nvim',
     depends = { 'https://github.com/nvim-treesitter/nvim-treesitter' },
   }
@@ -1243,7 +1247,7 @@ if enabled_octo then
         'https://github.com/nvim-telescope/telescope.nvim'
       },
     }
-    require"octo".setup()
+    require "octo".setup()
   end)
 end
 
@@ -1269,7 +1273,7 @@ now(function()
   require('xylene').setup()
 end)
 
-later(function ()
+later(function()
   add('https://github.com/NvChad/volt')
   add('https://github.com/NvChad/minty')
 end)
@@ -1292,7 +1296,7 @@ now(function()
   add('https://github.com/ayu-theme/ayu-vim')
   vim.g.ayucolor = 'light'
   vim.opt.background = 'dark'
----@diagnostic disable-next-line: missing-fields
+  ---@diagnostic disable-next-line: missing-fields
   require('everforest').setup {
     italics = true,
     disable_italic_comments = true,
@@ -1366,7 +1370,7 @@ map({ 'n', 'x' }, 'g?', function() require('ui_select')(_G.favoriteList, vim.fn.
 require('wwinbar')
 -- require('wtabbar')
 
-autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
+autocmd({ 'WinEnter', 'BufEnter', 'ColorScheme' }, {
   group = MyAuGroup,
   pattern = '*',
   callback = function()
@@ -1385,7 +1389,6 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
       vim.cmd.hi("StatusLine ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
       vim.cmd.hi("StatuslineNC ctermbg=NONE guibg=NONE ctermfg=NONE guifg=" .. fg)
     end
-
   end,
   once = true,
 })
@@ -1393,7 +1396,7 @@ autocmd({'WinEnter', 'BufEnter', 'ColorScheme'}, {
 vim.api.nvim_create_user_command("SwapClean", function()
   local dirs = vim.opt.directory:get()
   for _, dir in pairs(dirs) do
-    for name in vim.iter(vim.fs.dir(dir, {depth= 1})):filter(function(_, type)
+    for name in vim.iter(vim.fs.dir(dir, { depth = 1 })):filter(function(_, type)
       return type == "file"
     end) do
       local file = vim.fs.joinpath(dir, name)
@@ -1403,9 +1406,7 @@ vim.api.nvim_create_user_command("SwapClean", function()
   end
 end, {})
 
-
 vim.api.nvim_create_user_command('WagomuBox', function()
   local path = '~/dotvim/wagomu-box/'
   vim.cmd('edit ' .. path)
 end, {})
-

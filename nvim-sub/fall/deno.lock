@@ -1,0 +1,118 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@core/errorutil@^1.2.0": "jsr:@core/errorutil@1.2.0",
+      "jsr:@core/iterutil@^0.9.0": "jsr:@core/iterutil@0.9.0",
+      "jsr:@core/unknownutil@^4.3.0": "jsr:@core/unknownutil@4.3.0",
+      "jsr:@denops/core@^7.0.0": "jsr:@denops/core@7.0.1",
+      "jsr:@denops/std@^7.3.0": "jsr:@denops/std@7.3.2",
+      "jsr:@denops/std@^7.3.2": "jsr:@denops/std@7.3.2",
+      "jsr:@lambdalisue/itertools@^1.1.2": "jsr:@lambdalisue/itertools@1.1.2",
+      "jsr:@lambdalisue/systemopen@^1.0.0": "jsr:@lambdalisue/systemopen@1.0.0",
+      "jsr:@lambdalisue/unnullish@^1.0.2": "jsr:@lambdalisue/unnullish@1.0.2",
+      "jsr:@lambdalisue/unreachable@^1.0.1": "jsr:@lambdalisue/unreachable@1.0.1",
+      "jsr:@std/fs@^1.0.5": "jsr:@std/fs@1.0.5",
+      "jsr:@std/path@^1.0.7": "jsr:@std/path@1.0.8",
+      "jsr:@std/path@^1.0.8": "jsr:@std/path@1.0.8",
+      "jsr:@std/semver@^1.0.0": "jsr:@std/semver@1.0.3",
+      "jsr:@std/streams@^1.0.8": "jsr:@std/streams@1.0.8",
+      "jsr:@std/ulid@^1.0.0": "jsr:@std/ulid@1.0.0",
+      "jsr:@vim-fall/core@^0.2.1": "jsr:@vim-fall/core@0.2.1",
+      "jsr:@vim-fall/custom@^0.1.0": "jsr:@vim-fall/custom@0.1.0",
+      "jsr:@vim-fall/std@^0.8.0": "jsr:@vim-fall/std@0.8.0",
+      "npm:fzf@^0.5.2": "npm:fzf@0.5.2"
+    },
+    "jsr": {
+      "@core/errorutil@1.2.0": {
+        "integrity": "038293a3e411bf1c8e58631110ea11a546d1f30d286c36c672a85cfd4832fa4a"
+      },
+      "@core/iterutil@0.9.0": {
+        "integrity": "29a4ba1af8e79c2d63d96df4948bb995afb5256568401711ae97a1ef06cc67a8"
+      },
+      "@core/unknownutil@4.3.0": {
+        "integrity": "538a3687ffa81028e91d148818047df219663d0da671d906cecd165581ae55cc"
+      },
+      "@denops/core@7.0.1": {
+        "integrity": "ede39eec60de6d5bf0fbc0337d3e420a9689cc48afea8c71752e6c0fb630bde0"
+      },
+      "@denops/std@7.3.2": {
+        "integrity": "ff764883927dc1ad2edaa29cce795d02afbe241b49826ebfed03154d1b4e46d5",
+        "dependencies": [
+          "jsr:@core/unknownutil@^4.3.0",
+          "jsr:@denops/core@^7.0.0",
+          "jsr:@lambdalisue/itertools@^1.1.2",
+          "jsr:@lambdalisue/unreachable@^1.0.1",
+          "jsr:@std/semver@^1.0.0",
+          "jsr:@std/ulid@^1.0.0"
+        ]
+      },
+      "@lambdalisue/itertools@1.1.2": {
+        "integrity": "1b8c45a5ab7102a3ff1aa64c8ec0bdb12aee845bec5bf85458ed83446125587a"
+      },
+      "@lambdalisue/systemopen@1.0.0": {
+        "integrity": "7d9f8a903476fd936a8f7a4f0c1a9d2e974f759129cca581d0ea9a57caf3a40b"
+      },
+      "@lambdalisue/unnullish@1.0.2": {
+        "integrity": "1e1dd3b9f23f4978cb9b36a1baf0723eae83339ae4a693c44708cc8c67ffefa9"
+      },
+      "@lambdalisue/unreachable@1.0.1": {
+        "integrity": "24b0743775e92ea0d076beaf0869bfbe4708054ac570742628684fb35ccda0d4"
+      },
+      "@std/fs@1.0.5": {
+        "integrity": "41806ad6823d0b5f275f9849a2640d87e4ef67c51ee1b8fb02426f55e02fd44e",
+        "dependencies": [
+          "jsr:@std/path@^1.0.7"
+        ]
+      },
+      "@std/path@1.0.8": {
+        "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+      },
+      "@std/semver@1.0.3": {
+        "integrity": "7c139c6076a080eeaa4252c78b95ca5302818d7eafab0470d34cafd9930c13c8"
+      },
+      "@std/streams@1.0.8": {
+        "integrity": "b41332d93d2cf6a82fe4ac2153b930adf1a859392931e2a19d9fabfb6f154fb3"
+      },
+      "@std/ulid@1.0.0": {
+        "integrity": "d41c3d27a907714413649fee864b7cde8d42ee68437d22b79d5de4f81d808780"
+      },
+      "@vim-fall/core@0.2.1": {
+        "integrity": "4f5ae891c49da3c878ae3b9da959575705414bfe6cb05b22f373397507ed5b25",
+        "dependencies": [
+          "jsr:@denops/std@^7.3.0"
+        ]
+      },
+      "@vim-fall/custom@0.1.0": {
+        "integrity": "1af8d2de2ddeaaf490182c23a4bfdc9471bcd8156aef61b80283cc3f85c6eec0",
+        "dependencies": [
+          "jsr:@denops/std@^7.3.2",
+          "jsr:@vim-fall/core@^0.2.1"
+        ]
+      },
+      "@vim-fall/std@0.8.0": {
+        "integrity": "aa11fefe676ba67768f1d432c93f1cdc0a94ffbd9b7b76f5da4d92a2b7fe3d0c",
+        "dependencies": [
+          "jsr:@core/errorutil@^1.2.0",
+          "jsr:@core/iterutil@^0.9.0",
+          "jsr:@denops/std@^7.3.0",
+          "jsr:@lambdalisue/systemopen@^1.0.0",
+          "jsr:@lambdalisue/unnullish@^1.0.2",
+          "jsr:@std/fs@^1.0.5",
+          "jsr:@std/path@^1.0.8",
+          "jsr:@std/streams@^1.0.8",
+          "jsr:@vim-fall/core@^0.2.1",
+          "jsr:@vim-fall/custom@^0.1.0",
+          "npm:fzf@^0.5.2"
+        ]
+      }
+    },
+    "npm": {
+      "fzf@0.5.2": {
+        "integrity": "sha512-Tt4kuxLXFKHy8KT40zwsUPUkg1CrsgY25FxA2U/j/0WgEDCk3ddc/zLTCCcbSHX9FcKtLuVaDGtGE/STWC+j3Q==",
+        "dependencies": {}
+      }
+    }
+  },
+  "remote": {}
+}

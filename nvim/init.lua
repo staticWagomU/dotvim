@@ -160,10 +160,9 @@ end)
 -- | Treesitter関連
 -- =========================================
 later(function()
-  add({
-    sources = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    depends = { 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects' }
-  })
+  add('https://github.com/nvim-treesitter/nvim-treesitter' )
+
+  add('https://github.com/nvim-treesitter/nvim-treesitter-textobjects')
 
   require('nvim-treesitter.configs').setup {
     ensure_installed = {
@@ -199,23 +198,39 @@ later(function()
       end,
       additional_vim_regex_highlighting = false,
     },
-    textobjects = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-      },
-      selection_modes = {
-        ['@parameter.outer'] = 'v',
-        ['@function.outer'] = 'V',
-        ['@class.outer'] = '<c-v>',
-      },
-    },
     sync_install = false,
     modules = {},
     auto_install = true,
     ignore_install = {},
+    textobjects = {
+      select = {
+        enable = true,
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ai"] = "@conditional.outer",
+          ["ii"] = "@conditional.inner",
+          ["aC"] = "@class.outer",
+          ["iC"] = "@class.inner",
+          ["ac"] = "@comment.outer",
+          ["ic"] = "@comment.inner",
+          ["ab"] = "@block.outer",
+          ["ib"] = "@block.inner",
+          ["al"] = "@loop.outer",
+          ["il"] = "@loop.inner",
+          ["ip"] = "@parameter.inner",
+          ["ap"] = "@parameter.outer",
+          ["iS"] = "@scopename.inner",
+          ["aS"] = "@statement.outer",
+          ["i"] = "@call.inner",
+          ["iF"] = "@frame.inner",
+          ["oF"] = "@frame.outer",
+        },
+      },
+    },
   }
 end)
 

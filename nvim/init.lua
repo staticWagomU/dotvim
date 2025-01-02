@@ -280,7 +280,7 @@ end)
 
 now(function()
   add {
-    source = 'https://github.com/lambdalisue/gin.vim',
+    source = 'https://github.com/lambdalisue/vim-gin',
     depends = { 'vim-denops/denops.vim' },
   }
 
@@ -631,6 +631,19 @@ later(function()
         -- on_attach = function(client, bufnr)
         --   require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
         -- end,
+      }
+    end,
+    ['astro'] =function ()
+      lspconfig['astro'].setup {
+        capabilities = capabilities,
+        settings = {
+          astro = {
+            contentIntellisense = true,
+            updateImportsOnFileMove = {
+              enabled = true,
+            },
+          }
+        },
       }
     end,
     ['jsonls'] = function()
@@ -1289,8 +1302,10 @@ now(function()
 end)
 
 later(function()
+  -- かっこいいカラーピッカー
   add('https://github.com/NvChad/volt')
   add('https://github.com/NvChad/minty')
+  table.insert(_G.favoriteList, 'Huefy')
 end)
 
 later(function()
@@ -1300,6 +1315,18 @@ end)
 
 later(function()
   add('https://github.com/itchyny/vim-qfedit')
+end)
+
+later(function()
+  add('https://github.com/hrsh7th/nvim-pasta')
+  vim.keymap.set({ 'n', 'x' }, 'p', require('pasta.mapping').p)
+  vim.keymap.set({ 'n', 'x' }, 'P', require('pasta.mapping').P)
+
+  local pasta = require('pasta')
+  pasta.config.next_key = vim.keycode('<C-n>')
+  pasta.config.prev_key = vim.keycode('<C-p>')
+  pasta.config.indent_key = vim.keycode(',')
+  pasta.config.indent_fix = true
 end)
 
 now(function()

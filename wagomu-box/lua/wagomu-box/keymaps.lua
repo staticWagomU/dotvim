@@ -41,6 +41,8 @@ function M.apply()
     { '<Leader>bc', '<Cmd>close<Cr>' },
     { '<Leader>cd', '<Cmd>cd %:p:h<Cr>' },
 
+    { '*', '*N' },
+
     -- ref: https://github.com/habamax/.vim/blob/5ae879ffa91aa090efedc9f43b89c78cf748fb01/plugin/mappings.vim?plain=1#L152
     {
       '<Leader>j',

@@ -21,6 +21,7 @@ vim.g.mapleader = ' '
 -- 最低限の設定
 vim.opt.clipboard = 'unnamedplus,unnamed'
 vim.opt.completeopt = 'menu,menuone,noselect,popup' -- mini.completionで必要な設定
+vim.opt.cmdheight = 0
 vim.opt.hidden = true
 vim.opt.laststatus = 3
 vim.opt.shiftwidth = 2

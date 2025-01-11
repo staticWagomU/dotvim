@@ -160,7 +160,7 @@ end)
 -- | Treesitter関連
 -- =========================================
 later(function()
-  add('https://github.com/nvim-treesitter/nvim-treesitter' )
+  add('https://github.com/nvim-treesitter/nvim-treesitter')
 
   add('https://github.com/nvim-treesitter/nvim-treesitter-textobjects')
 
@@ -633,7 +633,7 @@ later(function()
         -- end,
       }
     end,
-    ['astro'] =function ()
+    ['astro'] = function()
       lspconfig['astro'].setup {
         capabilities = capabilities,
         settings = {
@@ -651,7 +651,7 @@ later(function()
         filetypes = { 'json', 'jsonc' },
         extra_filetypes = { 'jsonc', 'json' },
         settings = {
-          json  = {
+          json = {
             schemas = schemas,
           },
         },

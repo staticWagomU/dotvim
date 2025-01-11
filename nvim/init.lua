@@ -1334,6 +1334,10 @@ later(function()
   require('numb').setup()
 end)
 
+later(function()
+  add('https://github.com/jghauser/mkdir.nvim')
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

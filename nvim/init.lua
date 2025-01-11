@@ -35,7 +35,8 @@ vim.diagnostic.config({
 })
 
 ---@diagnostic disable-next-line: unused-local
-local maps, nmaps, omaps, vmaps, imaps, smaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps, WagomuBox.imaps, WagomuBox.smaps
+local maps, nmaps, omaps, vmaps, imaps, smaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps,
+    WagomuBox.imaps, WagomuBox.smaps
 local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
@@ -484,7 +485,7 @@ later(function()
   add('https://github.com/onsails/lspkind.nvim')
   require('copilot_cmp').setup()
   -- require("luasnip.loaders.from_vscode").lazy_load()
-  add('https://github.com/rafamadriz/friendly-snippets?tab=readme-ov-file')
+  add('https://github.com/rafamadriz/friendly-snippets')
 
   local cmp = require('cmp')
   local lspkind = require('lspkind')
@@ -501,7 +502,10 @@ later(function()
       format = lspkind.cmp_format {
         mode = 'symbol',
         max_width = 50,
-        symbol_map = { Copilot = '' },
+        symbol_map = {
+          Copilot = '',
+          vsnip = '',
+        },
       },
     },
     mapping = cmp.mapping.preset.insert {
@@ -522,6 +526,10 @@ later(function()
     }, {
       { name = 'buffer' },
     }),
+    experimental = {
+      ghost_text = true,
+      ghost_text = true,
+    },
   }
 
   cmp.setup.filetype('gitcommit', {
@@ -590,16 +598,24 @@ later(function()
 
 
   imaps {
-    { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'", { expr = true } },
-    { '<C-l>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'", { expr = true } },
-    { '<C-h>', "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+    { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",         { expr = true } },
+    { '<C-l>',   "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'",       { expr = true } },
+    { '<C-h>',   "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
   }
 
 
   smaps {
-    { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'", { expr = true } },
-    { '<C-l>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'", { expr = true } },
-    { '<C-h>', "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+    { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",         { expr = true } },
+    { '<C-l>',   "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'",       { expr = true } },
+    { '<C-h>',   "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+  }
+
+  vim.g.vsnip_filetypes = {
+    javascriptreact = { "javascript" },
+    typescriptreact = { "typescript" },
+
+    typescriptreact = { "typescript" },
+
   }
 end)
 

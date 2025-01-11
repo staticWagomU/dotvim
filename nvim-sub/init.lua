@@ -488,6 +488,12 @@ end)
 
 later(function()
   add('https://github.com/tyru/capture.vim')
+later(function()
+	add('https://github.com/lewis6991/gitsigns.nvim')
+
+	require('wagomu-box.plugin-config.gitsigns')
+end)
+
 now(function ()
 	add {
 		source = 'https://github.com/lambdalisue/vim-gin',

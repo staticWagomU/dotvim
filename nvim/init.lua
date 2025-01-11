@@ -35,7 +35,7 @@ vim.diagnostic.config({
 })
 
 ---@diagnostic disable-next-line: unused-local
-local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
+local maps, nmaps, omaps, vmaps, imaps, smaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps, WagomuBox.imaps, WagomuBox.smaps
 local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
@@ -452,6 +452,15 @@ end)
 -- | nvim-cmp関連
 -- =========================================
 later(function()
+  local function build_luasnip(params)
+    vim.notify('make luasnip', vim.log.levels.INFO)
+    local obj = vim.system({ 'make', 'install_jsregexp' }, { cwd = params.path }):wait()
+    if obj.code == 0 then
+      vim.notify('make luasnip done', vim.log.levels.INFO)
+    else
+      vim.notify('make luasnip failed', vim.log.levels.ERROR)
+    end
+  end
   add('https://github.com/hrsh7th/nvim-cmp')
   add('https://github.com/hrsh7th/cmp-nvim-lsp')
   add('https://github.com/hrsh7th/cmp-buffer')
@@ -460,12 +469,22 @@ later(function()
   add('https://github.com/hrsh7th/cmp-cmdline')
   add('https://github.com/hrsh7th/cmp-vsnip')
   add('https://github.com/hrsh7th/vim-vsnip')
+  add({
+    source = 'https://github.com/L3MON4D3/LuaSnip',
+    hooks = {
+      post_checkout = build_luasnip,
+      post_update = build_luasnip,
+    },
+  })
+  add('https://github.com/saadparwaiz1/cmp_luasnip')
   add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
   add('https://github.com/zbirenbaum/copilot-cmp')
   add('https://github.com/uga-rosa/cmp-skkeleton')
   add('https://github.com/staticWagomU/cmp-my-git-commit-prefix')
   add('https://github.com/onsails/lspkind.nvim')
   require('copilot_cmp').setup()
+  -- require("luasnip.loaders.from_vscode").lazy_load()
+  add('https://github.com/rafamadriz/friendly-snippets?tab=readme-ov-file')
 
   local cmp = require('cmp')
   local lspkind = require('lspkind')
@@ -474,6 +493,7 @@ later(function()
     snippet = {
       expand = function(args)
         vim.fn['vsnip#anonymous'](args.body)
+        -- require('luasnip').lsp_expand(args.body)
       end,
     },
     ---@diagnostic disable-next-line: missing-fields
@@ -496,6 +516,7 @@ later(function()
       { name = 'skkeleton' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lsp' },
+      -- { name = 'luasnip' },
       { name = 'vsnip' },
       { name = 'copilot' },
     }, {
@@ -566,6 +587,20 @@ later(function()
       comparators = { cmp.config.compare.sort_text }
     },
   })
+
+
+  imaps {
+    { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'", { expr = true } },
+    { '<C-l>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'", { expr = true } },
+    { '<C-h>', "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+  }
+
+
+  smaps {
+    { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'", { expr = true } },
+    { '<C-l>', "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'", { expr = true } },
+    { '<C-h>', "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+  }
 end)
 
 -- =========================================

@@ -1329,6 +1329,11 @@ later(function()
   pasta.config.indent_fix = true
 end)
 
+later(function()
+  add('https://github.com/nacro90/numb.nvim')
+  require('numb').setup()
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

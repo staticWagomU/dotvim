@@ -39,6 +39,7 @@ vim.opt.listchars = {
 	precedes = '«',
 }
 
+vim.opt.runtimepath:prepend(vim.fs.normalize('~/dotvim/wagomu-box'))
 
 -- pcallを挟むことでエラーが発生しても続行できる
 vim.treesitter.start = (function(wrapped)
@@ -51,6 +52,7 @@ vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
 
 -- mini.depsの初期設定
 local path_package = vim.fn.stdpath('data') .. '/site/'
+local plugins_path = vim.fs.joinpath(path_package, 'pack/deps/opt')
 local mini_path = path_package .. 'pack/deps/start/mini.nvim'
 
 if not vim.uv.fs_stat(mini_path) then
@@ -63,9 +65,14 @@ end
 require('mini.deps').setup { path = { package = path_package } }
 
 
+local utils = require('wagomu-box.utils')
+local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
+local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
+WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local opts = { noremap = true, silent = true }
 local bufopts = { buffer = true, noremap = true, silent = true }
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local autocmd = vim.api.nvim_create_autocmd
 local on_attach = function(on_attach)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)
@@ -481,6 +488,94 @@ end)
 
 later(function()
   add('https://github.com/tyru/capture.vim')
+now(function ()
+	add {
+		source = 'https://github.com/lambdalisue/vim-gin',
+		depends = { 'vim-denops/denops.vim' },
+	}
+
+
+	require('wagomu-box.plugin-config.gin')
+
+	local nowait_bufopts = { buffer = true, noremap = true, nowait = true }
+	autocmd({ 'FileType' }, {
+		pattern = { 'gin-*', 'gin' },
+		group = WagomuBox.gin_group,
+		callback = function()
+			nmaps {
+				{
+					'g?',
+					function()
+						require('select_action')('gin')
+					end,
+					nowait_bufopts,
+				},
+			}
+		end,
+	})
+
+	autocmd({ 'FileType' }, {
+		pattern = { 'gin-branch' },
+		group = WagomuBox.gin_group,
+		callback = function()
+			nmap('<C-g><C-p>',
+			function()
+				local function t(str, flg)
+					return vim.api.nvim_replace_termcodes(str, true, true, flg)
+				end
+				vim.api.nvim_feedkeys(t('<Plug>(gin-action-yank:branch)', true), 'n', true)
+				vim.schedule(function()
+					local branch = vim.fn.getreg('+')
+					if not branch:find('^origin/') then
+						return
+					end
+					-- branchからorigin/を取り除いた文字列を取得
+					local origin_branch = branch:sub(8)
+					-- コマンドラインモードに入力
+					vim.api.nvim_feedkeys(t(string.format(":Gin pull origin %s:%s", origin_branch, origin_branch), false), 'n',
+					false)
+				end)
+			end,
+			nowait_bufopts)
+		end
+	})
+end)
+
+now(function()
+	add {
+		source = 'https://github.com/vim-skk/skkeleton',
+		depends = {
+			'https://github.com/skk-dev/dict',
+			'https://github.com/vim-denops/denops.vim',
+		},
+	}
+
+	vim.api.nvim_create_autocmd('User', {
+		pattern = 'skkeleton-initialize-pre',
+		callback = function()
+			local getJisyo = function(name)
+				local dictdir = vim.fn.expand(vim.fs.joinpath(plugins_path, 'dict', 'SKK-JISYO.'))
+				return vim.fs.normalize(dictdir .. name)
+			end
+			vim.fn['skkeleton#config'] {
+				eggLikeNewline = true,
+				globalDictionaries = {
+					getJisyo('L'),
+					getJisyo('hukugougo'),
+					getJisyo('mazegaki'),
+					getJisyo('propernoun'),
+					getJisyo('station'),
+				},
+				databasePath = '/tmp/skkeleton.sqlite3',
+			}
+			vim.fn['skkeleton#register_kanatable']('rom', {
+				[ [[z\<Space>]] ] = { [[\u3000]], '' },
+				[ [[xn]] ] = { [[ん]], '' },
+			})
+		end,
+	})
+	map({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)')
+	nmap('<C-j>', 'i<Plug>(skkeleton-toggle)')
 end)
 
 

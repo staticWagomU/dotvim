@@ -22,7 +22,7 @@ local function find_actions(plugin)
   return actionlist
 end
 
-local function select_action(plugin)
+return function(plugin)
   local actions = find_actions(plugin)
   vim.ui.select(actions, {}, function(item, _)
     if item == nil then
@@ -31,5 +31,3 @@ local function select_action(plugin)
     vim.fn.feedkeys(plug .. '(' .. plugin .. '-action-' .. item .. ')', 'n')
   end)
 end
-
-return select_action

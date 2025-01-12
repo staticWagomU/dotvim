@@ -478,6 +478,7 @@ later(function()
   add('https://github.com/hrsh7th/cmp-cmdline')
   add('https://github.com/hrsh7th/cmp-vsnip')
   add('https://github.com/hrsh7th/vim-vsnip')
+  add('https://github.com/rafamadriz/friendly-snippets')
   add({
     source = 'https://github.com/L3MON4D3/LuaSnip',
     hooks = {
@@ -492,8 +493,7 @@ later(function()
   add('https://github.com/staticWagomU/cmp-my-git-commit-prefix')
   add('https://github.com/onsails/lspkind.nvim')
   require('copilot_cmp').setup()
-  -- require("luasnip.loaders.from_vscode").lazy_load()
-  add('https://github.com/rafamadriz/friendly-snippets')
+  require("luasnip.loaders.from_vscode").lazy_load()
 
   local cmp = require('cmp')
   local lspkind = require('lspkind')
@@ -501,8 +501,8 @@ later(function()
   cmp.setup {
     snippet = {
       expand = function(args)
-        vim.fn['vsnip#anonymous'](args.body)
-        -- require('luasnip').lsp_expand(args.body)
+        -- vim.fn['vsnip#anonymous'](args.body)
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     ---@diagnostic disable-next-line: missing-fields
@@ -528,8 +528,8 @@ later(function()
       { name = 'skkeleton' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lsp' },
-      -- { name = 'luasnip' },
-      { name = 'vsnip' },
+      { name = 'luasnip' },
+      -- { name = 'vsnip' },
       { name = 'copilot' },
     }, {
       { name = 'buffer' },

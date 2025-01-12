@@ -1417,7 +1417,6 @@ later(function()
   null_ls.setup {
     sources = {
       require('none-ls.diagnostics.eslint'),
-      require('none-ls.diagnostics.eslint_d'),
     }
   }
 end)

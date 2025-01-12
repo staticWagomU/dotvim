@@ -162,7 +162,14 @@ end)
 -- | Treesitter関連
 -- =========================================
 later(function()
-  add('https://github.com/nvim-treesitter/nvim-treesitter')
+  add({
+    source = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    hooks = {
+      post_checkout = function()
+        vim.cmd.TSUpdate('all')
+      end
+    }
+  })
 
   add('https://github.com/nvim-treesitter/nvim-treesitter-textobjects')
 

@@ -25,6 +25,7 @@ vim.treesitter.language.register('markdown', 'octo')
 
 vim.diagnostic.config({
   severity_sort = true,
+  virtual_text = false,
   virtual_lines = {
     only_current_line = true,
     format = function(diagnostic)
@@ -853,10 +854,6 @@ later(function()
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-  })
 
   utils.on_attach(function(_, _)
     require('ufo').setup()

@@ -1405,6 +1405,18 @@ later(function()
   add('https://github.com/jghauser/mkdir.nvim')
 end)
 
+later(function()
+  add('https://github.com/nvimtools/none-ls.nvim')
+
+  local null_ls = require('null-ls')
+  null_ls.setup {
+    sources = {
+      null_ls.builtins.diagnostic.eslint,
+      null_ls.builtins.diagnostic.eslint_d,
+    }
+  }
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

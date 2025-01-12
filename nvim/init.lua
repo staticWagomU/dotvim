@@ -24,6 +24,14 @@ end)(vim.treesitter.start)
 vim.treesitter.language.register('markdown', 'octo')
 
 vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "🚒",
+      [vim.diagnostic.severity.WARN] = "🚧",
+      [vim.diagnostic.severity.INFO] = "👀",
+      [vim.diagnostic.severity.HINT] = "🦒",
+    },
+  },
   severity_sort = true,
   virtual_text = false,
   virtual_lines = {
@@ -851,16 +859,6 @@ later(function()
     end,
   }
 
-  for type, icon in pairs {
-    Error = '🚒',
-    Warn = '🚧',
-    Hint = '🦒',
-    Info = '👀',
-  } do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
 
   utils.on_attach(function(_, _)
     require('ufo').setup()

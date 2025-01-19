@@ -1420,6 +1420,16 @@ later(function()
 end)
 
 now(function()
+	add {
+		source = 'https://github.com/vim-fall/fall.vim',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/lambdalisue/vim-glyph-palette'
+		},
+	}
+end)
+
+now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')
   add('https://github.com/rebelot/kanagawa.nvim')

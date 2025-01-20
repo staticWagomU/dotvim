@@ -1488,11 +1488,11 @@ vim.api.nvim_create_autocmd('User', {
   end
 })
 end)
-    ---
-    ---NB: This is only significant for dark backgrounds as the light palettes
-    ---have the same colour for both values in the switch.
-    float_style = 'bright',
-    ---Inlay hints are special markers that are displayed inline with the code to
+
+later(function()
+  add('https://github.com/nvim-telescope/telescope.nvim')
+end)
+
     ---provide you with additional information. You can use this option to customize
     ---the background color of inlay hints.
     ---

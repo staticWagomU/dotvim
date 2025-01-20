@@ -943,6 +943,15 @@ later(function()
   require('mini.indentscope').setup {}
 end)
 
+
+later(function()
+  add {
+    source = 'https://github.com/echasnovski/mini.pick',
+    depends = { 'https://github.com/echasnovski/mini.extra' },
+  }
+  require('mini.pick').setup {}
+end)
+
 -- =========================================
 -- | その他
 -- =========================================

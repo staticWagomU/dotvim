@@ -1429,13 +1429,15 @@ later(function()
 end)
 
 now(function()
-	add {
-		source = 'https://github.com/vim-fall/fall.vim',
-		depends = {
-			'https://github.com/vim-denops/denops.vim',
-			'https://github.com/lambdalisue/vim-glyph-palette'
-		},
-	}
+  add {
+    source = 'https://github.com/vim-fall/fall.vim',
+    depends = {
+      'https://github.com/vim-denops/denops.vim',
+      'https://github.com/lambdalisue/vim-glyph-palette'
+    },
+  }
+end)
+
 end)
 
 now(function()

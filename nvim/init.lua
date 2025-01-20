@@ -1438,56 +1438,56 @@ now(function()
   }
 end)
 
-end)
+later(function()
+  add('https://github.com/hrsh7th/nvim-deck')
 
-now(function()
-  -- add('https://github.com/sainnhe/everforest')
-  add('https://github.com/neanias/everforest-nvim')
-  add('https://github.com/rebelot/kanagawa.nvim')
-  add('https://github.com/sainnhe/edge')
-  add('https://github.com/EdenEast/nightfox.nvim')
-  add('https://github.com/ayu-theme/ayu-vim')
-  vim.g.ayucolor = 'light'
-  vim.opt.background = 'dark'
-  ---@diagnostic disable-next-line: missing-fields
-  require('everforest').setup {
-    italics = true,
-    disable_italic_comments = true,
-    ---By default, the colour of the sign column background is the same as the as normal text
-    ---background, but you can use a grey background by setting this to `'grey'`.
-    sign_column_background = 'none',
-    ---The contrast of line numbers, indent lines, etc. Options are `'high'` or
-    ---`'low'` (default).
-    ui_contrast = 'low',
-    ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
-    ---
-    ---When this option is used in conjunction with show_eob set to `false`, the
-    ---end of the buffer will only be hidden inside the active window. Inside
-    ---inactive windows, the end of buffer filler characters will be visible in
-    ---dimmed symbols. This is due to the way Vim and Neovim handle `EndOfBuffer`.
-    dim_inactive_windows = false,
-    ---Some plugins support highlighting error/warning/info/hint texts, by
-    ---default these texts are only underlined, but you can use this option to
-    ---also highlight the background of them.
-    diagnostic_text_highlight = true,
-    ---Which colour the diagnostic text should be. Options are `'grey'` or `'coloured'` (default)
-    diagnostic_virtual_text = 'coloured',
-    ---Some plugins support highlighting error/warning/info/hint lines, but this
-    ---feature is disabled by default in this colour scheme.
-    diagnostic_line_highlight = true,
-    ---By default, this color scheme won't colour the foreground of |spell|, instead
-    ---colored under curls will be used. If you also want to colour the foreground,
-    ---set this option to `true`.
-    spell_foreground = false,
-    ---Whether to show the EndOfBuffer highlight.
-    show_eob = true,
-    ---Style used to make floating windows stand out from other windows. `'bright'`
-    ---makes the background of these windows lighter than |hl-Normal|, whereas
-    ---`'dim'` makes it darker.
-    ---
-    ---Floating windows include for instance diagnostic pop-ups, scrollable
-    ---documentation windows from completion engines, overlay windows from
-    ---installers, etc.
+  local deck = require('deck')
+  require('deck.easy').setup()
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'DeckStart',
+  callback = function(e)
+    local ctx = e.data.ctx --[[@as deck.Context]]
+
+    -- normal-mode mapping.
+    ctx.keymap('n', '<Esc>', function()
+      ctx.set_preview_mode(false)
+    end)
+    ctx.keymap('n', '<Tab>', deck.action_mapping('choose_action'))
+    ctx.keymap('n', '<C-l>', deck.action_mapping('refresh'))
+    ctx.keymap('n', 'i', deck.action_mapping('prompt'))
+    ctx.keymap('n', 'a', deck.action_mapping('prompt'))
+    ctx.keymap('n', '@', deck.action_mapping('toggle_select'))
+    ctx.keymap('n', '*', deck.action_mapping('toggle_select_all'))
+    ctx.keymap('n', 'p', deck.action_mapping('toggle_preview_mode'))
+    ctx.keymap('n', 'd', deck.action_mapping('delete'))
+    ctx.keymap('n', '<CR>', deck.action_mapping('default'))
+    ctx.keymap('n', 'o', deck.action_mapping('open'))
+    ctx.keymap('n', 'O', deck.action_mapping('open_keep'))
+    ctx.keymap('n', 's', deck.action_mapping('open_split'))
+    ctx.keymap('n', 'v', deck.action_mapping('open_vsplit'))
+    ctx.keymap('n', 'N', deck.action_mapping('create'))
+    ctx.keymap('n', '<C-u>', deck.action_mapping('scroll_preview_up'))
+    ctx.keymap('n', '<C-d>', deck.action_mapping('scroll_preview_down'))
+
+    -- cmdline-mode mapping.
+    ctx.keymap('c', '<C-y>', function()
+      vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'n', true)
+      vim.schedule(function()
+        ctx.do_action('default')
+      end)
+    end)
+    ctx.keymap('c', '<C-j>', function()
+      ctx.set_cursor(ctx.get_cursor() + 1)
+    end)
+    ctx.keymap('c', '<C-k>', function()
+      ctx.set_cursor(ctx.get_cursor() - 1)
+    end)
+
+    -- If you want to start the filter by default, call ctx.prompt() here
+    ctx.prompt()
+  end
+})
+end)
     ---
     ---NB: This is only significant for dark backgrounds as the light palettes
     ---have the same colour for both values in the switch.

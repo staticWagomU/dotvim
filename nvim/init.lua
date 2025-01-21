@@ -1493,6 +1493,11 @@ later(function()
   add('https://github.com/nvim-telescope/telescope.nvim')
 end)
 
+later(function()
+  add('https://github.com/folke/snacks.nvim')
+  require('snacks').setup()
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

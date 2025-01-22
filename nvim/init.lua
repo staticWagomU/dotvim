@@ -1491,6 +1491,7 @@ end)
 
 later(function()
   add('https://github.com/nvim-telescope/telescope.nvim')
+  require('telescope').setup {}
 end)
 
 later(function()

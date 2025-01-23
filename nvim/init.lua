@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-doc-name, undefined-field
 vim.loader.enable()
 vim.opt.runtimepath:prepend(vim.fs.normalize('~/dotvim/wagomu-box'))
 require('wagomu-box.plugin-manager.mini-deps').setup()
@@ -544,7 +545,6 @@ later(function()
     }),
     experimental = {
       ghost_text = true,
-      ghost_text = true,
     },
   }
 
@@ -628,8 +628,6 @@ later(function()
 
   vim.g.vsnip_filetypes = {
     javascriptreact = { "javascript" },
-    typescriptreact = { "typescript" },
-
     typescriptreact = { "typescript" },
 
   }

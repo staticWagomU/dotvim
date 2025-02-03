@@ -81,13 +81,13 @@ autocmd({ 'FileType' }, {
       { 'l', '<Plug>(gin-action-unstage)', nowait_bufopts },
     })
     nmaps {
-      { 'a',          '<Plug>(gin-action-choice)',     nowait_bufopts },
-      { 'A',          '<Cmd>Gin commit --amend<Cr>',   nowait_bufopts },
-      { 'd',          '<Plug>(gin-action-diff:smart)', nowait_bufopts },
-      { '<Cr>',       '<Plug>(gin-action-edit)zv',     nowait_bufopts },
-      { '<C-g><C-f>', ':<C-u>Gin fetch ',              nosilent_bufopts },
-      { '<C-g><C-m>', ':<C-u>Gin merge ',              nosilent_bufopts },
-      { '<C-g><C-r>', ':<C-u>Gin rebase --autostash',  nosilent_bufopts },
+      { 'a',          '<Plug>(gin-action-choice)',            nowait_bufopts },
+      { 'A',          '<Cmd>Gin commit --amend<Cr>',          nowait_bufopts },
+      { 'd',          '<Plug>(gin-action-diff:smart)',        nowait_bufopts },
+      { '<Cr>',       '<Plug>(gin-action-edit)zv',            nowait_bufopts },
+      { '<C-g><C-f>', ':<C-u>Gin fetch origin ',              nosilent_bufopts },
+      { '<C-g><C-m>', ':<C-u>Gin merge ',                     nosilent_bufopts },
+      { '<C-g><C-r>', ':<C-u>Gin rebase --autostash origin/', nosilent_bufopts },
     }
   end,
 })

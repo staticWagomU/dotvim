@@ -1,4 +1,4 @@
 #!/bin/sh
 rm -rf ~/.local/state/nvim-darkpowered
 rm -rf ~/.local/share/nvim-darkpowered
-rm -rf ~/.cache/nvim-darkpowered/dpp
+rm -rf ~/.cache/nvim-darkpowered

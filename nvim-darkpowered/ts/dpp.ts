@@ -1,25 +1,18 @@
-import { ensure, is } from "https://deno.land/x/unknownutil@v3.16.3/mod.ts";
+import { ensure, is } from "jsr:@core/unknownutil@~4.3.0";
+import { ContextBuilder, Plugin } from "jsr:@shougo/dpp-vim@~4.1.0/types";
 import {
   BaseConfig,
-  ConfigReturn,
-  ContextBuilder,
-  Dpp,
-  Plugin,
-} from "https://deno.land/x/dpp_vim@v0.0.5/types.ts";
-import { Denops } from "https://deno.land/x/dpp_vim@v0.0.5/deps.ts";
+  type ConfigReturn,
+} from "jsr:@shougo/dpp-vim@~4.1.0/config";
+import { Dpp } from "jsr:@shougo/dpp-vim@~4.1.0/dpp";
+import { Denops } from "jsr:@denops/core@~7.0.1";
 
-type Lua = {
-  ftplugins?: Record<string, string>;
-  plugins?: Plugin[];
-};
-
-type LazyMakeStateResult = {
+type Toml = {
   plugins: Plugin[];
-  stateLines: string[];
 };
 
 const isStringArray = is.ArrayOf(is.String);
-// https://github.com/kuuote/dotvim/blob/version5/conf/dpp.ts?plain=1#L27-L32
+//https://github.com/kuuote/dotvim/blob/cce964b162abfe0e74c4932d74697c4b01caf146/conf/dpp.ts?plain=1#L27-L32
 async function glob(denops: Denops, path: string): Promise<string[]> {
   return ensure(
     await denops.call("glob", path, 1, 1),
@@ -34,9 +27,7 @@ export class Config extends BaseConfig {
     basePath: string;
     dpp: Dpp;
   }): Promise<ConfigReturn> {
-    const dotfilesDir = "~/dotvim/nvim/rc";
-		const config_base = await args.denops.call("stdpath", "config");
-    const luaPaths = await glob(args.denops, `${config_base}/lua/plugins/*.lua`);
+    const config_base = await args.denops.call("stdpath", "config");
 
     args.contextBuilder.setGlobal({
       extParams: {
@@ -50,100 +41,64 @@ export class Config extends BaseConfig {
 
     const [context, options] = await args.contextBuilder.get(args.denops);
 
-    const luas: Lua[] = [];
-    for (const luaPath of luaPaths) {
-      const lua = await args.dpp.extAction(
+    const plugins: Plugin[] = [];
+
+    const tomls = await glob(args.denops, `${config_base}/plugins/*.toml`);
+    for (const tomlPath of tomls) {
+      console.log(tomlPath);
+      const toml = await args.dpp.extAction(
         args.denops,
         context,
         options,
-        "lua",
+        "toml",
         "load",
         {
-          path: luaPath,
-          options: {
-            lazy: false,
-          },
+          path: tomlPath,
         },
-      ) as Lua | undefined;
+      ) as {
+        plugins: Plugin[];
+      };
 
-      if (lua) {
-        luas.push(lua);
-      }
+      plugins.push(...toml.plugins);
     }
 
-    const recordPlugins: Record<string, Plugin> = {};
-    const ftplugins: Record<string, string> = {};
-    const hooksFiles: string[] = [];
+    const lazyTomls = await glob(
+      args.denops,
+      `${config_base}/plugins/lazy/*.toml`,
+    );
+    for (const tomlPath of lazyTomls) {
+      const toml = await args.dpp.extAction(
+        args.denops,
+        context,
+        options,
+        "toml",
+        "load",
+        {
+          path: tomlPath,
+          options: {
+            lazy: true,
+          },
+        },
+      ) as Toml;
 
-    luas.forEach((lua) => {
-      for (const plugin of lua.plugins!) {
-        recordPlugins[plugin.name] = plugin;
-      }
+      plugins.push(...toml.plugins);
+    }
 
-      if (lua.ftplugins) {
-        for (const filetype of Object.keys(lua.ftplugins)) {
-          if (ftplugins[filetype]) {
-            ftplugins[filetype] += `\n${lua.ftplugins[filetype]}`;
-          } else {
-            ftplugins[filetype] = lua.ftplugins[filetype];
-          }
-        }
-      }
-    });
-
-       // const localPlugins = await args.dpp.extAction(
-       //   args.denops,
-       //   context,
-       //   options,
-       //   "local",
-       //   "local",
-       //   {
-       //     directory: "~/dotvim/nvim/wagomu",
-       //     options: {
-       //       frozen: true,
-       //       merged: false,
-       //     },
-       //     includes: [
-       //       "ddu-source-keymaps",
-       //       "denops-statusline",
-       //     ],
-       //   },
-       // ) as Plugin[] | undefined;
-       //
-       // if (localPlugins) {
-       //   for (const plugin of localPlugins) {
-       //     if (plugin.name in recordPlugins) {
-       //       recordPlugins[plugin.name] = Object.assign(
-       //         recordPlugins[plugin.name],
-       //         plugin,
-       //       );
-       //     } else {
-       //       recordPlugins[plugin.name] = plugin;
-       //     }
-       //   }
-       // }
-
-    const lazyResult = await args.dpp.extAction(
+    const result = await args.dpp.extAction(
       args.denops,
       context,
       options,
       "lazy",
       "makeState",
       {
-        plugins: Object.values(recordPlugins),
+        plugins,
       },
-    ) as LazyMakeStateResult | undefined;
-    const checkFiles = [
-      await glob(args.denops, `${dotfilesDir}/*.lua`),
-      await glob(args.denops, `${dotfilesDir}/*.ts`),
-    ].flat();
+    ) as {
+      plugins: Plugin[];
+    };
 
     return {
-      checkFiles: checkFiles,
-      ftplugins,
-      hooksFiles,
-      plugins: lazyResult?.plugins ?? [],
-      stateLines: lazyResult?.stateLines ?? [],
+      plugins: result.plugins,
     };
   }
 }

@@ -1,0 +1,26 @@
+[[plugins]]
+repo = 'Shougo/dpp.vim'
+rtp = ''
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-lazy'
+rtp = ''
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-toml'
+hook_add = '''
+" Enable dpp toml syntax.
+if !has('nvim')
+  autocmd MyAutoCmd CursorHold */rc/*.toml call dpp#ext#toml#syntax()
+endif
+'''
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-local'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-installer'
+
+[[plugins]]
+repo = 'Shougo/dpp-protocol-git'
+

@@ -1293,13 +1293,6 @@ later(function()
   end
 end)
 
-later(function()
-  add {
-    source = 'https://github.com/spywhere/detect-language.nvim',
-    depends = { 'https://github.com/nvim-treesitter/nvim-treesitter' },
-  }
-  require('detect-language').setup {}
-end)
 
 -- later(function()
 --   add('https://github.com/ChuufMaster/buffer-vacuum')

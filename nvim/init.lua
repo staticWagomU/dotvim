@@ -418,12 +418,6 @@ later(function()
     },
   }
 
-  if vim.fn.argc() == 0 then
-    vim.defer_fn(function()
-      oil.open(vim.fn.getcwd())
-    end, 150)
-  end
-
   nmaps {
     {
       '<Leader>e',

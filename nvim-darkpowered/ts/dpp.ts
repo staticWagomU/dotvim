@@ -95,10 +95,12 @@ export class Config extends BaseConfig {
       },
     ) as {
       plugins: Plugin[];
+      statelines: string[];
     };
 
     return {
       plugins: result.plugins,
+      stateLines: result.statelines,
     };
   }
 }

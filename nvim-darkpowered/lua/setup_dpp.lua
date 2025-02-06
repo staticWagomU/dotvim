@@ -7,18 +7,19 @@ local _config_path = vim.fn.stdpath('config')
 local config_path = _config_path[1] or _config_path
 
 
-_G.dpp_base = vim.fs.joinpath(cache_path, 'dpp')
+_G.dpp_base = '~/.cache/dpp'
 _G.dpp_ts_path = vim.fs.joinpath(config_path, 'ts', 'dpp.ts')
-local plugins_path = vim.fs.joinpath(dpp_base, 'repos', 'github.com')
+local plugins_path = vim.fn.expand(vim.fs.joinpath(dpp_base, 'repos', 'github.com'))
 local augroup = vim.api.nvim_create_augroup('MyConfig', { clear = true })
 
 local preppendPlugins = {
+  'vim-denops/denops.vim',
   'Shougo/dpp.vim',
   'Shougo/dpp-ext-lazy',
 }
 
 local appendPlugins = {
-  'vim-denops/denops.vim',
+  -- 'vim-denops/denops.vim',
   'Shougo/dpp-ext-installer',
   'Shougo/dpp-protocol-git',
   'Shougo/dpp-ext-toml',
@@ -39,36 +40,43 @@ local function clone(_plugins_path, repos)
 end
 
 function M.setup()
+  vim.print(1)
   if not vim.uv.fs_stat(dpp_base) then
+    vim.print(2)
     vim.fn.mkdir(dpp_base, 'p')
   end
 
+  vim.print(3)
   clone(plugins_path, preppendPlugins)
+  vim.print(4)
   for _, repo in ipairs(preppendPlugins) do
     local repo_path = vim.fs.joinpath(plugins_path, repo)
-    vim.opt.runtimepath:prepend(repo_path)
+    vim.opt.runtimepath:prepend(vim.fn.expand(repo_path))
+    vim.print(5)
   end
+
   local dpp = require('dpp')
-
-
-  if dpp.load_state(dpp_base) then
+  vim.print(6)
+  local hoge = dpp.load_state(vim.fn.expand(dpp_base))
+  vim.print(hoge)
+  if dpp.load_state(vim.fn.expand(dpp_base)) then
+    vim.print(7)
     vim.cmd.echo('"dpp load_state() is done" | redraw')
     clone(plugins_path, appendPlugins)
     for _, repo in ipairs(appendPlugins) do
       local repo_path = vim.fs.joinpath(plugins_path, repo)
       vim.opt.runtimepath:append(repo_path)
     end
-
-    vim.api.nvim_create_autocmd({ 'User' }, {
-      pattern = 'DenopsReady',
-      group = augroup,
-      callback = function()
-        vim.cmd.echo('"denopsready calling dpp make_state()" | redraw')
-        vim.notify("dpp load_state() is failed")
-        dpp.make_state(dpp_base, dpp_ts_path)
-      end
-    })
   end
+
+  vim.api.nvim_create_autocmd({ 'User' }, {
+    pattern = 'DenopsReady',
+    group = augroup,
+    callback = function()
+      vim.cmd.echo('"dpp load_state() is failed" | redraw')
+      dpp.make_state(dpp_base, dpp_ts_path)
+    end
+  })
 
   vim.api.nvim_create_autocmd({ 'User' }, {
     pattern = 'Dpp:makeStatePost',

@@ -127,6 +127,9 @@ abbrev {
 
 abbrev {
   { prepose = 'Gin commit', from = 'a',  to = '--amend' },
+  { prepose = 'Gin commit', from = 'n',  to = '--no-edit' },
+  { prepose = 'Gin commit --no-edit', from = 'a',  to = '--amend' },
+  { prepose = 'Gin commit --amend', from = 'n',  to = '--no-edit' },
   { prepose = 'Gin rebase', from = 'a',  to = '--autostash origin/main' },
   { prepose = 'Gin rebase', from = 'c',  to = '--continue' },
   { prepose = 'Gin rebase', from = 's',  to = '--skip' },

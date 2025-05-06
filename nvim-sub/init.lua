@@ -426,20 +426,7 @@ later(function()
 			end
 		})
 	end
-
-	-- LS関連のマッピングを設定
-	on_attach(function(_)
-		vim.keymap.set('n', 'gr', doSagaAction('rename'), bufopts)
-		vim.keymap.set('n', 'gd', doSagaAction('peek_definition'), bufopts)
-		vim.keymap.set('n', 'gD', doSagaAction('goto_definition'), bufopts)
-		vim.keymap.set('n', 'gt', doSagaAction('peek_type_definition'), bufopts)
-		vim.keymap.set('n', 'gT', doSagaAction('goto_type_definition'), bufopts)
-		vim.keymap.set('n', 'g<Space>', doSagaAction('code_action'), bufopts)
-		vim.keymap.set('n', 'gl', doSagaAction('show_line_diagnostics'), bufopts)
-		vim.keymap.set('n', 'gj', doSagaAction('diagnostics_jump_next'), bufopts)
-		vim.keymap.set('n', 'gk', doSagaAction('diagnostics_jump_prev'), bufopts)
-		vim.keymap.set('n', 'K', doSagaAction('hover_doc'), bufopts)
-	end)
+end)
 
 end)
 

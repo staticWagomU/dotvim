@@ -453,7 +453,7 @@ later(function()
 end)
 
 
-later(function()
+now(function()
 	add('https://github.com/lewis6991/gitsigns.nvim')
 
 	require('wagomu-box.plugin-config.gitsigns')

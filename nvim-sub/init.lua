@@ -39,7 +39,6 @@ vim.opt.listchars = {
 	precedes = '«',
 }
 
-vim.opt.runtimepath:prepend(vim.fs.normalize('~/dotvim/wagomu-box'))
 
 -- pcallを挟むことでエラーが発生しても続行できる
 vim.treesitter.start = (function(wrapped)
@@ -63,15 +62,19 @@ if not vim.uv.fs_stat(mini_path) then
 	vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
 require('mini.deps').setup { path = { package = path_package } }
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
+now(function ()
+	add('https://github.com/staticWagomU/wagomu-box.nvim')
+end)
 
 
 local utils = require('wagomu-box.utils')
-local maps, nmaps, omaps, vmaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps
-local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
+local maps, nmaps, omaps, vmaps = utils.maps, utils.nmaps, utils.omaps, utils.vmaps
+local nmap, map, xmap, imap = utils.nmap, utils.map, utils.xmap, utils.imap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local opts = { noremap = true, silent = true }
 local bufopts = { buffer = true, noremap = true, silent = true }
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 local autocmd = vim.api.nvim_create_autocmd
 local on_attach = function(on_attach)
 	vim.api.nvim_create_autocmd("LspAttach", {

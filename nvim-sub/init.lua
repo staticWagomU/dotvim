@@ -66,6 +66,8 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 now(function ()
 	add('https://github.com/staticWagomU/wagomu-box.nvim')
+	require('wagomu-box.keymaps').apply()
+	require('wagomu-box.commands')
 end)
 
 

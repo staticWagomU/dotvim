@@ -428,31 +428,32 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
 end)
 
 later(function()
-	add {
-		source = 'https://github.com/nvimdev/lspsaga.nvim',
-		depends = { 'nvim-lspconfig' },
-	}
-
-	require('lspsaga').setup {
-		ui = {
-			code_action = '🚕',
-		},
-		lightbulb = {
-			enable = false,
-		},
-		symbol_in_winbar = {
-			enable = false,
-		},
-		code_action = {
-			show_server_name = true,
-			extend_gitsigns = true,
-		},
-	}
-
-	---@param action string
-	---@return string
-	local doSagaAction = function(action)
-		return string.format('<Cmd>Lspsaga %s<Cr>', action)
+	add('https://github.com/dnlhc/glance.nvim')
+	on_attach(function(client)
+		if client:supports_method('textDocument/implementation') then
+			nmap('gD', vim.lsp.buf.implementation, bufopts)
+		end
+		if client:supports_method('textDocument/definition') then
+			nmap('gd', vim.lsp.buf.definition, bufopts)
+		end
+		if client:supports_method('textDocument/typeDefinition*') then
+			nmap('gt', vim.lsp.buf.type_definition, bufopts)
+		end
+		if client:supports_method('textDocument/references') then
+		end
+		if client:supports_method('textDocument/rename') then
+			nmap('gr', vim.lsp.buf.rename, bufopts)
+		end
+		if client:supports_method('textDocument/codeAction') then
+			nmap('<Leader>k', vim.lsp.buf.code_action, bufopts)
+		end
+		if client:supports_method('textDocument/signatureHelp') then
+			vim.api.nvim_create_autocmd('CursorHoldI', {
+			pattern = '*',
+			callback = function()
+				vim.lsp.buf.signature_help({ focus = false, silent = true })
+			end
+		})
 	end
 
 	-- LS関連のマッピングを設定

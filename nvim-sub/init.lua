@@ -140,6 +140,11 @@ later(function()
 	require('mini.extra').setup()
 end)
 
+now(function()
+	-- nvim_web_deviconsの代わり
+	require('mini.icons').setup()
+	MiniIcons.mock_nvim_web_devicons()
+end)
 
 now(function()
 	-- ファイラー
@@ -167,29 +172,24 @@ end)
 
 
 later(function()
-	-- git関連のコマンド等を追加してくれる（全然使いこなせてない）
-	require('mini.git').setup()
-end)
-
-now(function()
-	-- nvim_web_deviconsの代わり
-	require('mini.icons').setup()
-	MiniIcons.mock_nvim_web_devicons()
-end)
-
-later(function()
 	-- 縦移動が見やすくなる
 	require('mini.indentscope').setup()
 end)
 
 later(function()
-	-- 通知
-	require('mini.notify').setup()
-end)
-
-later(function()
 	require('mini.pairs').setup()
 end)
+
+
+later(function()
+  local gen_ai_spec = require('mini.extra').gen_ai_spec
+  require('mini.ai').setup({
+    custom_textobjects = {
+      B = gen_ai_spec.buffer(),
+    },
+  })
+end)
+
 
 later(function()
 	-- telescope的なやつ

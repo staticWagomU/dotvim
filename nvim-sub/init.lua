@@ -101,6 +101,13 @@ now(function()
 	}
 end)
 
+now(function()
+	-- 通知
+	require('mini.notify').setup()
+	vim.notify = require('mini.notify').notify
+end)
+
+
 later(function()
 	-- '[',']'起点のマッピングを追加
 	require('mini.bracketed').setup()

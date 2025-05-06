@@ -147,6 +147,14 @@ now(function()
 end)
 
 now(function()
+  require('mini.misc').setup()
+
+  MiniMisc.setup_restore_cursor()
+  MiniMisc.setup_auto_root()
+end)
+
+
+now(function()
 	-- ファイラー
 	require('mini.files').setup { window = { preview = true } }
 	vim.keymap.set('n', '<Leader>e', MiniFiles.open, opts)

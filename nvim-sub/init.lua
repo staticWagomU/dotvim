@@ -120,53 +120,7 @@ end)
 
 now(function()
 	-- 補完
-	-- require('mini.completion').setup()
-	local function build_blink(params)
-		vim.notify('Building blink.cmp', vim.log.levels.INFO)
-		local obj = vim.system({ 'cargo', 'build', '--release' }, { cwd = params.path }):wait()
-		if obj.code == 0 then
-			vim.notify('Building blink.cmp done', vim.log.levels.INFO)
-		else
-			vim.notify('Building blink.cmp failed', vim.log.levels.ERROR)
-		end
-	end
-	add({
-		source = 'https://github.com/Saghen/blink.cmp',
-		hooks = {
-			post_checkout = build_blink,
-			post_update = build_blink,
-		},
-	})
-	require('blink.cmp').setup {
-		keymap = {
-			preset = "enter",
-			["<S-Tab>"] = { "select_prev", "fallback" },
-			["<Tab>"] = { "select_next", "fallback" },
-		},
-		completion = {
-			list = {
-				selection = 'manual',
-			},
-			menu = {
-				draw = {
-					components = {
-						kind_icon = {
-							ellipsis = false,
-							text = function(ctx)
-								local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
-								return kind_icon
-							end,
-							-- Optionally, you may also use the highlights from mini.icons
-							highlight = function(ctx)
-								local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-								return hl
-							end,
-						}
-					}
-				}
-			}
-		},
-	}
+	require('mini.completion').setup()
 end)
 
 later(function()

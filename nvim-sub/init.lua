@@ -227,6 +227,8 @@ end)
 later(function()
 	-- telescope的なやつ
 	require('mini.pick').setup()
+	vim.ui.select = MiniPick.ui_select
+
 	vim.keymap.set('n', [[\e]], '<Cmd>Pick explorer<Cr>', opts)
 	vim.keymap.set('n', [[\b]], '<Cmd>Pick buffers<Cr>', opts)
 	vim.keymap.set('n', [[\h]], '<Cmd>Pick help<Cr>', opts)

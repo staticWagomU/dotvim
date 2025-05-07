@@ -574,6 +574,9 @@ now(function()
 	})
 	map({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)')
 	nmap('<C-j>', 'i<Plug>(skkeleton-toggle)')
+
+	add('https://github.com/delphinus/skkeleton_indicator.nvim')
+	require("skkeleton_indicator").setup {}
 end)
 
 

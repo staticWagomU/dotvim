@@ -605,19 +605,32 @@ now(function()
 	}
 end)
 
-vim.api.nvim_create_user_command("SwapClean", function()
-	local dirs = vim.opt.directory:get()
-	for _, dir in pairs(dirs) do
-		for name in vim.iter(vim.fs.dir(dir, {depth= 1})):filter(function(_, type)
-			return type == "file"
-		end) do
-		local file = vim.fs.joinpath(dir, name)
-		vim.print("deleting " .. file)
-		vim.fs.rm(file)
-	end
-end
-end, {})
-
+later(function()
+	add({ source = 'https://github.com/stevearc/quicker.nvim' })
+	local quicker = require('quicker')
+	vim.keymap.set('n', 'mq', function()
+		quicker.toggle()
+		quicker.refresh()
+	end, { desc = 'Toggle quickfix' })
+	quicker.setup({
+		keys = {
+			{
+				'>',
+				function()
+					require('quicker').expand({ before = 2, after = 2, add_to_existing = true })
+				end,
+				desc = 'Expand quickfix context',
+			},
+			{
+				'<',
+				function()
+					require('quicker').collapse()
+				end,
+				desc = 'Collapse quickfix context',
+			},
+		},
+	})
+end)
 
 vim.cmd[[
 augroup my-glyph-palette

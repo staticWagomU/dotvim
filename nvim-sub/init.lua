@@ -124,7 +124,28 @@ end)
 
 now(function()
 	-- 補完
-	require('mini.completion').setup()
+	local keywords_keys = vim.api.nvim_replace_termcodes('<C-x><C-k>', true, true, true)
+	local omnifunc_keys = vim.api.nvim_replace_termcodes('<C-x><C-o>', true, true, true)
+	require('mini.fuzzy').setup()
+	require('mini.completion').setup({
+		fallback_action = function()
+			---@diagnostic disable: param-type-mismatch
+			if vim.api.nvim_get_option_value('omnifunc', {}) == '' then
+				vim.api.nvim_feedkeys(keywords_keys, 'n', false)
+			else
+				vim.api.nvim_feedkeys(omnifunc_keys, 'n', false)
+			end
+		end,
+		---@diagnostic enable: param-type-mismatch
+		lsp_completion = {
+			process_items = MiniFuzzy.process_lsp_items,
+		},
+	})
+	require('mini.snippets').setup({
+		mappings = {
+			jump_prev = '<c-k>',
+		},
+	})
 end)
 
 later(function()

@@ -579,6 +579,14 @@ now(function()
 	require("skkeleton_indicator").setup {}
 end)
 
+later(function()
+	add({
+		source = 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring',
+		depends = { 'nvim-treesitter/nvim-treesitter' },
+	})
+	require('ts_context_commentstring').setup({})
+end)
+
 
 now(function()
 	vim.opt.background = 'light'

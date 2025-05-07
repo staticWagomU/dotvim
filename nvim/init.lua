@@ -1484,6 +1484,10 @@ later(function()
   require('snacks').setup()
 end)
 
+later(function()
+  add('https://github.com/joshuavial/aider.nvim')
+end)
+
 now(function()
   -- add('https://github.com/sainnhe/everforest')
   add('https://github.com/neanias/everforest-nvim')

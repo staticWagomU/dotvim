@@ -104,7 +104,7 @@ end)
 now(function()
 	-- 通知
 	require('mini.notify').setup()
-	vim.notify = require('mini.notify').notify
+	-- vim.notify = require('mini.notify').notify
 
 	vim.api.nvim_create_user_command('NotifyHistory', function()
 		MiniNotify.show_history()

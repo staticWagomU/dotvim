@@ -9,6 +9,7 @@ del %LOCALAPPDATA%\nvim-tmp
 del %LOCALAPPDATA%\nvim-writing
 del %LOCALAPPDATA%\nvim-wagomu
 del %LOCALAPPDATA%\nvim-vscode
+del %LOCALAPPDATA%\nvim-lazyvim
 mklink /D %LOCALAPPDATA%\nvim %USERPROFILE%\dotvim\nvim
 mklink /D %LOCALAPPDATA%\nvim-sub %USERPROFILE%\dotvim\nvim-sub
 mklink /D %LOCALAPPDATA%\nvim-mini %USERPROFILE%\dotvim\nvim-mini
@@ -16,6 +17,7 @@ mklink /D %LOCALAPPDATA%\nvim-tmp %USERPROFILE%\dotvim\nvim-tmp
 mklink /D %LOCALAPPDATA%\nvim-writing %USERPROFILE%\dotvim\nvim-writing
 mklink /D %LOCALAPPDATA%\nvim-wagomu %USERPROFILE%\dotvim\nvim-wagomu
 mklink /D %LOCALAPPDATA%\nvim-vscode %USERPROFILE%\dotvim\nvim-vscode
+mklink /D %LOCALAPPDATA%\nvim-lazyvim %USERPROFILE%\dotvim\nvim-lazyvim
 
 REM vimのシンボリックリンクを作成
 REM dir /B /A:Dでディレクトリのシンボリックリンクを作成する

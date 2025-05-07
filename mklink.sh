@@ -8,4 +8,6 @@ ln -s ~/dotvim/nvim-writing ~/.config/nvim-writing
 ln -s ~/dotvim/nvim-tmp ~/.config/nvim-tmp
 ln -s ~/dotvim/nvim-wagomu ~/.config/nvim-wagomu
 ln -s ~/dotvim/nvim-vscode ~/.config/nvim-vscode
+ln -s ~/dotvim/nvim-lazyvim ~/.config/nvim-lazyvim
+ln -s ~/dotvim/nvim-mini-snacks ~/.config/nvim-mini-snacks
 ln -s ~/dotvim/vim/vimrc ~/.vim/vimrc

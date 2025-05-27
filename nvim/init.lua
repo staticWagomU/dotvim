@@ -1405,12 +1405,12 @@ later(function()
   add('https://github.com/nvimtools/none-ls.nvim')
   add('https://github.com/nvimtools/none-ls-extras.nvim')
 
-  local null_ls = require('null-ls')
-  null_ls.setup {
-    sources = {
-      require('none-ls.diagnostics.eslint'),
-    }
-  }
+  -- local null_ls = require('null-ls')
+  -- null_ls.setup {
+  --   sources = {
+  --     require('none-ls.diagnostics.eslint'),
+  --   }
+  -- }
 end)
 
 now(function()

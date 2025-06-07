@@ -424,12 +424,14 @@ later(function()
       function()
         oil.open(vim.fn.getcwd())
       end,
+      { desc = 'ルートを起点にOilを開く' }
     },
     {
       '<Leader>E',
       function()
         oil.open(vim.fn.expand('%:p:h'))
       end,
+      { desc = '今開いているファイルのディレクトリを起点にOilを開く' }
     },
   }
 
@@ -1180,7 +1182,7 @@ later(function()
     },
     num_behavior = 'prefix',
   }
-  nmap('<Leader>y', '<Cmd>YankBank<Cr>')
+  nmap('<Leader>y', '<Cmd>YankBank<Cr>', { desc = 'YankBankを開くよ' })
 end)
 
 later(function()
@@ -1486,6 +1488,11 @@ end)
 
 later(function()
   add('https://github.com/joshuavial/aider.nvim')
+end)
+
+later(function()
+  add('https://github.com/folke/which-key.nvim')
+  require('which-key').setup({})
 end)
 
 now(function()

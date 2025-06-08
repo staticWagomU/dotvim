@@ -535,6 +535,7 @@ later(function()
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       -- { name = 'vsnip' },
+      { name = 'buffer' },
       { name = 'copilot' },
     }, {
       { name = 'buffer' },

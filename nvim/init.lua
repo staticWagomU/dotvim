@@ -1129,39 +1129,6 @@ now(function()
   }
 end)
 
-later(function()
-  -- ref: https://github.com/kawarimidoll/dotfiles/blob/d72bdde031248bf5157ef8a4fc1c15aeed0548b3/.config/nvim/minideps.lua#L422C3-L453C25
-  add {
-    source = 'CopilotC-Nvim/CopilotChat.nvim',
-    depends = { 'nvim-lua/plenary.nvim' },
-  }
-  local copilotChat = require('CopilotChat')
-  copilotChat.setup {
-    prompts = {
-      Explain = { mapping = '<Plug>(copilotchat-explain)' },
-      Tests = { mapping = '<Plug>(copilotchat-tests)' },
-      Fix = { mapping = '<Plug>(copilotchat-fix)' },
-      Optimize = { mapping = '<Plug>(copilotchat-optimize)' },
-      Docs = { mapping = '<Plug>(copilotchat-docs)' },
-      FixDiagnostic = { mapping = '<Plug>(copilotchat-fix-diagnostic)' },
-      Commit = { mapping = '<Plug>(copilotchat-commit)' },
-      CommitStaged = { mapping = '<Plug>(copilotchat-commit-staged)' },
-    },
-  }
-  for _, k in ipairs(vim.tbl_keys(copilotChat.config.prompts)) do
-    local name = 'copilotchat' .. string.gsub(k, '[A-Z]', '-%0'):lower()
-    vim.keymap.set('n', '<Plug>(' .. name .. ')', ':CopilotChat' .. k .. '<Cr>', { desc = '☆ ' .. name })
-    table.insert(_G.favoriteList, 'CopilotChat' .. k)
-  end
-
-  vim.api.nvim_create_user_command('Chat', function()
-    vim.ui.input({ prompt = 'CopilotChat: ' }, function(input)
-      if input ~= '' then
-        copilotChat.ask(input)
-      end
-    end)
-  end, { range = true })
-end)
 
 later(function()
   add('https://github.com/lewis6991/foldsigns.nvim')

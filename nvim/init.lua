@@ -1324,16 +1324,6 @@ later(function()
 end)
 
 
-now(function()
-  add({
-    source = 'https://github.com/Tronikelis/xylene.nvim',
-    depends = {
-      'https://github.com/stevearc/oil.nvim'
-    }
-  })
-  require('xylene').setup()
-end)
-
 later(function()
   -- かっこいいカラーピッカー
   add('https://github.com/NvChad/volt')

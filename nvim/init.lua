@@ -4,11 +4,6 @@ require('wagomu.mini-deps')
 
 vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
 
--- if utils.is_windows then
---   vim.opt.shell = 'cmd.exe'
---   vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
--- end
-
 -- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 vim.treesitter.start = (function(wrapped)
   return function(bufnr, lang)
@@ -48,6 +43,10 @@ now(function()
 	utils = require('wagomu-box.utils')
 end)
 
+if utils.is_windows then
+  vim.opt.shell = 'cmd.exe'
+  vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
+end
 
 --@diagnostic disable-next-line: unused-local
 local maps, nmaps, omaps, vmaps, imaps, smaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps,

@@ -8,7 +8,6 @@ local utils = require('wagomu-box.utils')
 local enabled_octo = false
 
 vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
-vim.env.OPENAI_API_KEY = require('wagomu-box.local_vimrc').OPENAI_AUTHKEY
 
 if utils.is_windows then
   vim.opt.shell = 'cmd.exe'

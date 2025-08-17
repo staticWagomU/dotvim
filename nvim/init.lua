@@ -55,24 +55,6 @@ local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, Wag
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
 
-vim.opt.cmdheight = 0
-vim.opt.fillchars = {
-  stl = '─',
-  stlnc = '─',
-  diff = '∙',
-  eob = ' ',
-  fold = '·',
-  horiz = '─',
-  horizup = '┴',
-  horizdown = '┬',
-  vert = '│',
-  vertleft = '┤',
-  vertright = '├',
-  verthoriz = '┼',
-}
-vim.opt.statusline = '─'
-vim.opt.laststatus = 0
-vim.opt.foldtext = [[v:lua.vim.treesitter.foldtext()]]
 
 --[=[
 "-------------------------------------------------------------------------------------------------+

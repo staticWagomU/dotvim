@@ -94,13 +94,15 @@ now(function()
   add('https://github.com/vim-denops/denops.vim')
 end)
 
---
--- now(function()
---   add('https://github.com/vigoux/notifier.nvim')
---   require('notifier').setup {}
--- end)
---
---
+
+now(function()
+  add('https://github.com/vigoux/notifier.nvim')
+  require('notifier').setup {
+    component_name_recall = true,
+  }
+end)
+
+
 -- now(function()
 --   add('https://github.com/nvim-tree/nvim-web-devicons')
 --   require('nvim-web-devicons').setup {

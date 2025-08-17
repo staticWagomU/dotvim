@@ -85,15 +85,15 @@ table.insert(_G.favoriteList, 'YankBank')
 local bufopts = { noremap = true, buffer = true }
 ---@diagnostic disable-next-line: unused-local
 local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
---
--- -- =========================================
--- -- | はじめにいるプラグインたち
--- -- =========================================
---
--- now(function()
---   add('https://github.com/vim-denops/denops.vim')
--- end)
---
+
+-- =========================================
+-- | はじめにいるプラグインたち
+-- =========================================
+
+now(function()
+  add('https://github.com/vim-denops/denops.vim')
+end)
+
 --
 -- now(function()
 --   add('https://github.com/vigoux/notifier.nvim')

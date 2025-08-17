@@ -74,18 +74,6 @@ local MyAuGroup = WagomuBox.MyAuGroup
 "-------------------------------------------------------------------------------------------------+
 -- ]=]
 
--- ref: https://zenn.dev/vim_jp/articles/2024-10-07-vim-insert-uppercase
-imap(
-  "<C-l>",
-  function()
-    local line = vim.fn.getline(".")
-    local col = vim.fn.getpos(".")[3]
-    local substring = line:sub(1, col - 1)
-    local result = vim.fn.matchstr(substring, [[\v<(\k(<)@!)*$]])
-    return "<C-w>" .. result:upper()
-  end,
-  { expr = true, desc = "入力文字列を大文字にする" }
-)
 
 ---@diagnostic disable-next-line: unused-local
 local abbrev = utils.make_abbrev

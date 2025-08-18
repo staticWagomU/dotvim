@@ -102,25 +102,12 @@ now(function()
   }
 end)
 
+now(function()
+	add('https://github.com/echasnovski/mini.icons')
+	require('mini.icons').setup()
+end)
 
--- now(function()
---   add('https://github.com/nvim-tree/nvim-web-devicons')
---   require('nvim-web-devicons').setup {
---     override = {
---       astro = {
---         icon = '󰑣',
---         color = '#FFD700',
---         name = 'Astro',
---       },
---       ts = {
---         icon = '󰛦',
---         color = '#3178C6',
---         name = 'TypeScript',
---       },
---     },
---   }
--- end)
---
+
 -- -- now(function()
 -- --   add('https://github.com/zbirenbaum/copilot.lua')
 -- --   require('copilot').setup {

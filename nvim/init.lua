@@ -588,188 +588,153 @@ end)
 --   map({ 'n', 'v' }, '<Leader>mf', function() require('conform').format({ lsp_fallback = true }) end)
 -- end)
 --
--- -- =========================================
--- -- | LSP関連
--- -- =========================================
--- later(function()
---   add('https://github.com/artemave/workspace-diagnostics.nvim')
---   add('https://github.com/williamboman/mason.nvim')
---   add {
---     source = 'https://github.com/williamboman/mason-lspconfig.nvim',
---     depends = { 'williamboman/mason.nvim' },
---   }
---   add {
---     source = 'https://github.com/neovim/nvim-lspconfig',
---     depends = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
---   }
---   add {
---     source = 'https://github.com/kevinhwang91/nvim-ufo',
---     depends = { 'kevinhwang91/promise-async' },
---   }
---
---   add('https://github.com/themaxmarchuk/tailwindcss-colors.nvim')
---   require('tailwindcss-colors').setup {}
---
---   require('mason').setup()
---   require('lspconfig')
---   local capabilities = vim.tbl_deep_extend(
---     'force',
---     vim.lsp.protocol.make_client_capabilities(),
---     require('cmp_nvim_lsp').default_capabilities()
---   )
---   capabilities.textDocument.foldingRange = {
---     dynamicRegistration = false,
---     lineFoldingOnly = true,
---   }
---   vim.lsp.enable('lua_ls')
---
---   require('mason-lspconfig').setup {}
---     -- ensure_installed = {
---     -- },
---   -- }
---
---   local schemas = require('wagomu-box.plugin-config.schema-catalog').schemas
---   local lsp_names = {
---     'astro',
---     'biome',
---     'cssls',
---     'denols',
---     'docker_compose_language_service',
---     'dockerls',
---     'emmet_ls',
---     'gopls',
---     'jsonls',
---     'lua_ls',
---     'rust_analyzer',
---     'svelte',
---     'tailwindcss',
---     'tinymist',
---     -- 'ts_ls',
---     'unocss',
---     'vue_ls',
---     'vtsls',
---     'zls',
---   }
---
---   vim.lsp.enable(lsp_names)
---   --   ['jsonls'] = function()
---   --     lspconfig['jsonls'].setup {
---   --       filetypes = { 'json', 'jsonc' },
---   --       extra_filetypes = { 'jsonc', 'json' },
---   --       settings = {
---   --         json = {
---   --           schemas = schemas,
---   --         },
---   --       },
---   --     }
---   --   end,
---   --   ['tailwindcss'] = function()
---   --     lspconfig['tailwindcss'].setup {
---   --       settings = {
---   --         tailwindCSS = {
---   --           experimental = {
---   --             classRegex = {
---   --               "twc\\.[^`]+`([^`]*)`",
---   --               "twc\\(.*?\\).*?`([^`]*)",
---   --               { "twc\\.[^`]+\\(([^)]*)\\)",     "(?:'|\"|`)([^']*)(?:'|\"|`)" },
---   --               { "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
---   --             },
---   --           },
---   --         },
---   --       },
---   --       capabilities = capabilities,
---   --       root_dir = lspconfig.util.root_pattern(
---   --         'tailwind.config.js',
---   --         'tailwind.config.cjs',
---   --         'tailwind.config.mjs',
---   --         'tailwind.config.ts'
---   --       ),
---   --       on_attach = function(_, bufnr)
---   --         require('tailwindcss-colors').buf_attach(bufnr)
---   --       end
---   --     }
---   --   end,
---   --   ['emmet_ls'] = function()
---   --     lspconfig['emmet_ls'].setup {
---   --       capabilities = capabilities,
---   --       extra_filetype = {
---   --         'astro',
---   --         'css',
---   --         'html',
---   --         'htmldjango',
---   --         'javascript.jsx',
---   --         'javascriptreact',
---   --         'svelte',
---   --         'typescript.tsx',
---   --         'typescriptreact',
---   --         'unocss',
---   --         'vue',
---   --       },
---   --     }
---   --   end,
---   -- }
---
---
---   utils.on_attach(function(_, _)
---     require('ufo').setup()
---   end)
---
---   nmaps {
---     { 'gf', vim.lsp.buf.format },
---   }
--- end)
---
--- later(function()
---   add {
---     source = 'https://github.com/nvimdev/lspsaga.nvim',
---     depends = { 'nvim-lspconfig' },
---   }
---   require('lspsaga').setup {
---     ui = {
---       code_action = '🚕',
---     },
---     lightbulb = {
---       enable = false,
---     },
---     symbol_in_winbar = {
---       enable = false,
---     },
---     code_action = {
---       show_server_name = true,
---       extend_gitsigns = true,
---     },
---   }
---
---   ---@param action string
---   ---@return string
---   local doSagaAction = function(action)
---     return string.format('<Cmd>Lspsaga %s<Cr>', action)
---   end
---
---   utils.on_attach(function(_, _)
---     nmaps {
---       { 'gr',       doSagaAction('rename') },
---       { 'gd',       doSagaAction('peek_definition') },
---       { 'gD',       doSagaAction('goto_definition') },
---       { 'gt',       doSagaAction('peek_type_definition') },
---       { 'gT',       doSagaAction('goto_type_definition') },
---       { 'g<Space>', doSagaAction('code_action') },
---       { 'gl',       doSagaAction('show_line_diagnostics') },
---       { ']]',       doSagaAction('diagnostic_jump_next') },
---       { '[[',       doSagaAction('diagnostic_jump_prev') },
---       { 'K',        doSagaAction('hover_doc') },
---     }
---   end)
--- end)
---
--- later(function()
---   add {
---     source = 'https://github.com/folke/trouble.nvim',
---     depends = { 'nvim-tree/nvim-web-devicons' },
---   }
---   require('trouble').setup {}
--- end)
---
+-- =========================================
+-- | LSP関連
+-- =========================================
+later(function()
+  add('https://github.com/artemave/workspace-diagnostics.nvim')
+  add('https://github.com/williamboman/mason.nvim')
+  add {
+    source = 'https://github.com/williamboman/mason-lspconfig.nvim',
+    depends = { 'williamboman/mason.nvim' },
+  }
+  add {
+    source = 'https://github.com/neovim/nvim-lspconfig',
+    depends = { 'williamboman/mason-lspconfig.nvim' },
+  }
+  add {
+    source = 'https://github.com/kevinhwang91/nvim-ufo',
+    depends = { 'kevinhwang91/promise-async' },
+  }
+
+  add('https://github.com/themaxmarchuk/tailwindcss-colors.nvim')
+  require('tailwindcss-colors').setup {}
+
+  require('mason').setup()
+  require('mason-lspconfig').setup({
+		ensure_installed = ensure_installed
+	})
+  local lspconfig = require('lspconfig')
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- local capabilities = vim.tbl_deep_extend(
+  --   'force',
+  --   vim.lsp.protocol.make_client_capabilities(),
+  --   require('cmp_nvim_lsp').default_capabilities()
+  -- )
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
+
+  local lsp_names = {
+    'astro',
+    'biome',
+    'cssls',
+    'denols',
+    'docker_compose_language_service',
+    'dockerls',
+    'emmet_ls',
+    'gopls',
+    'jsonls',
+    'lua_ls',
+    'rust_analyzer',
+    'svelte',
+    'tailwindcss',
+    'tinymist',
+    -- 'ts_ls',
+    'unocss',
+    'vue_ls',
+    'vtsls',
+    'zls',
+  }
+vim.lsp.config('tailwindcss', {
+			settings = {
+				tailwindCSS = {
+					experimental = {
+						classRegex = {
+							"twc\\.[^`]+`([^`]*)`",
+							"twc\\(.*?\\).*?`([^`]*)",
+							{ "twc\\.[^`]+\\(([^)]*)\\)",     "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+							{ "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+						},
+					},
+				},
+			},
+			capabilities = capabilities,
+			root_dir = lspconfig.util.root_pattern(
+				'tailwind.config.js',
+				'tailwind.config.cjs',
+				'tailwind.config.mjs',
+				'tailwind.config.ts'
+			),
+			on_attach = function(_, bufnr)
+				require('tailwindcss-colors').buf_attach(bufnr)
+			end
+})
+
+  vim.lsp.enable(lsp_names)
+
+  utils.on_attach(function(_, _)
+    require('ufo').setup()
+  end)
+
+  nmaps {
+    { 'gf', vim.lsp.buf.format },
+  }
+end)
+
+later(function()
+  add {
+    source = 'https://github.com/nvimdev/lspsaga.nvim',
+    depends = { 'nvim-lspconfig' },
+  }
+  require('lspsaga').setup {
+    ui = {
+      code_action = '🚕',
+    },
+    lightbulb = {
+      enable = false,
+    },
+    symbol_in_winbar = {
+      enable = false,
+    },
+    code_action = {
+      show_server_name = true,
+      extend_gitsigns = true,
+    },
+  }
+
+  ---@param action string
+  ---@return string
+  local doSagaAction = function(action)
+    return string.format('<Cmd>Lspsaga %s<Cr>', action)
+  end
+
+  utils.on_attach(function(_, _)
+    nmaps {
+      { 'gr',       doSagaAction('rename') },
+      { 'gd',       doSagaAction('peek_definition') },
+      { 'gD',       doSagaAction('goto_definition') },
+      { 'gt',       doSagaAction('peek_type_definition') },
+      { 'gT',       doSagaAction('goto_type_definition') },
+      { 'g<Space>', doSagaAction('code_action') },
+      { 'gl',       doSagaAction('show_line_diagnostics') },
+      { ']]',       doSagaAction('diagnostic_jump_next') },
+      { '[[',       doSagaAction('diagnostic_jump_prev') },
+      { 'K',        doSagaAction('hover_doc') },
+    }
+  end)
+end)
+
+later(function()
+  add {
+    source = 'https://github.com/folke/trouble.nvim',
+    depends = { 'nvim-tree/nvim-web-devicons' },
+  }
+  require('trouble').setup {}
+end)
+
 -- -- =========================================
 -- -- | mini family
 -- -- =========================================

@@ -103,8 +103,9 @@ now(function()
 end)
 
 now(function()
-	add('https://github.com/echasnovski/mini.icons')
-	require('mini.icons').setup()
+  add('https://github.com/echasnovski/mini.icons')
+  require('mini.icons').setup()
+  MiniIcons.mock_nvim_web_devicons()
 end)
 
 now(function()
@@ -113,35 +114,64 @@ now(function()
 
   MiniMisc.setup_restore_cursor()
 end)
--- --   require('copilot').setup {
--- --     suggestion = {
--- --       auto_trigger = true,
--- --       keymap = {
--- --         accept = '<C-g><C-g>',
--- --         dismiss = '<C-e>',
--- --       },
--- --     },
--- --   }
--- -- end)
---
--- now(function()
---   add('https://github.com/MunifTanjim/nui.nvim')
--- end)
---
--- -- =========================================
--- -- | Treesitter関連
--- -- =========================================
--- later(function()
---   -- TODO: mainに移行する
---   -- filetype毎に関数たたかないとダメらしい
---   add({
---     source = 'https://github.com/nvim-treesitter/nvim-treesitter',
---     hooks = {
---       post_checkout = function()
---         vim.cmd.TSUpdate('all')
---       end
---     }
---   })
+
+
+-- =========================================
+-- | Treesitter関連
+-- =========================================
+later(function()
+  add({
+    source = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    hooks = {
+      post_checkout = function()
+        vim.cmd.TSUpdate('all')
+      end
+    }
+  })
+  require'nvim-treesitter'.setup {
+    install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
+  }
+
+	local install_list = {
+		'astro',
+		'css',
+		'go',
+		'gomod',
+		'gosum',
+		'html',
+		'lua',
+		'markdown',
+		'markdown_inline',
+		'rust',
+		'toml',
+		'typescript',
+	}
+--  vim.api.nvim_create_autocmd('FileType', {
+--    group = WagomuBox.MyAuGroup,
+--    callback = function(event)
+--      local ok, nvim_treesitter = pcall(require, 'nvim-treesitter')
+--      if not ok then return end
+--      local ft = vim.bo[event.buf].ft
+--      local lang = vim.treesitter.language.get_lang(ft)
+--      nvim_treesitter.install({ lang }):await(function(err)
+--        if err then
+--          vim.notify('Treesitter install error for ft: ' .. ft .. ' err: ' .. err)
+--          return
+--        end
+--        pcall(vim.treesitter.start, event.buf)
+--        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+--        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+--      end)
+--    end,
+--  })
+
+  -- require('nvim-treesitter').install({
+  --   'bash',
+  --   'markdown',
+  --   'kotlin',
+  -- }, {
+  --   generate = true,
+  -- } --[[@as InstallOptions]])
 --
 --   add('https://github.com/nvim-treesitter/nvim-treesitter-textobjects')
 --
@@ -213,7 +243,7 @@ end)
 --       },
 --     },
 --   }
--- end)
+end)
 --
 -- later(function()
 --   add('https://github.com/windwp/nvim-ts-autotag')
@@ -308,105 +338,73 @@ now(function()
     end
   })
 end)
---
--- later(function()
---   add('https://github.com/FabijanZulj/blame.nvim')
---   require('blame').setup()
--- end)
---
+
 -- now(function()
 --   add {
 --     source = 'https://github.com/ogaken-1/nvim-gin-preview',
 --     depends = { 'https://github.com/lambdalisue/gin.vim' },
 --   }
 -- end)
---
--- later(function()
---   add('https://github.com/sindrets/diffview.nvim')
--- end)
---
--- later(function()
---   add {
---     source = 'https://github.com/isakbm/gitgraph.nvim',
---     depends = { 'https://github.com/sindrets/diffview.nvim' },
---   }
---
---   ---@type I.GGConfig
---   ---@diagnostic disable-next-line: missing-fields
---   require('gitgraph').setup {
---     hooks = {
---       -- Check diff of a commit
---       on_select_commit = function(commit)
---         vim.notify("DiffviewOpen " .. commit.hash .. "^!")
---         vim.cmd(":DiffviewOpen " .. commit.hash .. "^!")
---       end,
---       -- Check diff from commit a -> commit b
---       on_select_range_commit = function(from, to)
---         vim.notify("DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
---         vim.cmd(":DiffviewOpen " .. from.hash .. "~1.." .. to.hash)
---       end,
---     },
---   }
--- end)
---
+
+
 -- -- =========================================
 -- -- | ファイラー
 -- -- =========================================
--- later(function()
---   add('https://github.com/stevearc/oil.nvim')
---   local oil = require('oil')
---   oil.setup {
---     default_file_explorer = true,
---     win_options = {
---       number = false,
---       foldcolumn = '0',
---     },
---   }
---
---   nmaps {
---     {
---       '<Leader>e',
---       function()
---         oil.open(vim.fn.getcwd())
---       end,
---       { desc = 'ルートを起点にOilを開く' }
---     },
---     {
---       '<Leader>E',
---       function()
---         oil.open(vim.fn.expand('%:p:h'))
---       end,
---       { desc = '今開いているファイルのディレクトリを起点にOilを開く' }
---     },
---   }
---
---   autocmd('FileType', {
---     pattern = 'oil',
---     group = MyAuGroup,
---     callback = function(args)
---       local buffer = { buffer = args.buf }
---
---       nmaps {
---         { 'q', oil.close, buffer },
---         { '=', oil.save,  buffer },
---         {
---           '<Leader>we',
---           function()
---             local config = require('oil.config')
---             if #config.columns == 1 then
---               oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
---             else
---               oil.set_columns { 'icon' }
---             end
---           end,
---           buffer,
---         },
---       }
---     end,
---   })
--- end)
---
---
+later(function()
+  add('https://github.com/stevearc/oil.nvim')
+  local oil = require('oil')
+  oil.setup {
+    default_file_explorer = true,
+    win_options = {
+      number = false,
+      foldcolumn = '0',
+    },
+  }
+
+  nmaps {
+    {
+      '<Leader>e',
+      function()
+        oil.open(vim.fn.getcwd())
+      end,
+      { desc = 'ルートを起点にOilを開く' }
+    },
+    {
+      '<Leader>E',
+      function()
+        oil.open(vim.fn.expand('%:p:h'))
+      end,
+      { desc = '今開いているファイルのディレクトリを起点にOilを開く' }
+    },
+  }
+
+  autocmd('FileType', {
+    pattern = 'oil',
+    group = MyAuGroup,
+    callback = function(args)
+      local buffer = { buffer = args.buf }
+
+      nmaps {
+        { 'q', oil.close, buffer },
+        { '=', oil.save,  buffer },
+        {
+          '<Leader>we',
+          function()
+            local config = require('oil.config')
+            if #config.columns == 1 then
+              oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
+            else
+              oil.set_columns { 'icon' }
+            end
+          end,
+          buffer,
+        },
+      }
+    end,
+  })
+end)
+
+
 -- -- =========================================
 -- -- | nvim-cmp関連
 -- -- =========================================
@@ -790,10 +788,42 @@ end)
 --   require('mini.move').setup {}
 -- end)
 --
--- later(function()
---   add('https://github.com/echasnovski/mini.indentscope')
---   require('mini.indentscope').setup {}
--- end)
+later(function()
+	add('https://github.com/lukas-reineke/indent-blankline.nvim')
+	local highlight = {
+		"RainbowRed",
+		"RainbowYellow",
+		"RainbowBlue",
+		"RainbowOrange",
+		"RainbowGreen",
+		"RainbowViolet",
+		"RainbowCyan",
+	}
+
+	local hooks = require "ibl.hooks"
+	hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+		vim.api.nvim_set_hl(0, "RainbowRed",    { fg = "#E06C75" })
+		vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+		vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = "#61AFEF" })
+		vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+		vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = "#98C379" })
+		vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+		vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = "#56B6C2" })
+	end)
+
+	require("ibl").setup {
+		indent = {
+			highlight = highlight,
+		},
+		scope = {
+			enabled = false,
+		}
+	}
+end)
+later(function()
+	add('https://github.com/echasnovski/mini.indentscope')
+	require('mini.indentscope').setup {}
+end)
 --
 --
 -- later(function()

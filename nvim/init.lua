@@ -6,31 +6,31 @@ vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.serverna
 
 -- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 vim.treesitter.start = (function(wrapped)
-  return function(bufnr, lang)
-    lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
-    pcall(wrapped, bufnr, lang)
-  end
+	return function(bufnr, lang)
+		lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
+		pcall(wrapped, bufnr, lang)
+	end
 end)(vim.treesitter.start)
 vim.treesitter.language.register('markdown', 'octo')
 
 vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = "🚒",
-      [vim.diagnostic.severity.WARN] = "🚧",
-      [vim.diagnostic.severity.INFO] = "👀",
-      [vim.diagnostic.severity.HINT] = "🦒",
-    },
-  },
-  severity_sort = true,
-  virtual_text = false,
-  virtual_lines = {
-    only_current_line = true,
-    format = function(diagnostic)
-      return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
-    end,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "🚒",
+			[vim.diagnostic.severity.WARN] = "🚧",
+			[vim.diagnostic.severity.INFO] = "👀",
+			[vim.diagnostic.severity.HINT] = "🦒",
+		},
+	},
+	severity_sort = true,
+	virtual_text = false,
+	virtual_lines = {
+		only_current_line = true,
+		format = function(diagnostic)
+			return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
+		end,
 
-  }
+	}
 })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
@@ -44,13 +44,13 @@ now(function()
 end)
 
 if utils.is_windows then
-  vim.opt.shell = 'cmd.exe'
-  vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
+	vim.opt.shell = 'cmd.exe'
+	vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
 end
 
 --@diagnostic disable-next-line: unused-local
 local maps, nmaps, omaps, vmaps, imaps, smaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps,
-    WagomuBox.imaps, WagomuBox.smaps
+		WagomuBox.imaps, WagomuBox.smaps
 local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
@@ -91,28 +91,28 @@ local nosilent_bufopts = { buffer = true, noremap = true, silent = false }
 -- =========================================
 
 now(function()
-  add('https://github.com/vim-denops/denops.vim')
+	add('https://github.com/vim-denops/denops.vim')
 end)
 
 
 now(function()
-  add('https://github.com/vigoux/notifier.nvim')
-  require('notifier').setup {
-    component_name_recall = true,
-  }
+	add('https://github.com/vigoux/notifier.nvim')
+	require('notifier').setup {
+		component_name_recall = true,
+	}
 end)
 
 now(function()
-  add('https://github.com/echasnovski/mini.icons')
-  require('mini.icons').setup()
-  MiniIcons.mock_nvim_web_devicons()
+	add('https://github.com/echasnovski/mini.icons')
+	require('mini.icons').setup()
+	MiniIcons.mock_nvim_web_devicons()
 end)
 
 now(function()
-  add('https://github.com/echasnovski/mini.misc')
-  require('mini.misc').setup()
+	add('https://github.com/echasnovski/mini.misc')
+	require('mini.misc').setup()
 
-  MiniMisc.setup_restore_cursor()
+	MiniMisc.setup_restore_cursor()
 end)
 
 
@@ -120,17 +120,17 @@ end)
 -- | Treesitter関連
 -- =========================================
 later(function()
-  add({
-    source = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    hooks = {
-      post_checkout = function()
-        vim.cmd.TSUpdate('all')
-      end
-    }
-  })
-  require'nvim-treesitter'.setup {
-    install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
-  }
+	add({
+		source = 'https://github.com/nvim-treesitter/nvim-treesitter',
+		hooks = {
+			post_checkout = function()
+				vim.cmd.TSUpdate('all')
+			end
+		}
+	})
+	require 'nvim-treesitter'.setup {
+		install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
+	}
 
 	local install_list = {
 		'astro',
@@ -146,103 +146,103 @@ later(function()
 		'toml',
 		'typescript',
 	}
---  vim.api.nvim_create_autocmd('FileType', {
---    group = WagomuBox.MyAuGroup,
---    callback = function(event)
---      local ok, nvim_treesitter = pcall(require, 'nvim-treesitter')
---      if not ok then return end
---      local ft = vim.bo[event.buf].ft
---      local lang = vim.treesitter.language.get_lang(ft)
---      nvim_treesitter.install({ lang }):await(function(err)
---        if err then
---          vim.notify('Treesitter install error for ft: ' .. ft .. ' err: ' .. err)
---          return
---        end
---        pcall(vim.treesitter.start, event.buf)
---        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
---        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
---      end)
---    end,
---  })
+	--  vim.api.nvim_create_autocmd('FileType', {
+	--    group = WagomuBox.MyAuGroup,
+	--    callback = function(event)
+	--      local ok, nvim_treesitter = pcall(require, 'nvim-treesitter')
+	--      if not ok then return end
+	--      local ft = vim.bo[event.buf].ft
+	--      local lang = vim.treesitter.language.get_lang(ft)
+	--      nvim_treesitter.install({ lang }):await(function(err)
+	--        if err then
+	--          vim.notify('Treesitter install error for ft: ' .. ft .. ' err: ' .. err)
+	--          return
+	--        end
+	--        pcall(vim.treesitter.start, event.buf)
+	--        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	--        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+	--      end)
+	--    end,
+	--  })
 
-  -- require('nvim-treesitter').install({
-  --   'bash',
-  --   'markdown',
-  --   'kotlin',
-  -- }, {
-  --   generate = true,
-  -- } --[[@as InstallOptions]])
---
---   add('https://github.com/nvim-treesitter/nvim-treesitter-textobjects')
---
---   require('nvim-treesitter.configs').setup {
---     ensure_installed = {
---       'astro',
---       'css',
---       'go',
---       'gomod',
---       'gosum',
---       'html',
---       'lua',
---       'markdown',
---       'markdown_inline',
---       'rust',
---       'toml',
---       'typescript',
---     },
---     highlight = {
---       enable = true,
---       disable = function(lang, buf)
---         if lang == 'vimdoc' then
---           return true
---         end
---         local max_filesize = 50 * 1024 -- 50 KB
---         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
---         if ok and stats and stats.size > max_filesize then
---           vim.print('File too large: tree-sitter disabled.', 'WarningMsg')
---           return true
---         end
---         if vim.fn.line('$') > 20000 then
---           vim.print('Buffer has too many lines: tree-sitter disabled.', 'WarningMsg')
---           return true
---         end
---       end,
---       additional_vim_regex_highlighting = false,
---     },
---     sync_install = false,
---     modules = {},
---     auto_install = true,
---     ignore_install = {},
---     textobjects = {
---       select = {
---         enable = true,
---         -- Automatically jump forward to textobj, similar to targets.vim
---         lookahead = true,
---         keymaps = {
---           -- You can use the capture groups defined in textobjects.scm
---           ["af"] = "@function.outer",
---           ["if"] = "@function.inner",
---           ["ai"] = "@conditional.outer",
---           ["ii"] = "@conditional.inner",
---           ["aC"] = "@class.outer",
---           ["iC"] = "@class.inner",
---           ["ac"] = "@comment.outer",
---           ["ic"] = "@comment.inner",
---           ["ab"] = "@block.outer",
---           ["ib"] = "@block.inner",
---           ["al"] = "@loop.outer",
---           ["il"] = "@loop.inner",
---           ["ip"] = "@parameter.inner",
---           ["ap"] = "@parameter.outer",
---           ["iS"] = "@scopename.inner",
---           ["aS"] = "@statement.outer",
---           ["i"] = "@call.inner",
---           ["iF"] = "@frame.inner",
---           ["oF"] = "@frame.outer",
---         },
---       },
---     },
---   }
+	-- require('nvim-treesitter').install({
+	--   'bash',
+	--   'markdown',
+	--   'kotlin',
+	-- }, {
+	--   generate = true,
+	-- } --[[@as InstallOptions]])
+	--
+	--   add('https://github.com/nvim-treesitter/nvim-treesitter-textobjects')
+	--
+	--   require('nvim-treesitter.configs').setup {
+	--     ensure_installed = {
+	--       'astro',
+	--       'css',
+	--       'go',
+	--       'gomod',
+	--       'gosum',
+	--       'html',
+	--       'lua',
+	--       'markdown',
+	--       'markdown_inline',
+	--       'rust',
+	--       'toml',
+	--       'typescript',
+	--     },
+	--     highlight = {
+	--       enable = true,
+	--       disable = function(lang, buf)
+	--         if lang == 'vimdoc' then
+	--           return true
+	--         end
+	--         local max_filesize = 50 * 1024 -- 50 KB
+	--         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+	--         if ok and stats and stats.size > max_filesize then
+	--           vim.print('File too large: tree-sitter disabled.', 'WarningMsg')
+	--           return true
+	--         end
+	--         if vim.fn.line('$') > 20000 then
+	--           vim.print('Buffer has too many lines: tree-sitter disabled.', 'WarningMsg')
+	--           return true
+	--         end
+	--       end,
+	--       additional_vim_regex_highlighting = false,
+	--     },
+	--     sync_install = false,
+	--     modules = {},
+	--     auto_install = true,
+	--     ignore_install = {},
+	--     textobjects = {
+	--       select = {
+	--         enable = true,
+	--         -- Automatically jump forward to textobj, similar to targets.vim
+	--         lookahead = true,
+	--         keymaps = {
+	--           -- You can use the capture groups defined in textobjects.scm
+	--           ["af"] = "@function.outer",
+	--           ["if"] = "@function.inner",
+	--           ["ai"] = "@conditional.outer",
+	--           ["ii"] = "@conditional.inner",
+	--           ["aC"] = "@class.outer",
+	--           ["iC"] = "@class.inner",
+	--           ["ac"] = "@comment.outer",
+	--           ["ic"] = "@comment.inner",
+	--           ["ab"] = "@block.outer",
+	--           ["ib"] = "@block.inner",
+	--           ["al"] = "@loop.outer",
+	--           ["il"] = "@loop.inner",
+	--           ["ip"] = "@parameter.inner",
+	--           ["ap"] = "@parameter.outer",
+	--           ["iS"] = "@scopename.inner",
+	--           ["aS"] = "@statement.outer",
+	--           ["i"] = "@call.inner",
+	--           ["iF"] = "@frame.inner",
+	--           ["oF"] = "@frame.outer",
+	--         },
+	--       },
+	--     },
+	--   }
 end)
 --
 -- later(function()
@@ -265,78 +265,78 @@ end)
 -- | 日本語入力関連
 -- =========================================
 now(function()
-  add({
-    source = 'https://github.com/vim-skk/skkeleton',
-    depends = {
-      'https://github.com/skk-dev/dict',
-      'https://github.com/vim-denops/denops.vim',
-    },
-  })
-  require('wagomu-box.plugin-config.skkeleton').setup(WagomuBox.plugins_path)
+	add({
+		source = 'https://github.com/vim-skk/skkeleton',
+		depends = {
+			'https://github.com/skk-dev/dict',
+			'https://github.com/vim-denops/denops.vim',
+		},
+	})
+	require('wagomu-box.plugin-config.skkeleton').setup(WagomuBox.plugins_path)
 
-  add('https://github.com/delphinus/skkeleton_indicator.nvim')
-  require('skkeleton_indicator').setup {}
+	add('https://github.com/delphinus/skkeleton_indicator.nvim')
+	require('skkeleton_indicator').setup {}
 end)
 --
 -- =========================================
 -- | git関連
 -- =========================================
 later(function()
-  add('https://github.com/lewis6991/gitsigns.nvim')
+	add('https://github.com/lewis6991/gitsigns.nvim')
 
-  require('wagomu-box.plugin-config.gitsigns')
+	require('wagomu-box.plugin-config.gitsigns')
 end)
 
 now(function()
-  add {
-    source = 'https://github.com/lambdalisue/vim-gin',
-    depends = { 'vim-denops/denops.vim' },
-  }
+	add {
+		source = 'https://github.com/lambdalisue/vim-gin',
+		depends = { 'vim-denops/denops.vim' },
+	}
 
-  require('wagomu-box.plugin-config.gin')
+	require('wagomu-box.plugin-config.gin')
 
-  local nowait_bufopts = { buffer = true, noremap = true, nowait = true }
-  autocmd({ 'FileType' }, {
-    pattern = { 'gin-*', 'gin' },
-    group = WagomuBox.gin_group,
-    callback = function()
-      nmaps {
-        {
-          'g?',
-          function()
-            require('select_action')('gin')
-          end,
-          nowait_bufopts,
-        },
-      }
-    end,
-  })
+	local nowait_bufopts = { buffer = true, noremap = true, nowait = true }
+	autocmd({ 'FileType' }, {
+		pattern = { 'gin-*', 'gin' },
+		group = WagomuBox.gin_group,
+		callback = function()
+			nmaps {
+				{
+					'g?',
+					function()
+						require('select_action')('gin')
+					end,
+					nowait_bufopts,
+				},
+			}
+		end,
+	})
 
-  autocmd({ 'FileType' }, {
-    pattern = { 'gin-branch' },
-    group = WagomuBox.gin_group,
-    callback = function()
-      nmap('<C-g><C-p>',
-        function()
-          local function t(str, flg)
-            return vim.api.nvim_replace_termcodes(str, true, true, flg)
-          end
-          vim.api.nvim_feedkeys(t('<Plug>(gin-action-yank:branch)', true), 'n', true)
-          vim.schedule(function()
-            local branch = vim.fn.getreg('+')
-            if not branch:find('^origin/') then
-              return
-            end
-            -- branchからorigin/を取り除いた文字列を取得
-            local origin_branch = branch:sub(8)
-            -- コマンドラインモードに入力
-            vim.api.nvim_feedkeys(t(string.format(":Gin pull origin %s:%s", origin_branch, origin_branch), false), 'n',
-              false)
-          end)
-        end,
-        nowait_bufopts)
-    end
-  })
+	autocmd({ 'FileType' }, {
+		pattern = { 'gin-branch' },
+		group = WagomuBox.gin_group,
+		callback = function()
+			nmap('<C-g><C-p>',
+				function()
+					local function t(str, flg)
+						return vim.api.nvim_replace_termcodes(str, true, true, flg)
+					end
+					vim.api.nvim_feedkeys(t('<Plug>(gin-action-yank:branch)', true), 'n', true)
+					vim.schedule(function()
+						local branch = vim.fn.getreg('+')
+						if not branch:find('^origin/') then
+							return
+						end
+						-- branchからorigin/を取り除いた文字列を取得
+						local origin_branch = branch:sub(8)
+						-- コマンドラインモードに入力
+						vim.api.nvim_feedkeys(t(string.format(":Gin pull origin %s:%s", origin_branch, origin_branch), false), 'n',
+							false)
+					end)
+				end,
+				nowait_bufopts)
+		end
+	})
 end)
 
 -- now(function()
@@ -351,230 +351,230 @@ end)
 -- -- | ファイラー
 -- -- =========================================
 later(function()
-  add('https://github.com/stevearc/oil.nvim')
-  local oil = require('oil')
-  oil.setup {
-    default_file_explorer = true,
-    win_options = {
-      number = false,
-      foldcolumn = '0',
-    },
-  }
+	add('https://github.com/stevearc/oil.nvim')
+	local oil = require('oil')
+	oil.setup {
+		default_file_explorer = true,
+		win_options = {
+			number = false,
+			foldcolumn = '0',
+		},
+	}
 
-  nmaps {
-    {
-      '<Leader>e',
-      function()
-        oil.open(vim.fn.getcwd())
-      end,
-      { desc = 'ルートを起点にOilを開く' }
-    },
-    {
-      '<Leader>E',
-      function()
-        oil.open(vim.fn.expand('%:p:h'))
-      end,
-      { desc = '今開いているファイルのディレクトリを起点にOilを開く' }
-    },
-  }
+	nmaps {
+		{
+			'<Leader>e',
+			function()
+				oil.open(vim.fn.getcwd())
+			end,
+			{ desc = 'ルートを起点にOilを開く' }
+		},
+		{
+			'<Leader>E',
+			function()
+				oil.open(vim.fn.expand('%:p:h'))
+			end,
+			{ desc = '今開いているファイルのディレクトリを起点にOilを開く' }
+		},
+	}
 
-  autocmd('FileType', {
-    pattern = 'oil',
-    group = MyAuGroup,
-    callback = function(args)
-      local buffer = { buffer = args.buf }
+	autocmd('FileType', {
+		pattern = 'oil',
+		group = MyAuGroup,
+		callback = function(args)
+			local buffer = { buffer = args.buf }
 
-      nmaps {
-        { 'q', oil.close, buffer },
-        { '=', oil.save,  buffer },
-        {
-          '<Leader>we',
-          function()
-            local config = require('oil.config')
-            if #config.columns == 1 then
-              oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
-            else
-              oil.set_columns { 'icon' }
-            end
-          end,
-          buffer,
-        },
-      }
-    end,
-  })
+			nmaps {
+				{ 'q', oil.close, buffer },
+				{ '=', oil.save,  buffer },
+				{
+					'<Leader>we',
+					function()
+						local config = require('oil.config')
+						if #config.columns == 1 then
+							oil.set_columns { 'icon', 'permissions', 'size', 'mtime' }
+						else
+							oil.set_columns { 'icon' }
+						end
+					end,
+					buffer,
+				},
+			}
+		end,
+	})
 end)
 
 
--- -- =========================================
--- -- | nvim-cmp関連
--- -- =========================================
--- later(function()
---   local function build_luasnip(params)
---     vim.notify('make luasnip', vim.log.levels.INFO)
---     local obj = vim.system({ 'make', 'install_jsregexp' }, { cwd = params.path }):wait()
---     if obj.code == 0 then
---       vim.notify('make luasnip done', vim.log.levels.INFO)
---     else
---       vim.notify('make luasnip failed', vim.log.levels.ERROR)
---     end
---   end
---   add('https://github.com/hrsh7th/nvim-cmp')
---   add('https://github.com/hrsh7th/cmp-nvim-lsp')
---   add('https://github.com/hrsh7th/cmp-buffer')
---   add('https://github.com/hrsh7th/cmp-emoji')
---   add('https://github.com/hrsh7th/cmp-path')
---   add('https://github.com/hrsh7th/cmp-cmdline')
---   add('https://github.com/hrsh7th/cmp-vsnip')
---   add('https://github.com/hrsh7th/vim-vsnip')
---   add('https://github.com/rafamadriz/friendly-snippets')
---   add({
---     source = 'https://github.com/L3MON4D3/LuaSnip',
---     hooks = {
---       post_checkout = build_luasnip,
---       post_update = build_luasnip,
---     },
---   })
---   add('https://github.com/saadparwaiz1/cmp_luasnip')
---   add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
---   -- add('https://github.com/zbirenbaum/copilot-cmp')
---   add('https://github.com/uga-rosa/cmp-skkeleton')
---   add('https://github.com/staticWagomU/cmp-my-git-commit-prefix')
---   add('https://github.com/onsails/lspkind.nvim')
---   -- require('copilot_cmp').setup()
---   require("luasnip.loaders.from_vscode").lazy_load()
---
---   local cmp = require('cmp')
---   local lspkind = require('lspkind')
---
---   cmp.setup {
---     snippet = {
---       expand = function(args)
---         -- vim.fn['vsnip#anonymous'](args.body)
---         require('luasnip').lsp_expand(args.body)
---       end,
---     },
---     ---@diagnostic disable-next-line: missing-fields
---     formatting = {
---       format = lspkind.cmp_format {
---         mode = 'symbol',
---         max_width = 50,
---         symbol_map = {
---           -- Copilot = '',
---           vsnip = '',
---         },
---       },
---     },
---     mapping = cmp.mapping.preset.insert {
---       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
---       ['<C-f>'] = cmp.mapping.scroll_docs(4),
---       ['<C-Space>'] = cmp.mapping.complete(),
---       ['<C-e>'] = cmp.mapping.abort(),
---       ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
---     },
---     sources = cmp.config.sources(
---       {
---         { name = 'buffer' },
---       },
---       {
---         { name = 'emoji' },
---         { name = 'skkeleton' },
---         { name = 'nvim_lsp_signature_help' },
---         { name = 'nvim_lsp' },
---         { name = 'luasnip' },
---         -- { name = 'vsnip' },
---         { name = 'buffer' },
---         -- { name = 'copilot' },
---       }),
---     experimental = {
---       ghost_text = true,
---     },
---   }
---
---   cmp.setup.filetype('gitcommit', {
---     sources = cmp.config.sources({
---       { name = 'git' },
---     }, {
---       -- { name = 'copilot' },
---       { name = 'my-commit-prefix' },
---       { name = 'skkeleton' },
---       { name = 'buffer' },
---     }),
---   })
---
---   cmp.setup.cmdline({ '/', '?' }, {
---     mapping = cmp.mapping.preset.cmdline(),
---     sources = {
---       { name = 'buffer' },
---     },
---   })
---
---   cmp.setup.cmdline(':', {
---     mapping = cmp.mapping.preset.cmdline(),
---     sources = cmp.config.sources({
---       { name = 'path' },
---     }, {
---       { name = 'cmdline' },
---     }),
---   })
---
---   -- ref: https://github.com/teramako/dotfiles/blob/463b2434ddc4b85c9d335188d357916d142bad6a/nvim/init.lua#L403-L433
---   -- gin.vim の action: 用補完
---   ---@diagnostic disable-next-line: missing-fields
---   cmp.register_source('gin-action', {
---     enabled = function() -- filetype がgin-* の時のみ有効に
---       local ft = vim.opt_local.filetype:get()
---       if string.match(ft, '^gin%-') then
---         return true
---       end
---       return false
---     end,
---     complete = function(_, _, callback)
---       local items = {}
---       -- cmap の lhs が '<Plug>(gin-action*)' のものを抽出
---       -- see: https://github.com/lambdalisue/vim-gin/blob/main/denops/gin/action/core.ts#L50-L70
---       for _, _nmap in ipairs(vim.api.nvim_buf_get_keymap(0, 'n')) do
---         ---@diagnostic disable-next-line: undefined-field
---         local action = string.match(_nmap.lhs, '<Plug>%(gin%-action%-(%S+)%)')
---         if action then
---           ---@diagnostic disable-next-line: undefined-field
---           table.insert(items, { label = action, kind = 1, detail = _nmap.lhs .. '\n => ' .. _nmap.rhs })
---         end
---       end
---       callback(items)
---     end
---   })
---   cmp.setup.cmdline('@', { -- vim.fn.input() 時の補完
---     mapping = cmp.mapping.preset.cmdline(),
---     sources = cmp.config.sources({
---       { name = 'gin-action' }
---     }),
---     ---@diagnostic disable-next-line: missing-fields
---     sorting = {
---       comparators = { cmp.config.compare.sort_text }
---     },
---   })
---
---
---   imaps {
---     { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",         { expr = true } },
---     { '<C-l>',   "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'",       { expr = true } },
---     { '<C-h>',   "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
---   }
---
---
---   smaps {
---     { '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",         { expr = true } },
---     { '<C-l>',   "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'",       { expr = true } },
---     { '<C-h>',   "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
---   }
---
---   vim.g.vsnip_filetypes = {
---     javascriptreact = { "javascript" },
---     typescriptreact = { "typescript" },
---
---   }
--- end)
---
+-- =========================================
+-- | nvim-cmp関連
+-- =========================================
+later(function()
+	local function build_luasnip(params)
+		vim.notify('make luasnip', vim.log.levels.INFO)
+		local obj = vim.system({ 'make', 'install_jsregexp' }, { cwd = params.path }):wait()
+		if obj.code == 0 then
+			vim.notify('make luasnip done', vim.log.levels.INFO)
+		else
+			vim.notify('make luasnip failed', vim.log.levels.ERROR)
+		end
+	end
+	add('https://github.com/hrsh7th/nvim-cmp')
+	add('https://github.com/hrsh7th/cmp-nvim-lsp')
+	add('https://github.com/hrsh7th/cmp-buffer')
+	add('https://github.com/hrsh7th/cmp-emoji')
+	add('https://github.com/hrsh7th/cmp-path')
+	add('https://github.com/hrsh7th/cmp-cmdline')
+	add('https://github.com/hrsh7th/cmp-vsnip')
+	add('https://github.com/hrsh7th/vim-vsnip')
+	add('https://github.com/rafamadriz/friendly-snippets')
+	add({
+		source = 'https://github.com/L3MON4D3/LuaSnip',
+		hooks = {
+			post_checkout = build_luasnip,
+			post_update = build_luasnip,
+		},
+	})
+	add('https://github.com/saadparwaiz1/cmp_luasnip')
+	add('https://github.com/hrsh7th/cmp-nvim-lsp-signature-help')
+	-- add('https://github.com/zbirenbaum/copilot-cmp')
+	add('https://github.com/uga-rosa/cmp-skkeleton')
+	add('https://github.com/staticWagomU/cmp-my-git-commit-prefix')
+	add('https://github.com/onsails/lspkind.nvim')
+	-- require('copilot_cmp').setup()
+	require("luasnip.loaders.from_vscode").lazy_load()
+
+	local cmp = require('cmp')
+	local lspkind = require('lspkind')
+
+	cmp.setup {
+		snippet = {
+			expand = function(args)
+				-- vim.fn['vsnip#anonymous'](args.body)
+				require('luasnip').lsp_expand(args.body)
+			end,
+		},
+		---@diagnostic disable-next-line: missing-fields
+		formatting = {
+			format = lspkind.cmp_format {
+				mode = 'symbol',
+				max_width = 50,
+				symbol_map = {
+					-- Copilot = '',
+					vsnip = '',
+				},
+			},
+		},
+		mapping = cmp.mapping.preset.insert {
+			['<C-b>'] = cmp.mapping.scroll_docs(-4),
+			['<C-f>'] = cmp.mapping.scroll_docs(4),
+			['<C-Space>'] = cmp.mapping.complete(),
+			['<C-e>'] = cmp.mapping.abort(),
+			['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		},
+		sources = cmp.config.sources(
+			{
+				{ name = 'buffer' },
+			},
+			{
+				{ name = 'emoji' },
+				{ name = 'skkeleton' },
+				{ name = 'nvim_lsp_signature_help' },
+				{ name = 'nvim_lsp' },
+				{ name = 'luasnip' },
+				-- { name = 'vsnip' },
+				{ name = 'buffer' },
+				-- { name = 'copilot' },
+			}),
+		experimental = {
+			ghost_text = true,
+		},
+	}
+
+	cmp.setup.filetype('gitcommit', {
+		sources = cmp.config.sources({
+			{ name = 'git' },
+		}, {
+			-- { name = 'copilot' },
+			{ name = 'my-commit-prefix' },
+			{ name = 'skkeleton' },
+			{ name = 'buffer' },
+		}),
+	})
+
+	cmp.setup.cmdline({ '/', '?' }, {
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = {
+			{ name = 'buffer' },
+		},
+	})
+
+	cmp.setup.cmdline(':', {
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = cmp.config.sources({
+			{ name = 'path' },
+		}, {
+			{ name = 'cmdline' },
+		}),
+	})
+
+	-- ref: https://github.com/teramako/dotfiles/blob/463b2434ddc4b85c9d335188d357916d142bad6a/nvim/init.lua#L403-L433
+	-- gin.vim の action: 用補完
+	---@diagnostic disable-next-line: missing-fields
+	cmp.register_source('gin-action', {
+		enabled = function() -- filetype がgin-* の時のみ有効に
+			local ft = vim.opt_local.filetype:get()
+			if string.match(ft, '^gin%-') then
+				return true
+			end
+			return false
+		end,
+		complete = function(_, _, callback)
+			local items = {}
+			-- cmap の lhs が '<Plug>(gin-action*)' のものを抽出
+			-- see: https://github.com/lambdalisue/vim-gin/blob/main/denops/gin/action/core.ts#L50-L70
+			for _, _nmap in ipairs(vim.api.nvim_buf_get_keymap(0, 'n')) do
+				---@diagnostic disable-next-line: undefined-field
+				local action = string.match(_nmap.lhs, '<Plug>%(gin%-action%-(%S+)%)')
+				if action then
+					---@diagnostic disable-next-line: undefined-field
+					table.insert(items, { label = action, kind = 1, detail = _nmap.lhs .. '\n => ' .. _nmap.rhs })
+				end
+			end
+			callback(items)
+		end
+	})
+	cmp.setup.cmdline('@', { -- vim.fn.input() 時の補完
+		mapping = cmp.mapping.preset.cmdline(),
+		sources = cmp.config.sources({
+			{ name = 'gin-action' }
+		}),
+		---@diagnostic disable-next-line: missing-fields
+		sorting = {
+			comparators = { cmp.config.compare.sort_text }
+		},
+	})
+
+
+	imaps {
+		{ '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",         { expr = true } },
+		{ '<C-l>',   "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'",       { expr = true } },
+		{ '<C-h>',   "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+	}
+
+
+	smaps {
+		{ '<C-S-j>', "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",         { expr = true } },
+		{ '<C-l>',   "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<C-l>'",       { expr = true } },
+		{ '<C-h>',   "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev-next)' : '<C-h>'", { expr = true } },
+	}
+
+	vim.g.vsnip_filetypes = {
+		javascriptreact = { "javascript" },
+		typescriptreact = { "typescript" },
+
+	}
+end)
+
 -- -- =========================================
 -- -- | Formatter & Linter
 -- -- =========================================
@@ -592,147 +592,147 @@ end)
 -- | LSP関連
 -- =========================================
 later(function()
-  add('https://github.com/artemave/workspace-diagnostics.nvim')
-  add('https://github.com/williamboman/mason.nvim')
-  add {
-    source = 'https://github.com/williamboman/mason-lspconfig.nvim',
-    depends = { 'williamboman/mason.nvim' },
-  }
-  add {
-    source = 'https://github.com/neovim/nvim-lspconfig',
-    depends = { 'williamboman/mason-lspconfig.nvim' },
-  }
-  add {
-    source = 'https://github.com/kevinhwang91/nvim-ufo',
-    depends = { 'kevinhwang91/promise-async' },
-  }
+	add('https://github.com/artemave/workspace-diagnostics.nvim')
+	add('https://github.com/williamboman/mason.nvim')
+	add {
+		source = 'https://github.com/williamboman/mason-lspconfig.nvim',
+		depends = { 'williamboman/mason.nvim' },
+	}
+	add {
+		source = 'https://github.com/neovim/nvim-lspconfig',
+		depends = { 'williamboman/mason-lspconfig.nvim' },
+	}
+	add {
+		source = 'https://github.com/kevinhwang91/nvim-ufo',
+		depends = { 'kevinhwang91/promise-async' },
+	}
 
-  add('https://github.com/themaxmarchuk/tailwindcss-colors.nvim')
-  require('tailwindcss-colors').setup {}
+	add('https://github.com/themaxmarchuk/tailwindcss-colors.nvim')
+	require('tailwindcss-colors').setup {}
 
-  require('mason').setup()
-  require('mason-lspconfig').setup({
+	require('mason').setup()
+	require('mason-lspconfig').setup({
 		ensure_installed = ensure_installed
 	})
-  local lspconfig = require('lspconfig')
+	local lspconfig = require('lspconfig')
 
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  -- local capabilities = vim.tbl_deep_extend(
-  --   'force',
-  --   vim.lsp.protocol.make_client_capabilities(),
-  --   require('cmp_nvim_lsp').default_capabilities()
-  -- )
-  capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	-- local capabilities = vim.tbl_deep_extend(
+	--   'force',
+	--   vim.lsp.protocol.make_client_capabilities(),
+	--   require('cmp_nvim_lsp').default_capabilities()
+	-- )
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
 
-  local lsp_names = {
-    'astro',
-    'biome',
-    'cssls',
-    'denols',
-    'docker_compose_language_service',
-    'dockerls',
-    'emmet_ls',
-    'gopls',
-    'jsonls',
-    'lua_ls',
-    'rust_analyzer',
-    'svelte',
-    'tailwindcss',
-    'tinymist',
-    -- 'ts_ls',
-    'unocss',
-    'vue_ls',
-    'vtsls',
-    'zls',
-  }
-vim.lsp.config('tailwindcss', {
-			settings = {
-				tailwindCSS = {
-					experimental = {
-						classRegex = {
-							"twc\\.[^`]+`([^`]*)`",
-							"twc\\(.*?\\).*?`([^`]*)",
-							{ "twc\\.[^`]+\\(([^)]*)\\)",     "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-							{ "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
-						},
+	local lsp_names = {
+		'astro',
+		'biome',
+		'cssls',
+		'denols',
+		'docker_compose_language_service',
+		'dockerls',
+		'emmet_ls',
+		'gopls',
+		'jsonls',
+		'lua_ls',
+		'rust_analyzer',
+		'svelte',
+		'tailwindcss',
+		'tinymist',
+		-- 'ts_ls',
+		'unocss',
+		'vue_ls',
+		'vtsls',
+		'zls',
+	}
+	vim.lsp.config('tailwindcss', {
+		settings = {
+			tailwindCSS = {
+				experimental = {
+					classRegex = {
+						"twc\\.[^`]+`([^`]*)`",
+						"twc\\(.*?\\).*?`([^`]*)",
+						{ "twc\\.[^`]+\\(([^)]*)\\)",     "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+						{ "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
 					},
 				},
 			},
-			capabilities = capabilities,
-			root_dir = lspconfig.util.root_pattern(
-				'tailwind.config.js',
-				'tailwind.config.cjs',
-				'tailwind.config.mjs',
-				'tailwind.config.ts'
-			),
-			on_attach = function(_, bufnr)
-				require('tailwindcss-colors').buf_attach(bufnr)
-			end
-})
+		},
+		capabilities = capabilities,
+		root_dir = lspconfig.util.root_pattern(
+			'tailwind.config.js',
+			'tailwind.config.cjs',
+			'tailwind.config.mjs',
+			'tailwind.config.ts'
+		),
+		on_attach = function(_, bufnr)
+			require('tailwindcss-colors').buf_attach(bufnr)
+		end
+	})
 
-  vim.lsp.enable(lsp_names)
+	vim.lsp.enable(lsp_names)
 
-  utils.on_attach(function(_, _)
-    require('ufo').setup()
-  end)
+	utils.on_attach(function(_, _)
+		require('ufo').setup()
+	end)
 
-  nmaps {
-    { 'gf', vim.lsp.buf.format },
-  }
+	nmaps {
+		{ 'gf', vim.lsp.buf.format },
+	}
 end)
 
 later(function()
-  add {
-    source = 'https://github.com/nvimdev/lspsaga.nvim',
-    depends = { 'nvim-lspconfig' },
-  }
-  require('lspsaga').setup {
-    ui = {
-      code_action = '🚕',
-    },
-    lightbulb = {
-      enable = false,
-    },
-    symbol_in_winbar = {
-      enable = false,
-    },
-    code_action = {
-      show_server_name = true,
-      extend_gitsigns = true,
-    },
-  }
+	add {
+		source = 'https://github.com/nvimdev/lspsaga.nvim',
+		depends = { 'nvim-lspconfig' },
+	}
+	require('lspsaga').setup {
+		ui = {
+			code_action = '🚕',
+		},
+		lightbulb = {
+			enable = false,
+		},
+		symbol_in_winbar = {
+			enable = false,
+		},
+		code_action = {
+			show_server_name = true,
+			extend_gitsigns = true,
+		},
+	}
 
-  ---@param action string
-  ---@return string
-  local doSagaAction = function(action)
-    return string.format('<Cmd>Lspsaga %s<Cr>', action)
-  end
+	---@param action string
+	---@return string
+	local doSagaAction = function(action)
+		return string.format('<Cmd>Lspsaga %s<Cr>', action)
+	end
 
-  utils.on_attach(function(_, _)
-    nmaps {
-      { 'gr',       doSagaAction('rename') },
-      { 'gd',       doSagaAction('peek_definition') },
-      { 'gD',       doSagaAction('goto_definition') },
-      { 'gt',       doSagaAction('peek_type_definition') },
-      { 'gT',       doSagaAction('goto_type_definition') },
-      { 'g<Space>', doSagaAction('code_action') },
-      { 'gl',       doSagaAction('show_line_diagnostics') },
-      { ']]',       doSagaAction('diagnostic_jump_next') },
-      { '[[',       doSagaAction('diagnostic_jump_prev') },
-      { 'K',        doSagaAction('hover_doc') },
-    }
-  end)
+	utils.on_attach(function(_, _)
+		nmaps {
+			{ 'gr',       doSagaAction('rename') },
+			{ 'gd',       doSagaAction('peek_definition') },
+			{ 'gD',       doSagaAction('goto_definition') },
+			{ 'gt',       doSagaAction('peek_type_definition') },
+			{ 'gT',       doSagaAction('goto_type_definition') },
+			{ 'g<Space>', doSagaAction('code_action') },
+			{ 'gl',       doSagaAction('show_line_diagnostics') },
+			{ ']]',       doSagaAction('diagnostic_jump_next') },
+			{ '[[',       doSagaAction('diagnostic_jump_prev') },
+			{ 'K',        doSagaAction('hover_doc') },
+		}
+	end)
 end)
 
 later(function()
-  add {
-    source = 'https://github.com/folke/trouble.nvim',
-    depends = { 'nvim-tree/nvim-web-devicons' },
-  }
-  require('trouble').setup {}
+	add {
+		source = 'https://github.com/folke/trouble.nvim',
+		depends = { 'nvim-tree/nvim-web-devicons' },
+	}
+	require('trouble').setup {}
 end)
 
 -- -- =========================================
@@ -767,13 +767,13 @@ later(function()
 
 	local hooks = require "ibl.hooks"
 	hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-		vim.api.nvim_set_hl(0, "RainbowRed",    { fg = "#E06C75" })
+		vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
 		vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-		vim.api.nvim_set_hl(0, "RainbowBlue",   { fg = "#61AFEF" })
+		vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
 		vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-		vim.api.nvim_set_hl(0, "RainbowGreen",  { fg = "#98C379" })
+		vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
 		vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-		vim.api.nvim_set_hl(0, "RainbowCyan",   { fg = "#56B6C2" })
+		vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 	end)
 
 	require("ibl").setup {
@@ -1311,76 +1311,76 @@ end)
 -- end)
 --
 now(function()
-  -- add('https://github.com/sainnhe/everforest')
-  add('https://github.com/neanias/everforest-nvim')
-  -- add('https://github.com/rebelot/kanagawa.nvim')
-  -- add('https://github.com/sainnhe/edge')
-  -- add('https://github.com/EdenEast/nightfox.nvim')
-  -- add('https://github.com/ayu-theme/ayu-vim')
-  -- vim.g.ayucolor = 'light'
-  vim.opt.background = 'dark'
-  ---@diagnostic disable-next-line: missing-fields
-  require('everforest').setup {
-    italics = true,
-    disable_italic_comments = true,
-    ---By default, the colour of the sign column background is the same as the as normal text
-    ---background, but you can use a grey background by setting this to `'grey'`.
-    sign_column_background = 'none',
-    ---The contrast of line numbers, indent lines, etc. Options are `'high'` or
-    ---`'low'` (default).
-    ui_contrast = 'low',
-    ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
-    ---
-    ---When this option is used in conjunction with show_eob set to `false`, the
-    ---end of the buffer will only be hidden inside the active window. Inside
-    ---inactive windows, the end of buffer filler characters will be visible in
-    ---dimmed symbols. This is due to the way Vim and Neovim handle `EndOfBuffer`.
-    dim_inactive_windows = false,
-    ---Some plugins support highlighting error/warning/info/hint texts, by
-    ---default these texts are only underlined, but you can use this option to
-    ---also highlight the background of them.
-    diagnostic_text_highlight = true,
-    ---Which colour the diagnostic text should be. Options are `'grey'` or `'coloured'` (default)
-    diagnostic_virtual_text = 'coloured',
-    ---Some plugins support highlighting error/warning/info/hint lines, but this
-    ---feature is disabled by default in this colour scheme.
-    diagnostic_line_highlight = true,
-    ---By default, this color scheme won't colour the foreground of |spell|, instead
-    ---colored under curls will be used. If you also want to colour the foreground,
-    ---set this option to `true`.
-    spell_foreground = false,
-    ---Whether to show the EndOfBuffer highlight.
-    show_eob = true,
-    ---Style used to make floating windows stand out from other windows. `'bright'`
-    ---makes the background of these windows lighter than |hl-Normal|, whereas
-    ---`'dim'` makes it darker.
-    ---
-    ---Floating windows include for instance diagnostic pop-ups, scrollable
-    ---documentation windows from completion engines, overlay windows from
-    ---installers, etc.
-    ---
-    ---NB: This is only significant for dark backgrounds as the light palettes
-    ---have the same colour for both values in the switch.
-    float_style = 'bright',
-    ---Inlay hints are special markers that are displayed inline with the code to
-    ---provide you with additional information. You can use this option to customize
-    ---the background color of inlay hints.
-    ---
-    ---Options are `'none'` or `'dimmed'`.
-    inlay_hints_background = 'dimmed',
-  }
-  -- require('kanagawa').setup {
-  --   compile = true,
-  --   transparent = true,
-  --   functionStyle = { italic = true },
-  --   dimInactive = true,
-  --   theme = 'wave',
-  --   background = {
-  --     dark = 'wave',
-  --     light = 'lotus',
-  --   },
-  -- }
-  vim.cmd.colorscheme('everforest')
+	-- add('https://github.com/sainnhe/everforest')
+	add('https://github.com/neanias/everforest-nvim')
+	-- add('https://github.com/rebelot/kanagawa.nvim')
+	-- add('https://github.com/sainnhe/edge')
+	-- add('https://github.com/EdenEast/nightfox.nvim')
+	-- add('https://github.com/ayu-theme/ayu-vim')
+	-- vim.g.ayucolor = 'light'
+	vim.opt.background = 'dark'
+	---@diagnostic disable-next-line: missing-fields
+	require('everforest').setup {
+		italics = true,
+		disable_italic_comments = true,
+		---By default, the colour of the sign column background is the same as the as normal text
+		---background, but you can use a grey background by setting this to `'grey'`.
+		sign_column_background = 'none',
+		---The contrast of line numbers, indent lines, etc. Options are `'high'` or
+		---`'low'` (default).
+		ui_contrast = 'low',
+		---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
+		---
+		---When this option is used in conjunction with show_eob set to `false`, the
+		---end of the buffer will only be hidden inside the active window. Inside
+		---inactive windows, the end of buffer filler characters will be visible in
+		---dimmed symbols. This is due to the way Vim and Neovim handle `EndOfBuffer`.
+		dim_inactive_windows = false,
+		---Some plugins support highlighting error/warning/info/hint texts, by
+		---default these texts are only underlined, but you can use this option to
+		---also highlight the background of them.
+		diagnostic_text_highlight = true,
+		---Which colour the diagnostic text should be. Options are `'grey'` or `'coloured'` (default)
+		diagnostic_virtual_text = 'coloured',
+		---Some plugins support highlighting error/warning/info/hint lines, but this
+		---feature is disabled by default in this colour scheme.
+		diagnostic_line_highlight = true,
+		---By default, this color scheme won't colour the foreground of |spell|, instead
+		---colored under curls will be used. If you also want to colour the foreground,
+		---set this option to `true`.
+		spell_foreground = false,
+		---Whether to show the EndOfBuffer highlight.
+		show_eob = true,
+		---Style used to make floating windows stand out from other windows. `'bright'`
+		---makes the background of these windows lighter than |hl-Normal|, whereas
+		---`'dim'` makes it darker.
+		---
+		---Floating windows include for instance diagnostic pop-ups, scrollable
+		---documentation windows from completion engines, overlay windows from
+		---installers, etc.
+		---
+		---NB: This is only significant for dark backgrounds as the light palettes
+		---have the same colour for both values in the switch.
+		float_style = 'bright',
+		---Inlay hints are special markers that are displayed inline with the code to
+		---provide you with additional information. You can use this option to customize
+		---the background color of inlay hints.
+		---
+		---Options are `'none'` or `'dimmed'`.
+		inlay_hints_background = 'dimmed',
+	}
+	-- require('kanagawa').setup {
+	--   compile = true,
+	--   transparent = true,
+	--   functionStyle = { italic = true },
+	--   dimInactive = true,
+	--   theme = 'wave',
+	--   background = {
+	--     dark = 'wave',
+	--     light = 'lotus',
+	--   },
+	-- }
+	vim.cmd.colorscheme('everforest')
 end)
 --
 -- vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {

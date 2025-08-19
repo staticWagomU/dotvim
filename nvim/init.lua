@@ -232,10 +232,17 @@ end)
 -- | 日本語入力関連
 -- =========================================
 now(function()
-  add('https://github.com/vim-skk/skkeleton')
-  add('https://github.com/skk-dev/dict')
-
+  add({
+    source = 'https://github.com/vim-skk/skkeleton',
+    depends = {
+      'https://github.com/skk-dev/dict',
+      'https://github.com/vim-denops/denops.vim',
+    },
+  })
   require('wagomu-box.plugin-config.skkeleton').setup(WagomuBox.plugins_path)
+
+  add('https://github.com/delphinus/skkeleton_indicator.nvim')
+  require('skkeleton_indicator').setup {}
 end)
 --
 -- =========================================

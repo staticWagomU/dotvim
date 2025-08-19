@@ -107,9 +107,12 @@ now(function()
 	require('mini.icons').setup()
 end)
 
+now(function()
+  add('https://github.com/echasnovski/mini.misc')
+  require('mini.misc').setup()
 
--- -- now(function()
--- --   add('https://github.com/zbirenbaum/copilot.lua')
+  MiniMisc.setup_restore_cursor()
+end)
 -- --   require('copilot').setup {
 -- --     suggestion = {
 -- --       auto_trigger = true,

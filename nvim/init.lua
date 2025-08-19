@@ -48,9 +48,10 @@ if utils.is_windows then
 	vim.fn.system([[%USERPROFILE%\dotwin\init.cmd]])
 end
 
---@diagnostic disable-next-line: unused-local
+---@diagnostic disable-next-line: unused-local
 local maps, nmaps, omaps, vmaps, imaps, smaps = WagomuBox.maps, WagomuBox.nmaps, WagomuBox.omaps, WagomuBox.vmaps,
 		WagomuBox.imaps, WagomuBox.smaps
+---@diagnostic disable-next-line: unused-local
 local nmap, map, xmap, imap = WagomuBox.nmap, WagomuBox.map, WagomuBox.xmap, WagomuBox.imap
 WagomuBox.MyAuGroup = vim.api.nvim_create_augroup('MyAuGroup', { clear = true })
 local MyAuGroup = WagomuBox.MyAuGroup
@@ -132,6 +133,7 @@ later(function()
 		install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
 	}
 
+---@diagnostic disable-next-line: unused-local
 	local install_list = {
 		'astro',
 		'css',
@@ -610,23 +612,6 @@ later(function()
 	add('https://github.com/themaxmarchuk/tailwindcss-colors.nvim')
 	require('tailwindcss-colors').setup {}
 
-	require('mason').setup()
-	require('mason-lspconfig').setup({
-		ensure_installed = ensure_installed
-	})
-	local lspconfig = require('lspconfig')
-
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	-- local capabilities = vim.tbl_deep_extend(
-	--   'force',
-	--   vim.lsp.protocol.make_client_capabilities(),
-	--   require('cmp_nvim_lsp').default_capabilities()
-	-- )
-	capabilities.textDocument.foldingRange = {
-		dynamicRegistration = false,
-		lineFoldingOnly = true,
-	}
-
 	local lsp_names = {
 		'astro',
 		'biome',
@@ -648,6 +633,25 @@ later(function()
 		'vtsls',
 		'zls',
 	}
+
+
+	require('mason').setup()
+	require('mason-lspconfig').setup({
+		ensure_installed = lsp_names
+	})
+	local lspconfig = require('lspconfig')
+
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	-- local capabilities = vim.tbl_deep_extend(
+	--   'force',
+	--   vim.lsp.protocol.make_client_capabilities(),
+	--   require('cmp_nvim_lsp').default_capabilities()
+	-- )
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
+
 	vim.lsp.config('tailwindcss', {
 		settings = {
 			tailwindCSS = {

@@ -34,6 +34,7 @@ vim.diagnostic.config({
 })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local opts = { noremap = true, silent = true }
 local utils
 
 now(function()
@@ -276,8 +277,22 @@ now(function()
 	})
 	require('wagomu-box.plugin-config.skkeleton').setup(WagomuBox.plugins_path)
 
-	add('https://github.com/delphinus/skkeleton_indicator.nvim')
-	require('skkeleton_indicator').setup {}
+	-- add('https://github.com/delphinus/skkeleton_indicator.nvim')
+	-- require('skkeleton_indicator').setup {}
+	add('https://github.com/NI57721/skkeleton-state-popup')
+	vim.cmd[[
+call skkeleton_state_popup#config(#{
+  \   labels: {
+  \     'input': #{hira: "あ", kata: 'ア', hankata: 'ｶﾅ', zenkaku: 'Ａ'},
+  \     'input:okurinasi': #{hira: '▽▽', kata: '▽▽', hankata: '▽▽', abbrev: 'ab'},
+  \     'input:okuriari': #{hira: '▽▽', kata: '▽▽', hankata: '▽▽'},
+  \     'henkan': #{hira: '▼▼', kata: '▼▼', hankata: '▼▼', abbrev: 'ab'},
+  \     'latin': '_A',
+  \   },
+  \   opts: #{relative: 'cursor', col: 0, row: 1, anchor: 'NW', style: 'minimal'},
+  \ })
+call skkeleton_state_popup#run()
+	]]
 end)
 --
 -- =========================================
@@ -793,6 +808,70 @@ later(function()
 	add('https://github.com/echasnovski/mini.indentscope')
 	require('mini.indentscope').setup {}
 end)
+
+later(function()
+	-- telescope的なやつ
+	require('mini.pick').setup()
+	vim.ui.select = MiniPick.ui_select
+
+	vim.keymap.set('n', [[\e]], '<Cmd>Pick explorer<Cr>', opts)
+	vim.keymap.set('n', [[\b]], '<Cmd>Pick buffers<Cr>', opts)
+	vim.keymap.set('n', [[\h]], '<Cmd>Pick help<Cr>', opts)
+	vim.keymap.set('n', [[\\]], '<Cmd>Pick grep<Cr>', opts)
+	vim.keymap.set('n', [[\f]], '<Cmd>Pick files<Cr>', opts)
+	vim.keymap.set('n', [[\g]], '<Cmd>Pick git_files<Cr>', opts)
+	vim.keymap.set('n', [[\l]], '<Cmd>Pick buf_lines<Cr>', opts)
+	vim.keymap.set('n', [[\m]], '<Cmd>Pick visit_paths<Cr>', opts)
+end)
+
+later(function()
+	require('mini.cursorword').setup()
+end)
+
+later(function()
+	-- mini.hogeに対して便利関数が追加される
+	require('mini.extra').setup()
+end)
+
+later(function()
+	-- 対となる括弧等を挿入してくれる
+	require('mini.surround').setup()
+end)
+
+later(function()
+	require('mini.pairs').setup()
+end)
+
+later(function()
+  local gen_ai_spec = require('mini.extra').gen_ai_spec
+  require('mini.ai').setup({
+    custom_textobjects = {
+      B = gen_ai_spec.buffer(),
+    },
+  })
+end)
+
+
+now(function()
+	-- mr.vimのように訪問したファイルを記録してくれるやつ
+	require('mini.visits').setup()
+end)
+
+later(function()
+	add('https://github.com/stevearc/quicker.nvim')
+	require('quicker').setup()
+end)
+
+later(function()
+	add('https://github.com/kevinhwang91/nvim-bqf')
+	require('bqf').setup {
+		auto_enable = true,
+		func_map = {
+			vsplit = '',
+		},
+	}
+end)
+
 --
 --
 -- later(function()

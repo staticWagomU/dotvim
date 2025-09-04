@@ -872,6 +872,11 @@ later(function()
 	}
 end)
 
+later(function()
+  add('https://github.com/simeji/winresizer')
+end)
+
+
 --
 --
 -- later(function()
@@ -914,9 +919,6 @@ end)
 --   map({ 'n', 'x' }, 's', '<Nop>', { noremap = false, silent = false })
 -- end)
 --
--- later(function()
---   add('https://github.com/simeji/winresizer')
--- end)
 --
 -- now(function()
 --   add('https://github.com/lambdalisue/mr.vim')

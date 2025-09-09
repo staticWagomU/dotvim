@@ -873,7 +873,18 @@ later(function()
 end)
 
 later(function()
-  add('https://github.com/simeji/winresizer')
+	add('https://github.com/simeji/winresizer')
+end)
+
+later(function()
+	add {
+		source = 'https://github.com/nvim-telescope/telescope.nvim',
+		depends = {
+			'https://github.com/nvim-lua/plenary.nvim',
+			'https://github.com/nvim-tree/nvim-web-devicons',
+		},
+	}
+	require('telescope').setup()
 end)
 
 
@@ -1371,10 +1382,6 @@ end)
 --   })
 -- end)
 --
--- later(function()
---   add('https://github.com/nvim-telescope/telescope.nvim')
---   require('telescope').setup {}
--- end)
 --
 -- later(function()
 --   add('https://github.com/folke/snacks.nvim')

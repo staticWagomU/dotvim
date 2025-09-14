@@ -134,7 +134,7 @@ later(function()
 		install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
 	}
 
----@diagnostic disable-next-line: unused-local
+	---@diagnostic disable-next-line: unused-local
 	local install_list = {
 		'astro',
 		'css',
@@ -280,7 +280,7 @@ now(function()
 	-- add('https://github.com/delphinus/skkeleton_indicator.nvim')
 	-- require('skkeleton_indicator').setup {}
 	add('https://github.com/NI57721/skkeleton-state-popup')
-	vim.cmd[[
+	vim.cmd [[
 call skkeleton_state_popup#config(#{
   \   labels: {
   \     'input': #{hira: "あ", kata: 'ア', hankata: 'ｶﾅ', zenkaku: 'Ａ'},
@@ -822,6 +822,12 @@ later(function()
 	vim.keymap.set('n', [[\g]], '<Cmd>Pick git_files<Cr>', opts)
 	vim.keymap.set('n', [[\l]], '<Cmd>Pick buf_lines<Cr>', opts)
 	vim.keymap.set('n', [[\m]], '<Cmd>Pick visit_paths<Cr>', opts)
+
+	require('mini.pick').setup({
+		mappings = {
+			choose_marked = 'C-q',
+		}
+	})
 end)
 
 later(function()
@@ -843,12 +849,12 @@ later(function()
 end)
 
 later(function()
-  local gen_ai_spec = require('mini.extra').gen_ai_spec
-  require('mini.ai').setup({
-    custom_textobjects = {
-      B = gen_ai_spec.buffer(),
-    },
-  })
+	local gen_ai_spec = require('mini.extra').gen_ai_spec
+	require('mini.ai').setup({
+		custom_textobjects = {
+			B = gen_ai_spec.buffer(),
+		},
+	})
 end)
 
 
@@ -887,16 +893,116 @@ later(function()
 	require('telescope').setup()
 end)
 
+now(function()
+	add {
+		source = 'https://github.com/vim-fall/fall.vim',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/lambdalisue/vim-glyph-palette'
+		},
+	}
+end)
 
---
---
--- later(function()
---   add {
---     source = 'https://github.com/echasnovski/mini.pick',
---     depends = { 'https://github.com/echasnovski/mini.extra' },
---   }
---   require('mini.pick').setup {}
--- end)
+later(function()
+	add('https://github.com/hrsh7th/nvim-deck')
+
+	local deck = require('deck')
+
+	-- Apply pre-defined easy settings.
+	-- For manual configuration, refer to the code in `deck/easy.lua`.
+	require('deck.easy').setup()
+
+	-- Set up buffer-specific key mappings for nvim-deck.
+	vim.api.nvim_create_autocmd('User', {
+		pattern = 'DeckStart',
+		callback = function(e)
+			local ctx = e.data.ctx --[[@as deck.Context]]
+
+			ctx.keymap('n', '<Tab>', deck.action_mapping('choose_action'))
+			ctx.keymap('n', '<C-l>', deck.action_mapping('refresh'))
+			ctx.keymap('n', 'i', deck.action_mapping('prompt'))
+			ctx.keymap('n', 'a', deck.action_mapping('prompt'))
+			ctx.keymap('n', '@', deck.action_mapping('toggle_select'))
+			ctx.keymap('n', '*', deck.action_mapping('toggle_select_all'))
+			ctx.keymap('n', 'p', deck.action_mapping('toggle_preview_mode'))
+			ctx.keymap('n', 'd', deck.action_mapping('delete'))
+			ctx.keymap('n', '<CR>', deck.action_mapping('default'))
+			ctx.keymap('n', 'o', deck.action_mapping('open'))
+			ctx.keymap('n', 'O', deck.action_mapping('open_keep'))
+			ctx.keymap('n', 's', deck.action_mapping('open_split'))
+			ctx.keymap('n', 'v', deck.action_mapping('open_vsplit'))
+			ctx.keymap('n', 'N', deck.action_mapping('create'))
+			ctx.keymap('n', 'w', deck.action_mapping('write'))
+			ctx.keymap('n', '<C-u>', deck.action_mapping('scroll_preview_up'))
+			ctx.keymap('n', '<C-d>', deck.action_mapping('scroll_preview_down'))
+
+			-- If you want to start the filter by default, call ctx.prompt() here
+			ctx.prompt()
+		end
+	})
+
+	--key-mapping for explorer source (requires `require('deck.easy').setup()`).
+	vim.api.nvim_create_autocmd('User', {
+		pattern = 'DeckStart:explorer',
+		callback = function(e)
+			local ctx = e.data.ctx --[[@as deck.Context]]
+			ctx.keymap('n', 'h', deck.action_mapping('explorer.collapse'))
+			ctx.keymap('n', 'l', deck.action_mapping('explorer.expand'))
+			ctx.keymap('n', '.', deck.action_mapping('explorer.toggle_dotfiles'))
+			ctx.keymap('n', 'c', deck.action_mapping('explorer.clipboard.save_copy'))
+			ctx.keymap('n', 'm', deck.action_mapping('explorer.clipboard.save_move'))
+			ctx.keymap('n', 'p', deck.action_mapping('explorer.clipboard.paste'))
+			ctx.keymap('n', 'x', deck.action_mapping('explorer.clipboard.paste'))
+			ctx.keymap('n', '<Leader>ff', deck.action_mapping('explorer.dirs'))
+			ctx.keymap('n', 'P', deck.action_mapping('toggle_preview_mode'))
+			ctx.keymap('n', '~', function()
+				ctx.do_action('explorer.get_api').set_cwd(vim.fs.normalize('~'))
+			end)
+			ctx.keymap('n', '\\', function()
+				ctx.do_action('explorer.get_api').set_cwd(vim.fs.normalize('/'))
+			end)
+		end
+	})
+
+	-- Example key bindings for launching nvim-deck sources. (These mapping required `deck.easy` calls.)
+	vim.keymap.set('n', '<Leader>ff', '<Cmd>Deck files<CR>', { desc = 'Show recent files, buffers, and more' })
+	vim.keymap.set('n', '<Leader>gr', '<Cmd>Deck grep<CR>', { desc = 'Start grep search' })
+	vim.keymap.set('n', '<Leader>gi', '<Cmd>Deck git<CR>', { desc = 'Open git launcher' })
+	vim.keymap.set('n', '<Leader>he', '<Cmd>Deck helpgrep<CR>', { desc = 'Live grep all help tags' })
+
+	-- Show the latest deck context.
+	vim.keymap.set('n', '<Leader>;', function()
+		local context = deck.get_history()[vim.v.count == 0 and 1 or vim.v.count]
+		if context then
+			context.show()
+		end
+	end)
+
+	-- Do default action on next item.
+	vim.keymap.set('n', '<Leader>n', function()
+		local ctx = require('deck').get_history()[1]
+		if ctx then
+			ctx.set_cursor(ctx.get_cursor() + 1)
+			ctx.do_action('default')
+		end
+	end)
+end)
+
+
+later(function()
+	add('https://github.com/folke/snacks.nvim')
+	require('snacks').setup()
+end)
+
+later(function()
+	add('https://github.com/ibhagwan/fzf-lua')
+end)
+
+later(function()
+	add('https://github.com/nvim-mini/mini.fuzzy')
+	require('mini.fuzzy').setup()
+end)
+
 --
 -- -- =========================================
 -- -- | その他
@@ -1321,72 +1427,6 @@ end)
 --   -- }
 -- end)
 --
--- now(function()
---   add {
---     source = 'https://github.com/vim-fall/fall.vim',
---     depends = {
---       'https://github.com/vim-denops/denops.vim',
---       'https://github.com/lambdalisue/vim-glyph-palette'
---     },
---   }
--- end)
---
--- later(function()
---   add('https://github.com/hrsh7th/nvim-deck')
---
---   local deck = require('deck')
---   require('deck.easy').setup()
---   vim.api.nvim_create_autocmd('User', {
---     pattern = 'DeckStart',
---     callback = function(e)
---       local ctx = e.data.ctx --[[@as deck.Context]]
---
---       -- normal-mode mapping.
---       ctx.keymap('n', '<Esc>', function()
---         ctx.set_preview_mode(false)
---       end)
---       ctx.keymap('n', '<Tab>', deck.action_mapping('choose_action'))
---       ctx.keymap('n', '<C-l>', deck.action_mapping('refresh'))
---       ctx.keymap('n', 'i', deck.action_mapping('prompt'))
---       ctx.keymap('n', 'a', deck.action_mapping('prompt'))
---       ctx.keymap('n', '@', deck.action_mapping('toggle_select'))
---       ctx.keymap('n', '*', deck.action_mapping('toggle_select_all'))
---       ctx.keymap('n', 'p', deck.action_mapping('toggle_preview_mode'))
---       ctx.keymap('n', 'd', deck.action_mapping('delete'))
---       ctx.keymap('n', '<CR>', deck.action_mapping('default'))
---       ctx.keymap('n', 'o', deck.action_mapping('open'))
---       ctx.keymap('n', 'O', deck.action_mapping('open_keep'))
---       ctx.keymap('n', 's', deck.action_mapping('open_split'))
---       ctx.keymap('n', 'v', deck.action_mapping('open_vsplit'))
---       ctx.keymap('n', 'N', deck.action_mapping('create'))
---       ctx.keymap('n', '<C-u>', deck.action_mapping('scroll_preview_up'))
---       ctx.keymap('n', '<C-d>', deck.action_mapping('scroll_preview_down'))
---
---       -- cmdline-mode mapping.
---       ctx.keymap('c', '<C-y>', function()
---         vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'n', true)
---         vim.schedule(function()
---           ctx.do_action('default')
---         end)
---       end)
---       ctx.keymap('c', '<C-j>', function()
---         ctx.set_cursor(ctx.get_cursor() + 1)
---       end)
---       ctx.keymap('c', '<C-k>', function()
---         ctx.set_cursor(ctx.get_cursor() - 1)
---       end)
---
---       -- If you want to start the filter by default, call ctx.prompt() here
---       ctx.prompt()
---     end
---   })
--- end)
---
---
--- later(function()
---   add('https://github.com/folke/snacks.nvim')
---   require('snacks').setup()
--- end)
 --
 -- later(function()
 --   add('https://github.com/joshuavial/aider.nvim')

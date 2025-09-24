@@ -1325,10 +1325,16 @@ end)
 -- --   })
 -- -- end)
 --
--- now(function()
---   add('https://github.com/yuki-yano/fuzzy-motion.vim')
---   nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
--- end)
+now(function()
+	add({
+		source = 'https://github.com/yuki-yano/fuzzy-motion.vim',
+		depends = {
+			'https://github.com/lambdalisue/vim-kensaku'
+		},
+	})
+	vim.g.fuzzy_motion_matchers = { 'fzf', 'kensaku' }
+	nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
+end)
 --
 -- later(function()
 --   add('https://github.com/tyru/capture.vim')

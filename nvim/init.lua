@@ -115,6 +115,7 @@ now(function()
 	add('https://github.com/echasnovski/mini.icons')
 	require('mini.icons').setup()
 	MiniIcons.mock_nvim_web_devicons()
+	MiniIcons.tweak_lsp_kind()
 end)
 
 now(function()

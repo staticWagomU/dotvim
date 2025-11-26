@@ -139,9 +139,7 @@ later(function()
 			end
 		}
 	})
-	require 'nvim-treesitter'.setup {
-		install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')
-	}
+	require('nvim-treesitter').setup()
 
 	---@diagnostic disable-next-line: unused-local
 	local install_list = {

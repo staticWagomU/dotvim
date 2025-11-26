@@ -30,6 +30,12 @@ vim.diagnostic.config({
 		format = function(diagnostic)
 			return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
 		end,
+		severity = {
+			[vim.diagnostic.severity.ERROR] = "🚒",
+			[vim.diagnostic.severity.WARN] = "🚧",
+			[vim.diagnostic.severity.INFO] = "👀",
+			[vim.diagnostic.severity.HINT] = "🦒",
+		}
 
 	}
 })

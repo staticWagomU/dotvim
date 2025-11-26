@@ -156,6 +156,15 @@ later(function()
 		'toml',
 		'typescript',
 	}
+
+	vim.api.nvim_create_autocmd("FileType", {
+		group = vim.api.nvim_create_augroup("vim-treesitter-start", {}),
+		callback = function(_)
+			if vim.tbl_contains(install_list, vim.bo.filetype) then
+				pcall(vim.treesitter.start)
+			end
+		end,
+	})
 	--  vim.api.nvim_create_autocmd('FileType', {
 	--    group = WagomuBox.MyAuGroup,
 	--    callback = function(event)

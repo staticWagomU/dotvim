@@ -1464,6 +1464,23 @@ end)
 --   add('https://github.com/nekowasabi/aider.vim')
 -- end)
 --
+later(function()
+	add('https://github.com/lambdalisue/nvim-aibo')
+	require('aibo').setup()
+end)
+
+later(function()
+	add('https://github.com/bassamsdata/namu.nvim')
+	vim.keymap.set("n", "<leader>ss", ":Namu symbols<cr>", {
+		desc = "Jump to LSP symbol",
+		silent = true,
+	})
+	vim.keymap.set("n", "<leader>sw", ":Namu workspace<cr>", {
+		desc = "LSP Symbols - Workspace",
+		silent = true,
+	})
+end)
+
 now(function()
 	-- add('https://github.com/sainnhe/everforest')
 	add('https://github.com/neanias/everforest-nvim')

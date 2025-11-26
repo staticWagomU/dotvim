@@ -26,7 +26,7 @@ vim.diagnostic.config({
 	severity_sort = true,
 	virtual_text = false,
 	virtual_lines = {
-		only_current_line = true,
+		current_line = true,
 		format = function(diagnostic)
 			return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
 		end,

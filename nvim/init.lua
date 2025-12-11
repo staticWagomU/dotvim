@@ -2,8 +2,8 @@
 vim.loader.enable()
 require('wagomu.mini-deps')
 
-vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
-
+-- vim.env.REACT_EDITOR = table.concat({ vim.v.progpath, "--server", vim.v.servername, "--remote" }, " ")
+--
 -- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 vim.treesitter.start = (function(wrapped)
 	return function(bufnr, lang)
@@ -11,7 +11,7 @@ vim.treesitter.start = (function(wrapped)
 		pcall(wrapped, bufnr, lang)
 	end
 end)(vim.treesitter.start)
-vim.treesitter.language.register('markdown', 'octo')
+-- vim.treesitter.language.register('markdown', 'octo')
 
 vim.diagnostic.config({
 	signs = {
@@ -30,13 +30,6 @@ vim.diagnostic.config({
 		format = function(diagnostic)
 			return string.format('%s (%s: %s)', diagnostic.message, diagnostic.source, diagnostic.code)
 		end,
-		severity = {
-			[vim.diagnostic.severity.ERROR] = "🚒",
-			[vim.diagnostic.severity.WARN] = "🚧",
-			[vim.diagnostic.severity.INFO] = "👀",
-			[vim.diagnostic.severity.HINT] = "🦒",
-		}
-
 	}
 })
 
@@ -165,24 +158,24 @@ later(function()
 			end
 		end,
 	})
-	--  vim.api.nvim_create_autocmd('FileType', {
-	--    group = WagomuBox.MyAuGroup,
-	--    callback = function(event)
-	--      local ok, nvim_treesitter = pcall(require, 'nvim-treesitter')
-	--      if not ok then return end
-	--      local ft = vim.bo[event.buf].ft
-	--      local lang = vim.treesitter.language.get_lang(ft)
-	--      nvim_treesitter.install({ lang }):await(function(err)
-	--        if err then
-	--          vim.notify('Treesitter install error for ft: ' .. ft .. ' err: ' .. err)
-	--          return
-	--        end
-	--        pcall(vim.treesitter.start, event.buf)
-	--        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-	--        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-	--      end)
-	--    end,
-	--  })
+	--	 vim.api.nvim_create_autocmd('FileType', {
+	--	   group = WagomuBox.MyAuGroup,
+	--	   callback = function(event)
+	--	     local ok, nvim_treesitter = pcall(require, 'nvim-treesitter')
+	--	     if not ok then return end
+	--	     local ft = vim.bo[event.buf].ft
+	--	     local lang = vim.treesitter.language.get_lang(ft)
+	--	     nvim_treesitter.install({ lang }):await(function(err)
+	--	       if err then
+	--	         vim.notify('Treesitter install error for ft: ' .. ft .. ' err: ' .. err)
+	--	         return
+	--	       end
+	--	       pcall(vim.treesitter.start, event.buf)
+	--	       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	--	       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+	--	     end)
+	--	   end,
+	--	 })
 
 	-- require('nvim-treesitter').install({
 	--   'bash',
@@ -309,6 +302,8 @@ call skkeleton_state_popup#config(#{
   \ })
 call skkeleton_state_popup#run()
 	]]
+	vim.cmd [[highlight SkkeletonHenkan gui=reverse term=reverse cterm=reverse]]
+	add('https://github.com/NI57721/skkeleton-henkan-highlight')
 end)
 --
 -- =========================================
@@ -323,9 +318,13 @@ end)
 now(function()
 	add {
 		source = 'https://github.com/lambdalisue/vim-gin',
-		depends = { 'vim-denops/denops.vim' },
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/rhysd/committia.vim'
+		},
 	}
 
+	vim.g.committia_open_only_vim_starting = 0
 	require('wagomu-box.plugin-config.gin')
 
 	local nowait_bufopts = { buffer = true, noremap = true, nowait = true }
@@ -394,6 +393,22 @@ later(function()
 		},
 	}
 
+	vim.api.nvim_create_autocmd("BufWinEnter", {
+		callback = function(ctx)
+			if vim.startswith(ctx.file, "oil://") then
+				if not vim.w.old_winbar then
+					vim.w.old_winbar = vim.wo[0].winbar
+				end
+				vim.wo[0].winbar = "%F"
+				return
+			end
+
+			if vim.w.old_winbar then
+				vim.wo[0].winbar = vim.w.old_winbar
+			end
+		end,
+	})
+
 	nmaps {
 		{
 			'<Leader>e',
@@ -416,10 +431,29 @@ later(function()
 		group = MyAuGroup,
 		callback = function(args)
 			local buffer = { buffer = args.buf }
+			local fern_opts = vim.tbl_extend('force', {}, buffer, { desc = 'カーソル位置のパスをFernで開く' })
 
 			nmaps {
 				{ 'q', oil.close, buffer },
 				{ '=', oil.save,  buffer },
+				{
+					'<Leader>o',
+					function()
+						local entry = oil.get_cursor_entry()
+						local current_dir = oil.get_current_dir(args.buf) or vim.fn.getcwd()
+
+						if entry then
+							-- -reveal でカーソル位置のエントリにフォーカス
+							local reveal_path = current_dir .. entry.name
+							vim.cmd(string.format('Fern %s -reveal=%s',
+								vim.fn.fnameescape(current_dir),
+								vim.fn.fnameescape(reveal_path)))
+						else
+							vim.cmd(string.format('Fern %s', vim.fn.fnameescape(current_dir)))
+						end
+					end,
+					fern_opts,
+				},
 				{
 					'<Leader>we',
 					function()
@@ -433,6 +467,47 @@ later(function()
 					buffer,
 				},
 			}
+		end,
+	})
+end)
+
+later(function()
+	add {
+		source = 'https://github.com/lambdalisue/vim-fern',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+		},
+	}
+
+	vim.api.nvim_create_autocmd('FileType', {
+		pattern = 'fern',
+		callback = function(args)
+			vim.opt_local.relativenumber = false
+			vim.opt_local.number = false
+			vim.opt_local.signcolumn = 'no'
+			vim.opt_local.foldcolumn = "0"
+			vim.keymap.set('n', '<Leader>o', function()
+				local vimL_func_definition = [[
+  function! GetFernCursorPathInline() abort
+    let helper = fern#helper#new()
+    let node = helper.sync.get_cursor_node()
+    return node
+  endfunction
+]]
+				vim.api.nvim_exec2(vimL_func_definition, {
+					output = false
+				})
+				local cursor_path = vim.fn["GetFernCursorPathInline"]()["_path"]
+				cursor_path = vim.fs.dirname(vim.fn.fnamemodify(cursor_path, ':p'))
+
+				local ok_oil, oil = pcall(require, 'oil')
+				if not ok_oil then
+					vim.notify('oil.nvim を読み込めませんでした', vim.log.levels.ERROR)
+					return
+				end
+
+				oil.open(cursor_path)
+			end, { buffer = args.buf, desc = 'カーソル位置のディレクトリをOilで開く' })
 		end,
 	})
 end)
@@ -1095,111 +1170,115 @@ end)
 --   }
 -- end)
 --
--- -- =========================================
--- -- | ddu関連
--- -- =========================================
--- now(function()
---   -- ----------------------------------------
---   -- UI
---   -- ----------------------------------------
---   add('https://github.com/Shougo/ddu-ui-ff')
---   add('https://github.com/Shougo/ddu-ui-filer')
---   -- ----------------------------------------
---   -- Source
---   -- ----------------------------------------
---   add('https://github.com/Shougo/ddu-source-action')
---   add('https://github.com/Shougo/ddu-source-file')
---   add('https://github.com/Shougo/ddu-source-file_old')
---   add('https://github.com/Shougo/ddu-source-file_rec')
---   add('https://github.com/Shougo/ddu-source-line')
---   add('https://github.com/kuuote/ddu-source-mr')
---   add('https://github.com/matsui54/ddu-source-file_external')
---   add('https://github.com/matsui54/ddu-source-help')
---   add('https://github.com/shun/ddu-source-buffer')
---   add('https://github.com/shun/ddu-source-rg')
---   add('https://github.com/staticWagomU/ddu-source-patch_local')
---
---   add('https://github.com/kuuote/ddu-source-git_diff')
---   add('https://github.com/kuuote/ddu-source-git_status')
---   add('https://github.com/kyoh86/ddu-source-git_branch')
---   add('https://github.com/kyoh86/ddu-source-git_diff_tree')
---   add('https://github.com/kyoh86/ddu-source-git_log')
---
---   -- ----------------------------------------
---   -- Kind
---   -- ----------------------------------------
---   add('https://github.com/Shougo/ddu-kind-file')
---   add('https://github.com/matsui54/ddu-vim-ui-select')
---
---   -- ----------------------------------------
---   -- Filter
---   -- ----------------------------------------
---   add('https://github.com/Shougo/ddu-filter-matcher_substring')
---   add('https://github.com/Shougo/ddu-filter-sorter_alpha')
---   add('https://github.com/kuuote/ddu-filter-sorter_mtime')
---   add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
---   add('https://github.com/staticWagomU/ddu-filter-matcher-specific-items')
---   add('https://github.com/yuki-yano/ddu-filter-fzf')
---
---   add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
---   add('https://github.com/nabezokodaikon/ddu-filter-converter_git_status')
---
---   add {
---     source = 'https://github.com/Shougo/ddu.vim',
---     depends = { 'lambdalisue/mr.vim' },
---   }
---   add('https://github.com/shougo/ddu-commands.vim')
---
---   -- さすがに長いので分ける
---   require('pluginconfig.ddu')
---
---   local ddu = require('pluginconfig.ddu.util')
---
---   WagomuBox.nmaps {
---     {
---       [[\,]],
---       function() ddu.start_source('file_ghq') end,
---     },
---     {
---       [[\p]],
---       function() ddu.start_local('patch_local') end,
---     },
---     {
---       [[\\]],
---       function() ddu.start_local('favorite') end,
---     },
---     {
---       [[\b]],
---       function() ddu.start_source('buffer') end,
---     },
---     {
---       [[\f]],
---       function() ddu.start_local('file_recursive 💛') end,
---     },
---     {
---       [[\F]],
---       function() ddu.start_local('current_file') end,
---     },
---     {
---       [[\g]],
---       function() ddu.start_local('file_git') end,
---     },
---     {
---       [[\h]],
---       function() ddu.start_source('help') end,
---     },
---     {
---       [[\l]],
---       function() ddu.start_source('line') end,
---     },
---     {
---       [[\m]],
---       function() ddu.start_local('mrw') end,
---     },
---   }
--- end)
---
---
+-- =========================================
+-- | ddu関連
+-- =========================================
+now(function()
+	-- ----------------------------------------
+	-- UI
+	-- ----------------------------------------
+	add('https://github.com/Shougo/ddu-ui-ff')
+	add('https://github.com/Shougo/ddu-ui-filer')
+	-- ----------------------------------------
+	-- Source
+	-- ----------------------------------------
+	add('https://github.com/Shougo/ddu-source-action')
+	add('https://github.com/Shougo/ddu-source-file')
+	add('https://github.com/Shougo/ddu-source-file_old')
+	add('https://github.com/Shougo/ddu-source-file_rec')
+	add('https://github.com/Shougo/ddu-source-line')
+	add('https://github.com/kuuote/ddu-source-mr')
+	add('https://github.com/matsui54/ddu-source-file_external')
+	add('https://github.com/matsui54/ddu-source-help')
+	add('https://github.com/shun/ddu-source-buffer')
+	add('https://github.com/shun/ddu-source-rg')
+	add('https://github.com/staticWagomU/ddu-source-patch_local')
+
+	add('https://github.com/kuuote/ddu-source-git_diff')
+	add('https://github.com/kuuote/ddu-source-git_status')
+	add('https://github.com/kyoh86/ddu-source-git_branch')
+	add('https://github.com/kyoh86/ddu-source-git_diff_tree')
+	add('https://github.com/kyoh86/ddu-source-git_log')
+
+	-- ----------------------------------------
+	-- Kind
+	-- ----------------------------------------
+	add('https://github.com/Shougo/ddu-kind-file')
+	add('https://github.com/matsui54/ddu-vim-ui-select')
+
+	-- ----------------------------------------
+	-- Filter
+	-- ----------------------------------------
+	add('https://github.com/Shougo/ddu-filter-matcher_substring')
+	add('https://github.com/Shougo/ddu-filter-sorter_alpha')
+	add('https://github.com/kuuote/ddu-filter-sorter_mtime')
+	add('https://github.com/kyoh86/ddu-filter-converter_hl_dir')
+	add('https://github.com/staticWagomU/ddu-filter-matcher-specific-items')
+	add('https://github.com/yuki-yano/ddu-filter-fzf')
+
+	add('https://github.com/uga-rosa/ddu-filter-converter_devicon')
+	add('https://github.com/nabezokodaikon/ddu-filter-converter_git_status')
+
+	add {
+		source = 'https://github.com/Shougo/ddu.vim',
+		depends = { 'lambdalisue/mr.vim' },
+	}
+	add('https://github.com/shougo/ddu-commands.vim')
+
+	-- さすがに長いので分ける
+	require('pluginconfig.ddu')
+
+	local ddu = require('pluginconfig.ddu.util')
+
+	WagomuBox.nmaps {
+		{
+			[[<Space>,]],
+			function() ddu.start_source('file_ghq') end,
+		},
+		{
+			[[<Space>p]],
+			function() ddu.start_local('patch_local') end,
+		},
+		-- {
+		-- 	[[<Space><Space>]],
+		-- 	function() ddu.start_local('favorite') end,
+		-- },
+		{
+			[[<Space>b]],
+			function() ddu.start_source('buffer') end,
+		},
+		{
+			[[<Space>l]],
+			function() ddu.start_local('live_grep 💛') end,
+		},
+		{
+			[[<Space>f]],
+			function() ddu.start_local('file_recursive 💛') end,
+		},
+		{
+			[[<Space>F]],
+			function() ddu.start_local('current_file') end,
+		},
+		{
+			[[<Space>g]],
+			function() ddu.start_local('file_git') end,
+		},
+		{
+			[[<Space>h]],
+			function() ddu.start_source('help') end,
+		},
+		{
+			[[<Space>/]],
+			function() ddu.start_source('line') end,
+		},
+		{
+			[[<Space>m]],
+			function() ddu.start_local('mrw') end,
+		},
+	}
+end)
+
+
 -- later(function()
 --   add('https://github.com/lewis6991/foldsigns.nvim')
 --   require('foldsigns').setup()
@@ -1351,6 +1430,7 @@ now(function()
 	vim.g.fuzzy_motion_matchers = { 'fzf', 'kensaku' }
 	nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
 end)
+
 --
 -- later(function()
 --   add('https://github.com/tyru/capture.vim')

@@ -1,5 +1,8 @@
 local ddu = require('pluginconfig.ddu.util')
 local bufopts = { buffer = true, silent = false }
+require('pluginconfig.ddu.path_concealer').setup({
+  advanced = false,
+})
 
 ddu.alias('default', 'source', 'file_rg', 'file_external' )
 ddu.alias('default', 'source', 'file_git', 'file_external')

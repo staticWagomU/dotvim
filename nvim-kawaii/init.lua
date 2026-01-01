@@ -1,0 +1,142 @@
+vim.loader.enable()
+
+vim.env.XDG_STATE_HOME = '/tmp'
+vim.opt.undodir = vim.env.XDG_STATE_HOME .. '/' .. vim.env.NVIM_APPNAME .. '/undo'
+vim.opt.background = 'light'
+
+vim.g.loaded_gzip = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_fzf = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.loaded_remote_plugins = 1
+
+-- Clone 'mini.nvim' manually in a way that it gets managed by 'mini.deps'
+local path_package = vim.fn.stdpath('data') .. '/site/'
+local mini_path = path_package .. 'pack/deps/start/mini.nvim'
+local plugins_path = vim.fs.joinpath(path_package, 'pack/deps/opt')
+if not vim.loop.fs_stat(mini_path) then
+	vim.cmd('echo "Installing `mini.nvim`" | redraw')
+	local clone_cmd = {
+		'git', 'clone', '--filter=blob:none',
+		'https://github.com/nvim-mini/mini.nvim', mini_path
+	}
+	vim.fn.system(clone_cmd)
+	vim.cmd('packadd mini.nvim | helptags ALL')
+	vim.cmd('echo "Installed `mini.nvim`" | redraw')
+end
+
+-- Set up 'mini.deps' (customize to your liking)
+require('mini.deps').setup({ path = { package = path_package } })
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
+
+-- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
+vim.treesitter.start = (function(wrapped)
+	return function(bufnr, lang)
+		lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
+		pcall(wrapped, bufnr, lang)
+	end
+end)(vim.treesitter.start)
+
+
+add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
+now(function()
+	add('https://github.com/staticWagomU/wagomu-box.nvim')
+	require('wagomu-box.keymaps').apply()
+	require('wagomu-box.options').apply()
+	U = require('wagomu-box.utils')
+end)
+
+nmaps = U.nmaps
+autocmd = vim.api.nvim_create_autocmd
+
+now(function()
+	require('mini.icons').setup()
+	MiniIcons.mock_nvim_web_devicons()
+	MiniIcons.tweak_lsp_kind()
+end)
+
+
+later(function()
+	add('https://github.com/stevearc/oil.nvim')
+	require('plugins.oil')
+end)
+
+later(function()
+	add {
+		source = 'https://github.com/lambdalisue/vim-fern',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+		},
+	}
+	require('plugins.fern')
+end)
+
+later(function()
+	add('https://github.com/lewis6991/gitsigns.nvim')
+	require('wagomu-box.plugin-config.gitsigns')
+end)
+
+now(function()
+	add {
+		source = 'https://github.com/lambdalisue/vim-gin',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/rhysd/committia.vim'
+		},
+	}
+
+	vim.g.committia_open_only_vim_starting = 0
+	require('wagomu-box.plugin-config.gin')
+	require('plugins.vim-gin')
+
+end)
+
+now(function()
+	add({
+		source = 'https://github.com/vim-skk/skkeleton',
+		depends = {
+			'https://github.com/skk-dev/dict',
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/NI57721/skkeleton-state-popup',
+			'https://github.com/NI57721/skkeleton-henkan-highlight',
+		},
+	})
+
+	require('wagomu-box.plugin-config.skkeleton').setup(plugins_path)
+
+	vim.fn['skkeleton_state_popup#config']({
+		labels = {
+			input = { hira = 'あ', kata = 'ア', hankata = 'ｶﾅ', zenkaku = 'Ａ' },
+			['input:okurinasi'] = { hira = '▽▽', kata = '▽▽', hankata = '▽▽', abbrev = 'ab' },
+			['input:okuriari'] = { hira = '▽▽', kata = '▽▽', hankata = '▽▽' },
+			henkan = { hira = '▼▼', kata = '▼▼', hankata = '▼▼', abbrev = 'ab' },
+			latin = '_A',
+		},
+		opts = { relative = 'cursor', col = 0, row = 1, anchor = 'NW', style = 'minimal' },
+	})
+	vim.cmd[[call skkeleton_state_popup#run()]]
+	vim.api.nvim_set_hl(0, 'SkkeletonHenkan', { reverse = true })
+end)
+
+later(function()
+	add('https://github.com/savq/melange-nvim')
+	vim.opt.background = 'light'
+	vim.cmd.colorscheme('melange')
+end)

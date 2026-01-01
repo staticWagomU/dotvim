@@ -45,13 +45,6 @@ require('mini.deps').setup({ path = { package = path_package } })
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 
--- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
-vim.treesitter.start = (function(wrapped)
-	return function(bufnr, lang)
-		lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
-		pcall(wrapped, bufnr, lang)
-	end
-end)(vim.treesitter.start)
 
 add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
@@ -92,6 +85,35 @@ now(function()
 	require('mini.misc').setup()
 	MiniMisc.setup_restore_cursor()
 	MiniMisc.setup_auto_root()
+end)
+
+later(function()
+	-- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
+	vim.treesitter.start = (function(wrapped)
+		return function(bufnr, lang)
+			lang = lang or vim.fn.getbufvar(bufnr or '', '&filetype')
+			pcall(wrapped, bufnr, lang)
+		end
+	end)(vim.treesitter.start)
+
+	add({
+		source = 'https://github.com/nvim-treesitter/nvim-treesitter',
+		hooks = {
+			post_checkout = function()
+				vim.cmd.TSUpdate('all')
+			end
+		}
+	})
+
+
+	autocmd("FileType", {
+		group = WagomuBox.MyAuGroup,
+		callback = function(_)
+			pcall(vim.treesitter.start)
+			vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+			vim.wo[0][0].foldmethod = 'expr'
+		end,
+	})
 end)
 
 later(function()

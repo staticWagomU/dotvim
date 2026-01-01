@@ -72,6 +72,11 @@ now(function()
 	MiniIcons.tweak_lsp_kind()
 end)
 
+now(function()
+	require('mini.misc').setup()
+	MiniMisc.setup_restore_cursor()
+	MiniMisc.setup_auto_root()
+end)
 
 later(function()
 	add('https://github.com/stevearc/oil.nvim')

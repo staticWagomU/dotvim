@@ -55,6 +55,7 @@ now(function()
 	U = require('wagomu-box.utils')
 end)
 
+map = U.map
 maps, nmaps = U.maps, U.nmaps
 autocmd = vim.api.nvim_create_autocmd
 

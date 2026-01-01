@@ -88,6 +88,10 @@ now(function()
 end)
 
 later(function()
+	require('mini.pairs').setup()
+end)
+
+later(function()
 	-- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 	vim.treesitter.start = (function(wrapped)
 		return function(bufnr, lang)

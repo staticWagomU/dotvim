@@ -334,6 +334,11 @@ later(function()
 end)
 
 later(function()
+	add('https://github.com/folke/snacks.nvim')
+	require('snacks').setup()
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

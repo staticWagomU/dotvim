@@ -240,6 +240,10 @@ later(function()
 end)
 
 later(function()
+	add('https://github.com/simeji/winresizer')
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

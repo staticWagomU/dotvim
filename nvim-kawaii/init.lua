@@ -66,6 +66,23 @@ end)
 nmaps = U.nmaps
 autocmd = vim.api.nvim_create_autocmd
 
+-- https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
+-- https://github.com/kawarimidoll/dotfiles/blob/3973a06c025e13e853336848c0856db60271ef1e/.config/nvim/init.lua#L45C1-L59C3
+autocmd('BufWritePre', {
+  pattern = '*',
+  callback = function(event)
+    local dir = vim.fs.dirname(event.file)
+    local force = U.is_present(vim.v.cmdbang)
+    if
+      not vim.bool_fn.isdirectory(dir)
+      and (force or vim.fn.confirm('"' .. dir .. '" does not exist. Create?', '&Yes\n&No') == 1)
+    then
+      vim.fn.mkdir(vim.fn.iconv(dir, vim.opt.encoding:get(), vim.opt.termencoding:get()), 'p')
+    end
+  end,
+  desc = 'Auto mkdir to save file',
+})
+
 now(function()
 	require('mini.icons').setup()
 	MiniIcons.mock_nvim_web_devicons()

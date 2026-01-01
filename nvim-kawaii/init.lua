@@ -92,6 +92,17 @@ later(function()
 end)
 
 later(function()
+	local gen_ai_spec = require('mini.extra').gen_ai_spec
+	require('mini.ai').setup({
+		custom_textobjects = {
+			b = gen_ai_spec.buffer(),
+			i = gen_ai_spec.indent(),
+			l = gen_ai_spec.line(),
+		},
+	})
+end)
+
+later(function()
 	-- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 	vim.treesitter.start = (function(wrapped)
 		return function(bufnr, lang)

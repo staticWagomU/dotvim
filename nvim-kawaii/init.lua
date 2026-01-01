@@ -53,7 +53,6 @@ vim.treesitter.start = (function(wrapped)
 	end
 end)(vim.treesitter.start)
 
-
 add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 now(function()

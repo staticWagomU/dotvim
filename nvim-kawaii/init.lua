@@ -347,6 +347,11 @@ later(function()
 end)
 
 later(function()
+  add('https://github.com/machakann/vim-sandwich')
+  map({ 'n', 'x' }, 's', '<Nop>', { noremap = false, silent = false })
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

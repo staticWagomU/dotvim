@@ -92,17 +92,6 @@ later(function()
 end)
 
 later(function()
-	local gen_ai_spec = require('mini.extra').gen_ai_spec
-	require('mini.ai').setup({
-		custom_textobjects = {
-			b = gen_ai_spec.buffer(),
-			i = gen_ai_spec.indent(),
-			l = gen_ai_spec.line(),
-		},
-	})
-end)
-
-later(function()
 	-- ref: https://zenn.dev/kawarimidoll/articles/18ee967072def7
 	vim.treesitter.start = (function(wrapped)
 		return function(bufnr, lang)
@@ -140,16 +129,17 @@ later(function()
 	require('nvim-treesitter-textobjects').setup({
 		select = {
 			lookahead = true,
-			selection_modes = {
-				['@parameter.outer'] = 'v',
-				['@function.inner'] = 'V',
-				['@function.outer'] = 'V',
-			},
 		},
 	})
-	maps({'x', 'o' }, {
-		{'if', function() require('nvim-treesitter-textobjects.select').select_textobject('@function.inner', 'textobjects') end},
-		{'af', function() require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects') end},
+
+	local gen_spec = require("mini.ai").gen_spec
+	local gen_ai_spec = require('mini.extra').gen_ai_spec
+	require('mini.ai').setup({
+		custom_textobjects = {
+			b = gen_ai_spec.buffer(),
+			i = gen_ai_spec.indent(),
+			f = gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" })
+		},
 	})
 end)
 

@@ -260,6 +260,17 @@ later(function()
 	}
 	require('telescope').setup()
 end)
+
+now(function()
+	add {
+		source = 'https://github.com/vim-fall/fall.vim',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			'https://github.com/lambdalisue/vim-glyph-palette'
+		},
+	}
+end)
+
 later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'

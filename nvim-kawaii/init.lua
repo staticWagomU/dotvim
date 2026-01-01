@@ -171,6 +171,10 @@ later(function()
 end)
 
 later(function()
+	require('mini.cursorword').setup()
+end)
+
+later(function()
 	add('https://github.com/stevearc/oil.nvim')
 	require('plugins.oil')
 end)

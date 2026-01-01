@@ -147,7 +147,7 @@ later(function()
 
 	local hooks = require 'ibl.hooks'
 	hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-		vim.api.nvim_set_hl(1, 'RainbowRed', { fg = '#BF0021' })
+		vim.api.nvim_set_hl(0, 'RainbowRed', { fg = '#BF0021' })
 		vim.api.nvim_set_hl(0, 'RainbowYellow', { fg = '#E5C07B' })
 		vim.api.nvim_set_hl(0, 'RainbowBlue', { fg = '#465AA4' })
 		vim.api.nvim_set_hl(0, 'RainbowOrange', { fg = '#CCA478' })

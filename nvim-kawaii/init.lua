@@ -352,6 +352,25 @@ later(function()
 end)
 
 later(function()
+  add('https://github.com/hrsh7th/nvim-insx')
+  local insx = require('insx')
+  local esc = require('insx').helper.regex.esc
+  require('insx.preset.standard').setup()
+  insx.add('<Tab>', require('insx.recipe.jump_next')({
+    jump_pat = {
+      ([=[\%%#[^%s]*%s\zs]=]):format(';', esc(';')),
+      ([=[\%%#[^%s]*%s\zs]=]):format(')', esc(')')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('\\]', esc(']')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('}', esc('}')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('>', esc('>')),
+      ([=[\%%#[^%s]*%s\zs]=]):format('"', esc('"')),
+      ([=[\%%#[^%s]*%s\zs]=]):format("'", esc("'")),
+      ([=[\%%#[^%s]*%s\zs]=]):format('`', esc('`')),
+    },
+  }))
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

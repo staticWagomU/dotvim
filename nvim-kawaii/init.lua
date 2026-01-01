@@ -230,6 +230,16 @@ later(function()
 end)
 
 later(function()
+	add('https://github.com/kevinhwang91/nvim-bqf')
+	require('bqf').setup {
+		auto_enable = true,
+		func_map = {
+			vsplit = '',
+		},
+	}
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

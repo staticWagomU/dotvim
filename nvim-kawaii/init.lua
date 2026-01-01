@@ -225,6 +225,11 @@ now(function()
 end)
 
 later(function()
+	add('https://github.com/stevearc/quicker.nvim')
+	require('quicker').setup()
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

@@ -372,6 +372,17 @@ later(function()
 end)
 
 later(function()
+	add('https://github.com/windwp/nvim-ts-autotag')
+	require('nvim-ts-autotag').setup({
+		opts = {
+			enable_close = true,
+			enable_rename = true,
+			enable_close_on_slash = false
+		},
+	})
+end)
+
+later(function()
 	add('https://github.com/savq/melange-nvim')
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')

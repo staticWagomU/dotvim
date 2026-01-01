@@ -130,16 +130,7 @@ later(function()
 			lookahead = true,
 		},
 	})
-
-	local gen_spec = require("mini.ai").gen_spec
-	local gen_ai_spec = require('mini.extra').gen_ai_spec
-	require('mini.ai').setup({
-		custom_textobjects = {
-			b = gen_ai_spec.buffer(),
-			i = gen_ai_spec.indent(),
-			f = gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" })
-		},
-	})
+	require('plugins.mini.ai')
 end)
 
 later(function()
@@ -225,19 +216,7 @@ now(function()
 	})
 
 	require('wagomu-box.plugin-config.skkeleton').setup(plugins_path)
-
-	vim.fn['skkeleton_state_popup#config']({
-		labels = {
-			input = { hira = 'あ', kata = 'ア', hankata = 'ｶﾅ', zenkaku = 'Ａ' },
-			['input:okurinasi'] = { hira = '▽▽', kata = '▽▽', hankata = '▽▽', abbrev = 'ab' },
-			['input:okuriari'] = { hira = '▽▽', kata = '▽▽', hankata = '▽▽' },
-			henkan = { hira = '▼▼', kata = '▼▼', hankata = '▼▼', abbrev = 'ab' },
-			latin = '_A',
-		},
-		opts = { relative = 'cursor', col = 0, row = 1, anchor = 'NW', style = 'minimal' },
-	})
-	vim.cmd[[call skkeleton_state_popup#run()]]
-	vim.api.nvim_set_hl(0, 'SkkeletonHenkan', { reverse = true })
+	require('plugins.skkeleton')
 end)
 
 later(function()

@@ -453,49 +453,49 @@ later(function()
 	vim.lsp.enable({ 'lua_ls' })
 end)
 
-later(function()
-	add('https://github.com/stevearc/conform.nvim')
-	local prettier = { "prettierd", "prettier", stop_after_first = true }
-	local opts = {
-		default_format_opts = {
-			lsp_format = "fallback",
-		},
-		formatters_by_ft = {
-			javascript = prettier,
-			typescript = prettier,
-			javascriptreact = prettier,
-			typescriptreact = prettier,
-			css = prettier,
-			graphql = prettier,
-			html = prettier,
-			json = { "prettierd", "prettier", "jq", stop_after_first = true },
-			json5 = prettier,
-			jsonc = prettier,
-			yaml = prettier,
-			markdown = { "injected" },
-			lua = { "stylua" },
-			go = { "goimports", "gofmt" },
-			python = { "isort", "black" },
-			["_"] = { "trim_whitespace", "trim_newlines", lsp_format = "last" },
-		},
-		formatters = {
-			injected = {
-				options = {
-					lang_to_formatters = {
-						html = {},
-					},
-				},
-			},
-			-- Dealing with old version of prettierd that doesn't support range formatting
-			prettierd = {
-				---@diagnostic disable-next-line: assign-type-mismatch
-				range_args = false,
-			},
-		}
-	}
-	require('conform').setup(opts)
-	vim.o.formatexpr = 'v:lua.require"conform".formatexpr()'
-end)
+-- later(function()
+-- 	add('https://github.com/stevearc/conform.nvim')
+-- 	local prettier = { "prettierd", "prettier", stop_after_first = true }
+-- 	local opts = {
+-- 		default_format_opts = {
+-- 			lsp_format = "fallback",
+-- 		},
+-- 		formatters_by_ft = {
+-- 			javascript = prettier,
+-- 			typescript = prettier,
+-- 			javascriptreact = prettier,
+-- 			typescriptreact = prettier,
+-- 			css = prettier,
+-- 			graphql = prettier,
+-- 			html = prettier,
+-- 			-- json = prettier,
+-- 			json5 = prettier,
+-- 			jsonc = prettier,
+-- 			yaml = prettier,
+-- 			markdown = { "injected" },
+-- 			lua = { "stylua" },
+-- 			go = { "goimports", "gofmt" },
+-- 			python = { "isort", "black" },
+-- 			["_"] = { "trim_whitespace", "trim_newlines", lsp_format = "last" },
+-- 		},
+-- 		formatters = {
+-- 			injected = {
+-- 				options = {
+-- 					lang_to_formatters = {
+-- 						html = {},
+-- 					},
+-- 				},
+-- 			},
+-- 			-- Dealing with old version of prettierd that doesn't support range formatting
+-- 			prettierd = {
+-- 				---@diagnostic disable-next-line: assign-type-mismatch
+-- 				range_args = false,
+-- 			},
+-- 		}
+-- 	}
+-- 	require('conform').setup(opts)
+-- 	vim.o.formatexpr = 'v:lua.require"conform".formatexpr()'
+-- end)
 
 later(function()
 	add('https://github.com/savq/melange-nvim')

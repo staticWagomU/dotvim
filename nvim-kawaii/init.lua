@@ -493,7 +493,7 @@ later(function()
 			},
 		}
 	}
-	require('confirm').setup(opts)
+	require('conform').setup(opts)
 	vim.o.formatexpr = 'v:lua.require"conform".formatexpr()'
 end)
 

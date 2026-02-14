@@ -453,6 +453,10 @@ later(function()
 	vim.lsp.enable({ 'lua_ls' })
 end)
 
+later(function()
+	add('https://github.com/serhez/bento.nvim')
+end)
+
 -- later(function()
 -- 	add('https://github.com/stevearc/conform.nvim')
 -- 	local prettier = { "prettierd", "prettier", stop_after_first = true }
@@ -499,7 +503,7 @@ end)
 
 later(function()
 	add('https://github.com/savq/melange-nvim')
-	vim.opt.background = 'light'
+	vim.opt.background = 'dark'
 	vim.cmd.colorscheme('melange')
 end)
 

@@ -55,7 +55,7 @@ now(function()
 	U = require('wagomu-box.utils')
 end)
 
-map = U.map
+map, nmap = U.map, U.nmap
 maps, nmaps = U.maps, U.nmaps
 autocmd = vim.api.nvim_create_autocmd
 
@@ -507,4 +507,16 @@ later(function()
 	add('https://github.com/lambdalisue/nvim-aibo')
 	require('aibo').setup()
 end)
+
+now(function()
+	add({
+		source = 'https://github.com/yuki-yano/fuzzy-motion.vim',
+		depends = {
+			'https://github.com/lambdalisue/vim-kensaku'
+		},
+	})
+	vim.g.fuzzy_motion_matchers = { 'fzf', 'kensaku' }
+	nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
+end)
+
 

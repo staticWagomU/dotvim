@@ -502,3 +502,9 @@ later(function()
 	vim.opt.background = 'light'
 	vim.cmd.colorscheme('melange')
 end)
+
+later(function()
+	add('https://github.com/lambdalisue/nvim-aibo')
+	require('aibo').setup()
+end)
+

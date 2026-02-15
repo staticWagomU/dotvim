@@ -63,11 +63,6 @@ local function get_unique_path(bufnr, other_bufnrs)
     table.insert(unique_parts, current_path[i])
   end
 
-  -- 最低でも2つのディレクトリ要素を含めるようにする
-  if #unique_parts < 3 and #current_path > #common_prefix + 2 then
-    table.insert(unique_parts, 1, current_path[#common_prefix])
-  end
-
   return table.concat(unique_parts, '/')
 end
 
@@ -75,7 +70,8 @@ local function a()
   local buflist = {}
   for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
     -- popup windowは無視
-    if vim.fn.win_gettype(buf.bufnr) == 'popup' then
+    local winid = vim.fn.bufwinid(buf.bufnr)
+    if winid == -1 or vim.fn.win_gettype(winid) == 'popup' then
       goto continue
     end
 
@@ -107,20 +103,20 @@ local function a()
       for _, bufnr in ipairs(bufnrs) do
         local unique_path = get_unique_path(bufnr, bufnrs)
         local winid = vim.fn.bufwinid(bufnr)
-        if winid ~= -1 and vim.fn.line('$', winid) > 1 then
+        if winid ~= -1 then
           vim.fn.setwinvar(winid, '&winbar', unique_path)
         end
       end
     else
       local winid = vim.fn.bufwinid(bufnrs[1])
-      if winid ~= -1 and vim.fn.line('$', winid) > 1 then
+      if winid ~= -1 then
         vim.fn.setwinvar(winid, '&winbar', vim.fs.basename(vim.fn.bufname(bufnrs[1])))
       end
     end
   end
 end
 
-vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFilePost', 'InsertEnter', 'BufWritePost' }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'BufWinEnter', 'BufFilePost', 'BufWritePost' }, {
   group = WagomuBox.MyAuGroup,
   pattern = '*',
   callback = function()
@@ -130,6 +126,7 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'CursorMoved', 'BufWinEnter', 'BufFi
 
 function M.setup(_opts)
   local opts = _opts or {}
+  a()
 end
 
 function M.update()

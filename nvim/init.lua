@@ -1309,13 +1309,13 @@ end)
 --   }
 -- end)
 --
--- later(function()
---   add('https://github.com/mattn/vim-sonictemplate')
---   vim.g.sonictemplate_vim_template_dir = {
---     WagomuBox.plugins_path .. '/vim-sonictemplate/template',
---     '~/dotvim/wagomu-box/template/'
---   }
--- end)
+later(function()
+  add('https://github.com/mattn/vim-sonictemplate')
+  vim.g.sonictemplate_vim_template_dir = {
+    WagomuBox.plugins_path .. '/vim-sonictemplate/template',
+    '~/dotvim/wagomu-box/template/'
+  }
+end)
 --
 -- later(function()
 --   add('https://github.com/epwalsh/obsidian.nvim')
@@ -1429,6 +1429,11 @@ now(function()
 	})
 	vim.g.fuzzy_motion_matchers = { 'fzf', 'kensaku' }
 	nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
+end)
+
+later(function()
+	add('https://github.com/yuki-yano/smart-tmux-nav.nvim')
+	require('smart-tmux-nav').setup()
 end)
 
 --
@@ -1641,7 +1646,7 @@ end)
 --
 -- map({ 'n', 'x' }, 'g?', function() require('ui_select')(_G.favoriteList, vim.fn.execute) end)
 --
--- require('wwinbar')
+require('wwinbar')
 -- -- require('wtabbar')
 --
 -- vim.api.nvim_create_user_command('WagomuBox', function()

@@ -523,4 +523,32 @@ now(function()
 	nmap('<Leader><Leader>', '<Cmd>FuzzyMotion<CR>')
 end)
 
+later(function()
+	add({
+		source = 'https://github.com/Shougo/ddc.vim',
+		depends = {
+			'https://github.com/vim-denops/denops.vim',
+			-- UI
+			'https://github.com/Shougo/pum.vim',
+			'https://github.com/Shougo/ddc-ui-pum',
+			-- source
+			'https://github.com/Shougo/ddc-source-around',
+			'https://github.com/matsui54/ddc-source-buffer',
+			'https://github.com/Shougo/ddc-source-cmdline',
+			'https://github.com/Shougo/ddc-source-cmdline_history',
+			'https://github.com/Shougo/ddc-source-lsp',
+			'https://github.com/Shougo/ddc-source-line',
+			'https://github.com/Shougo/ddc-source-shell_native',
+			'https://github.com/LumaKernel/ddc-source-file',
+			'https://github.com/uga-rosa/ddc-source-lsp-setup',
+			-- filter
+			'https://github.com/tani/ddc-fuzzy',
+			'https://github.com/Shougo/ddc-filter-sorter_rank',
+			'https://github.com/Shougo/ddc-filter-matcher_head',
+			'https://github.com/Shougo/ddc-filter-converter_remove_overlap',
+			'https://github.com/Shougo/ddc-filter-converter_truncate_abbr',
+		},
+	})
+	require('plugins.ddc').setup()
+end)
 

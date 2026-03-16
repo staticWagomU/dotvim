@@ -64,6 +64,10 @@ autocmd = vim.api.nvim_create_autocmd
 autocmd('BufWritePre', {
 	pattern = '*',
 	callback = function(event)
+		-- skip protocol url
+		if event.file:match('^%w+://') then
+			return
+		end
 		local dir = vim.fs.dirname(event.file)
 		local force = U.is_present(vim.v.cmdbang)
 		if
@@ -450,7 +454,7 @@ later(function()
 	})
 	require('mason-lspconfig')
 
-	vim.lsp.enable({ 'lua_ls' })
+	vim.lsp.enable({ 'lua_ls', 'basedpyright' })
 end)
 
 later(function()
@@ -552,3 +556,26 @@ later(function()
 	require('plugins.ddc').setup()
 end)
 
+later(function()
+	add('https://github.com/xieyonn/spinner.nvim')
+	require('spinner').config('cursor', {
+		kind = 'cursor',
+		placeholder = '✔',
+		attach = {
+			lsp = {
+				progress = true, -- listen to LspProgress
+
+				request = {
+					-- Select the methods you're interested in. For a complete list: `:h lsp-method`
+					-- 'textDocument/definition', -- for GoToDefinition (shortcut `C-]`)
+					'textDocument/hover', -- for hover (shortcut `K`)
+				},
+
+				-- Optional, select lsp names you're interested in.
+				client_names = {
+					'lua_ls',
+				}
+			},
+		},
+	})
+end)
